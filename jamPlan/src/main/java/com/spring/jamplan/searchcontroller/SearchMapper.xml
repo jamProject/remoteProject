@@ -4,4 +4,37 @@
 
 <mapper namespace="com.spring.jamplan.searchcontroller">
 	
+	
+	<!-- column값은 대소문자를 구분하지 않는다. -->
+ 	<!-- property의 형태로 파라미터명 매핑 -->
+ 	<!-- PlanVO 이용 시, 추가 부분 -->
+	<resultMap type="PlanVO" id="planResultMap">
+		<result property="planNo" column="planNo" />
+		<result property="teamNO" column="teamNO" />
+		<result property="goodCount" column="goodCount" />
+		<result property="readCount" column="readCount" />
+		<result property="isOpen" column="isOpen" />
+		<result property="planName" column="planName" />
+		<result property="hashTag" column="hashTag" />
+		<result property="planDate" column="planDate" />
+	</resultMap>
+	<!-- TogetherBoardVO 이용 시, 추가 부분 -->
+	<resultMap type="TogetherBoardVO" id="togetherBoardResultMap">
+		<result property="togetherNo" column="togetherNo" />
+		<result property="planNo" column="planNo" />
+		<result property="ReadCount" column="ReadCount" />
+		<result property="id" column="id" />
+		<result property="togetherSubject" column="togetherSubject" />
+		<result property="togetherContent" column="togetherContent" />
+		<result property="togetherDate" column="togetherDate" />
+	</resultMap>
+	
+	<select id="searchPlan" resultMap="planResultMap">
+		select * from plan order by planDate
+	</select>
+	
+	<select id="searchTogether" resultMap="togetherBoardResultMap">
+		select * from together order by togetherDate
+	</select>
+	
 </mapper>
