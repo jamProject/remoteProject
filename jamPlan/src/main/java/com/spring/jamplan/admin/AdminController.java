@@ -1,4 +1,4 @@
-package com.spring.jamplan;
+package com.spring.jamplan.admin;
 
 import org.springframework.stereotype.Controller;
 

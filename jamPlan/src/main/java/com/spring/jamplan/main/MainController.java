@@ -1,8 +1,8 @@
-package com.spring.jamplan;
+package com.spring.jamplan.main;
 
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class ManagePlanController {
+public class MainController {
 
 }

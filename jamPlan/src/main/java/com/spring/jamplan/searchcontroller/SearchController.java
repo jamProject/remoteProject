@@ -1,4 +1,4 @@
-package com.spring.jamplan;
+package com.spring.jamplan.searchcontroller;
 
 import org.springframework.stereotype.Controller;
 
