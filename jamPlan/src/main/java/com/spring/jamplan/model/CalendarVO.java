@@ -13,5 +13,6 @@ public class CalendarVO {
 	int planNo;
 	int selectDate;
 	int dateCount;
+	String userColor;
 	boolean confirmed;
 }

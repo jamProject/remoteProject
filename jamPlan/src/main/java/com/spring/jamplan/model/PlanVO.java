@@ -16,7 +16,7 @@ public class PlanVO {
 	int goodCount;
 	int readCount;
 	
-	boolean isOpen;
+	int isOpen;
 	
 	String planName;
 	String hashTag;
