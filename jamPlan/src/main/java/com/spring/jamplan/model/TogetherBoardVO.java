@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 public class TogetherBoardVO {
 	int togetherNo;
 	int planNo;
-	int ReadCount;
+	int readCount;
 	
 	String id;
 	String togetherSubject;
 	String togetherContent;
 
+	// 동행 일정 게시 날짜
 	DateFormat togetherDate;
 	
 	//file;
