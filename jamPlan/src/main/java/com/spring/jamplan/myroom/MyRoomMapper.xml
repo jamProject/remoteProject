@@ -24,7 +24,15 @@
 		<result property="planDate" column="planDate" />
 	</resultMap>
 	
-	<select id="getTeamList" parameterType="com.spring.jamplan.model.UserVO">
-		
+	<select id="getTeamList" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamResultMap">
+		select * from user_team where id=#{id, javaType=String }
+	</select>
+	
+	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamVO" resultMap="teamResultMap">
+		select * from plan where teamNo=#{teamNo, javaType=int }
+	</select>
+	
+	<select id="getConfirmedDate" parameterType="com.spring.jamplan.model.CalendarVO" resultType="String">
+		select 
 	</select>
 </mapper>
