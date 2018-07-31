@@ -10,6 +10,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>planTablePage</h1>
 </body>
 </html>

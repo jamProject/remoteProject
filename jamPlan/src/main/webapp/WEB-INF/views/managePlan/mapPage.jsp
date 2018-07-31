@@ -10,6 +10,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>mapPage</h1>
 </body>
 </html>
