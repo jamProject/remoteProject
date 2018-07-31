@@ -14,15 +14,15 @@ CREATE OR PLACE VIEW v_PLAN(PLANNO, TEAMNO, PLANNAME)
 AS
 SELECT PLANNO, TEAMNO, PLAN
  -->
-<mapper namespace="com.spring.jamplan.myroom">
+<mapper namespace="./com.spring.jamplan.myroom.MyRoomMapper">
 	<resultMap type="TeamVO" id="teamResultMap">
-		<result property="teamNo" column="teamNo" />
-		<result property="planNo" column="planNo" />
 		<result property="id" column="id" />
-		<result property="teamName" column="teamName" />
-		<result property="role" column="role" />
+		<result property="teamNo" column="teamNo" />
 		<result property="isTeamLeader" column="isTeamLeader" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
 		<result property="chatTime" column="chatTime" />
+		<result property="teamName" column="teamName" />
 	</resultMap>
 	
 	<resultMap type="PlanVO" id="planResultMap">

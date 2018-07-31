@@ -11,13 +11,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TeamVO {
-	int teamNo;
-	int planNo;
-	
 	String id;
-	String teamName;
-	String role;
+	int teamNo;
 	String isTeamLeader;
-
+	String role;
+	int planNo;
 	DateFormat chatTime;
+	String teamName;
+	
+	
+
+	
 }
