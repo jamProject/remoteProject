@@ -59,6 +59,7 @@ SELECT PLANNO, TEAMNO, PLAN
 		<result property="isRead" column="isRead" />
 	</resultMap> 
 	
+	<!-- DB에서 가져오는 부분들 -->
 	<select id="getTeamList" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamResultMap">
 		select * from team where id=#{id javaType=String }
 	</select>
@@ -82,18 +83,23 @@ SELECT PLANNO, TEAMNO, PLAN
 	<select id="searchTeam" parameterType="String" resultMap="teamResultMap">
 		select * from team where teamName=#{teamName javaType=String }
 	</select>
+	<!-- DB에서 가져오는 부분 끝 -->
 	
-	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO" insert=>
-		insert into plan(planNo, teamNo, planName, planDate) into (#{planNo javaType=int }, 
-			#{teamNo javaType=int }, #{planName javaType=String }, #{planDate javaType=dateFormat })
+	<!-- DB에 추가하는 부분 -->
+	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO" >
+		insert into plan(planNo, teamNo, planName, planDate) into (#{planNo }, 
+			#{teamNo }, #{planName javaType=String }, #{planDate })
 	</insert>
+	<!-- DB에 추가하는 부분 끝 -->
 	
+	<!-- DB에서 제거하는 부분 -->
 	<delete id="deleteTeam" parameterType="com.spring.jamplan.model.TeamVO">
 		delete from team where teamName=#{teamName javaType=String }
 	</delete> 
 	
 	<delete id="deletePlan" parameterType="com.spring.jamplan.model.PlanVO">
-		delete from plan where planNo=#{planNo javaType=int }
+		delete from plan where planNo=#{planNo }
 	</delete>
+	<!-- DB에서 제거하는 부분 끝 -->
 
 </mapper>
