@@ -12,11 +12,11 @@
       nowMonth = dt.getMonth() + 1;
       nowDay = dt.getDate();
       nowYear = dt.getFullYear();
-      
-		window.onload = function() {
-		calcCalendar(nowYear,nowMonth+1)
-		selectYearList();
-		selectMonthList();
+    	  
+      window.onload = function() {
+      calcCalendar(nowYear,nowMonth)
+	  selectYearList(nowYear);
+	  selectMonthList(nowMonth);
 	}
 	
 	// 현재 날짜와 윤달, 해당 월의 일수 계산
@@ -55,7 +55,7 @@
 	   }
 	   // 달력생성 및 비어있는 칸 생성
 	   function calcCalendar(year, month){
-	      var dt = new Date();
+
 	      var calendar = new Calendar();
 	      var calendarDiv = document.getElementById('calendar');
 	      var html = '<table id="cal"><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>';
@@ -63,7 +63,7 @@
 	      dt.setYear(Number(year));
 	      dt.setMonth(Number(month) - 1);
 	      // 날짜 표시 반복문
-	      for(var day = 1;  day <= calendar.totMonthDay(dt.getMonth(), calendar.calYun(dt.getYear())); day ++){   
+	      for(var day = 1;  day <= calendar.totMonthDay(month, calendar.calYun(year)); day ++){   
 	         
 	           dt.setDate(day);
 	           // 달력 1주차 빈칸생성 로직    
@@ -86,96 +86,66 @@
 	   //현재 년도부터 10년치 년도 선택
 	   function selectYearList(year) {
 		   // 현재 날짜 속성으로 지정
-		   if(year==null){
-			   dt = new Date();
-			   nowYear = dt.getFullYear();
-			   var html = '<select>';
-			   
-			   for(var i = 0; i < 10; i++){
-				   html += '<option value = ' + nowYear + '>'+nowYear+'</option>';
-				   nowYear++;
-			   }
-			   html+='</select>';
-			   document.getElementById('nowYear').innerHTML = html;
-		   }else{
+		   var html = '<select id = "yearList" onchange="selectYearChange()">';
 
-			   var html = '<select>';
-			   
+			   dt = new Date();
+			   year = year - 5;	   
 			   for(var i = 0; i < 10; i++){
-				   html += '<option value = ' + year + '>'+ year+'</option>';
-				   Year++;
+				   if(i == 5 ){
+					   html += '<option value = ' + year + ' selected>'+year+'</option>';
+				   }else{
+					   html += '<option value = ' + year + '>'+year+'</option>';
+				   }
+				   year++;
 			   }
 			   html+='</select>';
 			   document.getElementById('nowYear').innerHTML = html;
-		   }
 	   }
 	   //현재 월 부터 12월 까지
 	   function selectMonthList(month) {
-		   if(month==null){
-			   dt = new Date();
-
-			   nowMonth = dt.getMonth()+2;
-			   /* console.log(nowMonth); */
-			  
-			   var html = '<select>';
-			   for(var i = 1; i <= 12; i++){
-				   if(i != nowMonth){
-					   /* console.log(i+" i :"+ i);
-					   console.log(i+" nowMonth : "+ nowMonth); */
-					   html += '<option value = ' + i + '>'+i+'</option>';
-				   }else if(nowMonth == i){
-					   /* console.log(i);
-					   console.log(nowMonth); */
-					   html += '<option value = ' + i +  ' selected>'+i+ '</option>';
-				   }
-			   }
-			   
-			   html+='</select>';
-			   document.getElementById('nowMonth').innerHTML = html;
-		   }else{
-			   nowMonth = month;
-			   /* console.log(nowMonth); */
-			  
-			   var html = '<select>';
-			   for(var i = 1; i <= 12; i++){
-				   if(i != nowMonth){
-					   /* console.log(i+" i :"+ i);
-					   console.log(i+" nowMonth : "+ nowMonth); */
-					   html += '<option value = ' + i + '>'+i+'</option>';
-				   }else if(nowMonth == i){
-					   /* console.log(i);
-					   console.log(nowMonth); */
-					   html += '<option value = ' + i +  ' selected>'+i+ '</option>';
-				   }
-			   }
-			   
-			   html+='</select>';
-			   document.getElementById('nowMonth').innerHTML = html;
+		   var html = '<select id = "monthList" onchange="selectMonthChange()">';
+		   for(var i = 1; i <= 12; i++){		   
+			   if(i != month){
+				   html += '<option value = ' + i + '>'+i+'</option>';		  
+			   }else if(i == month){
+				   html += '<option value = ' + i + ' selected>'+i+'</option>';		  
+			   }			  
 		   }
-		   
+		
+			html+='</select>';
+			document.getElementById('nowMonth').innerHTML = html;
 	   }
 	   
 	   function selectYearChange(){
-		   var langSelect = document.getElementById("nowYear");
-		   console.log("a");
+		   var yearSelect = document.getElementById("yearList");
+		   var monthSelect = document.getElementById("monthList");
 		    // select element에서 선택된 option의 value가 저장된다.
-		   var selectValue = langSelect.options[langSelect.selectedIndex].value;
-		   calcCalendar(selectValue, 1)
-		   selectYearList(selectValue);
-		   selectMonthList(1);
+		   var year = yearSelect.options[yearSelect.selectedIndex].value;
+		   var month = monthSelect.options[monthSelect.selectedIndex].value;
+		   
+		   console.log("change year _ year : "+year);
+		   console.log("change year _ month : "+month);
+		   
+		   calcCalendar(year, month)
+		   selectYearList(year);
+		   selectMonthList(month);
+		   
 	   }
 	   
 	   function selectMonthChange(){
-		   var langSelect = document.getElementById("nowMonth");
-		   console.log(langSelect);
-		   dt = new Date();
-		   nowYear = dt.getFullYear();
-		     
-		   // select element에서 선택된 option의 value가 저장된다.
-		   var selectValue = langSelect.options[langSelect.selectedIndex].value;
-		   calcCalendar(nowYear,selectValue)
-	       selectYearList(nowYear);
-		   selectMonthList(selectValue);
+		  var yearSelect = document.getElementById("yearList");
+		  var monthSelect = document.getElementById("monthList");
+		  // select element에서 선택된 option의 value가 저장된다.
+		  var year = yearSelect.options[yearSelect.selectedIndex].value;
+		  var month = monthSelect.options[monthSelect.selectedIndex].value;
+     
+		  // select element에서 선택된 option의 value가 저장된다.
+		  console.log("change month _ year : " + year);
+		  console.log("change month _ month : " + month);
+		  
+		  calcCalendar(year, month)
+		  selectYearList(year);
+		  selectMonthList(month);
 	   }
 	</script>
 </head>
@@ -186,10 +156,10 @@
 	<table>
 		<tr>
 			<td>
-				<div id = "nowYear" onchange="selectYearChange"></div>	
+				<div id = "nowYear" ></div>	
 			</td>
 			<td>
-				<div id = "nowMonth" onchange="selectMonthChange"></div>
+				<div id = "nowMonth" ></div>
 			</td>
 		</tr>
 	</table>
