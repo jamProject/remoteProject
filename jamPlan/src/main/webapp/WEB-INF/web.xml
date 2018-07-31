@@ -32,8 +32,9 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>mainPage</welcome-file>
+		<welcome-file>/WEB-INF/views/managePlan/mapPage.jsp</welcome-file>
 	</welcome-file-list>
+
 	<!-- Korean Filter -->
    <filter>
       <filter-name>CharacterEncodingFilter</filter-name>
