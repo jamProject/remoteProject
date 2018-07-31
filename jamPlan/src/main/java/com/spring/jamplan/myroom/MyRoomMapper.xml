@@ -95,8 +95,5 @@ SELECT PLANNO, TEAMNO, PLAN
 	<delete id="deletePlan" parameterType="com.spring.jamplan.model.PlanVO">
 		delete from plan where planNo=#{planNo javaType=int }
 	</delete>
-	
-	 
-	
-	
+
 </mapper>
