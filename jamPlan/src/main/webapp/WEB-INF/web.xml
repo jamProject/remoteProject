@@ -32,7 +32,7 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>mainPage</welcome-file>
+		<welcome-file>home.jsp</welcome-file>
 	</welcome-file-list>
 	<!-- Korean Filter -->
    <filter>
