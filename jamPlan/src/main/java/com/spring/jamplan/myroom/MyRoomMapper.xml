@@ -14,8 +14,9 @@ CREATE OR PLACE VIEW v_PLAN(PLANNO, TEAMNO, PLANNAME)
 AS
 SELECT PLANNO, TEAMNO, PLAN
  -->
-<mapper namespace="com.spring.jamplan.myroom">
-	<resultMap type="TeamVO" id="teamResultMap">
+<mapper namespace="com.spring.jamplan.myroom.MyRoomMapper">
+
+	<resultMap id="teamResultMap" type ="com.spring.jamplan.model.TeamVO">
 		<result property="teamNo" column="teamNo" />
 		<result property="planNo" column="planNo" />
 		<result property="id" column="id" />
@@ -25,7 +26,7 @@ SELECT PLANNO, TEAMNO, PLAN
 		<result property="chatTime" column="chatTime" />
 	</resultMap>
 	
-	<resultMap type="PlanVO" id="planResultMap">
+	<resultMap id="planResultMap" type="com.spring.jamplan.model.PlanVO">
 		<result property="planNo" column="planNo" />
 		<result property="teamNo" column="teamNo" />
 		<result property="goodCount" column="goodCount" />
@@ -36,7 +37,7 @@ SELECT PLANNO, TEAMNO, PLAN
 		<result property="planDate" column="planDate" />
 	</resultMap>
 	
-	<resultMap type="UserVO" id="userResultMap">
+	<resultMap id="userResultMap" type="com.spring.jamplan.model.UserVO" >
 		<result property="id" column="id" />
 		<result property="email" column="email" />
 		<result property="pass" column="pass" />
@@ -51,7 +52,7 @@ SELECT PLANNO, TEAMNO, PLAN
 		<result property="hobby" column="hobby" />
 	</resultMap>
 	
-	<resultMap type="MessageVO" id="messageResultMap">
+	<resultMap id="messageResultMap" type="com.spring.jamplan.model.MessageVO">
 		<result property="id" column="id" />
 		<result property="sendId" column="sendId" />
 		<result property="messageContent" column="messageContent" />
@@ -83,7 +84,7 @@ SELECT PLANNO, TEAMNO, PLAN
 		select * from team where teamName=#{teamName javaType=String }
 	</select>
 	
-	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO" insert=>
+	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO">
 		insert into plan(planNo, teamNo, planName, planDate) into (#{planNo javaType=int }, 
 			#{teamNo javaType=int }, #{planName javaType=String }, #{planDate javaType=dateFormat })
 	</insert>

@@ -28,12 +28,33 @@
 	<!--controller찾기-->
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>*.jam</url-pattern>
+		<url-pattern>*.admin</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.main</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.manageplan</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.myroom</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.search</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>mainPage</welcome-file>
 	</welcome-file-list>
+	
 	<!-- Korean Filter -->
    <filter>
       <filter-name>CharacterEncodingFilter</filter-name>
