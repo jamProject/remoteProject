@@ -83,9 +83,9 @@ SELECT PLANNO, TEAMNO, PLAN
 		select * from team where teamName=#{teamName javaType=String }
 	</select>
 	
-	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO" insert=>
-		insert into plan(planNo, teamNo, planName, planDate) into (#{planNo javaType=int }, 
-			#{teamNo javaType=int }, #{planName javaType=String }, #{planDate javaType=dateFormat })
+	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO"> 
+		insert into plan(planNo, teamNo, planName, planDate) into (#{planNo}, 
+			#{teamNo }, #{planName }, #{planDate })
 	</insert>
 	
 	<delete id="deleteTeam" parameterType="com.spring.jamplan.model.TeamVO">
