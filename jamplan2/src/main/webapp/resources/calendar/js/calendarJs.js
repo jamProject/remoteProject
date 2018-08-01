@@ -76,10 +76,15 @@ function calcCalendar(year, month) {
 		// 일요일이 아니라면 날짜를 표시하고 일요일이라면 날짜를 표시한 후 줄바꿈
 		if (dt.getDay() != 6) {
 			html += '<td class = "date" value = ' + String(day) + '>'
-					+ String(day) + '</td>';
+					+ String(day)
+					+ '<button class = "dateButton" type = "submit" value ='
+					+ String(day) + '>' + "좋아요" + '</button>' + '</td>';
 		} else {
 			html += '<td class = "date" value = ' + String(day) + '>'
-					+ String(day) + '</td></tr><tr>';
+					+ String(day)
+					+ '<button class = "dateButton" type = "submit" value ='
+					+ String(day) + '>' + '좋아요'+ '</button>' 
+					+ '</td></tr><tr>';
 		}
 	}
 	var addBoxNum = dt.getDay() - 1;
@@ -169,4 +174,7 @@ function printYearMonth(year, month) {
 	var html = '<h3>' + String(year) + '년 ' + String(month) + '월' + '</h3>';
 	// console.log(html);
 	document.getElementById('calendarDiv').innerHTML = html;
+}
+function mouseHover(){
+	
 }

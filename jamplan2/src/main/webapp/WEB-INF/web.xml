@@ -35,8 +35,11 @@
   	<url-pattern>*.manageplan</url-pattern>
   </servlet-mapping>
   
-  <welcome-file-list>
+ <!--  <welcome-file-list>
     <welcome-file>/WEB-INF/views/managePlan/calendarPage.jsp</welcome-file>
+  </welcome-file-list> -->
+  <welcome-file-list>
+  	<welcome-file>mainPage.jsp</welcome-file>
   </welcome-file-list>
   
   <filter>

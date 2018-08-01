@@ -11,6 +11,11 @@
 </head>
 <body>
 	<h1>mainPage</h1>
-	<a href = "load.room">myRoom</a>
+	   
+	<a href = "main.manageplan">planMain</a>
+	<a href = "calendar.manageplan">calendar</a>
+	<a href = "map.manageplan">map</a>
+	<a href = "plantable.manageplan">plan</a>
+	<a href = "viewall.manageplan">view all</a>
 </body>
 </html>

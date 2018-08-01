@@ -2,9 +2,12 @@
 
 
 .date:hover{ 
-	text-align: center;
+	
 }
-
+.dateButton{
+	width: 70px;
+	height: 30px;
+}
 #calendarDiv {
 	text-align: center;
 	padding: 10px 30px 10px 10px;
