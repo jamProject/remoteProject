@@ -25,6 +25,8 @@
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-zbRuhOB5viFlwhkw3TmDnC0XIWcq0HI&callback=initMap&libraries=drawing,places" async defer>
 </script>
 
+
+
 <style>  
 </style>
 </head>
@@ -47,7 +49,6 @@
 </div>
 </aside>
 <aside  id = "map"> </aside>
-
 </div>
 
 <!-- 
