@@ -1,11 +1,10 @@
-var geocorder;
-var map;
-var address;
+var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      var labelIndex = 0;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {			/*지도생성, 지도를 표시할 div아이디가'map' */
     	center: {lat: 37.566, lng: 126.977},			/* 지도의 중심좌표 */
-    	zoom: 10
+    	zoom: 13
     });
     var input = document.getElementById('searchInput');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);			//지도or위성
@@ -28,13 +27,9 @@ function initMap() {
         scaledSize: new google.maps.Size(35, 35)
     }));
     
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-      });
-    
     autocomplete.addListener('place_changed', function() {
         infowindow.close();
-        marker.setVisible(false);
+        //marker.setVisible(false);
         var place = autocomplete.getPlace();
         
         if (!place.place_id) {
@@ -67,27 +62,53 @@ function initMap() {
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
         infowindow.open(map, marker); 
     });   
+   
     
-    
-    google.maps.event.addListener(map, 'click', function(mouseEvent) {        
+    google.maps.event.addListener(map, 'click', function(mouseEvent) {
+    	var latlng = mouseEvent.latLng;
+        var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
         
-        // 클릭한 위도, 경도 정보를 가져옵니다 
-        //var latlng = mouseEvent.LatLng; 
+         marker = new google.maps.Marker({
+            position: latlng,
+            label: labels[labelIndex++ % labels.length],
+            map: map
+          });
+        /*    size: new google.maps.Size(0,0),
+            origin: new google.maps.Point(0, 0),
+            anchorPoint: new google.maps.Point(0, -1),
+            scaledSize: new google.maps.Size(5,5)*/
         
-        // 마커 위치를 클릭한 위치로 옮깁니다
-        marker.setPosition(mouseEvent.LatLng);
-        marker.setMap(map);
-      //  infowindow.setContent('<div><strong>' +mouseEvent.LatLng+'</string>' );
-       // infowindow.open(map, marker); 
-
+        /*marker.setMap(map);
+        marker.setPosition(lat_lng);*/
+        
+		geocoder.geocode({'latLng': lat_lng}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK)  {
+				if (results[0])
+				{
+                  infowindow.setContent(results[0].formatted_address );
+                  infowindow.open(map, marker);	
+                 
+	    		} else {
+	    			alert("No results found");
+	    		}
+	    	}else{
+	    		infowindow.setContent("lat: " + latlng.lat() + " lng: " + latlng.lng());
+	    		infowindow.open(map, marker);
+	    	}
+    	});
     });
-}
+
+	marker.addListener('click', function() {
+        infowindow.open(map, marker);
+     });
+}   
+
   /*  google.maps.event.addListener(map, 'click', function(mouseEvent) {
     	 marker.setPosition(mouseEvent.latLng);
     	 marker.setMap(map);    
     	
     	 var latlng = mouseEvent.latLng;
-    	 infowindow.setContent( '<div>클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ' + '경도는 ' + latlng.getLng() + ' 입니다</div>');
+    	 infowindow.setContent( '<div>클릭한 위치의 위도는 ' + latlng.lat() + ' 이고, ' + '경도는 ' + latlng.lng() + ' 입니다</div>');
     	 infowindow.open(map, marker);
       });
     
