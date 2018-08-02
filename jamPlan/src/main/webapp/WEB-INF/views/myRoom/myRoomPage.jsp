@@ -11,6 +11,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>myRoomPage</h1>
 </body>
 </html>
