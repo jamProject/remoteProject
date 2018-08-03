@@ -30,18 +30,18 @@
 <style>  
 </style>
 </head>
-<body onload="initMap()">
+<body>
 <input  id="searchInput"  class="controls"  type = "text"  placeholder = "위치 입력" />
 <div class="content">
 <aside id="main-aside">
 <h3> &nbsp;&nbsp;** Top10 ** </h5>
 <div class="ui vertical buttons">  			
-  <button class="ui button">1one </button>
-  <button class="ui button">2Messages</button>
-  <button class="ui button">3Events</button>
-  <button class="ui button">4Photos</button>
-  <button class="ui button">5Photos</button>
-  <button class="ui button">6Photos</button>
+  <button class="ui button">1Place </button>
+  <button class="ui button">2Place</button>
+  <button class="ui button">3Place</button>
+  <button class="ui button">4Place</button>
+  <button class="ui button">5Place</button>
+  <button class="ui button">6Place</button>
   <button class="ui button">7Photos</button>
   <button class="ui button">8Photos</button>
   <button class="ui button">9Photos</button>
