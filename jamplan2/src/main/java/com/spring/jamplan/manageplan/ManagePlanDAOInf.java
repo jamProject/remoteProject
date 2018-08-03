@@ -1,5 +1,5 @@
 package com.spring.jamplan.manageplan;
 
-public interface ManangePlanDAO {
+public interface ManagePlanDAOInf {
 
 }

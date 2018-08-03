@@ -1,17 +1,24 @@
 /* @author wookim
 
  */
-
 dt = new Date();
 nowMonth = dt.getMonth();
 nowDay = dt.getDate();
 nowYear = dt.getFullYear();
 
 window.onload = function() {
-	calcCalendar(nowYear, nowMonth + 1)
+	calcCalendar(nowYear, nowMonth + 1);
 	selectYearList(nowYear);
 	selectMonthList(nowMonth + 1);
-	printYearMonth(nowYear, nowMonth + 1)
+	printYearMonth(nowYear, nowMonth + 1);
+	hiddenBut();
+}
+
+function hiddenBut() {
+	$(".dateButton").css('visibility', 'hidden');
+}
+function showBut() {
+	$(".dateButton").css('visibility', 'visible');
 }
 
 // 현재 날짜와 윤달, 해당 월의 일수 계산
@@ -54,6 +61,8 @@ function Calendar() {
 		return days;
 	}
 }
+
+
 // 달력생성 및 비어있는 칸 생성
 function calcCalendar(year, month) {
 	var calendar = new Calendar();
@@ -75,7 +84,7 @@ function calcCalendar(year, month) {
 		}
 		// 일요일이 아니라면 날짜를 표시하고 일요일이라면 날짜를 표시한 후 줄바꿈
 		if (dt.getDay() != 6) {
-			html += '<td class = "date" value = ' + String(day) + '>'
+			html += '<td Sclass = "date" value = ' + String(day) + '>'
 					+ String(day)
 					+ '<button class = "dateButton" type = "submit" value ='
 					+ String(day) + '>' + "좋아요" + '</button>' + '</td>';
@@ -83,7 +92,7 @@ function calcCalendar(year, month) {
 			html += '<td class = "date" value = ' + String(day) + '>'
 					+ String(day)
 					+ '<button class = "dateButton" type = "submit" value ='
-					+ String(day) + '>' + '좋아요'+ '</button>' 
+					+ String(day) + '>' + '좋아요' + '</button>'
 					+ '</td></tr><tr>';
 		}
 	}
@@ -174,7 +183,4 @@ function printYearMonth(year, month) {
 	var html = '<h3>' + String(year) + '년 ' + String(month) + '월' + '</h3>';
 	// console.log(html);
 	document.getElementById('calendarDiv').innerHTML = html;
-}
-function mouseHover(){
-	
 }

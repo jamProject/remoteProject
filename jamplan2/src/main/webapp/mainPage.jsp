@@ -13,15 +13,11 @@
 	<h1>mainPage </h1>
 	
 	<form action="calendar.manageplan">
-		<input type = "text" name = "planNo">
-		<input type = "text" name = "teamNo">
+		<input value="planNo" type = "text" name = "planNo">
+		<input value="teamNo" type = "text" name = "teamNo">
 		<input type = "submit" value="서버전송">
 	</form>
 	
 	<a href = "main.manageplan">planMain</a>
-	<a href = "calendar.manageplan?planNo=1&teamNo=1">calendar</a>
-	<a href = "map.manageplan">map</a>
-	<a href = "plantable.manageplan">plan</a>
-	<a href = "viewall.manageplan">view all</a>
 </body>
 </html>
