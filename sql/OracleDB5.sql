@@ -1,3 +1,15 @@
+create table plan(
+    planno number primary key,
+    teamno number not null,
+    planname varchar2(30) not null,
+    plandate date,
+    goodcount number,
+    hastag varchar2(30),
+    readcount number,
+    isopen number not null
+);
+drop table plan;
+select * from plan;
 select * from plan where isopen = 0 and teamno =1;
 COMMIT;
 

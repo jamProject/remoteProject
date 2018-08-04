@@ -14,13 +14,21 @@
 	margin:  10px 30px 10px 10px;
 	width: 200px;
 }
-
+#sun{
+	color: rgb(178, 83, 53);
+}
+#sat{
+	color: rgb(71, 178, 151);
+}
 #calendar {
 	text-align: left;
 	background-color: white;
 }
 
-
+.goodBut{
+	width: 70px;
+	height: 30px;
+}
 table {
 	border-spacing: 0px;
 	border-collapse: separate;

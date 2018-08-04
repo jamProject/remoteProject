@@ -6,21 +6,31 @@ nowMonth = dt.getMonth();
 nowDay = dt.getDate();
 nowYear = dt.getFullYear();
 
-window.onload = function() {
+$(document).ready(function(){
+	
 	calcCalendar(nowYear, nowMonth + 1);
 	selectYearList(nowYear);
 	selectMonthList(nowMonth + 1);
 	printYearMonth(nowYear, nowMonth + 1);
-	hiddenBut();
-}
+	hiddenAllBut();
+	
+	$(".goodbut").on("click", function(){
+		$(".yearList").get
+	});
+});
 
-function hiddenBut() {
-	$(".dateButton").css('visibility', 'hidden');
+function hiddenBut(day) {
+	$("#dateButton" + day).css('visibility', 'hidden');
 }
-function showBut() {
-	$(".dateButton").css('visibility', 'visible');
+function hiddenAllBut() {
+	$(".goodBut").css('visibility', 'hidden');
 }
-
+function showBut(day) {
+	$("#dateButton" + day).css('visibility', 'visible');
+}
+function clickBut(day){
+	
+}
 // 현재 날짜와 윤달, 해당 월의 일수 계산
 function Calendar() {
 	// 윤달 판단
@@ -62,12 +72,11 @@ function Calendar() {
 	}
 }
 
-
 // 달력생성 및 비어있는 칸 생성
 function calcCalendar(year, month) {
 	var calendar = new Calendar();
 	var calendarDiv = document.getElementById('calendar');
-	var html = '<table id="cal"><tr id = "calendarHead"><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>';
+	var html = '<table id="cal"><tr id = "calendarHead"><th id = "sun">일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th id = "sat">토</th></tr><tr>';
 	// 계산하고자 하는 연도와 월을 날짜 객체에 지정
 	dt.setYear(Number(year));
 	dt.setMonth(Number(month) - 1);
@@ -84,16 +93,19 @@ function calcCalendar(year, month) {
 		}
 		// 일요일이 아니라면 날짜를 표시하고 일요일이라면 날짜를 표시한 후 줄바꿈
 		if (dt.getDay() != 6) {
-			html += '<td Sclass = "date" value = ' + String(day) + '>'
-					+ String(day)
-					+ '<button class = "dateButton" type = "submit" value ='
-					+ String(day) + '>' + "좋아요" + '</button>' + '</td>';
+			html += '<td class = "date" value = ' + String(day)+ ' onmouseover = "showBut(' + String(day)+ ')" onmouseout = "hiddenBut(' + String(day) + ')">'
+					+ String(day) 
+					+ '<button class= "goodBut" id = "dateButton'+ String(day) + '" value =' + String(day)+ '>' + "좋아요" 
+					+ '</button>' 
+					+ '</td>';
 		} else {
-			html += '<td class = "date" value = ' + String(day) + '>'
-					+ String(day)
-					+ '<button class = "dateButton" type = "submit" value ='
-					+ String(day) + '>' + '좋아요' + '</button>'
-					+ '</td></tr><tr>';
+			html += '<td class = "date" value = ' + String(day)+ ' onmouseover = "showBut(' + String(day)+ ')" onmouseout = "hiddenBut(' + String(day) + ')">'
+					+ String(day) 
+					+ '<button class= "goodBut" id = "dateButton'+ String(day) + '"  value =' + String(day)+ '>'
+					+ '좋아요' 
+					+ '</button>' 
+					+ '</td></tr>'
+					+ '<tr>';
 		}
 	}
 	var addBoxNum = dt.getDay() - 1;
@@ -147,6 +159,7 @@ function selectMonthList(month) {
 }
 
 function selectYearChange() {
+
 	var yearSelect = document.getElementById("yearList");
 	var monthSelect = document.getElementById("monthList");
 	// select element에서 선택된 option의 value가 저장된다.
@@ -160,9 +173,11 @@ function selectYearChange() {
 	selectYearList(year);
 	selectMonthList(month);
 	printYearMonth(year, month);
+	hiddenAllBut();
 }
 
 function selectMonthChange() {
+	hiddenAllBut();
 	var yearSelect = document.getElementById("yearList");
 	var monthSelect = document.getElementById("monthList");
 	// select element에서 선택된 option의 value가 저장된다.
@@ -177,6 +192,7 @@ function selectMonthChange() {
 	selectYearList(year);
 	selectMonthList(month);
 	printYearMonth(year, month);
+	hiddenAllBut();
 }
 
 function printYearMonth(year, month) {

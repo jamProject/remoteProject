@@ -1,0 +1,13 @@
+git pull 이후 에러 목록들
+
+1. sevlet context 
+annotaion driven
+의 오류는 
+프로젝트> 오른쪽클릭> 속성> 자바빌드패스>
+라이브러리탭 > JRE시스템 라이브러리> 에디트 >
+enviroments> javaSE-1.8 < 어플라이
+
+2. server에러
+우측 프로젝트 > server 폴더 > server.xml
+에서 <context>태그가 2줄 인지 확인한다.
+2줄이라면 (아마 중복됬을것) 한 태그의 내용을 지운다.
