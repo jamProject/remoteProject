@@ -13,25 +13,58 @@ $(document).ready(function(){
 	selectMonthList(nowMonth + 1);
 	printYearMonth(nowYear, nowMonth + 1);
 	hiddenAllBut();
+	clickBut();
 	
-	$(".goodbut").on("click", function(){
-		$(".yearList").get
-	});
 });
 
+//마우스가 밖으로 나갔을 때 좋아요 버튼 숨기기 이벤트
 function hiddenBut(day) {
+
 	$("#dateButton" + day).css('visibility', 'hidden');
 }
+
+//모든 버튼 숨기기 이벤트
 function hiddenAllBut() {
+
 	$(".goodBut").css('visibility', 'hidden');
 }
+
+//마우스 안으로 들어오묜 좋아요 버튼 보이기 이벤트
 function showBut(day) {
 	$("#dateButton" + day).css('visibility', 'visible');
 }
-function clickBut(day){
-	
+
+//좋아요 버튼 눌렀을 때 년도 저장 하기 이벤트
+function clickBut(){
+	$(".goodBut").on("click", function(){
+		var yearSelect = $("#listYear").val();
+		var monthSelect = $("#listMonth").val();
+		var daySelect = $(this).val();
+		
+		var date;
+		
+		if(yearSelect<2100){
+			date = String(yearSelect.substring(2,4));
+		}else{
+			date = String(yearSelect.substring(1,4));
+		}
+		
+		if(monthSelect < 10){
+			date = date + '/0' + String(monthSelect);
+		}else{
+			date = date +'/'+ String(monthSelect);
+		}
+		
+		if(daySelect < 10){
+			date = date +'/0'+ String(daySelect);
+		}else{
+			date = date +'/'+ String(daySelect);
+		}	
+		console.log(date);
+	});
 }
-// 현재 날짜와 윤달, 해당 월의 일수 계산
+
+//현재 날짜와 윤달, 해당 월의 일수 계산
 function Calendar() {
 	// 윤달 판단
 	this.calYun = function(year) {
@@ -72,7 +105,7 @@ function Calendar() {
 	}
 }
 
-// 달력생성 및 비어있는 칸 생성
+//달력생성 및 비어있는 칸 생성
 function calcCalendar(year, month) {
 	var calendar = new Calendar();
 	var calendarDiv = document.getElementById('calendar');
@@ -117,13 +150,13 @@ function calcCalendar(year, month) {
 			html += '<td></td>';
 		}
 	}
-	console.log(dt.getDay());
+	//console.log(dt.getDay());
 
 	html += '</table></div>'
 	calendarDiv.innerHTML = html;
 }
 
-// 현재 년도부터 10년치 년도 선택
+//현재 년도부터 10년치 년도 선택
 function selectYearList(year) {
 	// 현재 날짜 속성으로 지정
 	var html = '<select id = "yearList" onchange="selectYearChange()">';
@@ -132,7 +165,7 @@ function selectYearList(year) {
 	year = year - 5;
 	for (var i = 0; i < 10; i++) {
 		if (i == 5) {
-			html += '<option value = ' + year + ' selected>' + year + "년"
+			html += '<option id = "listYear" value = ' + year + ' selected>' + year + "년"
 					+ '</option>';
 		} else {
 			html += '<option value = ' + year + '>' + year + "년" + '</option>';
@@ -142,14 +175,15 @@ function selectYearList(year) {
 	html += '</select>';
 	document.getElementById('nowYear').innerHTML = html;
 }
-// 현재 월 부터 12월 까지
+
+//현재 월 부터 12월 까지
 function selectMonthList(month) {
 	var html = '<select id = "monthList" onchange="selectMonthChange()">';
 	for (var i = 1; i <= 12; i++) {
 		if (i != month) {
 			html += '<option value = ' + i + '>' + i + '월' + '</option>';
 		} else if (i == month) {
-			html += '<option value = ' + i + ' selected>' + i + '월'
+			html += '<option id = "listMonth" value = ' + i + ' selected>' + i + '월'
 					+ '</option>';
 		}
 	}
@@ -158,6 +192,7 @@ function selectMonthList(month) {
 	document.getElementById('nowMonth').innerHTML = html;
 }
 
+//셀렉트 년도 변경 이벤트
 function selectYearChange() {
 
 	var yearSelect = document.getElementById("yearList");
@@ -174,8 +209,10 @@ function selectYearChange() {
 	selectMonthList(month);
 	printYearMonth(year, month);
 	hiddenAllBut();
+	clickBut();
 }
 
+//셀렉트 월 변경 이벤트
 function selectMonthChange() {
 	hiddenAllBut();
 	var yearSelect = document.getElementById("yearList");
@@ -193,8 +230,10 @@ function selectMonthChange() {
 	selectMonthList(month);
 	printYearMonth(year, month);
 	hiddenAllBut();
+	clickBut();
 }
 
+//달력 출력 함수
 function printYearMonth(year, month) {
 	var html = '<h3>' + String(year) + '년 ' + String(month) + '월' + '</h3>';
 	// console.log(html);
