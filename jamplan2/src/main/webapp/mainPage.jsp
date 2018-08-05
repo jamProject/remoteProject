@@ -13,8 +13,8 @@
 	<h1>mainPage </h1>
 	
 	<form action="calendar.manageplan">
-		<input value="planNo" type = "text" name = "planNo">
-		<input value="teamNo" type = "text" name = "teamNo">
+		<input value="id" type = "text" name = "id">
+		<input value="password" type = "text" name = "password">
 		<input type = "submit" value="서버전송">
 	</form>
 	
