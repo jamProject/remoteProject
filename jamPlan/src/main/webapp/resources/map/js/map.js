@@ -42,6 +42,7 @@ function initMap() {
      marker = new google.maps.Marker({
         icon: markerImage,
     	map: map,
+    	
         anchorPoint: new google.maps.Point(0,-29)
     });
     
@@ -70,6 +71,8 @@ function initMap() {
 			if (status == google.maps.GeocoderStatus.OK)  {
 				if (results[0]){
 					
+					// Add the marker at the clicked location, and add the next-available label
+					// from the array of alphabetical characters.
 					marker = new google.maps.Marker({
 			        	icon: markerImage,
 			            label: labels[labelIndex++ % labels.length],
@@ -106,6 +109,7 @@ function initMap() {
          infowindow.close();
          marker = new google.maps.Marker({
         	icon: markerImage,
+        	draggable:true,
             label: labels[labelIndex++ % labels.length],
             map: map,
             position: latlng
@@ -124,17 +128,28 @@ function initMap() {
     }
         
     function attachMessage(marker, latlng) {    	
-    	 var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
+    	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
     	 
 		geocoder.geocode({'latLng': lat_lng}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK)  {
 				if (results[0]){
-                  infowindow.setContent(results[0].formatted_address );
-                  infowindow.open(map, marker);	
-                  
-                  marker.addListener('click', function() {
-                      infowindow.open(map, marker);
-                  });
+                  /*infowindow.setContent(place.name + '<br>' + results[0].formatted_address  + 
+                		  '<div>' + '<button>pick</button>' + '</div>');
+					infowindow.setContent("<div>" +  results[0].formatted_address +
+						  "<br><input type='submit' value='Pick' onclick='BarFind()'><div id='bar'></div></div>");*/
+					
+					infowindow.setContent(
+						"<div><table>" +
+							"<tr><td colspan='3'>place.name</td><tr>" +
+							"<tr><td colspan='3'>" + results[0].formatted_address + "</td><tr>" +
+							"<tr><td id='bar'>selectMember</td><td><input type='submit' value='Pick' onclick='BarFind()'></td>" +
+							"<td><input type='button' value='Cancel' onclick='BarCancel(yu)'></td></tr>" +
+						"</table></div>");					
+					infowindow.open(map,marker);
+                 
+                     marker.addListener('click', function() {
+                    	 infowindow.open(map,this);
+					});
 	    		} else {
 	    			alert("No results found");
 	    		}
@@ -143,8 +158,8 @@ function initMap() {
 	    		infowindow.open(map, marker);
 	    	}
 		});
-    }   
-
+    }
+    
   //동선그리기
    function flightPath(){
     for (i in travelPathArray){
@@ -160,6 +175,15 @@ function initMap() {
     travelPathArray.push(flightPath);
     }
 }   
+
+	function BarFind(){
+	  document.getElementById('bar').innerHTML = "selectMember" + "<br>" + "yu" + "<br>" + "ji";
+	}
+	
+	function BarCancel(obj){	// obj.parentNode 를 이용하여 삭제
+		 document.getElementById('bar').removeChild(obj);
+	 }
+	
   /* 
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({

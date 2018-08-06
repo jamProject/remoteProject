@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<script language="JavaScript" src="./map/js/map.js" charset="UTF-8"></script>
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -22,15 +23,22 @@
 <script src="${mapJs}"></script>
 
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-zbRuhOB5viFlwhkw3TmDnC0XIWcq0HI&callback=initMap&libraries=drawing,places" async defer>
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXzorrjSQ61PxTjiyMHOydxJOq0iEOcaI&callback=initMap&libraries=drawing,places" async defer>
 </script>
-
-
+<!-- <script
+ src="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyB-zbRuhOB5viFlwhkw3TmDnC0XIWcq0HI" >
+</script> -->
 
 <style>  
 </style>
 </head>
 <body>
+<select class="ui dropdown">
+  <!-- <option value="">Gender</option> -->
+  <option value="0">1월 13일</option>
+  <option value="1">1월 14일</option>
+  <option value="2">1월 15일</option>
+</select>
 <input  id="searchInput"  class="controls"  type = "text"  placeholder = "위치 입력" />
 <div class="content">
 <aside id="main-aside">
@@ -50,6 +58,8 @@
 </aside>
 <aside  id = "map"> </aside>
 </div>
+
+
 
 <!-- 
  <ul  id = "geoData" >

@@ -31,9 +31,15 @@
 		<url-pattern>*.jam</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/views/admin/adminPage.jsp</welcome-file>
+	</welcome-file-list>
+	 -->
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/views/managePlan/mapPage.jsp</welcome-file>
 	</welcome-file-list>
+
 
 	<!-- Korean Filter -->
    <filter>
