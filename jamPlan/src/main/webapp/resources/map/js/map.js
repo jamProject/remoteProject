@@ -156,7 +156,7 @@ function initMap() {
 	    strokeOpacity: 0.3,
 	    strokeWeight: 2
 	});
-    flightPath.setMap(map);s
+    flightPath.setMap(map);
     travelPathArray.push(flightPath);
     }
 }   
