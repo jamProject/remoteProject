@@ -8,15 +8,18 @@ import com.spring.jamplan.model.UserVO;
 
 public interface AdminDAO {
 	
-	public ArrayList<TeamVO> getTeamList(String teamName);	
-	public ArrayList<PlanVO> getPlanList(String planName);
-	public ArrayList<UserVO> getUserList(String id);
-	public int deleteUser(String id);
-	public int deletePlan(int planNo);
-	public int deleteTeam(int teamNo);
+	public ArrayList<UserVO> getUserList();
+	public ArrayList<TeamVO> getTeamList();	
+	public ArrayList<PlanVO> getPlanList();			//전체 조회
+	public UserVO getUser(String id);
+	public TeamVO getTeam(String teamName);			//검색
+	//public PlanVO getPlan(String planName);		
+	public void deleteUser(String id);
+	public void deleteTeam(String teamName);
+	public void deletePlan(int planNo);				//삭제
 	
-	public int sendMessage(String id);		//보류
+	//보류
+	public int sendMessage(String id);				
 	public int sendMessage2(String teamName);
-	
-	
+	public int getCount();
 }

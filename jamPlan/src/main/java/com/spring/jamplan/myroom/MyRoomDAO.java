@@ -8,7 +8,6 @@ import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
 
-
 public interface MyRoomDAO {
 
 	public ArrayList<TeamVO> getTeamList(UserVO user);

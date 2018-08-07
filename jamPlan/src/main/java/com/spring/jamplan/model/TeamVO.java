@@ -19,5 +19,5 @@ public class TeamVO {
 	String role;
 	String isTeamLeader;
 
-	DateFormat chatTime;
+	int chatTime;
 }

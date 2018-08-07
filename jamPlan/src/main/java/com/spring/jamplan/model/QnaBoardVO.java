@@ -1,6 +1,7 @@
 package com.spring.jamplan.model;
 
-import java.text.DateFormat;
+
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,6 @@ public class QnaBoardVO {
 	String boardReLev;
 	// boardFile;
 	// boardImage;
-	DateFormat boardDate;
+	Date boardDate;
 	
 }

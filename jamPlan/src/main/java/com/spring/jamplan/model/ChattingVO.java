@@ -1,6 +1,7 @@
 package com.spring.jamplan.model;
 
-import java.text.DateFormat;
+
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ChattingVO {
-	DateFormat chatTime;
+	Date chatTime;
 	String chatContent;
 }

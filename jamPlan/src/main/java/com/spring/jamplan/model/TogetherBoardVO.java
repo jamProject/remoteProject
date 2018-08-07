@@ -1,6 +1,7 @@
 package com.spring.jamplan.model;
 
-import java.text.DateFormat;
+
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class TogetherBoardVO {
 	String togetherContent;
 
 	// 동행 일정 게시 날짜
-	DateFormat togetherDate;
+	Date togetherDate;
 	
 	//file;
 	//togetherImage;

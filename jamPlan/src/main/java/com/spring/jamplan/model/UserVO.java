@@ -1,6 +1,6 @@
 package com.spring.jamplan.model;
 
-import java.text.DateFormat;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -26,5 +26,5 @@ public class UserVO {
 	
 	boolean isAdmin;
 	
-	DateFormat signDate;
+	Date signDate;
 }

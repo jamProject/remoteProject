@@ -1,7 +1,8 @@
 #map {
-	float: left;
-    width: 600px;
+	width: 600px;
     height: 400px;
+    margin: auto;
+	float: left;
     margin: 0 10px 0 0;
 	border: 3px solid #73AD21;
 }
@@ -25,13 +26,16 @@
     text-overflow: ellipsis;
     width: 50%;
 }
+
 #searchInput:focus {
     border-color: #4d90fe;
 }
+
 #main-aside{
 float: right;
 width: auto;
 } 
+
 .content {
 	margin: 5px;
 	padding: 5px;
@@ -39,5 +43,9 @@ width: auto;
 	position: fixed; 
     left: 400px;
   	top: 150px;
+  	display: inline-block;
+}
+.selectdate{
+	display: inline-block;
 }
 

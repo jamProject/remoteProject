@@ -29,20 +29,27 @@
  src="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyB-zbRuhOB5viFlwhkw3TmDnC0XIWcq0HI" >
 </script> -->
 
-<style>  
+<style> 
+.maptotal{
+position:relative;
+left: 405px;
+top: 112px;} 
 </style>
 </head>
 <body>
+
+<div class="maptotal">
 <select class="ui dropdown">
-  <!-- <option value="">Gender</option> -->
   <option value="0">1월 13일</option>
   <option value="1">1월 14일</option>
   <option value="2">1월 15일</option>
 </select>
-<input  id="searchInput"  class="controls"  type = "text"  placeholder = "위치 입력" />
+
+
 <div class="content">
-<aside id="main-aside">
-<h3> &nbsp;&nbsp;** Top10 ** </h5>
+<input  id="searchInput"  class="controls"  type = "text"  placeholder = "위치 입력" />
+<div id="main-aside">
+<h3> &nbsp;&nbsp;** Top10 ** </h3>
 <div class="ui vertical buttons">  			
   <button class="ui button">1Place </button>
   <button class="ui button">2Place</button>
@@ -55,11 +62,11 @@
   <button class="ui button">9Photos</button>
   <button class="ui button">10Photos</button>
 </div>
-</aside>
-<aside  id = "map"> </aside>
 </div>
 
-
+<aside  id = "map"> </aside>
+</div>
+</div>
 
 <!-- 
  <ul  id = "geoData" >

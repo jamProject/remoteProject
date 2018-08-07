@@ -15,7 +15,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 
 	@Override
 	public ArrayList<TeamVO> getTeamList(UserVO user) {
-		ArrayList<TeamVO> teamList = new ArrayList<TeamVO>();
+		//ArrayList<TeamVO> teamList = new ArrayList<TeamVO>();
 		
 		return null;
 	}

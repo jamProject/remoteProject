@@ -20,7 +20,10 @@
 	<bean id = "sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	<!-- ref는 위 클래스의 빈객체를 해당 개체의 속성에 맵핑시켜주는 작업을 한다.-->
 		<property name="dataSource" ref="dataSource"/>
-		<!-- <property name="mapperLocations" value="classpath:/com/spring/springmybatis/MemberMapper.xml"/>  이방식은 직접 xml파일을 지정하는 방법-->
+		<property name="typeAliasesPackage" value="com.spring.jamplan" />
+		 <!-- <property name="mapperLocations" value="classpath:/com/spring/springmybatis/MemberMapper.xml"/> 이방식은 직접 xml파일을 지정하는 방법 -->
+     	<property name="mapperLocations" value="classpath:/com/spring/jamplan/**/*.xml" />	
+     		<!-- **모든 하위 파일 ,폴더,패키지 의 xml 문서 맵핑시켜줌 -->
 	</bean>
 	
 	<!-- 세션을 사용하기 위한 레퍼와 실제 데이터를 연결하는 메소드를 맵핑시켜주는 것을 이놈이 저장 -->

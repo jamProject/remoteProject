@@ -42,7 +42,6 @@ function initMap() {
      marker = new google.maps.Marker({
         icon: markerImage,
     	map: map,
-    	
         anchorPoint: new google.maps.Point(0,-29)
     });
     
@@ -101,8 +100,80 @@ function initMap() {
         infowindow.open(map, marker); 
         
     });   
-   
-    google.maps.event.addListener(map, 'click', function(mouseEvent) {
+   ///////////////////////////////////////////////////////////////////////////////////////////////////
+    google.maps.event.addListener(map, 'click', function(mouseEvent)
+        	var latlng = mouseEvent.latLng;   
+
+var ClickEventHandler = function(map, origin) {
+  this.origin = origin;
+  this.map = map;
+ /* this.directionsService = new google.maps.DirectionsService;
+  this.directionsDisplay = new google.maps.DirectionsRenderer;
+  this.directionsDisplay.setMap(map);
+  this.placesService = new google.maps.places.PlacesService(map);*/
+  this.infowindow = new google.maps.InfoWindow;
+  this.infowindowContent = document.getElementById('infowindow-content');
+  this.infowindow.setContent(this.infowindowContent);
+
+  // Listen for clicks on the map.
+  this.map.addListener('click', this.handleClick.bind(this));
+};
+
+ClickEventHandler.prototype.handleClick = function(event) {
+  console.log('You clicked on: ' + event.latLng);
+  // If the event has a placeId, use it.
+  if (event.placeId) {
+    console.log('You clicked on place:' + event.placeId);
+
+    // Calling e.stop() on the event prevents the default info window from
+    // showing.
+    // If you call stop here when there is no placeId you will prevent some
+    // other map click event handlers from receiving the event.
+    event.stop();
+ //   this.calculateAndDisplayRoute(event.placeId);
+    this.getPlaceInformation(event.placeId);
+  }
+};
+
+ClickEventHandler.prototype.calculateAndDisplayRoute = function(placeId) {
+  var me = this;
+  this.directionsService.route({
+    origin: this.origin,
+    destination: {placeId: placeId},
+    travelMode: 'WALKING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      me.directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+};
+
+ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
+  var me = this;
+  this.placesService.getDetails({placeId: placeId}, function(place, status) {
+    if (status === 'OK') {
+      me.infowindow.close();
+      me.infowindow.setPosition(place.geometry.location);
+      me.infowindowContent.children['place-icon'].src = place.icon;
+      me.infowindowContent.children['place-name'].textContent = place.name;
+      me.infowindowContent.children['place-id'].textContent = place.place_id;
+      me.infowindowContent.children['place-address'].textContent =
+          place.formatted_address;
+      me.infowindow.open(me.map);
+    }
+  });
+};
+    
+    
+    
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+   /* google.maps.event.addListener(map, 'click', function(mouseEvent) {
     	var latlng = mouseEvent.latLng;   
         //var service = new google.maps.places.PlacesService(map);
         
@@ -118,7 +189,7 @@ function initMap() {
          root(marker,latlng);
      	 attachMessage(marker, latlng);     //선을 그리기 위해 좌표를 넣는다.
 
-    });                                                                                         
+    });        */                                                                                 
     
     function root(marker,latlng){
         Coordinates.push(latlng);		   //마커 담기
@@ -184,22 +255,12 @@ function initMap() {
 		 document.getElementById('bar').removeChild(obj);
 	 }
 	
-  /* 
-    var service = new google.maps.places.PlacesService(map);
-    service.getDetails({
-      placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4'
-    }, function(place, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-         marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        });
-        
-    google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-            'Place ID: ' + place.place_id + '<br>' +
-            place.formatted_address + '</div>');
-          infowindow.open(map, marker);
-        });
-      }
-    });*/
+	
+	
+	
+/*
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          center: origin
+        });*/
+       

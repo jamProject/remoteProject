@@ -1,6 +1,7 @@
 package com.spring.jamplan.model;
 
-import java.text.DateFormat;
+
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,6 @@ public class PlanVO {
 	String planName;
 	String hashTag;
 	
-	DateFormat planDate;
+	Date planDate;
 	
 }
