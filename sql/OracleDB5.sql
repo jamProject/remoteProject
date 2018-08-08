@@ -6,10 +6,12 @@ create table planDate(
     confirmIndicator number
 );
 commit;
-select * from plandate;
-
+select * from plandate ;
+select * from plandate where id = 'admin' and SELECTDATE = '18/08/07';
+select * from plandate where  SELECTDATE = '18/08/10';
 commit;
 drop table plandate;
+delete from plandate where DATECOUNT = 2;
 insert into plandate values(1, '18/08/01',  'admin', 1, 0);
 insert into plandate values(1, '18/08/02',  'admin', 1, 0);
 insert into plandate values(1, '18/08/04',  'admin', 1, 0);
