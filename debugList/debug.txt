@@ -35,3 +35,10 @@ session 객체 접근 불가 시 리퀘스트에서 session 객체 생성  */
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
 	%>
+
+---------
+java
+
+객체의 필드가 null인지 확인 하기 이전에
+객체 자체가 null인지 항상 생각해 볼것
+레퍼런스 구조를 잘 생각을 할것

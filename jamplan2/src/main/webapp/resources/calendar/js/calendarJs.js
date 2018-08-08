@@ -15,6 +15,9 @@ $(document).ready(function(){
 	printYearMonth(nowYear, nowMonth + 1);
 	hiddenAllBut();
 	clickBut();
+	
+	var year = String(nowYear).substring(2,4);
+	printSelectDateAjax(Number(year),nowMonth+1);
 	/*해당 문서 로딩 이후
 	 * ajax를 이용하여 mananagePlanController에 
 	 * loadCalendar.manageplan로  맴핑되는 
@@ -22,6 +25,24 @@ $(document).ready(function(){
 	 * db에 접속하여 해당 일정에 날짜를 선택한 데이터를 가져와서 뿌려준다.
 	 * 
 	 * */
+	
+	
+	/*$.ajax({
+		
+	})*/
+
+	
+});
+/*function loadJQuery() {
+    var oScript = document.createElement("script");
+    oScript.type = "text/javascript";
+    oScript.charset = "utf-8";		  
+    oScript.src = "http://code.jquery.com/jquery-3.2.1.min.js";	
+    document.getElementsByTagName("head")[0].appendChild(oScript);
+}*/
+
+function printSelectDateAjax(year, month){
+	$(".countDate").html("");	
 	$.ajax({
 		url:'loadCalendar.manageplan',
 		type:'POST',
@@ -30,9 +51,25 @@ $(document).ready(function(){
 		//data: {"selectDate" : date}
 		success:function(str){
 			$.each(str, function(index, item){
-				var day = Number(item.selectDate.substring(6,8));
-				console.log(day);
-				$('.date'+ day).append("+"+String(item.dateCount));
+				var yearSub = Number(item.selectDate.substring(0,2));
+				console.log("yearSub : "+yearSub);
+				var monthSub= Number(item.selectDate.substring(3,5));
+				console.log("monthSub : "+monthSub);
+				var day;
+				var output =""
+				
+				console.log("now year : " +year);
+				console.log("now month : " + month);
+				if(yearSub==year && monthSub == Number(month)){ 
+					day = Number(item.selectDate.substring(6,8));
+					console.log(day);
+					
+					output += '<div class = "countDate">';	
+					output += '+' + String(item.dateCount);
+					output += '</div>';
+					$('#dateTd'+ day).append(output);
+				}
+				
 				/*var output ='';
 				output += '<tr>';
 				output += '<td>' + item.id + '</td>';
@@ -49,20 +86,8 @@ $(document).ready(function(){
 			alert("통신실패");
 		}
 	});
-	
-	/*$.ajax({
-		
-	})*/
+}
 
-	
-});
-/*function loadJQuery() {
-    var oScript = document.createElement("script");
-    oScript.type = "text/javascript";
-    oScript.charset = "utf-8";		  
-    oScript.src = "http://code.jquery.com/jquery-3.2.1.min.js";	
-    document.getElementsByTagName("head")[0].appendChild(oScript);
-}*/
 
 // 마우스가 밖으로 나갔을 때 좋아요 버튼 숨기기 이벤트
 function hiddenBut(day) {
@@ -88,7 +113,8 @@ function clickBut(){
 		var monthSelect = $("#listMonth").val();
 		var daySelect = $(this).val();
 		var date;
-		
+		var year;
+		var month;
 		/*var date = new Date();
 		date.setYear(yearSelect);
 		date.setMonth(monthSelect);
@@ -96,17 +122,17 @@ function clickBut(){
 		*/
 		
 		if(yearSelect<2100){
-			date = String(yearSelect.substring(2,4));
+			date = yearSelect.substring(2,4);
+			year = date;
 		}else{
-			date = String(yearSelect.substring(1,4));
+			date = yearSelect.substring(1,4);
+			year = date;
 		}
-		
 		if(monthSelect < 10){
 			date = date + '/0' + String(monthSelect);
 		}else{
 			date = date +'/'+ String(monthSelect);
 		}
-		var month = date;
 		if(daySelect < 10){
 			date = date +'/0'+ String(daySelect);
 		}else{
@@ -114,15 +140,15 @@ function clickBut(){
 		}	
 		//location.href ="calendar.manageplan?id=<%=id%>&selectDate=date";
 		console.log("date : "+date);
-		
+
 		$.ajax({
 			url:"selectCalendar.manageplan",
 			type:"POST",
 			contentType:'application/x-www-form-urlencoded; charsert=utf-8',
 			dataType:"json",
-			data : {"selectDate" : date , "selectMonth" : month}
+			data : {"selectDate" : date}
 		})
-	
+		printSelectDateAjax(Number(year),Number(monthSelect));
 	});
 }
 
@@ -188,13 +214,13 @@ function calcCalendar(year, month) {
 		}
 		// 일요일이 아니라면 날짜를 표시하고 일요일이라면 날짜를 표시한 후 줄바꿈
 		if (dt.getDay() != 6) {
-			html += '<td class = "date" value = ' + String(day)+ ' onmouseover = "showBut(' + String(day)+ ')" onmouseout = "hiddenBut(' + String(day) + ')">'
+			html += '<td class = "date" id = "dateTd'+String(day)+'" value = ' + String(day)+ ' onmouseover = "showBut(' + String(day)+ ')" onmouseout = "hiddenBut(' + String(day) + ')">'
 					+ String(day) 
 					+ '<button class= "goodBut" id = "dateButton'+ String(day) + '" value =' + String(day)+ '>' + "좋아요" 
 					+ '</button>' 
 					+ '</td>';
 		} else {
-			html += '<td class = "date" value = ' + String(day)+ ' onmouseover = "showBut(' + String(day)+ ')" onmouseout = "hiddenBut(' + String(day) + ')">'
+			html += '<td class = "date" id = "dateTd'+String(day)+'" value = ' + String(day)+ ' onmouseover = "showBut(' + String(day)+ ')" onmouseout = "hiddenBut(' + String(day) + ')">'
 					+ String(day) 
 					+ '<button class= "goodBut" id = "dateButton'+ String(day) + '"  value =' + String(day)+ '>'
 					+ '좋아요' 
@@ -260,18 +286,21 @@ function selectYearChange() {
 	var yearSelect = document.getElementById("yearList");
 	var monthSelect = document.getElementById("monthList");
 	// select element에서 선택된 option의 value가 저장된다.
-	var year = yearSelect.options[yearSelect.selectedIndex].value;
+	var yearVal = yearSelect.options[yearSelect.selectedIndex].value;
 	var month = monthSelect.options[monthSelect.selectedIndex].value;
-
-	// console.log("change year _ year : " + year);
-	// console.log("change year _ month : " + month);
-
-	calcCalendar(year, month)
-	selectYearList(year);
+	
+	
+	//console.log("change year _ year : " + year);
+	//console.log("change year _ month : " + month);
+	
+	calcCalendar(yearVal, month)
+	selectYearList(yearVal);
 	selectMonthList(month);
-	printYearMonth(year, month);
+	printYearMonth(yearVal, month);
 	hiddenAllBut();
 	clickBut();
+	var year = String(yearVal).substring(2,4);
+	printSelectDateAjax(year, month);
 }
 
 // 셀렉트 월 변경 이벤트
@@ -280,19 +309,23 @@ function selectMonthChange() {
 	var yearSelect = document.getElementById("yearList");
 	var monthSelect = document.getElementById("monthList");
 	// select element에서 선택된 option의 value가 저장된다.
-	var year = yearSelect.options[yearSelect.selectedIndex].value;
+	var yearVal = yearSelect.options[yearSelect.selectedIndex].value;
 	var month = monthSelect.options[monthSelect.selectedIndex].value;
 
+	
 	// select element에서 선택된 option의 value가 저장된다.
 	// console.log("change month _ year : " + year);
 	// console.log("change month _ month : " + month);
 
-	calcCalendar(year, month);
-	selectYearList(year);
+	calcCalendar(yearVal, month);
+	selectYearList(yearVal);
 	selectMonthList(month);
-	printYearMonth(year, month);
+	printYearMonth(yearVal, month);
 	hiddenAllBut();
 	clickBut();
+	
+	var year = String(yearVal).substring(2,4);
+	printSelectDateAjax(year, month);
 }
 
 // 달력 출력 함수

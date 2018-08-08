@@ -15,7 +15,6 @@ public class CalendarVO {
 	String id;
 	int planNo;
 	String selectDate;
-	String selectMonth;
 	int dateCount;
 	int confirmIndicator;
 	
@@ -36,12 +35,6 @@ public class CalendarVO {
 	}
 	public void setSelectDate(String selectDate) {
 		this.selectDate = selectDate;
-	}
-	public String getSelectMonth() {
-		return selectMonth;
-	}
-	public void setSelectMonth(String selectMonth) {
-		this.selectMonth = selectMonth;
 	}
 	public int getDateCount() {
 		return dateCount;

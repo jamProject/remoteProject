@@ -26,8 +26,8 @@ public class ManagePlanController {
 	@Autowired(required = true)
 	ManagePlanDAOService mpDAOS;
 	
-	@Autowired
-	CalendarDAOService calDAOS;
+	//@Autowired
+	//CalendarDAOService calDAOS;
 
 	private ArrayList<PlanVO> planList;
 
@@ -44,19 +44,17 @@ public class ManagePlanController {
 	
 	@RequestMapping(value = "selectCalendar.manageplan", method = RequestMethod.POST)
 	@ResponseBody
-	public String calendarSelect(HttpSession session, CalendarVO vo) {
-		System.out.println(vo.getSelectDate());
-		System.out.println(vo.getSelectMonth());
+	public void calendarSelect(HttpSession session, CalendarVO vo) {
 		vo.setId((String)session.getAttribute("id"));
 		vo.setPlanNo((int)session.getAttribute("planNo"));
-		//List<CaledarVO> vo = 
-		return "managePlan/calendarPage";
+		mpDAOS.insertSelectDate(vo);
+		
 	}
 	
 	@RequestMapping(value = "loadCalendar.manageplan", method = RequestMethod.POST)
 	@ResponseBody
 	public String calendarLoadDate(HttpSession session) {
-		ArrayList<CalendarVO> calVO = calDAOS.getSelectDate((int)session.getAttribute("planNo"));
+		ArrayList<CalendarVO> calVO = mpDAOS.getSelectDate((int)session.getAttribute("planNo"));
 		ObjectMapper mapper = new ObjectMapper();//json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
 		String str="";
 		try {

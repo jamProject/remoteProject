@@ -1,22 +1,34 @@
 create table planDate(
     planNo number not null,
     selectDate varchar2(20),
-    selectMonth varchar2(20),
     id varchar2(36),
     dateCount number,
     confirmIndicator number
 );
+commit;
 select * from plandate;
+
 commit;
 drop table plandate;
-insert into plandate values(1, '18/08/01', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/02', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/04', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/05', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/22', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/23', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/24', '18/08', 'admin', 1, 0);
-insert into plandate values(1, '18/08/25', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/01',  'admin', 1, 0);
+insert into plandate values(1, '18/08/02',  'admin', 1, 0);
+insert into plandate values(1, '18/08/04',  'admin', 1, 0);
+insert into plandate values(1, '18/08/05',  'admin', 1, 0);
+insert into plandate values(1, '18/08/22',  'admin', 1, 0);
+insert into plandate values(1, '18/08/23',  'admin', 1, 0);
+insert into plandate values(1, '18/08/24',  'admin', 1, 0);
+insert into plandate values(1, '18/08/25',  'admin', 1, 0);
+
+insert into plandate values(1, '18/09/03',  'admin', 1, 0);
+insert into plandate values(1, '18/09/12',  'admin', 1, 0);
+insert into plandate values(1, '18/10/03',  'admin', 1, 0);
+insert into plandate values(1, '18/11/07',  'admin', 1, 0);
+insert into plandate values(1, '18/12/28',  'admin', 1, 0);
+insert into plandate values(1, '19/01/11',  'admin', 1, 0);
+insert into plandate values(1, '19/01/26',  'admin', 1, 0);
+insert into plandate values(1, '19/01/25',  'admin', 1, 0);
+
+
 
 commit;
 drop table planDate;
