@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
       
 <mapper namespace="com.spring.jamplan.admin.AdminMapper">
-	<resultMap id="AdminUserResultMap" type="UserVO">
+	<resultMap id="AdminUserResultMap" type="com.spring.jamplan.model.UserVO">
 		<result property="id" column="ID"/>
 		<result property="email" column="EMAIL"/>
 		<result property="pass" column="PASS"/>
@@ -14,21 +14,20 @@
 		<result property="hobby" column="HOBBY"/>
 		<result property="age" column="AGE"/>
 		<result property="signDate" column="SIGNDATE"/>
-		
+		<result property="name" column="NAME"/>
 		<!-- image랑 isAdmin 안넣움...... -->
 	</resultMap>
 	
-	<resultMap id="AdminTeamResultMap" type="TeamVO">
+	<resultMap id="AdminTeamResultMap" type="com.spring.jamplan.model.TeamVO">
 		<result property="teamNo" column="TEAMNO"/>
 		<result property="planNo" column="PLANNO"/>
 		<result property="id" column="ID"/>
 		<result property="teamName" column="TEAMNAME"/>
 		<result property="role" column="ROLE"/>
-		<result property="isTeamLeader" column="ISTEAMLEADER"/>
 		<result property="chatTime" column="CHATTIME"/>
 	</resultMap>
 	
-	<resultMap id="AdminPlanResultMap" type="PlanVO">
+	<resultMap id="AdminPlanResultMap" type="com.spring.jamplan.model.PlanVO">
 		<result property="planNo" column="PLANNO"/>
 		<result property="teamNo" column="TEAMNO"/>
 		<result property="goodCount" column="GOODCOUNT"/>
@@ -40,7 +39,7 @@
 	</resultMap>
 
 	<select id="getUserList" resultMap="AdminUserResultMap">
-		select * from userInfo				
+		select id, name, email, gender, snsLink, signDate from userInfo
 	</select>			
 	
 	<select id="getTeamList" resultMap="AdminTeamResultMap">
@@ -68,7 +67,7 @@
 	</delete>
 	
 	<delete id="deletePlan" parameterType="int"> 
-		delete from plan WHERE planNo=#{planNo, javaType = int} 
+		delete from plan WHERE planNo=#{planNo} 
 	</delete>
 	
 	

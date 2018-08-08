@@ -1,26 +1,38 @@
 package com.spring.jamplan.admin;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.jamplan.model.PlanVO;
+import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.UserVO;
+
 @Controller
 public class AdminController {
 	
-	@Autowired
-	AdminMapper adminMapper;
-
-	@RequestMapping("/adminLoad.admin")
-	public String adminLoad(HttpServletRequest request) {
-		return "admin/adminPage";
-	}
+	@Autowired(required = true)
+	UserVO userVO;
 	
+	@Autowired(required = true)
+	TeamVO teamVO;
+	
+	@Autowired(required = true)
+	PlanVO planVO;
+	
+	@Autowired
+	private AdminDAOService adminDAOService;
+
 	@RequestMapping("/getUserList.admin")
-	public ModelAndView getUserList(String id) {
-		return null;
+	public ModelAndView getUserList() {
+		ModelAndView result = new ModelAndView();
+		ArrayList<UserVO> userList = adminDAOService.getUserList();
+		result.addObject("userList", userList);
+		result.setViewName("/admin/adminPage");
+		return result;
 	}
 
 	@RequestMapping("/getTeamList.admin")

@@ -2,6 +2,8 @@ package com.spring.jamplan.admin;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.jamplan.model.PlanVO;
@@ -11,13 +13,15 @@ import com.spring.jamplan.model.UserVO;
 @Service
 public class AdminDAOService implements AdminDAO{
 
-	/*@Autowired			//sqlSession에 sqlSessionTemplate가 대입됨(의존성주입).sqlSession이 부모클래스.
-	private SqlSession sqlSession;*/
+	@Autowired			//sqlSession에 sqlSessionTemplate가 대입됨(의존성주입).sqlSession이 부모클래스.
+	private SqlSession sqlSession;
 	
 	@Override
 	public ArrayList<UserVO> getUserList() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<UserVO> userList = new ArrayList<UserVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		userList = adminMapper.getUserList();
+		return userList;
 	}
 
 	@Override
