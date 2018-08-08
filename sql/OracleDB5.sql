@@ -1,3 +1,48 @@
+create table planDate(
+    planNo number not null,
+    selectDate varchar2(20),
+    selectMonth varchar2(20),
+    id varchar2(36),
+    dateCount number,
+    confirmIndicator number
+);
+select * from plandate;
+commit;
+drop table plandate;
+insert into plandate values(1, '18/08/01', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/02', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/04', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/05', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/22', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/23', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/24', '18/08', 'admin', 1, 0);
+insert into plandate values(1, '18/08/25', '18/08', 'admin', 1, 0);
+
+commit;
+drop table planDate;
+select * from planDate;
+
+
+select planNo from userteam where id = 'admin';
+create table userteam(
+    id varchar2(32),
+    teamno number,
+    role number,
+    planno number,
+    chattime date,
+    teamname varchar2(32)
+);
+drop table userteam;
+select * from userteam where id = 'admin';
+select*from userteam;
+insert into userteam values('admin',1,1,1,null,'team1');
+insert into userteam values('admin',1,1,2,null,'team1');
+insert into userteam values('user1',1,1,3,null,'team1');
+insert into userteam values('user1',2,1,4,null,'team1');
+insert into userteam values('admin',2,1,5,null,'team1');
+insert into userteam values('user2',3,1,6,null,'team1');
+insert into userteam values('user2',3,1,7,null,'team1');
+commit;
 create table userInfo(
     id varchar2(32) primary key,
     email varchar2(80) not null,
@@ -11,9 +56,10 @@ create table userInfo(
     travelType varchar2(2000),
     hobby varchar2 (500)
 );
-
-select * from userInfo;
-
+select *from userinfo;
+select * from userInfo where id = 'user1' and pass = '1234';
+COMMIT;
+insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('admin','wookim456@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('wookim','wookim456@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('user1','user1@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('user2','user2@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
@@ -22,6 +68,9 @@ insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, t
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('user5','user5@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('user6','user6@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 
+create table userTeam(
+    id varchar2 ref
+)
 
 create table plan(
     planno number primary key,
@@ -33,7 +82,7 @@ create table plan(
     readcount number,
     isopen number not null
 );
-drop table plan;
+--drop table plan;
 select * from plan;     
 select * from plan where isopen = 0 and teamno =1;
 COMMIT;
@@ -49,5 +98,9 @@ insert into plan (planno, teamno, planname, plandate, isopen) values (9,3,'team3
 insert into plan (planno, teamno, planname, plandate, isopen) values (10,3,'team3',sysdate,1);
 insert into plan (planno, teamno, planname, plandate, isopen) values (11,4,'team4',sysdate,0);
 insert into plan (planno, teamno, planname, plandate, isopen) values (12,4,'team4',sysdate,1);
+insert into plan (planno, teamno, planname, plandate, isopen) values (13,4,'team4',sysdate,1);
+insert into plan (planno, teamno, planname, plandate, isopen) values (14,4,'team4',sysdate,1);
+insert into plan (planno, teamno, planname, plandate, isopen) values (15,4,'team4',sysdate,1);
+insert into plan (planno, teamno, planname, plandate, isopen) values (16,4,'team4',sysdate,1);
 
 select * form plan where isopen =0;

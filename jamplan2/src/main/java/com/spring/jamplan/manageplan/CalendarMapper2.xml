@@ -19,8 +19,7 @@
 	</resultMap>
 
 	<select id="getAllPlans" resultMap="PlanResultMap">
-		select * from plan where
-		isopen=0
+		select * from plan where isopen=0
 	</select>
 
 	<select id="getTeamPlan"

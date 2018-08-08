@@ -23,10 +23,10 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- ref는 위 클래스의 빈객체를 해당 개체의 속성에 맵핑시켜주는 작업을 한다. -->
 		<property name="dataSource" ref="dataSource" />
-		<property name="typeAliasesPackage" value="com.spring.jamplan.manageplan" />
+		<property name="typeAliasesPackage" value="com.spring.jamplan" />
 		<!-- <property name="mapperLocations" value="classpath:/com/spring/springmybatis/MemberMapper.xml"/> 
 			이방식은 직접 xml파일을 지정하는 방법 -->
-		<property name="mapperLocations" value="classpath:/com/spring/jamplan/manageplan/**/*.xml" /><!-- **모든 
+		<property name="mapperLocations" value="classpath:/com/spring/jamplan/**/*.xml" /><!-- **모든 
 			하위 파일 ,폴더,패키지 의 xml 문서 맵핑시켜줌 -->
 	</bean>
 

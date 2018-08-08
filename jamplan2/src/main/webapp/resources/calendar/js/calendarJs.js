@@ -6,6 +6,7 @@ nowMonth = dt.getMonth();
 nowDay = dt.getDate();
 nowYear = dt.getFullYear();
 
+
 $(document).ready(function(){
 	
 	calcCalendar(nowYear, nowMonth + 1);
@@ -14,34 +15,85 @@ $(document).ready(function(){
 	printYearMonth(nowYear, nowMonth + 1);
 	hiddenAllBut();
 	clickBut();
+	/*해당 문서 로딩 이후
+	 * ajax를 이용하여 mananagePlanController에 
+	 * loadCalendar.manageplan로  맴핑되는 
+	 * 메소드가 실행되고 해당 메소드는
+	 * db에 접속하여 해당 일정에 날짜를 선택한 데이터를 가져와서 뿌려준다.
+	 * 
+	 * */
+	$.ajax({
+		url:'loadCalendar.manageplan',
+		type:'POST',
+		dataType:"json",
+		contentType:'application/x-www-form-urlencoded; charest=utf-8',
+		//data: {"selectDate" : date}
+		success:function(str){
+			$.each(str, function(index, item){
+				var day = Number(item.selectDate.substring(6,8));
+				console.log(day);
+				$('.date'+ day).append("+"+String(item.dateCount));
+				/*var output ='';
+				output += '<tr>';
+				output += '<td>' + item.id + '</td>';
+				output += '<td>' + item.name + '</td>';
+				output += '<td>' + item.job + '</td>';
+				output += '<td>' + item.address + '</td>';
+				output += '<td>' + item.bloodtype + '</td>';
+				output += '</tr>';
+				console.log("output:" + output);
+				//아래 output테이블에 추가 하라는 뜻
+				$('#output').append(output);*/
+			});
+		},error:function(){
+			alert("통신실패");
+		}
+	});
+	
+	/*$.ajax({
+		
+	})*/
+
 	
 });
+/*function loadJQuery() {
+    var oScript = document.createElement("script");
+    oScript.type = "text/javascript";
+    oScript.charset = "utf-8";		  
+    oScript.src = "http://code.jquery.com/jquery-3.2.1.min.js";	
+    document.getElementsByTagName("head")[0].appendChild(oScript);
+}*/
 
-//마우스가 밖으로 나갔을 때 좋아요 버튼 숨기기 이벤트
+// 마우스가 밖으로 나갔을 때 좋아요 버튼 숨기기 이벤트
 function hiddenBut(day) {
 
 	$("#dateButton" + day).css('visibility', 'hidden');
 }
 
-//모든 버튼 숨기기 이벤트
+// 모든 버튼 숨기기 이벤트
 function hiddenAllBut() {
 
 	$(".goodBut").css('visibility', 'hidden');
 }
 
-//마우스 안으로 들어오묜 좋아요 버튼 보이기 이벤트
+// 마우스 안으로 들어오묜 좋아요 버튼 보이기 이벤트
 function showBut(day) {
 	$("#dateButton" + day).css('visibility', 'visible');
 }
 
-//좋아요 버튼 눌렀을 때 년도 저장 하기 이벤트
+// 좋아요 버튼 눌렀을 때 년도 저장 하기 이벤트
 function clickBut(){
 	$(".goodBut").on("click", function(){
 		var yearSelect = $("#listYear").val();
 		var monthSelect = $("#listMonth").val();
 		var daySelect = $(this).val();
-		
 		var date;
+		
+		/*var date = new Date();
+		date.setYear(yearSelect);
+		date.setMonth(monthSelect);
+		date.setDate(daySelect);
+		*/
 		
 		if(yearSelect<2100){
 			date = String(yearSelect.substring(2,4));
@@ -54,17 +106,27 @@ function clickBut(){
 		}else{
 			date = date +'/'+ String(monthSelect);
 		}
-		
+		var month = date;
 		if(daySelect < 10){
 			date = date +'/0'+ String(daySelect);
 		}else{
 			date = date +'/'+ String(daySelect);
 		}	
-		console.log(date);
+		//location.href ="calendar.manageplan?id=<%=id%>&selectDate=date";
+		console.log("date : "+date);
+		
+		$.ajax({
+			url:"selectCalendar.manageplan",
+			type:"POST",
+			contentType:'application/x-www-form-urlencoded; charsert=utf-8',
+			dataType:"json",
+			data : {"selectDate" : date , "selectMonth" : month}
+		})
+	
 	});
 }
 
-//현재 날짜와 윤달, 해당 월의 일수 계산
+// 현재 날짜와 윤달, 해당 월의 일수 계산
 function Calendar() {
 	// 윤달 판단
 	this.calYun = function(year) {
@@ -105,7 +167,7 @@ function Calendar() {
 	}
 }
 
-//달력생성 및 비어있는 칸 생성
+// 달력생성 및 비어있는 칸 생성
 function calcCalendar(year, month) {
 	var calendar = new Calendar();
 	var calendarDiv = document.getElementById('calendar');
@@ -150,13 +212,13 @@ function calcCalendar(year, month) {
 			html += '<td></td>';
 		}
 	}
-	//console.log(dt.getDay());
+	// console.log(dt.getDay());
 
-	html += '</table></div>'
+	html += '</table>'
 	calendarDiv.innerHTML = html;
 }
 
-//현재 년도부터 10년치 년도 선택
+// 현재 년도부터 10년치 년도 선택
 function selectYearList(year) {
 	// 현재 날짜 속성으로 지정
 	var html = '<select id = "yearList" onchange="selectYearChange()">';
@@ -176,7 +238,7 @@ function selectYearList(year) {
 	document.getElementById('nowYear').innerHTML = html;
 }
 
-//현재 월 부터 12월 까지
+// 현재 월 부터 12월 까지
 function selectMonthList(month) {
 	var html = '<select id = "monthList" onchange="selectMonthChange()">';
 	for (var i = 1; i <= 12; i++) {
@@ -192,7 +254,7 @@ function selectMonthList(month) {
 	document.getElementById('nowMonth').innerHTML = html;
 }
 
-//셀렉트 년도 변경 이벤트
+// 셀렉트 년도 변경 이벤트
 function selectYearChange() {
 
 	var yearSelect = document.getElementById("yearList");
@@ -212,7 +274,7 @@ function selectYearChange() {
 	clickBut();
 }
 
-//셀렉트 월 변경 이벤트
+// 셀렉트 월 변경 이벤트
 function selectMonthChange() {
 	hiddenAllBut();
 	var yearSelect = document.getElementById("yearList");
@@ -233,7 +295,7 @@ function selectMonthChange() {
 	clickBut();
 }
 
-//달력 출력 함수
+// 달력 출력 함수
 function printYearMonth(year, month) {
 	var html = '<h3>' + String(year) + '년 ' + String(month) + '월' + '</h3>';
 	// console.log(html);

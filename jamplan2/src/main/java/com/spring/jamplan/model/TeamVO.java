@@ -1,6 +1,6 @@
 package com.spring.jamplan.model;
 
-import java.text.DateFormat;
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,7 @@ public class TeamVO {
 	String teamName;
 	String role;
 	String isTeamLeader;
-
-	DateFormat chatTime;
+	Date chatTime;
 
 	public int getTeamNo() {
 		return teamNo;
@@ -69,11 +68,11 @@ public class TeamVO {
 		this.isTeamLeader = isTeamLeader;
 	}
 
-	public DateFormat getChatTime() {
+	public Date getChatTime() {
 		return chatTime;
 	}
 
-	public void setChatTime(DateFormat chatTime) {
+	public void setChatTime(Date chatTime) {
 		this.chatTime = chatTime;
 	}
 }

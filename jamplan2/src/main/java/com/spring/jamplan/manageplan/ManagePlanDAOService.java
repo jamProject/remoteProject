@@ -10,7 +10,6 @@ import com.spring.jamplan.model.PlanVO;
 
 @Service
 public class ManagePlanDAOService {
-
 	@Autowired
 	private SqlSession sqlSession;// mybatis(ibatis) 라이브러리가 제공하는 클래스
 
@@ -22,7 +21,7 @@ public class ManagePlanDAOService {
 
 		planList = new ArrayList<PlanVO>();
 		planList = calendarMapper.getAllPlans();
-
+		System.out.println("dao");
 		return planList;
 	}
 
@@ -31,7 +30,7 @@ public class ManagePlanDAOService {
 
 		planList = new ArrayList<PlanVO>();
 		planList = calendarMapper.getTeamPlan(planVO);
-
+		System.out.println(planList.get(0).getPlanNo());
 		return planList;
 	}
 }

@@ -180,6 +180,7 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		
 		<!-- Jackson JSON Mapper -->
 
 		<!-- Test -->
@@ -191,6 +192,17 @@
 		</dependency>
 	</dependencies>
 	<build>
+	
+		<!-- xml추가
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		 -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>

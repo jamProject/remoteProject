@@ -1,5 +1,7 @@
 package com.spring.jamplan.model;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
 
 
@@ -10,9 +12,49 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CalendarVO {
+	String id;
 	int planNo;
-	int selectDate;
+	String selectDate;
+	String selectMonth;
 	int dateCount;
-	String userColor;
-	boolean confirmed;
+	int confirmIndicator;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public int getPlanNo() {
+		return planNo;
+	}
+	public void setPlanNo(int planNo) {
+		this.planNo = planNo;
+	}
+	public String getSelectDate() {
+		return selectDate;
+	}
+	public void setSelectDate(String selectDate) {
+		this.selectDate = selectDate;
+	}
+	public String getSelectMonth() {
+		return selectMonth;
+	}
+	public void setSelectMonth(String selectMonth) {
+		this.selectMonth = selectMonth;
+	}
+	public int getDateCount() {
+		return dateCount;
+	}
+	public void setDateCount(int dateCount) {
+		this.dateCount = dateCount;
+	}
+	public int getConfirmed() {
+		return confirmIndicator;
+	}
+	public void setConfirmed(int confirmed) {
+		this.confirmIndicator = confirmed;
+	}
+	
+
 }

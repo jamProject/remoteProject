@@ -12,12 +12,10 @@
 <body>
 	<h1>mainPage </h1>
 	
-	<form action="calendar.manageplan">
+	<form action="login.main" method="post">
 		<input value="id" type = "text" name = "id">
-		<input value="password" type = "text" name = "password">
-		<input type = "submit" value="서버전송">
+		<input value="pass" type = "password" name = "pass">
+		<input type = "submit" value="로그인">
 	</form>
-	
-	<a href = "main.manageplan">planMain</a>
 </body>
 </html>

@@ -1,3 +1,5 @@
+<%@page import="com.spring.jamplan.model.CalendarVO"%>
+<%@page import="org.springframework.boot.autoconfigure.web.ServerProperties.Session"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -15,14 +17,18 @@
 <spring:url value="/resources/calendar/css/calendarCss.css" var="calCss" />
 
 <%
-	ArrayList<PlanVO> planList = (ArrayList<PlanVO>)request.getAttribute("planList");
-%>
+	/*session 객체 접근 불가 시 리퀘스트에서 session 객체 생성  */
+	HttpSession session = request.getSession();
+	String id = (String)session.getAttribute("id");
+%>	
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"
 	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		  crossorigin="anonymous"></script>
 <script src="${calJs}"></script>
 <link href="${calCss}" rel="stylesheet" />
+
+
 </head>
 
 <body>
@@ -44,7 +50,6 @@
 	
 	<div>
 	   <script type="text/javascript">
-		<%-- <%=planList.get(0).getPlanNo() %> --%>
 	   </script>
 	</div>
 	
