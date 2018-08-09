@@ -28,10 +28,10 @@
 				
 				<label>Plan Main</label>
 				
-				<td><a href="calendar.manageplan">calendar</a></td>
-				<td><a href="map.manageplan">map</a></td>
-				<td><a href="plantable.manageplan">plan</a></td>
-				<td><a href="viewall.manageplan">view all</a></td>
+				<td><a href="calendar.mp">calendar</a></td>
+				<td><a href="map.mp">map</a></td>
+				<td><a href="plantable.mp">plan</a></td>
+				<td><a href="viewall.mp">view all</a></td>
 			</tr>
 		</table>
 	</div>

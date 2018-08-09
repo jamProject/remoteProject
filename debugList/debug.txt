@@ -42,3 +42,55 @@ java
 객체의 필드가 null인지 확인 하기 이전에
 객체 자체가 null인지 항상 생각해 볼것
 레퍼런스 구조를 잘 생각을 할것
+
+
+
+---------
+java ajex
+
+ajex는 값을 송신 수신 전부 가능하다.
+하지만 주의사항이 있다.
+
+데이터를 송신만 하더라도 controller에서 
+어떠한 값을 리턴 해주어야 한다.
+$.ajex(function(){
+   	url:'loadCalendar.mp',
+  	type:'POST',
+	dataType:"json",
+	contentType:'application/x-www-form-urlencoded; charest=utf-8',
+	data: {"selectDate" : date},
+	success:function(str){
+	     data를 컨트롤러로 보내고, 
+	     컨트롤러에서 리턴값을 받아와 정상적인 실행이 되었다면 
+	     해당 success:function이 실행된다.
+	},
+	erorr:function(){
+	     송 수신 실패 시 
+	}
+})
+
+------------------
+ajax 406에러 디버깅
+1. url 문제 
+controller로 이동하는 requestmapping url이 너무 길거나 내부적인 충돌을 일으키는 문제.
+해당 url은 *.xx 식의 2글자로 지정하는 것을 권장한다.
+
+2. ajax 버전 문제
+<dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.9.13</version>
+</dependency> -->
+
+pom.xml에 위와 같은 jacson버전을 사용 중 이라면 다음으로 변경한다.
+
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-core</artifactId>
+	<version>2.4.1</version>
+</dependency>
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-databind</artifactId>
+	<version>2.4.1.1</version>
+</dependency>

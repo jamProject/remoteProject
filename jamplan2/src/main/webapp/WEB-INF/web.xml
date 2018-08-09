@@ -30,7 +30,7 @@
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>*.manageplan</url-pattern>
+		<url-pattern>*.mp</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

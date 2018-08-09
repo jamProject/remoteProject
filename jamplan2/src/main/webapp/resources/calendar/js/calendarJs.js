@@ -26,25 +26,15 @@ $(document).ready(function(){
 	 * 
 	 * */
 	
-	
-	/*$.ajax({
-		
-	})*/
-
-	
 });
-/*function loadJQuery() {
-    var oScript = document.createElement("script");
-    oScript.type = "text/javascript";
-    oScript.charset = "utf-8";		  
-    oScript.src = "http://code.jquery.com/jquery-3.2.1.min.js";	
-    document.getElementsByTagName("head")[0].appendChild(oScript);
-}*/
+
 
 function printSelectDateAjax(year, month){
 	$(".countDate").html("");	
+	var selectDateList = new Array();
+
 	$.ajax({
-		url:'loadCalendar.manageplan',
+		url:'loadCalendar.mp',
 		type:'POST',
 		dataType:"json",
 		contentType:'application/x-www-form-urlencoded; charest=utf-8',
@@ -62,25 +52,12 @@ function printSelectDateAjax(year, month){
 				console.log("now month : " + month);
 				if(yearSub==year && monthSub == Number(month)){ 
 					day = Number(item.selectDate.substring(6,8));
-					console.log(day);
-					
+					console.log(day);		
 					output += '<div class = "countDate">';	
 					output += '+' + String(item.dateCount);
 					output += '</div>';
 					$('#dateTd'+ day).append(output);
 				}
-				
-				/*var output ='';
-				output += '<tr>';
-				output += '<td>' + item.id + '</td>';
-				output += '<td>' + item.name + '</td>';
-				output += '<td>' + item.job + '</td>';
-				output += '<td>' + item.address + '</td>';
-				output += '<td>' + item.bloodtype + '</td>';
-				output += '</tr>';
-				console.log("output:" + output);
-				//아래 output테이블에 추가 하라는 뜻
-				$('#output').append(output);*/
 			});
 		},error:function(){
 			alert("통신실패");
@@ -114,12 +91,6 @@ function clickBut(){
 		var daySelect = $(this).val();
 		var date;
 		var year;
-		var month;
-		/*var date = new Date();
-		date.setYear(yearSelect);
-		date.setMonth(monthSelect);
-		date.setDate(daySelect);
-		*/
 		
 		if(yearSelect<2100){
 			date = yearSelect.substring(2,4);
@@ -138,17 +109,24 @@ function clickBut(){
 		}else{
 			date = date +'/'+ String(daySelect);
 		}	
-		//location.href ="calendar.manageplan?id=<%=id%>&selectDate=date";
+
 		console.log("date : "+date);
 
 		$.ajax({
-			url:"selectCalendar.manageplan",
+			url:"selectCalendar.mp",
 			type:"POST",
 			contentType:'application/x-www-form-urlencoded; charsert=utf-8',
 			dataType:"json",
-			data : {"selectDate" : date}
+			data : {"selectDate" : date},
+			success:function(map){
+				//alert(map.res);
+				printSelectDateAjax(Number(year),Number(monthSelect));
+			},
+			erorr:function(){
+				alert("출력실패");
+			}
 		})
-		printSelectDateAjax(Number(year),Number(monthSelect));
+		
 	});
 }
 
@@ -188,7 +166,6 @@ function Calendar() {
 		} else {
 			days = 30;
 		}
-
 		return days;
 	}
 }
@@ -303,7 +280,8 @@ function selectYearChange() {
 	printSelectDateAjax(year, month);
 }
 
-// 셀렉트 월 변경 이벤트
+// 셀렉트 월 변경 이벤트  '<select id = "monthList" onchange="selectMonthChange()">';
+
 function selectMonthChange() {
 	hiddenAllBut();
 	var yearSelect = document.getElementById("yearList");
