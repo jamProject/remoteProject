@@ -94,7 +94,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
             dataType: "json",
             contentType : 'application/x-www-form-urlencoded; charset=utf-8',
             data : {
-            	'planName' : $('.form-control').val()
+            	'planDate' : $('.form-control').val()
             	//위의 코딩은 예제로 일정네임으로 검색할수있게해준것, 조회수,추천순,최신순,날짜순 출력하수있게 하기
             },
          	success:function(data) {
@@ -248,6 +248,9 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 						placeholder="원하시는 일정을 검색해보세요!"/> 
 						<span
 						class="input-group-btn">
+						<button class="btn btn-default" type="button" id="target" >
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
 						<button class="btn btn-default" type="button" id="target">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>

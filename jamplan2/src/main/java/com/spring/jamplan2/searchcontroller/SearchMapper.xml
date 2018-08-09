@@ -31,30 +31,17 @@ create table plan(
 	</insert>
 	
 	<select id ="planSearch" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" resultMap="planResultMap">
-			<!-- 만약 스위스여행을 검색하고싶은데 스위스만 쳐도 그것에 대한 정보가 나올수있게 하는 방법 생각해보기 -->
-	      SELECT * FROM plan where 
-	      <if test = "planName != ''">
-	         planName like '%'||#{planName, jdbcType=VARCHAR}||'%'
-	      </if>
-	       <if test = "planName != ''">
-	         AND planName = #{planName, jdbcType=VARCHAR}
-	      </if>
-	       <if test = "planName != ''">
-	         AND planName = #{planName, jdbcType=VARCHAR}
-	      </if>
-	       <if test = "planName != ''">
-	         AND planName = #{planName, jdbcType=VARCHAR}
-	      </if>
-	     
-	      order by planName
-   </select>
+	
+    SELECT planDate,readCount,goodCount,planName FROM plan where like '%'||#{planName, jdbcType=VARCHAR}||'%'
+	
+    </select>
 	
 	<select id ="clickSearch" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" resultMap="planResultMap"> 
  	
       SELECT * FROM plan 
       
       <if test = 'planDate != null and planDate.equals("a")' >
-         order by planDate
+         order by planDate desc
       </if>
       <if test = 'readCount != null and readCount.equals(1)' >
          order by readCount
