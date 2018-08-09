@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,12 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
+import com.spring.jamplan.model.TeamVO;
 
 @Controller
 public class ManagePlanController {
 
 	@Autowired(required = true)
 	PlanVO planVO;
+	
+	@Autowired(required = true)
+	TeamVO teamVO;
 
 	@Autowired(required = true)
 	ManagePlanDAOService mpDAOS;
@@ -36,7 +41,18 @@ public class ManagePlanController {
 	}
 
 	@RequestMapping(value = "calendar.mp", method = RequestMethod.GET)
-	public String calendarLoad() {
+	public String calendarLoad(HttpSession session, Model model) {
+		String id = (String)session.getAttribute("id");
+		int planNo = (int)session.getAttribute("planNo");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("planNo", planNo);
+		
+		TeamVO vo = mpDAOS.getPlanRole(map);	
+		session.setAttribute("role", vo.getRole());
+		
+		
 		return "managePlan/calendarPage";
 	}
 	

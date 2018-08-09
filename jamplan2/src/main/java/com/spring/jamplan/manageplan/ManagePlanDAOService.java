@@ -1,6 +1,7 @@
 package com.spring.jamplan.manageplan;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
+import com.spring.jamplan.model.TeamVO;
 
 @Service
 public class ManagePlanDAOService {
 	@Autowired
 	private SqlSession sqlSession;// mybatis(ibatis) 라이브러리가 제공하는 클래스
+	@Autowired
+	private TeamVO teamVO;
+	
 	private CalendarMapper calendarMapper;
 	private ArrayList<PlanVO> planList;
 	private ArrayList<CalendarVO> voList;
@@ -33,6 +38,12 @@ public class ManagePlanDAOService {
 		planList = calendarMapper.getTeamPlan(planVO);
 		// System.out.println(planList.get(0).getPlanNo());
 		return planList;
+	}
+	
+	public TeamVO getPlanRole(HashMap<String, Object> map) {
+		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
+		teamVO = calendarMapper.getTeamRole(map);
+		return teamVO;
 	}
 
 	public ArrayList<CalendarVO> getSelectDate(int planNo) {

@@ -43,19 +43,21 @@ create table userteam(
     teamno number,
     role number,
     planno number,
-    chattime date,
     teamname varchar2(32)
 );
 drop table userteam;
 select * from userteam where id = 'admin';
 select*from userteam;
-insert into userteam values('admin',1,1,1,null,'team1');
-insert into userteam values('admin',1,1,2,null,'team1');
-insert into userteam values('user1',1,1,3,null,'team1');
-insert into userteam values('user1',2,1,4,null,'team1');
-insert into userteam values('admin',2,1,5,null,'team1');
-insert into userteam values('user2',3,1,6,null,'team1');
-insert into userteam values('user2',3,1,7,null,'team1');
+insert into userteam values('admin',1,0,1,'team1');
+insert into userteam values('user1',1,1,1,'team1');
+insert into userteam values('user2',1,2,1,'team1');
+insert into userteam values('user3',1,3,1,'team1');
+insert into userteam values('user4',1,4,1,'team1');
+insert into userteam values('user1',1,2,3,'team1');
+insert into userteam values('user1',2,1,4,'team1');
+insert into userteam values('admin',2,1,5,'team1');
+insert into userteam values('user2',3,1,6,'team1');
+insert into userteam values('user2',3,1,7,'team1');
 commit;
 create table userInfo(
     id varchar2(32) primary key,

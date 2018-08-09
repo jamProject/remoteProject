@@ -1,9 +1,11 @@
 package com.spring.jamplan.manageplan;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
+import com.spring.jamplan.model.TeamVO;
 
 public interface CalendarMapper {
 	public ArrayList<PlanVO> getAllPlans();
@@ -15,5 +17,6 @@ public interface CalendarMapper {
 	public void insertSelectDate(CalendarVO calendarVO);
 	public void deleteSelectDate(CalendarVO calendarVO);
 	public void updateCountDate(CalendarVO calendarVO);
+	public TeamVO getTeamRole(HashMap<String, Object> map);
 	
 }

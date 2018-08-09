@@ -39,6 +39,20 @@
 		<result property="dateCount" column="dateCount" />
 		<result property="confirmIndicator" column="confirmed" />
 	</resultMap>
+	
+	<!-- getTeamRole -->
+	<resultMap type="com.spring.jamplan.model.TeamVO"
+		id="TeamResultMap">
+		<result property="id" column="id" />
+		<result property="teamNo" column="teamNo" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="teamNo" column="teamNo" />
+	</resultMap>
+	
+	<select id ="getTeamRole" parameterType="hashmap" resultMap="TeamResultMap">
+		select * from userTeam where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
+	</select>
 
 	<select id="getCalendarSelectDate" parameterType="int"
 		resultMap="CalendarResultMap">

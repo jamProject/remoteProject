@@ -16,9 +16,8 @@ public class TeamVO {
 	
 	String id;
 	String teamName;
-	String role;
-	String isTeamLeader;
-	Date chatTime;
+	int role;
+
 
 	public int getTeamNo() {
 		return teamNo;
@@ -52,27 +51,12 @@ public class TeamVO {
 		this.teamName = teamName;
 	}
 
-	public String getRole() {
+	public int getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 
-	public String getIsTeamLeader() {
-		return isTeamLeader;
-	}
-
-	public void setIsTeamLeader(String isTeamLeader) {
-		this.isTeamLeader = isTeamLeader;
-	}
-
-	public Date getChatTime() {
-		return chatTime;
-	}
-
-	public void setChatTime(Date chatTime) {
-		this.chatTime = chatTime;
-	}
 }

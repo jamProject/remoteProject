@@ -20,6 +20,7 @@
 	/*session 객체 접근 불가 시 리퀘스트에서 session 객체 생성  */
 	HttpSession session = request.getSession();
 	String id = (String)session.getAttribute("id");
+	int role = (int)session.getAttribute("role");
 %>	
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"
@@ -47,7 +48,20 @@
 			</tr>
 		</table>
 	</div>
+	<div>
 	
+	<%
+		if(role==0 || role ==1){
+	%>		
+		<form>
+			<input type = "button" id = "save" value="저장하기"/>
+		</form>
+			
+	<% 
+		}
+	%>
+	
+	</div>
 	<div>
 	   <script type="text/javascript">
 	   </script>

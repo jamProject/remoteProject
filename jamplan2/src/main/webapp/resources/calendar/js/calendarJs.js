@@ -18,6 +18,23 @@ $(document).ready(function(){
 	
 	var year = String(nowYear).substring(2,4);
 	printSelectDateAjax(Number(year),nowMonth+1);
+	
+	/*if($("#save").length && ("#save").val()=="저장하기"){
+		$("#save").click(function(){
+			$("#save").val("취소");
+		})
+	}*/
+	if($("#save").length && $("#save").val()=="저장하기"){
+		$("#save").click(function(){
+			$("#save").val("취소");
+		})		
+	}
+	
+	if($("#save").length && $("#save").val()=="취소"){
+		$("#save").click(function(){
+			$("#save").val("저장하기");
+		})
+	}
 	/*해당 문서 로딩 이후
 	 * ajax를 이용하여 mananagePlanController에 
 	 * loadCalendar.manageplan로  맴핑되는 
@@ -25,7 +42,6 @@ $(document).ready(function(){
 	 * db에 접속하여 해당 일정에 날짜를 선택한 데이터를 가져와서 뿌려준다.
 	 * 
 	 * */
-	
 });
 
 
@@ -38,7 +54,6 @@ function printSelectDateAjax(year, month){
 		type:'POST',
 		dataType:"json",
 		contentType:'application/x-www-form-urlencoded; charest=utf-8',
-		//data: {"selectDate" : date}
 		success:function(str){
 			$.each(str, function(index, item){
 				var yearSub = Number(item.selectDate.substring(0,2));
