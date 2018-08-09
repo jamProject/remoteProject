@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script language="JavaScript" src="./map/js/map.js" charset="UTF-8"></script>
+<script language="JavaScript" src="./resources/map/js/map.js" charset="UTF-8"></script>
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
