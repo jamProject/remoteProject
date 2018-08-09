@@ -56,9 +56,9 @@ function initMap() {
          fillOpacity: 0.8,
          strokeColor: "FFFA82",
          strokeWeight: 1,
-         anchor: new google.maps.Point(15,36),
+         anchor: new google.maps.Point(18,34),
          labelOrigin: { x: 16, y: 16 }
-    })
+    });
      /*marker = new google.maps.Marker({
         icon: markerImage,
     	map: map,
@@ -67,7 +67,7 @@ function initMap() {
     
     autocomplete.addListener('place_changed', function() {
         infowindow.close();
-        marker.setVisible(false);
+        //marker.setVisible(false);
         var place = autocomplete.getPlace();
         
         if (!place.place_id) {
@@ -89,7 +89,6 @@ function initMap() {
         geocoder.geocode({'location':place.geometry.location}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK)  {
 				if (results[0]){
-					
 					 marker = new google.maps.Marker({
 			        	 icon: markerImage,
 			             label: {
@@ -100,7 +99,7 @@ function initMap() {
 			            map: map,
 			            position: place.geometry.location
 			          });
-					
+					marker.setMap(map);
                   //var geo_latlng = results[0].geometry.location;                 
                   //root(marker,geo_latlng);
 				}
@@ -120,7 +119,7 @@ function initMap() {
         
        // var contentString = '<div><strong id="placename" value = ' + place.name + '>' + place.name + '</strong><br>' + address;
         infowindow.setContent('<div><strong id="placename" value = ' + place.name + '>' + place.name + '</strong><br>' + address);
-        infowindow.open(map, marker); 
+        infowindow.open(map, this); 
         
         marker.addListener('click', function (event){
         	infowindow.open(this, marker); 
@@ -142,8 +141,10 @@ function initMap() {
     
     
     google.maps.event.addListener(map, 'click', function(mouseEvent) {
-    	var latlng = mouseEvent.latLng;            
-         marker = new google.maps.Marker({
+    	 infowindow.close();
+    	var latlng = mouseEvent.latLng;    
+    	
+        marker = new google.maps.Marker({
         	 icon: markerImage,
              label: {
                  text: '+1' || '●',
@@ -171,6 +172,7 @@ function initMap() {
 	    });
 	}*/
 }
+
     function popInfoWindow(marker, latlng) {    	
     	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
     	var geocoder = new google.maps.Geocoder;
@@ -197,7 +199,7 @@ function initMap() {
 	    	}
 		});
     	
-    	marker.addListener('click', function (event){
+    	marker.addListener('click', function (event){    		
     		infowindow.open(this, marker); 
         });
 	}
