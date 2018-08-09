@@ -80,13 +80,24 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		event.preventDefault();
 	});
 	
-	 $('#target').click(function (){ 
+	var tagEvent = '';
+	 $('.tag').click(function (){ 
          
          findPlanList();         
       }); //target
       
-   
+  
       function findPlanList() {
+    	var params = {};
+    	var tagEvent = $(this).attr('id');
+    	
+    	switch(tagEvent) {
+    		case 'planDateTag' :
+    			params = {'planDate' : 'a'};
+    			break;
+    		case 'readCountTag' :
+    			params = {}
+    	}
     	  alert("3");
          $.ajax({
         	 url:'/jamplan2/planSearch.search',
@@ -148,7 +159,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
               case 'dateClick':
             	   params = {'planName' : 'b'};
             	   alert(params);
-                 	 break;
+                  break;
             }
   		
   		jQuery.ajax({
@@ -248,10 +259,16 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 						placeholder="원하시는 일정을 검색해보세요!"/> 
 						<span
 						class="input-group-btn">
-						<button class="btn btn-default" type="button" id="target" >
+						<button class="btn btn-default tag" type="button" id="planDateTag" >
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
-						<button class="btn btn-default" type="button" id="target">
+						<button class="btn btn-default tag" type="button" id="readCountTag">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+						<button class="btn btn-default tag" type="button" id="goodCountTag">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+						<button class="btn btn-default tag" type="button" id="planNameeTag">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span>
