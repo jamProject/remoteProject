@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	 <!-- 뷰(jsp)와 관련없는 빈 설정에 사용. servlet-context.xml은 뷰(jsp)와 관련된 빈설정에 사용 -->
+   <bean id="dataSource"
+      class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+      <property name="driverClass" value="oracle.jdbc.OracleDriver" />
+      <!-- 아래의 부분은 오라클 버전이나 계정에 따라 다르게 적는다. -->
+      <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+      <property name="username" value="hr" />
+      <property name="password" value="123456" />      
+   </bean>
+   
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">      <!-- session을 유지관리 -->
+      <property name="dataSource"   ref="dataSource" />  <!-- dataSource를 이용해서 쓰겟다 (참조) -->  <!-- ref에는 기존에 만들어놓은 빈객체를 참조할때 사용. ref놈을 참조하기 위해서 dataSource라는 이름을 사용하겠다. --> 
+      <property name="typeAliasesPackage" value="com.spring.jamplan2.searchcontroller" />
+      <property name="mapperLocations" 
+            value="classpath:/com/spring/jamplan2/**/*.xml" /> <!--springmybatis에 있는 모든하위문서(**)중  모든xml파일 탐색해서 매핑--> <!-- ★하위에있는 모든 xml을 맵핑하겠다 -->
+   </bean>
+   
+   <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg ref="sqlSessionFactory" />            <!-- 이 객체가 생성될 때 생성자의 입력 파라미터(constructor-arg)로 sqlSessionFactory(바로 위에 있는놈)를 사용하겠다. -->
+   </bean >
+		
+</beans>

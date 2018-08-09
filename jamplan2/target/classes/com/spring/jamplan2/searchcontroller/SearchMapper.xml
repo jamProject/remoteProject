@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+create table plan(
+	image varchar2(100),
+	planDate varchar2(200),
+	planName varchar2(200),
+	goodCount varchar2(400),
+	readCount varchar2(200)
+);
+ -->
+	
+<mapper namespace="com.spring.jamplan2.searchcontroller.SearchMapper">
+
+	<resultMap type="PlanVO" id="planResultMap">
+ 		<result property="image" column="image" />
+ 		<result property="planDate" column="planDate" />
+ 		<result property="planName" column="planName" />
+ 		<result property="goodCount" column="goodCount" />
+ 		<result property="readCount" column="readCount" />
+ 	</resultMap>
+	
+	<select id="getPlanList" resultMap="planResultMap">
+		SELECT * FROM plan
+	</select> 
+	
+	<insert id="fileUpload" parameterType="com.spring.jamplan2.searchcontroller.PlanVO">
+		insert into plan(image) values (#{image})
+	</insert>
+	
+	<select id ="planSearch" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" resultMap="planResultMap">
+			<!-- 만약 스위스여행을 검색하고싶은데 스위스만 쳐도 그것에 대한 정보가 나올수있게 하는 방법 생각해보기 -->
+	      SELECT * FROM plan where 
+	      <if test = "planName != ''">
+	         planName like '%'||#{planName, jdbcType=VARCHAR}||'%'
+	      </if>
+	       <if test = "planName != ''">
+	         AND planName = #{planName, jdbcType=VARCHAR}
+	      </if>
+	       <if test = "planName != ''">
+	         AND planName = #{planName, jdbcType=VARCHAR}
+	      </if>
+	       <if test = "planName != ''">
+	         AND planName = #{planName, jdbcType=VARCHAR}
+	      </if>
+	     
+	      order by planName
+   </select>
+	
+	<select id ="clickSearch" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" resultMap="planResultMap"> 
+ 	
+      SELECT * FROM plan 
+      
+      <if test = 'planDate != null and planDate.equals("a")' >
+         order by planDate
+      </if>
+      <if test = 'readCount != null and readCount.equals(1)' >
+         order by readCount
+      </if>
+      <if test = 'goodCount != null and goodCount.equals(2)' >
+         order by goodCount
+      </if>
+      <if test = 'planName != null and planName.equals("b")' >
+         order by planName
+      </if>
+     
+     
+   </select>
+   
+  
+	
+	
+	<!-- 조회수
+	<update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
+		update plan set readCount = (select readCount from plan where planName = #{planName, jdbcType=VARCHAR}) + 1 where planName =  #{planName, jdbcType=VARCHAR}
+	</update> -->
+	
+	
+	
+
+	
+	
+	
+</mapper>
