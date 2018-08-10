@@ -5,7 +5,7 @@ dt = new Date();
 nowMonth = dt.getMonth();
 nowDay = dt.getDate();
 nowYear = dt.getFullYear();
-
+var savaButCheck = 0;
 
 $(document).ready(function(){
 	
@@ -24,17 +24,46 @@ $(document).ready(function(){
 			$("#save").val("취소");
 		})
 	}*/
-	if($("#save").length && $("#save").val()=="저장하기"){
+	if($("#save").length ){
 		$("#save").click(function(){
-			$("#save").val("취소");
+			if($("#save").val()=="저장하기"){
+				$("#save").val("취소");	
+				
+			}else{
+				$("#save").val("저장하기");
+				$(".date").css("background-color", "white");
+			}
+			
+			$(".date").hover(
+					//마우스 들어 왔을 떄
+					function(){
+						if($("#save").val()=="취소"){
+							//$(this).css("background-color", "green");
+							var num = $(this).attr("value");
+							$("#dateButton"+num).html("일정저장");
+						}
+					},
+					//마우스 나갈 때
+					function(){
+						if($("#save").val()=="취소"){
+							//$(this).css("background-color", "white");
+							var num = $(this).attr("value");
+							//console.log(num);
+							$("#dateButton"+num).html("좋아요");
+						}
+					})
+			/*$(".goodBut").click(function(){
+				if($("#save").val()=="취소"){
+					var num = $(this).attr("value");
+					$("#dateTd"+num).css("background-color", "green");
+					//console.log("but c:"+num);
+					
+				}
+			})*/
 		})		
+		
 	}
 	
-	if($("#save").length && $("#save").val()=="취소"){
-		$("#save").click(function(){
-			$("#save").val("저장하기");
-		})
-	}
 	/*해당 문서 로딩 이후
 	 * ajax를 이용하여 mananagePlanController에 
 	 * loadCalendar.manageplan로  맴핑되는 
@@ -43,6 +72,7 @@ $(document).ready(function(){
 	 * 
 	 * */
 });
+
 
 
 function printSelectDateAjax(year, month){
@@ -56,22 +86,26 @@ function printSelectDateAjax(year, month){
 		contentType:'application/x-www-form-urlencoded; charest=utf-8',
 		success:function(str){
 			$.each(str, function(index, item){
-				var yearSub = Number(item.selectDate.substring(0,2));
-				console.log("yearSub : "+yearSub);
-				var monthSub= Number(item.selectDate.substring(3,5));
-				console.log("monthSub : "+monthSub);
+				var yearSub = Number(item.selectDate.substring(0,2));	
+				var monthSub= Number(item.selectDate.substring(3,5));	
 				var day;
 				var output =""
-				
-				console.log("now year : " +year);
-				console.log("now month : " + month);
+				//console.log("yearSub : "+yearSub);
+				//console.log("monthSub : "+monthSub);
+				//console.log("now year : " +year);
+				//console.log("now month : " + month);
 				if(yearSub==year && monthSub == Number(month)){ 
 					day = Number(item.selectDate.substring(6,8));
-					console.log(day);		
+					//console.log(day);		
 					output += '<div class = "countDate">';	
 					output += '+' + String(item.dateCount);
 					output += '</div>';
 					$('#dateTd'+ day).append(output);
+					console.log(item.confirmIndicator);
+					if(item.confirmIndicator == 1){
+						console.log("확정일정");
+						$("#dateTd"+day).css("background-color", "green");
+					}
 				}
 			});
 		},error:function(){
@@ -125,22 +159,48 @@ function clickBut(){
 			date = date +'/'+ String(daySelect);
 		}	
 
-		console.log("date : "+date);
-
-		$.ajax({
-			url:"selectCalendar.mp",
-			type:"POST",
-			contentType:'application/x-www-form-urlencoded; charsert=utf-8',
-			dataType:"json",
-			data : {"selectDate" : date},
-			success:function(map){
-				//alert(map.res);
-				printSelectDateAjax(Number(year),Number(monthSelect));
-			},
-			erorr:function(){
-				alert("출력실패");
+		if( !$("#save").length || $("#save").val()=="저장하기"){
+			$.ajax({
+				url:"selectCalendar.mp",
+				type:"POST",
+				contentType:'application/x-www-form-urlencoded; charsert=utf-8',
+				dataType:"json",
+				data : {"selectDate" : date},
+				success:function(map){
+					alert(map.res);
+					printSelectDateAjax(Number(year),Number(monthSelect));
+				},
+				erorr:function(){
+					alert("출력실패");
+				}
+			})
+		}else{
+			var num = $(this).attr("value");
+			if($("#dateTd"+num).css("background-color")!="rgb(0, 128, 0)"){
+				//console.log($("#dateTd"+num).css("background-color"));
+				$("#dateTd"+num).css("background-color", "green");
+				
+				$.ajax({
+					url:"FixCal.mp",
+					type:"POST",
+					contentType:'application/x-www-form-urlencoded; charsert=utf-8',
+					dataType:"json",
+					data : {"selectDate" : date},
+					success:function(map){
+						//alert(map.res);
+						alert("일정 확정 성공")
+					},
+					erorr:function(){
+						alert("일정 확정 실패");
+					}
+				})
+			}else{
+				console.log("else");
+				$("#dateTd"+num).css("background-color", "white");
 			}
-		})
+			
+		}
+		
 		
 	});
 }
@@ -171,10 +231,10 @@ function Calendar() {
 		if (mon < 8 && mon % 2 == 1) {
 			days = 31;
 		} else if (mon == 2 && yun == true) {
-			console.log("day : " + days + " yun : " + yun);
+			//console.log("day : " + days + " yun : " + yun);
 			days = 29;
 		} else if (mon == 2 && yun == false) {
-			console.log("day : " + days + " yun : " + yun);
+			//console.log("day : " + days + " yun : " + yun);
 			days = 28;
 		} else if (mon > 7 && mon % 2 == 0) {
 			days = 31;

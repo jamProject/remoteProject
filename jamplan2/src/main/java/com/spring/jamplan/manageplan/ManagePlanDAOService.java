@@ -45,6 +45,22 @@ public class ManagePlanDAOService {
 		teamVO = calendarMapper.getTeamRole(map);
 		return teamVO;
 	}
+	
+	public void getFixDate(CalendarVO vo) {
+		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
+		calendarMapper.updateFixDate(vo);
+	}
+	
+	public void getSelectDateFix(CalendarVO vo){
+		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
+		voList = calendarMapper.getSelectFixDate(vo);
+		if(voList.size()==0) {
+			vo.setDateCount(1);
+			calendarMapper.insertSelectDate(vo);
+		}else {
+			getFixDate(vo);
+		}
+	}
 
 	public ArrayList<CalendarVO> getSelectDate(int planNo) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
@@ -53,6 +69,7 @@ public class ManagePlanDAOService {
 		// System.out.println(voList.size());
 		int k = 0;
 		int size = voList.size();
+		//일정을 여러명이 선택 했을 때 중복 제거하고 +n 카운트 하나만 보이도록 
 		for (int i = 0; i < voList.size(); i++) {
 			for (int j = 0; j < voList.size(); j++) {
 				if (i != j) {

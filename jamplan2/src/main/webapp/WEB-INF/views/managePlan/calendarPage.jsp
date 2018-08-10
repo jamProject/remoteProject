@@ -49,14 +49,13 @@
 		</table>
 	</div>
 	<div>
-	
+
 	<%
 		if(role==0 || role ==1){
 	%>		
 		<form>
-			<input type = "button" id = "save" value="저장하기"/>
+			<input type = "button" id = "save" value="저장하기" />
 		</form>
-			
 	<% 
 		}
 	%>

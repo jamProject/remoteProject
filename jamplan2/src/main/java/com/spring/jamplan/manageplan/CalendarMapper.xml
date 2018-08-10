@@ -50,6 +50,14 @@
 		<result property="teamNo" column="teamNo" />
 	</resultMap>
 	
+	<select id="getSelectFixDate" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		select * from planDate where planNo = #{planNo, javaType = String} and selectDate = #{selectDate, javaType = String}
+	</select>
+	
+	<update id = "updateFixDate" parameterType="com.spring.jamplan.model.CalendarVO">
+		update plandate set confirmIndicator = 1 where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType = String}
+	</update>
+	
 	<select id ="getTeamRole" parameterType="hashmap" resultMap="TeamResultMap">
 		select * from userTeam where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
 	</select>

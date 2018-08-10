@@ -23,15 +23,15 @@ public class ManagePlanController {
 
 	@Autowired(required = true)
 	PlanVO planVO;
-	
+
 	@Autowired(required = true)
 	TeamVO teamVO;
 
 	@Autowired(required = true)
 	ManagePlanDAOService mpDAOS;
-	
-	//@Autowired
-	//CalendarDAOService calDAOS;
+
+	// @Autowired
+	// CalendarDAOService calDAOS;
 
 	private ArrayList<PlanVO> planList;
 
@@ -40,55 +40,67 @@ public class ManagePlanController {
 		return "managePlan/planMainPage";
 	}
 
-	@RequestMapping(value = "calendar.mp", method = RequestMethod.GET)
-	public String calendarLoad(HttpSession session, Model model) {
-		String id = (String)session.getAttribute("id");
-		int planNo = (int)session.getAttribute("planNo");
-		
+	@RequestMapping(value = "calendar.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String calendarLoad(HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		int planNo = (int) session.getAttribute("planNo");
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		map.put("planNo", planNo);
-		
-		TeamVO vo = mpDAOS.getPlanRole(map);	
+
+		TeamVO vo = mpDAOS.getPlanRole(map);
 		session.setAttribute("role", vo.getRole());
-		
-		
+
 		return "managePlan/calendarPage";
 	}
-	
-	@RequestMapping(value = "selectCalendar.mp", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+
+	@RequestMapping(value = "selectCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String, Object> calendarSelect(HttpSession session, CalendarVO vo) {
 		System.out.println(vo.getSelectDate());
-		vo.setId((String)session.getAttribute("id"));
-		vo.setPlanNo((int)session.getAttribute("planNo"));
+		vo.setId((String) session.getAttribute("id"));
+		vo.setPlanNo((int) session.getAttribute("planNo"));
 		mpDAOS.insertSelectDate(vo);
-		
-		Map<String,Object> map = new HashMap<String, Object>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("res", "ok");
 		return map;
 	}
-	//선택한 날짜 디비에서 불러오는 컨트롤러 json으로 해당 데이터 보내기
-	@RequestMapping(value = "loadCalendar.mp", method = RequestMethod.POST)
+
+	// 선택한 날짜 디비에서 불러오는 컨트롤러 json으로 해당 데이터 보내기
+	@RequestMapping(value = "loadCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String calendarLoadDate(HttpSession session) {
-		ArrayList<CalendarVO> calVO = mpDAOS.getSelectDate((int)session.getAttribute("planNo"));
-		
-		ObjectMapper mapper = new ObjectMapper();//json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
-		String str="";
+		ArrayList<CalendarVO> calVO = mpDAOS.getSelectDate((int) session.getAttribute("planNo"));
+		ObjectMapper mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
+		String str = "";
 		try {
 			str = mapper.writeValueAsString(calVO);
-		}catch (Exception e) {
+			//System.out.println("확인 : "+calVO.get(0).getConfirmed());
+		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("castring fail");
 		}
-		
 		return str;
 	}
-	
-	@RequestMapping(value = "select.mp", method = RequestMethod.POST, produces ="application/json;charset=UTF-8")
-	public void selectDate() {
+	//방장(혹은팀원)이 날짜를 확정 지으면 update문으로 해당 일정 업데이트 + 삽입
+	@RequestMapping(value = "FixCal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public HashMap<String, Object> fixDate(HttpSession session, CalendarVO vo) {
 		
+		vo.setId((String)session.getAttribute("id"));
+		vo.setPlanNo((int)session.getAttribute("planNo"));
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			mpDAOS.getSelectDateFix(vo);
+			map.put("res", "ok");
+			System.out.println("fixCal Success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			map.put("res", "fail");
+		}
+		return map;
 	}
 
 	@RequestMapping("map.mp")
