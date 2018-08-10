@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,22 +23,30 @@
 <link href="${mapCss}" rel="stylesheet" />
 <script src="${semanticMinJs}"></script>
 <script src="${mapJs}"></script>
-
+<%
+String id = request.getParameter("id");
+%>
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXzorrjSQ61PxTjiyMHOydxJOq0iEOcaI&callback=initMap&libraries=drawing,places" async defer>
 </script>
-<!-- <script
- src="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyB-zbRuhOB5viFlwhkw3TmDnC0XIWcq0HI" >
-</script> -->
 
 <style> 
 .maptotal{
 position:relative;
 left: 405px;
-top: 112px;} 
+top: 112px;
+} 
+
+#infowindow-content {
+        display: none;
+      }
+      #map #infowindow-content {
+        display: inline;
+      }
 </style>
 </head>
 <body>
+<input type=hidden id="id" value=<%=id %> /> 
 
 <div class="maptotal">
 <select class="ui dropdown">
@@ -65,6 +75,13 @@ top: 112px;}
 </div>
 
 <aside  id = "map"> </aside>
+<div id="infowindow-content">
+      <img id="place-icon" src="" height="30" width="30">		<!-- 인포안에 아이콘 -->
+      <span id="place-name"  class="title"></span><br>
+      <span id="place-address"></span><br>
+      <span id="memberlist"></span><br>
+      <span><input type='submit' value='Pick'></span> 
+   </div>
 </div>
 </div>
 

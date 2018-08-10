@@ -10,7 +10,7 @@ public interface AdminMapper {
 	
 	ArrayList<UserVO> getUserList();
 	ArrayList<TeamVO> getTeamList();	
-	ArrayList<PlanVO> getPlanList();			//전체 조회
+	ArrayList<PlanVO> getPlanList(String planName);			//전체 조회
 	UserVO getUser(String id);
 	TeamVO getTeam(String teamName);	
 	/*PlanVO getPlan(String planName);  일정이름은 중복가능*/			//검색

@@ -33,7 +33,7 @@ List<UserVO> userList = (ArrayList<UserVO>)request.getAttribute("userList");
  table{
  	width: 60%;
  	margin-left: 310px;
- 	margin-top: 135px; 
+ 	margin-top: 110px; 
  	border: 2px solid #C8C8C8;
  	border-collapse: collapse;
  	table-layout:auto;	
@@ -47,12 +47,16 @@ List<UserVO> userList = (ArrayList<UserVO>)request.getAttribute("userList");
 	margin-left: 150px;
  	padding: 20px 40px 20px;
  }
+ 
+ .ui icon input{
+ 	margin-left: 100px;
+ }
 </style>
 </head>
 <body>
 <h1 class="admin-title">회원 관리 페이지</h1>
 <div class="ui secondary pointing menu">
-  <a class="active item">
+  <a class="active item" href="/getUserList.admin">
       회원찾기
   </a>
   <a class="item">
@@ -62,18 +66,18 @@ List<UserVO> userList = (ArrayList<UserVO>)request.getAttribute("userList");
      일정찾기
   </a>
 </div>
-<div class="search-group">
-<select class="ui dropdown">
+<!--<div class="search-group">
+ <select class="ui dropdown">
   <option value="0">아이디</option>
   <option value="1">팀</option>
   <option value="2">동행</option>
-</select>
+</select> -->
 <div class="ui icon input">
-  <input type="text" placeholder="Search...">
+  <input type="text" placeholder="아이디 검색">
   <!-- <i class="search icon"></i> -->
 </div>
 <button class="ui button">검색</button>
-</div>
+
 <table >
   <thead>
     <tr>

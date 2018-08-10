@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.jamplan.model.PlanVO;
@@ -26,7 +27,13 @@ public class AdminController {
 	@Autowired
 	private AdminDAOService adminDAOService;
 
-	@RequestMapping("/getUserList.admin")
+	//test
+	@RequestMapping("mapPage.admin")
+	public String mapPage() {
+		return "managePlan/mapPage";
+	}
+		
+	@RequestMapping("/getUserList.admin")	
 	public ModelAndView getUserList() {
 		ModelAndView result = new ModelAndView();
 		ArrayList<UserVO> userList = adminDAOService.getUserList();
@@ -36,7 +43,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/getTeamList.admin")
-	public ModelAndView getTeamList(String teamName) {
+	public ModelAndView getTeamList() {
 		return null;
 	}
 	
@@ -69,6 +76,7 @@ public class AdminController {
 	public ModelAndView deletePlan(int planNo) {
 		return null;
 	}
+	
 	
 	
 }
