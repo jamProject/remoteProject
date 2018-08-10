@@ -79,24 +79,40 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		//기본 이벤트 제거
 		event.preventDefault();
 	});
+
 	
-	var tagEvent = '';
+	 $('.li1').click(function(){
+			
+			var name = $(this).html();
+			console.log(name);
+			$('.dropdown-toggle').html(name);
+		});
+	
+	
+	
+	 var tagEvent = '';
 	 $('.tag').click(function (){ 
          
-         findPlanList();         
-      }); //target
-      
-  
-      function findPlanList() {
     	var params = {};
-    	var tagEvent = $(this).attr('id');
-    	
+    	//var name = $(this).html();
+    	var tagEvent = $('.dropdown-toggle').html();
+    	alert(tagEvent);
     	switch(tagEvent) {
-    		case 'planDateTag' :
-    			params = {'planDate' : 'a'};
+    		case '날짜' :
+    			params = {'planDate' : $('.form-control').val()};
+    			console.log("날짜");
     			break;
-    		case 'readCountTag' :
-    			params = {}
+    		case '제목' :
+    			params = {'planName' : $('.form-control').val()};
+    			console.log("제목");
+    			alert(params);
+    			break;
+           //날짜값 자르는 변수하나 만들어줘서 넘기자.   
+     
+      
+      
+	    
+    			
     	}
     	  alert("3");
          $.ajax({
@@ -104,17 +120,19 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
             type:'POST',
             dataType: "json",
             contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-            data : {
+            data : params,
+            	/* {
             	'planDate' : $('.form-control').val()
             	//위의 코딩은 예제로 일정네임으로 검색할수있게해준것, 조회수,추천순,최신순,날짜순 출력하수있게 하기
-            },
+            }, */
+            
          	success:function(data) {
          
-           /*  $('#team_print').html('');      //기존 것 날려주고.. */
+
            $('#output').empty();
-            alert(data);
+            /* alert(data); */
         	 $.each(data, function(index, item){ 
-        		 alert(item.image);
+        		 /* alert(item.image); */
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
@@ -135,9 +153,9 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		});         
       
 
-
+	 }); 
 	
-      }
+      
       
       var clickevent = '';
       $('.clk').click(function(event){
@@ -192,13 +210,23 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
   					alert("ajax통신 실패!!!");
   				}
   			}); 
-  		
-  		
   	});
+      
+      
+  		
+      
+      
+      
+      
   	
   	selectData();
   });
-      
+    
+  	
+ 
+  
+  
+  
       
       
       
@@ -259,16 +287,22 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 						placeholder="원하시는 일정을 검색해보세요!"/> 
 						<span
 						class="input-group-btn">
-						<button class="btn btn-default tag" type="button" id="planDateTag" >
+						
+						    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">선택
+						    <span class="caret"></span></button>
+						    
+						    <div class="dropdown-menu">
+						      <li><a class="li1" >제목</a></li>
+     						  <li><a class="li1" >날짜</a></li>
+						    </div>
+						 
+					
+						
+						<!-- <button class="btn btn-default tag" type="button" id="planDateTag" >
 							<span class="glyphicon glyphicon-search"></span>
-						</button>
-						<button class="btn btn-default tag" type="button" id="readCountTag">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-						<button class="btn btn-default tag" type="button" id="goodCountTag">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-						<button class="btn btn-default tag" type="button" id="planNameeTag">
+						</button> -->
+						
+						<button class="btn btn-default tag" type="button" >
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span>

@@ -2,72 +2,80 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-create table plan(
-	image varchar2(100),
-	planDate varchar2(200),
-	planName varchar2(200),
-	goodCount varchar2(400),
-	readCount varchar2(200)
-);
- -->
-	
-<mapper namespace="com.spring.jamplan2.searchcontroller.SearchMapper">
+<!-- create table plan( image varchar2(100), planDate varchar2(200), planName 
+	varchar2(200), goodCount varchar2(400), readCount varchar2(200) ); -->
+
+<mapper
+	namespace="com.spring.jamplan2.searchcontroller.SearchMapper">
 
 	<resultMap type="PlanVO" id="planResultMap">
- 		<result property="image" column="image" />
- 		<result property="planDate" column="planDate" />
- 		<result property="planName" column="planName" />
- 		<result property="goodCount" column="goodCount" />
- 		<result property="readCount" column="readCount" />
- 	</resultMap>
-	
+		<result property="image" column="image" />
+		<result property="planDate" column="planDate" />
+		<result property="planName" column="planName" />
+		<result property="goodCount" column="goodCount" />
+		<result property="readCount" column="readCount" />
+	</resultMap>
+
 	<select id="getPlanList" resultMap="planResultMap">
-		SELECT * FROM plan
-	</select> 
-	
-	<insert id="fileUpload" parameterType="com.spring.jamplan2.searchcontroller.PlanVO">
+		SELECT * FROM plan order by planDate desc
+	</select>
+
+	<insert id="fileUpload"
+		parameterType="com.spring.jamplan2.searchcontroller.PlanVO">
 		insert into plan(image) values (#{image})
 	</insert>
-	
-	<select id ="planSearch" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" resultMap="planResultMap">
-	
-    SELECT planDate,readCount,goodCount,planName FROM plan where like '%'||#{planName, jdbcType=VARCHAR}||'%'
-	
-    </select>
-	
-	<select id ="clickSearch" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" resultMap="planResultMap"> 
- 	
-      SELECT * FROM plan 
-      
-      <if test = 'planDate != null and planDate.equals("a")' >
-         order by planDate desc
-      </if>
-      <if test = 'readCount != null and readCount.equals(1)' >
-         order by readCount
-      </if>
-      <if test = 'goodCount != null and goodCount.equals(2)' >
-         order by goodCount
-      </if>
-      <if test = 'planName != null and planName.equals("b")' >
-         order by planName
-      </if>
-     
-     
-   </select>
-   
-  
-	
-	
-	<!-- 조회수
-	<update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
-		update plan set readCount = (select readCount from plan where planName = #{planName, jdbcType=VARCHAR}) + 1 where planName =  #{planName, jdbcType=VARCHAR}
-	</update> -->
-	
-	
-	
 
-	
-	
-	
+	<select id="planSearch"
+		parameterType="com.spring.jamplan2.searchcontroller.PlanVO"
+		resultMap="planResultMap">
+
+		SELECT * FROM plan
+		
+		<if test='planName != null '>
+			where planName like '%'||#{planName, jdbcType=VARCHAR}||'%' order by planName
+		</if>
+		<if test='planDate != null '>
+			where planDate like '%'||to_date(#{planDate, jdbcType=VARCHAR}, "YYYY-MM-DD")||'%' order by planDate desc
+		</if>
+
+
+
+	</select>
+
+	<select id="clickSearch"
+		parameterType="com.spring.jamplan2.searchcontroller.PlanVO"
+		resultMap="planResultMap">
+
+		SELECT * FROM plan
+
+		<if test='planDate != null and planDate.equals("a")'>
+			order by planDate desc
+		</if>
+		<if test='readCount != null and readCount.equals(1)'>
+			order by readCount
+		</if>
+		<if test='goodCount != null and goodCount.equals(2)'>
+			order by goodCount
+		</if>
+		<if test='planName != null and planName.equals("b")'>
+			order by planName
+		</if>
+
+
+	</select>
+
+
+
+
+	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
+		> update plan set readCount = (select readCount from plan where planName 
+		= #{planName, jdbcType=VARCHAR}) + 1 where planName = #{planName, jdbcType=VARCHAR} 
+		</update> -->
+
+
+
+
+
+
+
 </mapper>

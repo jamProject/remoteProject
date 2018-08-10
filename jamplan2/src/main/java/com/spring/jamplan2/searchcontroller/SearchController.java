@@ -87,7 +87,10 @@ public class SearchController {
 	@RequestMapping(value = "planSearch.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String planSearch(PlanVO planVO) {
-		System.out.println("확인1");
+		//데이터 확인
+		System.out.println("jsp에서 넘어오는 값?" + planVO.getPlanDate());
+		System.out.println("jsp에서 넘어오는 값?" + planVO.getPlanName());
+				
 		ArrayList<PlanVO> planList = searchService.planSearch(planVO);
 		String str = "";
 		ObjectMapper mapper = new ObjectMapper();

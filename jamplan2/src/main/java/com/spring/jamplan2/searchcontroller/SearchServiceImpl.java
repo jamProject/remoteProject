@@ -31,7 +31,7 @@ public class SearchServiceImpl implements SearchService{
 		return check;
 	}
 	
-	@Override
+	/*@Override
 	public ArrayList<PlanVO> planSearch(PlanVO planVO) {
 		System.out.println("확인2");
 		ArrayList<PlanVO> planList = null;
@@ -40,11 +40,37 @@ public class SearchServiceImpl implements SearchService{
 		System.out.println("확인3");
 		
 		return planList;
+	}*/
+	
+	@Override
+	public ArrayList<PlanVO> planSearch(PlanVO planVO) {
+		//넘어오는값확인
+		System.out.println("데이터확인 : " + planVO.getPlanDate());
+		System.out.println("데이터확인 : " + planVO.getPlanName());
+		
+		ArrayList<PlanVO> planList = null;
+		
+		if (planVO.getPlanDate() != null) {
+			System.out.println("타겟확인a");
+			SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+			planList = searchmapper.planSearch(planVO);
+			//System.out.println(planList.get(0).getPlanDate());
+			System.out.println("타겟확인a");
+		}
+		else if (planVO.getPlanName() != null) {
+			System.out.println("타겟확인b");
+			SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+			planList = searchmapper.planSearch(planVO);
+			System.out.println("타겟확인b");
+			
+			return planList;
+		}
+		return planList;
 	}
 	
 	@Override
 	public ArrayList<PlanVO> clickSearch(PlanVO planVO) {
-		
+		//넘어오는값확인
 		System.out.println("데이터확인 : " + planVO.getPlanDate());
 		System.out.println("데이터확인 : " + planVO.getReadCount());
 		System.out.println("데이터확인 : " + planVO.getGoodCount());
