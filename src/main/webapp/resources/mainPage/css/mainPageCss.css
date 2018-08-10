@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.row {
+	height:450px;
+}
+
+.rightMenu{
+	margin:0 auto;
+	display: table;
+	height: 400px;
+	overflow: hidden;
+	text-align: center;
+}
+.subrightMenu{
+	display: table-cell;
+}
