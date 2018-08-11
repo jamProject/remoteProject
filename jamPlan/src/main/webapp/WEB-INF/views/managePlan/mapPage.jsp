@@ -46,8 +46,7 @@ top: 112px;
 </style>
 </head>
 <body>
-<input type=hidden id="id" value=<%=id %> /> 
-
+<%-- <input type=hidden id="memberid" value=<%=id %> />  --%>
 <div class="maptotal">
 <select class="ui dropdown">
   <option value="0">1월 13일</option>

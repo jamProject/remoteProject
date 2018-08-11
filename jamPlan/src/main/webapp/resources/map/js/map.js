@@ -225,15 +225,16 @@ function initMap() {
     
     function popInfoWindow(marker, latlng) {  
     	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
-    	
+		var id = $('#memberid').val();
+
     	geocoder.geocode({'latLng': lat_lng}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK)  {
 				if (results[0]){					
 					infowindow.setContent(
 						"<div><table>" +							
 							"<tr><td colspan='3'>" + results[0].formatted_address + "</td><tr>" +
-							"<tr><td id='bar'>selectMember</td><td><input id ='submitbtn' type='submit' value='Pick' onclick='BarFind()'></td>" +
-							"<td><input type='button' value='Cancel' onclick='BarCancel(yu)'></td></tr>" +
+							"<tr><td id='bar'>selectMember</td><td><input id ='submitbtn' type='button' value='Pick' onclick='BarFind(" + id + ")'></td>" +
+							"<td><input type='button' value='Cancel' onclick='BarCancel(" + id + ")'></td></tr>" +
 						"</table></div>");					
 					
 					infowindow.open(map,marker);
@@ -292,11 +293,14 @@ function initMap() {
     travelPathArray.push(flightPath);
     }*/  
 
-	function BarFind(){
-	  document.getElementById('bar').innerHTML = "selectMember" + "<br>" + id;
-	  //console.log(${"#id"}.val());
-	}
+
+	function BarFind(id){
+		//var id = document.getElementById("memberid").value;
+		document.getElementById('bar').innerHTML = "selectMember" + "<br>" + id;
+		console.log(id);
+	}  
 	
-	function BarCancel(obj){	// obj.parentNode 를 이용하여 삭제
-		 document.getElementById('bar').removeChild(obj);
+	
+	function BarCancel(id){	// obj.parentNode 를 이용하여 삭제
+		 document.getElementById('bar').removeChild(id);
 	 }
