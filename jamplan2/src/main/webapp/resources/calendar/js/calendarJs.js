@@ -101,9 +101,9 @@ function printSelectDateAjax(year, month){
 					output += '+' + String(item.dateCount);
 					output += '</div>';
 					$('#dateTd'+ day).append(output);
-					console.log(item.confirmIndicator);
+					//console.log(item.confirmIndicator);
 					if(item.confirmIndicator == 1){
-						console.log("확정일정");
+						//console.log("확정일정");
 						$("#dateTd"+day).css("background-color", "green");
 					}
 				}
@@ -167,7 +167,7 @@ function clickBut(){
 				dataType:"json",
 				data : {"selectDate" : date},
 				success:function(map){
-					alert(map.res);
+					//alert(map.res);
 					printSelectDateAjax(Number(year),Number(monthSelect));
 				},
 				erorr:function(){
@@ -188,7 +188,7 @@ function clickBut(){
 					data : {"selectDate" : date},
 					success:function(map){
 						//alert(map.res);
-						alert("일정 확정 성공")
+						//alert("일정 확정 성공")
 					},
 					erorr:function(){
 						alert("일정 확정 실패");
