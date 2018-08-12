@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
@@ -9,15 +8,14 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완료되면 자동으로 실행 */
 	//목록
@@ -86,7 +84,15 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 			var name = $(this).html();
 			console.log(name);
 			$('.dropdown-toggle').html(name);
+			
+			if (name == '날짜') {
+				$('#dateCheck').css('display', 'block');
+			}
+			else {
+				$('#dateCheck').css('display', 'none');
+			}
 		});
+	 
 	
 	
 	
@@ -215,7 +221,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
       
   		
       
-      
+
       
       
   	
@@ -223,28 +229,28 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
   });
     
   	
- 
-  
-  
-  
-      
-      
-      
-/*       
-	selectData();
-      
-}); */
-</script>
-<body id="myPage" data-spy="scroll" data-target=".navbar"
-	data-offset="50">
 
-	<nav class="navbar navbar-inverse">
+
+	/*       
+	 selectData();
+	
+	 }); */
+</script>
+
+<style>
+.navbar {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+</style>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+
+	<!-- <nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">JAM plan</a>
 			</div>
@@ -263,11 +269,16 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 				</ul>
 			</div>
 		</div>
+	</nav> -->
+	<nav class="navbar fixed-top navbar-expand-md bg-warning navbar-dark">
+		<nav class="container">
+			<a herf="" class="navbar-brand"> <img src="swiss2.jpg" alt="">
+			</a>
+		</nav>
 	</nav>
 
 	<div class="carousel-inner" role="listbox">
-		<img src="/jamplan2/resources/search/image/swiss7.jpg" alt="photo"
-			width="1520" height="400" />
+		<img src="/jamplan2/resources/search/image/swiss7.jpg" alt="photo" width="1520" height="400" />
 		<div class="carousel-caption">
 			<h3>일정 찾기!</h3>
 			<p>다른사람들의 일정을 파헤쳐보자!!</p>
@@ -283,40 +294,43 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		<div class="container">
 			<div class="col-sm-4">
 				<div class="input-group">
-					<input type="text" class="form-control"
-						placeholder="원하시는 일정을 검색해보세요!"/> 
-						<span
-						class="input-group-btn">
-						
-						    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">선택
-						    <span class="caret"></span></button>
-						    
-						    <div class="dropdown-menu">
-						      <li><a class="li1" >제목</a></li>
-     						  <li><a class="li1" >날짜</a></li>
-						    </div>
-						 
-					
-						
-						<!-- <button class="btn btn-default tag" type="button" id="planDateTag" >
+					<input type="text" class="form-control" placeholder="원하시는 일정을 검색해보세요!" /> <span class="input-group-btn">
+
+						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+							선택 <span class="caret"></span>
+						</button>
+
+						<div class="dropdown-menu">
+							<li><a class="li1">제목</a></li>
+							<li><a class="li1">날짜</a></li>
+						</div> <!-- <button class="btn btn-default tag" type="button" id="planDateTag" >
 							<span class="glyphicon glyphicon-search"></span>
 						</button> -->
-						
-						<button class="btn btn-default tag" type="button" >
+
+						<button class="btn btn-default tag" type="button">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
+
+
+						<div class="input-group date"  id="dateCheck" style=" display : none;" >
+							<!-- <input type="text" class="form-control"> -->
+							<span class="input-group-addon"><input type="date"></span>
+						</div>
+
+
+
 					</span>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<br>
 	<br>
 
 	<div class="col-sm-5">
 		<div class="btn-group">
-			<button type="button" class="btn btn-primary clk" id="newDateClick" >최신순</button>
+			<button type="button" class="btn btn-primary clk" id="newDateClick">최신순</button>
 			<button type="button" class="btn btn-primary clk" id="readCountClick">조회순</button>
 			<button type="button" class="btn btn-primary clk" id="goodCountClick">추천순</button>
 			<button type="button" class="btn btn-primary clk" id="dateClick">제목</button>
@@ -330,11 +344,10 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 
 	<div id="output"></div>
 
-	<div class="row text-center">
+	<!-- <div class="row text-center">
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss2.jpg" alt="brienz"
-					width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss2.jpg" alt="brienz" width="400" height="300">
 				<p>
 					<strong>brienz</strong>
 				</p>
@@ -344,8 +357,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		</div>
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss3.jpg" alt="brienz"
-					width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss3.jpg" alt="brienz" width="400" height="300">
 				<p>
 					<strong>brienz</strong>
 				</p>
@@ -355,8 +367,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		</div>
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss6.jpg"
-					alt="matterhorn" width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss6.jpg" alt="matterhorn" width="400" height="300">
 				<p>
 					<strong>matterhorn</strong>
 				</p>
@@ -368,8 +379,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 	<div class="row text-center">
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss2.jpg" alt="brienz"
-					width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss2.jpg" alt="brienz" width="400" height="300">
 				<p>
 					<strong>brienz</strong>
 				</p>
@@ -379,8 +389,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		</div>
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss3.jpg" alt="brienz"
-					width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss3.jpg" alt="brienz" width="400" height="300">
 				<p>
 					<strong>brienz</strong>
 				</p>
@@ -390,8 +399,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		</div>
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss6.jpg"
-					alt="matterhorn" width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss6.jpg" alt="matterhorn" width="400" height="300">
 				<p>
 					<strong>matterhorn</strong>
 				</p>
@@ -403,8 +411,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 	<div class="row text-center">
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss2.jpg" alt="brienz"
-					width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss2.jpg" alt="brienz" width="400" height="300">
 				<p>
 					<strong>brienz</strong>
 				</p>
@@ -414,8 +421,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		</div>
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss3.jpg" alt="brienz"
-					width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss3.jpg" alt="brienz" width="400" height="300">
 				<p>
 					<strong>brienz</strong>
 				</p>
@@ -425,8 +431,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		</div>
 		<div class="col-sm-4">
 			<div class="thumbnail">
-				<img src="/jamplan2/resources/search/image/swiss6.jpg"
-					alt="matterhorn" width="400" height="300">
+				<img src="/jamplan2/resources/search/image/swiss6.jpg" alt="matterhorn" width="400" height="300">
 				<p>
 					<strong>matterhorn</strong>
 				</p>
@@ -434,17 +439,14 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 				<button class="btn">like</button>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Footer -->
 	<footer class="text-center">
-		<a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TOP">
-			<span class="glyphicon glyphicon-chevron-up"></span>
-		</a><br>
-		<br>
+		<a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TOP"> <span class="glyphicon glyphicon-chevron-up"></span>
+		</a><br> <br>
 		<p>
-			JAM Theme Made By <a href="https://www.jamplan.com"
-				data-toggle="tooltip" title="Visit w3schools">www.jamplan.com</a>
+			JAM Theme Made By <a href="https://www.jamplan.com" data-toggle="tooltip" title="Visit w3schools">www.jamplan.com</a>
 		</p>
 	</footer>
 

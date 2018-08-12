@@ -35,7 +35,7 @@
 			where planName like '%'||#{planName, jdbcType=VARCHAR}||'%' order by planName
 		</if>
 		<if test='planDate != null '>
-			where planDate like '%'||to_date(#{planDate, jdbcType=VARCHAR}, "YYYY-MM-DD")||'%' order by planDate desc
+			where planDate like '%'||#{planDate, jdbcType=VARCHAR}||'%' order by planDate desc
 		</if>
 
 
