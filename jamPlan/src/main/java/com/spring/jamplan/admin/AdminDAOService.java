@@ -31,7 +31,7 @@ public class AdminDAOService implements AdminDAO{
 	}
 
 	@Override
-	public ArrayList<PlanVO> getPlanList() {
+	public ArrayList<PlanVO> getPlanList(String planName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

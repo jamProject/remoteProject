@@ -46,8 +46,8 @@
 		select * from userTeam
 	</select>
 
-	<select id="getPlanList" resultMap="AdminPlanResultMap">
-		select * from plan
+	<select id="getPlanList" parameterType="String" resultMap="AdminPlanResultMap">
+		select * from plan where planName = #{planName, javaType = String}
 	</select>
 	
 	<select id="getUser" parameterType="String" resultMap="AdminUserResultMap">

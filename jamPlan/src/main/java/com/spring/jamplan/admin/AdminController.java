@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.jamplan.model.PlanVO;
@@ -25,8 +26,8 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDAOService adminDAOService;
-
-	@RequestMapping("/getUserList.admin")
+		
+	@RequestMapping("getUserList.admin")	
 	public ModelAndView getUserList() {
 		ModelAndView result = new ModelAndView();
 		ArrayList<UserVO> userList = adminDAOService.getUserList();
@@ -35,40 +36,41 @@ public class AdminController {
 		return result;
 	}
 
-	@RequestMapping("/getTeamList.admin")
-	public ModelAndView getTeamList(String teamName) {
+	@RequestMapping("getTeamList.admin")
+	public ModelAndView getTeamList() {
 		return null;
 	}
 	
-	@RequestMapping("/getPlanList.admin")
+	@RequestMapping("getPlanList.admin")
 	public ModelAndView getPlanList(String planName) {
 		return null;
 	}
 	
-	@RequestMapping("/getUser.admin")
+	@RequestMapping("getUser.admin")
 	public ModelAndView getUser(String id) {
 		return null;
 	}
 
-	@RequestMapping("/getTeam.admin")
+	@RequestMapping("getTeam.admin")
 	public ModelAndView getTeam(String teamName) {
 		return null;
 	}
 	
-	@RequestMapping("/deleteUser.admin")
+	@RequestMapping("deleteUser.admin")
 	public ModelAndView deleteUser(String id) {
 		return null;
 	}
 	
-	@RequestMapping("/deleteTeam.admin")
+	@RequestMapping("deleteTeam.admin")
 	public ModelAndView deleteTeam(String teamName) {
 		return null;
 	}
 	
-	@RequestMapping("/deletePlan.admin")
+	@RequestMapping("deletePlan.admin")
 	public ModelAndView deletePlan(int planNo) {
 		return null;
 	}
+	
 	
 	
 }
