@@ -179,9 +179,9 @@ function clickBut(){
 			if($("#dateTd"+num).css("background-color")!="rgb(0, 128, 0)"){
 				//console.log($("#dateTd"+num).css("background-color"));
 				$("#dateTd"+num).css("background-color", "green");
-				
+				//console.log("일정 확정하기" + num);
 				$.ajax({
-					url:"FixCal.mp",
+					url:"fixcal.mp",
 					type:"POST",
 					contentType:'application/x-www-form-urlencoded; charsert=utf-8',
 					dataType:"json",
@@ -197,6 +197,21 @@ function clickBut(){
 			}else{
 				console.log("else");
 				$("#dateTd"+num).css("background-color", "white");
+				
+				$.ajax({
+					url:"fixcal.mp",
+					type:"POST",
+					contentType:'application/x-www-form-urlencoded; charsert=utf-8',
+					dataType:"json",
+					data : {"selectDate" : date},
+					success:function(map){
+						//alert(map.res);
+						//alert("일정 확정 성공")
+					},
+					erorr:function(){
+						//alert("일정 확정 실패");
+					}
+				})
 			}
 			
 		}

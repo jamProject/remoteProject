@@ -85,12 +85,15 @@ public class ManagePlanController {
 		return str;
 	}
 	//방장(혹은팀원)이 날짜를 확정 지으면 update문으로 해당 일정 업데이트 + 삽입
-	@RequestMapping(value = "FixCal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "fixcal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	//json받을 떄 필수다 리스폰스 바디
+	@ResponseBody
 	public HashMap<String, Object> fixDate(HttpSession session, CalendarVO vo) {
 		
 		vo.setId((String)session.getAttribute("id"));
 		vo.setPlanNo((int)session.getAttribute("planNo"));
-		
+		System.out.println("컨트롤러 select date : "+vo.getSelectDate());
+		System.out.println("컨트롤러 실행");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			mpDAOS.getSelectDateFix(vo);
@@ -99,6 +102,7 @@ public class ManagePlanController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			map.put("res", "fail");
+			System.out.println("fixCal fail");
 		}
 		return map;
 	}

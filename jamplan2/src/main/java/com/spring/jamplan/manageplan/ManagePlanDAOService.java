@@ -46,25 +46,62 @@ public class ManagePlanDAOService {
 		return teamVO;
 	}
 	
-	public void getFixDate(CalendarVO vo) {
+	public void updateFixDate(CalendarVO vo) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 		calendarMapper.updateFixDate(vo);
 	}
 	
 	public void getSelectDateFix(CalendarVO vo){
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
-		voList = calendarMapper.getSelectFixDate(vo);
+		System.out.println("getSelectFixDate 진입");
+		voList = new ArrayList<CalendarVO>();
+		try {
+			System.out.println("planNo: "+ vo.getPlanNo());
+			System.out.println("selectDate : "+vo.getSelectDate());
+			voList = calendarMapper.getSelectFixDate(vo);
+			System.out.println("getSelectFixDate 성공");
+			System.out.println("voList size = "+ voList.size());
+			System.out.println("volist confirm : " + voList.get(0).getConfirmIndicator());
+		}catch (Exception e) {
+			System.out.println("calendarMapper 데이터 없음");
+			// TODO: handle exception
+		}
 		if(voList.size()==0) {
+			System.out.println("voList size = "+ voList.size());
 			vo.setDateCount(1);
+			vo.setConfirmIndicator(1);
 			calendarMapper.insertSelectDate(vo);
 		}else {
-			getFixDate(vo);
+			System.out.println("voList size != 0");
+			System.out.println("voList size = "+ voList.size());
+			System.out.println("volist confirm : " + voList.get(0).getConfirmIndicator());
+			System.out.println("volist 0 indi : "+ voList.get(0).getConfirmIndicator());
+			System.out.println("volist 0 select : " + voList.get(0).getSelectDate());
+			System.out.println("voliost 0 planno : "+ voList.get(0).getPlanNo());
+			System.out.println("vilist id : " + voList.get(0).getId());
+			System.out.println("volist dateCount : " + voList.get(0).getDateCount());
+			if(voList.get(0).getConfirmIndicator()==1) {
+				System.out.println("확정 취소");
+				vo.setConfirmIndicator(0);
+				updateFixDate(vo);
+			}else {
+				System.out.println("일정 확정");
+				vo.setConfirmIndicator(1);
+				updateFixDate(vo);
+			}
 		}
 	}
 
 	public ArrayList<CalendarVO> getSelectDate(int planNo) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
-		voList = calendarMapper.getCalendarSelectDate(planNo);
+		voList = new ArrayList<CalendarVO>();
+		try {
+			voList = calendarMapper.getCalendarSelectDate(planNo);
+		}catch (Exception e) {
+			System.out.println("getCalendarSelectDate fail");
+			// TODO: handle exception
+		}
+	
 		// System.out.println(sendList.size());
 		// System.out.println(voList.size());
 		int k = 0;
@@ -92,6 +129,8 @@ public class ManagePlanDAOService {
 
 	public void insertSelectDate(CalendarVO vo) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
+		
+		
 		ArrayList<CalendarVO> checkVOList = calendarMapper.checkSelectDate(vo);
 		ArrayList<CalendarVO> checkList = calendarMapper.getCountDate(vo);
 		int dateCount = 1;

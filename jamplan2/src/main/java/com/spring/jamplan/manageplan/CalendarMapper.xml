@@ -35,9 +35,8 @@
 		<result property="id" column="id" />
 		<result property="planNo" column="planNo" />
 		<result property="selectDate" column="selectDate" />
-		<result property="selectMonth" column="selectMonth" />
 		<result property="dateCount" column="dateCount" />
-		<result property="confirmIndicator" column="confirmed" />
+		<result property="confirmIndicator" column="confirmIndicator" />
 	</resultMap>
 	
 	<!-- getTeamRole -->
@@ -51,11 +50,14 @@
 	</resultMap>
 	
 	<select id="getSelectFixDate" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
-		select * from planDate where planNo = #{planNo, javaType = String} and selectDate = #{selectDate, javaType = String}
+		 select planNo, selectDate, id, dateCount, confirmIndicator from plandate
+		 where 
+		 planNo = #{planNo, javaType = int} and 
+		 SELECTDATE = #{selectDate, javaType = String}
 	</select>
 	
 	<update id = "updateFixDate" parameterType="com.spring.jamplan.model.CalendarVO">
-		update plandate set confirmIndicator = 1 where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType = String}
+		update plandate set confirmIndicator = #{confirmIndicator, javaType = int} where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType = String}
 	</update>
 	
 	<select id ="getTeamRole" parameterType="hashmap" resultMap="TeamResultMap">
@@ -84,8 +86,14 @@
 		parameterType="com.spring.jamplan.model.CalendarVO">
 		insert into plandate
 		(planNo,selectDate,id,datecount,confirmIndicator)
-		values(#{planNo, javaType = int},#{selectDate, javaType = String},#{id, javaType =
-		String},#{dateCount, javaType = int},#{confirmIndicator, javaType = int})
+		values
+		(
+			#{planNo, javaType = int},
+			#{selectDate, javaType = String},
+			#{id, javaType =String},
+			#{dateCount, javaType = int},
+			#{confirmIndicator, javaType = int}
+		)
 	</insert>
 	
 	<delete id="deleteSelectDate" parameterType = "com.spring.jamplan.model.CalendarVO">

@@ -35,13 +35,15 @@ create table plan(
     readcount number,
     isopen number not null
 );
+select * from plandate where planNo =1 and SELECTDATE ='18/08/01'; 
 commit;
-select * from plandate ;
+select * from plandate order by selectdate asc;
+select * from plandate where planno =1 and SELECTDATE = '18/08/03';
 select * from plandate where id = 'admin' and SELECTDATE = '18/08/07';
 select * from plandate where  SELECTDATE = '18/08/10';
 commit;
 --drop table plandate;
---delete from plandate where DATECOUNT = 2;
+delete from plandate where id = 'admin' and selectdate = '18/08/02' and dateCount = 1;
 insert into plandate values(1, '18/08/01',  'admin', 1, 0);
 insert into plandate values(1, '18/08/02',  'admin', 1, 0);
 insert into plandate values(1, '18/08/04',  'admin', 1, 0);
