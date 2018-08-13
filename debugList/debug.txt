@@ -1,107 +1,174 @@
 git pull 이후 에러 목록들
 
 
+
 1. sevlet context 
 annotaion driven
 의
  오류는 
-프로젝트> 오른쪽클릭> 속성> 자바빌드패스>
+프로젝트> 오른쪽클릭>
+ 속성> 자바빌드패스>
 라이브러리탭 > 
-JRE시스템 라이브러리> 에디트 >
-enviroments> javaSE-1.8 < 
-어플라이
+JRE시스템 라이브러리>
+ 에디트 >
+enviroments> javaSE-1.8 >어플라이
+
+
 
 2. server에러
-우측 프로젝트 > server 폴더 > server.xml
+우측 프로젝트 >
+ server 폴더 > server.xml
 에서 
+
 <context>태그가 2줄 인지 확인한다.
+
 2줄이라면 (아마 중복됬을것) 
 한 태그의 내용을 지운다.
 
 
+
+
 ----------
-mybatis 에러
+mybatis 
+에러
 1. 바인딩익셉션
 root-context 에서 
+
 <property name="typeAliasesPackage" value="패키지경로" />
+
 <property name="mapperLocations" value="classpath:/패키지경로/**/*.xml" />
+
 꼭 설정 확인해라
+
+
 
 
 -----------
 jsp에서 
-session 객체 접근 불가 시 리퀘스트에서 session 객체 생성  */
-	<%
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-	%>
+session 객체 접근 불가 시 리퀘스트에서 session 객체 생성 
+ */
+	
+<%
+
+HttpSession session = request.getSession();
+		
+String id = (String)session.getAttribute("id");
+	
+%>
+
+
 
 ---------
 java
 
-객체의 필드가 null인지 확인 하기 이전에
-객체 자체가 null인지 항상 생각해 볼것
+
+객체의 필드가 null인지 확인 하기 이전에 
+객체 자체가
+ null인지 항상 생각해 볼것
 레퍼런스 구조를 잘 생각을 할것
+
+
 
 
 
 ---------
 java ajex
 
-ajex는 값을 송신 수신 전부 가능하다.
+ajex
+는 값을 송신 수신 전부 가능하다.
+
 하지만 주의사항이 있다.
 
-데이터를 송신만 하더라도 controller에서 
+데이터를 송신만 하더라도 
+controller에서 
 어떠한 값을 리턴 해주어야 한다.
+
 $.ajex(function(){
-   	url:'loadCalendar.mp',
+   	
+	url:'loadCalendar.mp',
+
   	type:'POST',
+	
 	dataType:"json",
+	
 	contentType:'application/x-www-form-urlencoded; charest=utf-8',
+	
 	data: {"selectDate" : date},
+	
 	success:function(str){
-	     data를 컨트롤러로 보내고, 
-	     컨트롤러에서 리턴값을 받아와 정상적인 실행이 되었다면 
-	     해당 success:function이 실행된다.
+	     
+data를 컨트롤러로 보내고, 
+	     
+컨트롤러에서 리턴값을 받아와 정상적인 실행이 되었다면 
+	  
+   해당 success:function이 실행된다.
 	},
-	erorr:function(){
-	     송 수신 실패 시 
+	
+erorr:function(){
+	  
+   송 수신 실패 시 
+
 	}
 })
 
+
 ------------------
-ajax 406에러 디버깅
+
+ajax 406에러 
+디버깅
 1. url 문제 
-controller로 이동하는 requestmapping url이 너무 길거나 내부적인 충돌을 일으키는 문제.
+controller로 이동하는 requestmapping url이 너무 길거나
+ 내부적인 충돌을 일으키는 문제.
 해당 url은 *.xx 식의 2글자로 지정하는 것을 권장한다.
 
+
 2. ajax 버전 문제
-<dependency>
-	<groupId>org.codehaus.jackson</groupId>
-	<artifactId>jackson-mapper-asl</artifactId>
-	<version>1.9.13</version>
-</dependency> -->
-
-pom.xml에 위와 같은 jacson버전을 사용 중 이라면 다음으로 변경한다.
 
 <dependency>
-	<groupId>com.fasterxml.jackson.core</groupId>
-	<artifactId>jackson-core</artifactId>
-	<version>2.4.1</version>
+	
+<groupId>org.codehaus.jackson</groupId>
+	
+<artifactId>jackson-mapper-asl</artifactId>
+	
+<version>1.9.13</version>
 </dependency>
+
+ -->
+
+pom.xml에 위와 같은 jacson버전을 사용 중 이라면 다음으로 변경한다
+.
+
 <dependency>
-	<groupId>com.fasterxml.jackson.core</groupId>
-	<artifactId>jackson-databind</artifactId>
-	<version>2.4.1.1</version>
+	
+<groupId>com.fasterxml.jackson.core</groupId>
+
+<artifactId>jackson-core</artifactId>
+	
+<version>2.4.1</version>
 </dependency>
+
+<dependency>
+	
+<groupId>com.fasterxml.jackson.core</groupId>
+	
+<artifactId>jackson-databind</artifactId>
+	
+<version>2.4.1.1</version>
+</dependency>
+
+
 
 
 
 -----------------------------------
+
 db에서 데이터를 제대로 가져오지 못할 때
 
+
 mapper.xml를 확인하자
-쿼리문에 문제가 없다면 
+쿼리문에 문제가 없다면
+ 
 테이블 자체를 확인해보자
 쓸떼없는 컬럼이 있다면
-데이터가 밀려서 제대로 저장 불러오기가 안될 수 있다.
+데이터가
+ 밀려서 제대로 저장 불러오기가 안될 수 있다.
