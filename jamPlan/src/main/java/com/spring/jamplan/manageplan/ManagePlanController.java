@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.MapVO;
 
 @Controller
@@ -23,7 +23,7 @@ public class ManagePlanController {
 	private ManagePlanDAOService managePlanDAOService;
 	
 	//test
-	@RequestMapping(value="mapPage.map")
+	@RequestMapping(value="mapPage.map", method = RequestMethod.GET)
 	public String mapPage() {
 		return "managePlan/mapPage";
 	}
@@ -32,12 +32,14 @@ public class ManagePlanController {
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getPickList() {		//클래스 타입 확인
+		
 		List<MapVO> pickList = managePlanDAOService.getPickList();
 		//왜 mapVO안되냐
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			str = mapper.writeValueAsString(pickList);
+			
 		}catch(Exception e) {
 			System.out.println("first() mapper: " + e.getMessage());
 		}
@@ -49,11 +51,11 @@ public class ManagePlanController {
 	@ResponseBody
 	public Object insertMember(MapVO mapVO) {
 		Map<String, Object> retVal = new HashMap<String, Object>(); 
-		
+		System.out.println("controller insert");
 		try {
 			System.out.println("mapVO.getId()=" + mapVO.getId());
 			int res = managePlanDAOService.insertMember(mapVO); 
-			
+		
 			retVal.put("res", "OK"); 
 		}
 		catch (Exception e)

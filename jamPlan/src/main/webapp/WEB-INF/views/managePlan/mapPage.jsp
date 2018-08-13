@@ -36,16 +36,18 @@ left: 405px;
 top: 112px;
 } 
 
-#infowindow-content {
-        display: none;
-      }
-      #map #infowindow-content {
+/* #infowindow-content {
+      display: none;
+}
+#map #infowindow-content {
         display: inline;
-      }
+ } */
+
 </style>
 </head>
 <body>
-<input type=hidden id="memberid" value=<%=id %> /> 
+<input type="hidden" id="memberid" value=<%=id %> /> 
+
 <div class="maptotal">
 <select class="ui dropdown">
   <option value="0">1월 13일</option>
@@ -73,14 +75,14 @@ top: 112px;
 </div>
 
 <aside  id = "map"> </aside>
-<div id="infowindow-content">
-      <img id="place-icon" src="" height="30" width="30">		<!-- 인포안에 아이콘 -->
+<!-- <div id="infowindow-content">
+      <img id="place-icon" src="" height="30" width="30">		인포안에 아이콘
       <span id="place-name"  class="title"></span><br>
       <span id="place-address"></span><br>
       <span id="memberlist"></span><br>
       <span><input type='submit' value='Pick'></span> 
    </div>
-</div>
+</div> -->
 </div>
 
 <!-- 

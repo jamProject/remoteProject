@@ -8,87 +8,90 @@ var up_lng;
 var up_lat
 var up_latlng;
 
-$(document).ready(function(){
-	var id = document.getElementById("memberid").value;
-//	var idarray = [];
+function pickList(){
+	$('#output').html("");
 	
-	function pickList(){
-		$('#output').empty();
-		
-		$.ajax({
-			url:'getPickList.map',
-			type: 'POST',
-			dataType : "json",
-			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			success:function(data){
-				$.each(data, function(index, item){
-					var output = '';
-					output += '<tr>';
-					output += '<td>' + item.id + '</td>';
-					output += '</tr>'; 
-					console.log("output:" + output);
-					$('#output').append(output);
-				});
-			},
-			error:function(){
-				alert("ajax통신실패!!!");
-		   }
-		});
-	}
-	
-	$('#pickBtn').click(function(event){		
-		//idarray.push(id);		
-		//document.getElementById('output').innerHTML = "selectMember" + "<br>" + idarray;
-		$.ajax({
-			url:'insertMember.map',
-			type: 'POST',
-			data: { "planNo": 1,
-					"id": id,
-					"userColor": "black",
-					"mapCount": 1,
-					"location":"seoul"},
-			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			dataType : "json",
-			success:function(retVal){ 	
-				if(retVal.res == "OK"){
-					//$('#output').html(id);						
-					pickList();					
-				}
-				else
-				{
-					alert("Insert Fail!!!");
-				}
-			},
-			error:function(){
-				alert("ajax통신실패!!!");
-			}
-		});
+	$.ajax({
+		url:'getPickList.map',
+		type: 'POST',
+		dataType : "json",
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		success:function(data){
+			$.each(data, function(index, item){
+				//$('#output').val('');
+				var output = '';
+				output += '<tr>';
+				output += '<td>' + item.id + '</td>';
+				output += '</tr>'; 
+				console.log("output:" + output);
+				
+				$('#output').append(output);
+			});
+		},
+		error:function(){
+			alert("ajax통신실패!!!");
+	   }
 	});
+	event.preventDefault();
+}
 
-	$('#cancelBtn').click(function(event){	// obj.parentNode 를 이용하여 삭제
-		//document.getElementById('output').innerHTML="selectMember" + "<br>" + idarray.pop();
-		$.ajax({
-			url: 'deleteMember.map',
-			type: 'POST',
-			data: {"id": id},
-			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			dataType : "json",
-			success:function(retVal){
-				if(retVal.res == "OK"){
-					$('#output').html("");
-				}
-				else
-				{
-					alert("Delete Fail!!!");
-				}
-			},
-			error:function(){
-				 alert("ajax통신실패!!!");
-			}
-		});
-	});	
-	pickList();
-});	
+
+function onPick(){		
+//idarray.push(id);		
+//document.getElementById('output').innerHTML = "selectMember" + "<br>" + idarray;
+console.log("252582525252");
+$.ajax({
+	url:'insertMember.map',
+	type: 'POST',
+	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+	dataType : "json",
+	data: { 
+		"planNo":1,
+		"id":"hello",
+		"userColor":"black",
+		"mapCount":1,
+		"location":"seoul"},
+	success:function(retVal){ 	
+		if(retVal.res == "OK"){
+			//$('#output').html(id);						
+			pickList();					
+		}
+		else
+		{
+			alert("Insert Fail!!!");
+		}
+	},
+	error:function(){
+		alert("ajax통신실패!!!");
+	}
+});
+event.preventDefault();
+}
+
+function onCancel(){// obj.parentNode 를 이용하여 삭제
+//document.getElementById('output').innerHTML="selectMember" + "<br>" + idarray.pop();
+$.ajax({
+	url: 'deleteMember.map',
+	type: 'POST',
+	data: {"id":$("#memberid").val()},
+	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+	dataType : "json",
+	success:function(retVal){
+		if(retVal.res == "OK"){
+			//$('#output').html("");
+			pickList();
+		}
+		else
+		{
+			alert("Delete Fail!!!");
+		}
+	},
+	error:function(){
+		 alert("ajax통신실패!!!");
+	}
+});
+event.preventDefault();
+}
 
 function initMap() {
 	
@@ -170,7 +173,7 @@ function initMap() {
         	 icon: markerImage,
              label: {
                  text: '+1' || '●',
-                 color: "C9C5C9"
+                 color: "FFFFFF"
              },
         	draggable:true,
             map: map,
@@ -288,8 +291,46 @@ function initMap() {
             popInfoWindow(marker, latlng);
 
         }
-    });                                                                                  
-
+    });                              
+    
+    function popInfoWindow(marker, latlng) {  
+    	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
+    	//var id = $('#memberid').val();
+//    	var idarray = [];
+    	var id = document.getElementById("memberid").value;
+    	
+    	pickList();
+    		
+    	geocoder.geocode({'latLng': lat_lng}, function(results, status) {   		
+    		
+    		if (status == google.maps.GeocoderStatus.OK)  {
+    			if (results[0]){					
+    				infowindow.setContent(
+    					"<table>" +							
+    						"<tr><td colspan='3'>" + results[0].formatted_address + "</td></tr>" +
+    						"<tr><td>selectMember</td>" + 
+    						"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>" +
+    						"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>" +
+    					"</table>" + "<table id='output'><tr><td>test</td></tr></table>" 					
+    				);				
+    			
+    			infowindow.open(map,marker);
+    				
+        		} else {
+        			alert("No results found");
+        		}
+        	}else{
+        		infowindow.setContent("lat: " + latlng.lat() + " lng: " + latlng.lng());
+        		infowindow.open(map, marker);
+        	}
+    	    	
+    	marker.addListener('click', function (event){    		
+    		popInfoWindow(marker,latlng); 
+    	});
+    	
+        });
+    }
+    	
 	/*function addMarker(latlng) {
 		marker = new google.maps.Marker({
 			position: latlng,
@@ -303,41 +344,6 @@ function initMap() {
 	    });
 	}*/
     
-    function popInfoWindow(marker, latlng) {  
-    	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
-		//var id = $('#memberid').val();
-    	
-		
-    	geocoder.geocode({'latLng': lat_lng}, function(results, status) {
-    		
-    		
-			if (status == google.maps.GeocoderStatus.OK)  {
-				if (results[0]){					
-					infowindow.setContent(
-						"<table>" +							
-							"<tr><td colspan='3'>" + results[0].formatted_address + "</td></tr>" +
-							"<tr><td>selectMember</td></tr>" + 
-							"<tr><td><input id ='pickBtn' type='button' value='Pick' ></td>" +
-							"<td><input id='cancelBtn' type='button' value='Cancel' ></td></tr>" +
-						"</table>" + "<table id='output'></table>" 
-						
-					);				
-				infowindow.open(map,marker);
-					
-	    		} else {
-	    			alert("No results found");
-	    		}
-	    	}else{
-	    		infowindow.setContent("lat: " + latlng.lat() + " lng: " + latlng.lng());
-	    		infowindow.open(map, marker);
-	    	}
-		    	
-    	marker.addListener('click', function (event){    		
-    		popInfoWindow(marker,latlng); 
-    	});
-        });
-	}
- 
     ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
         var me = this;
         this.placesService.getDetails({placeId: placeId}, function(place, status) {

@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MapVO {
-	int planNo;
-	int mapCount;
-	String id;
-	String userColor;
-	String location;
+	private int planNo;
+	private int mapCount;
+	private String id;
+	private String userColor;
+	private String location;
 	
 	public int getPlanNo() {
 		return planNo;

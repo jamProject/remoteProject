@@ -3,11 +3,11 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 
 CREATE TABLE PLANMAP(
-PLANNO NUMBER,
+PLANNO NUMBER NOT NULL,
 ID VARCHAR2(50),
 USERCOLOR VARCHAR2(50),
 MAPCOUNT NUMBER DEFAULT 0,
-LOACTION VARCHAR2(100)
+LOCATION VARCHAR2(100)
 );
  -->
  
@@ -27,9 +27,13 @@ LOACTION VARCHAR2(100)
 	
 	<insert id="insertMember" parameterType="com.spring.jamplan.model.MapVO" >
 		insert into planMap values
-			(#{planNo, javaType=String}, #{id, javaType=String}, #{userColor, javaType=String},
-			 	#{mapCount}, #{location, javaType=String})
+			(#{planNo, javaType=int}, #{id, javaType=String}, #{userColor, javaType=String},
+			 	#{mapCount, javaType=int}, #{location, javaType=String})
 	</insert>
+	
+	<select id="pickMemberCount" parameterType="String">
+		select count(*) from planMap where id=#{id, javaType=String} 
+	</select>
 	
 	<delete id="deleteMember" parameterType="String">
 		delete planMap where id=#{id, javaType=String} 
