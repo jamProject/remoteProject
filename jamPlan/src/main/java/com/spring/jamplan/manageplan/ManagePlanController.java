@@ -38,24 +38,30 @@ public class ManagePlanController {
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
+			System.out.println("listcontrollerfirst");
 			str = mapper.writeValueAsString(pickList);
-			
+			System.out.println("listcontrollelast");
 		}catch(Exception e) {
 			System.out.println("first() mapper: " + e.getMessage());
 		}
 		return str;	
 	}
-	
-	@RequestMapping(value="insertMember.map", method = RequestMethod.POST,
+		
+	@RequestMapping(value="checkPick.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Object insertMember(MapVO mapVO) {
+	public Object checkPick(MapVO mapVO) {
 		Map<String, Object> retVal = new HashMap<String, Object>(); 
-		System.out.println("controller insert");
+		
 		try {
 			System.out.println("mapVO.getId()=" + mapVO.getId());
-			int res = managePlanDAOService.insertMember(mapVO); 
-		
+			int count = managePlanDAOService.checkPick(mapVO); 
+			System.out.println("Checkcontrollerfirst");
+
+			if(count==0){				
+				int res = managePlanDAOService.insertMember(mapVO); 
+				System.out.println("insertcontrollerfirst");
+			}
 			retVal.put("res", "OK"); 
 		}
 		catch (Exception e)

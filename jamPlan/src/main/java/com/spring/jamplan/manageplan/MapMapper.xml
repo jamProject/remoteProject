@@ -31,8 +31,9 @@ LOCATION VARCHAR2(100)
 			 	#{mapCount, javaType=int}, #{location, javaType=String})
 	</insert>
 	
-	<select id="pickMemberCount" parameterType="String">
-		select count(*) from planMap where id=#{id, javaType=String} 
+	<select id="checkPick" parameterType="com.spring.jamplan.model.MapVO">
+		select count(*) from planMap 
+		where planNo=#{planNo, javaType=int} and id=#{id, javaType=String} and location=#{location,javaType=String} 
 	</select>
 	
 	<delete id="deleteMember" parameterType="String">

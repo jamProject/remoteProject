@@ -17,8 +17,7 @@ function pickList(){
 		dataType : "json",
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){
-			$.each(data, function(index, item){
-				//$('#output').val('');
+			$.each(data, function(index, item){				
 				var output = '';
 				output += '<tr>';
 				output += '<td>' + item.id + '</td>';
@@ -35,19 +34,18 @@ function pickList(){
 	event.preventDefault();
 }
 
-
 function onPick(){		
 //idarray.push(id);		
 //document.getElementById('output').innerHTML = "selectMember" + "<br>" + idarray;
 console.log("252582525252");
 $.ajax({
-	url:'insertMember.map',
+	url:'checkPick.map',
 	type: 'POST',
 	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	dataType : "json",
 	data: { 
 		"planNo":1,
-		"id":"hello",
+		"id":"haha",
 		"userColor":"black",
 		"mapCount":1,
 		"location":"seoul"},

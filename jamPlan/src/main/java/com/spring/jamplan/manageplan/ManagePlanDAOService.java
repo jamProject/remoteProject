@@ -24,10 +24,18 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	}
 	
 	@Override
+	public int checkPick(MapVO mapVO) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		int count = mapMapper.checkPick(mapVO);
+		System.out.println("checkPickDAOS");
+		return count;
+	}	
+	
+	@Override
 	public int insertMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
 		int res = mapMapper.insertMember(mapVO);
-		System.out.println("insertMemberDAO");
+		System.out.println("insertDAOS");
 		return res;
 	}
 	
