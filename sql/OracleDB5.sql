@@ -98,9 +98,6 @@ insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, t
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('user5','user5@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 insert into userinfo (id, email, pass, isadmin, signDate, nation, gender, age, travelType, hobby) values('user6','user6@gmail.com','1234',1,sysdate,'한국','남',26,'혼자','기타연주');
 
-
-
-
 --drop table plan;
 select * from plan;     
 select * from plan where isopen = 0 and teamno =1;
@@ -133,6 +130,7 @@ create table planDate(
     dateCount number,
     confirmIndicator number
 );
+
 commit;
 select * from plandate ;
 select * from plandate where id = 'admin' and SELECTDATE = '18/08/07';

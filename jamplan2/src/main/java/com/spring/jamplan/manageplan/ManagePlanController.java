@@ -27,7 +27,7 @@ public class ManagePlanController {
 	@Autowired(required = true)
 	TeamVO teamVO;
 
-	@Autowired(required = true)
+	@Autowired(required = true)	
 	ManagePlanDAOService mpDAOS;
 
 	// @Autowired
@@ -66,6 +66,25 @@ public class ManagePlanController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("res", "ok");
 		return map;
+	}
+	
+	@RequestMapping(value = "getMemberId.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String getMemberId(HttpSession session) {
+		int planNo = (int)session.getAttribute("planNo");
+		ArrayList<CalendarVO> voList = mpDAOS.getMemberId(planNo);
+		
+		ObjectMapper mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
+		String str = "";
+		try {
+			str = mapper.writeValueAsString(voList);
+			System.out.println("확인 : "+voList.get(0).getId());
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("castring fail");
+		}
+		return str;
+		
 	}
 
 	// 선택한 날짜 디비에서 불러오는 컨트롤러 json으로 해당 데이터 보내기

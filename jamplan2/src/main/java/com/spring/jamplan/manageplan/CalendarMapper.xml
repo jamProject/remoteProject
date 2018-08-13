@@ -49,6 +49,10 @@
 		<result property="teamNo" column="teamNo" />
 	</resultMap>
 	
+	<select id="getMemberId" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		select * from plandate where planNo = #{planNo, javaType = int} order by selectdate asc
+	</select>
+	
 	<select id="getSelectFixDate" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
 		 select planNo, selectDate, id, dateCount, confirmIndicator from plandate
 		 where 

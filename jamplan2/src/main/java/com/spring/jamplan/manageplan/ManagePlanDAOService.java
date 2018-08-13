@@ -45,12 +45,7 @@ public class ManagePlanDAOService {
 		teamVO = calendarMapper.getTeamRole(map);
 		return teamVO;
 	}
-	
-	public void updateFixDate(CalendarVO vo) {
-		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
-		calendarMapper.updateFixDate(vo);
-	}
-	
+		
 	public void getSelectDateFix(CalendarVO vo){
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 		System.out.println("getSelectFixDate 진입");
@@ -83,15 +78,23 @@ public class ManagePlanDAOService {
 			if(voList.get(0).getConfirmIndicator()==1) {
 				System.out.println("확정 취소");
 				vo.setConfirmIndicator(0);
-				updateFixDate(vo);
+				calendarMapper.updateFixDate(vo);
 			}else {
 				System.out.println("일정 확정");
 				vo.setConfirmIndicator(1);
-				updateFixDate(vo);
+				calendarMapper.updateFixDate(vo);
 			}
 		}
 	}
-
+	
+	public ArrayList<CalendarVO> getMemberId(int planNo){
+		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
+		voList = new ArrayList<CalendarVO>();
+		
+		voList = calendarMapper.getMemberId(planNo);
+		return voList;
+	}
+	
 	public ArrayList<CalendarVO> getSelectDate(int planNo) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 		voList = new ArrayList<CalendarVO>();
@@ -129,8 +132,7 @@ public class ManagePlanDAOService {
 
 	public void insertSelectDate(CalendarVO vo) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
-		
-		
+	
 		ArrayList<CalendarVO> checkVOList = calendarMapper.checkSelectDate(vo);
 		ArrayList<CalendarVO> checkList = calendarMapper.getCountDate(vo);
 		int dateCount = 1;

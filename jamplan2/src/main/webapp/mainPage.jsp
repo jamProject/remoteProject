@@ -16,6 +16,7 @@
 		<input value="id" type = "text" name = "id">
 		<input value="pass" type = "password" name = "pass">
 		<input type = "submit" value="로그인">
+		
 	</form>
 </body>
 </html>

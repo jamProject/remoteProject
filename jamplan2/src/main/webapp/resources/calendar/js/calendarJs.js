@@ -18,11 +18,9 @@ $(document).ready(function() {
 
 	var year = String(nowYear).substring(2, 4);
 	printSelectDateAjax(Number(year), nowMonth + 1);
-
-	/*
-	 * if($("#save").length && ("#save").val()=="저장하기"){
-	 * $("#save").click(function(){ $("#save").val("취소"); }) }
-	 */
+	idHover();
+	
+	//팀장 + 부팀장만 보이는 저장하기 버튼 이벤트
 	if ($("#save").length) {
 		$("#save").click(function() {
 			if ($("#save").val() == "저장하기") {
@@ -49,12 +47,13 @@ $(document).ready(function() {
 					var num = $(this).attr("value");
 					// console.log(num);
 					$("#dateButton" + num).html("좋아요");
+					
+					//$(".date")
 				}
 			})
 		})
-
 	}
-
+	
 	/*
 	 * 해당 문서 로딩 이후 ajax를 이용하여 mananagePlanController에 loadCalendar.manageplan로
 	 * 맴핑되는 메소드가 실행되고 해당 메소드는 db에 접속하여 해당 일정에 날짜를 선택한 데이터를 가져와서 뿌려준다.
@@ -62,9 +61,78 @@ $(document).ready(function() {
 	 */
 });
 
+function idHover(){
+	$(".date").hover(
+			//마우스 들어올때
+			function(){
+				$(this).children(".id").css('visibility', 'visible');
+			},
+			//마우스 나갈 때
+			function(){
+				$(this).children(".id").css('visibility', 'hidden');		
+		})
+}
+
+function idHide(){
+	$(".id").css('visibility', 'hidden');
+}
+
+//좋아요 누른 수 보여주는 메소드 + 누른 아이디 보여주는 메소드
 function printSelectDateAjax(year, month) {
 	$(".countDate").html("");
-	var selectDateList = new Array();
+	$(".id").html("");
+	var output = "<div class = 'id'>";
+	var dayList = new Array();
+	$.ajax({
+		url : 'getMemberId.mp',
+		type : 'POST',
+		dataType : "json",
+		contentType : 'application/x-www-form-urlencoded; charest=utf-8',
+		success : function(str){
+			$.each(str, function(index, item){
+				//console.log(str);
+				var yearSub = Number(item.selectDate.substring(0, 2));
+				var monthSub = Number(item.selectDate.substring(3, 5));
+				if (yearSub == year && monthSub == Number(month)) {
+					day = Number(item.selectDate.substring(6, 8));
+					if(dayList.length ==0){
+						dayList.push(day);
+						output+=String(item.id);
+						output+="<br/>"
+						//console.log(dayList.length);
+						//console.log(Object.keys(str).length);
+
+					}else if(day == dayList[dayList.length-1]){
+						dayList.push(day);
+						output+=String(item.id);
+						output+="<br/>"
+						//console.log(dayList.length);
+						//console.log(Object.keys(str).length);
+
+					}else if(day != dayList[dayList.length-1]){
+						
+						output+="</div>"
+						//console.log(dayList.length);
+						$("#dateTd"+ dayList[dayList.length-1]).append(output);
+						dayList.push(day);
+						output = "<div class = 'id'>"
+						output+=String(item.id);
+						output+="<br/>"
+						//console.log(dayList.length);
+						//console.log(Object.keys(str).length);
+
+						
+					}
+				}
+			})
+			output+="</div>"
+			$("#dateTd"+ dayList[dayList.length-1]).append(output);
+			$(".id").css('visibility', 'hidden');
+		},
+		error : function(){
+			alert("통신실패");
+		}
+	})
 
 	$.ajax({
 		url : 'loadCalendar.mp',
@@ -104,13 +172,11 @@ function printSelectDateAjax(year, month) {
 
 // 마우스가 밖으로 나갔을 때 좋아요 버튼 숨기기 이벤트
 function hiddenBut(day) {
-
 	$("#dateButton" + day).css('visibility', 'hidden');
 }
 
 // 모든 버튼 숨기기 이벤트
 function hiddenAllBut() {
-
 	$(".goodBut").css('visibility', 'hidden');
 }
 
@@ -121,37 +187,57 @@ function showBut(day) {
 
 // 좋아요 버튼 눌렀을 때 년도 저장 하기 이벤트
 function clickBut() {
-	$(".goodBut")
-			.on(
-					"click",
-					function() {
-						var yearSelect = $("#listYear").val();
-						var monthSelect = $("#listMonth").val();
-						var daySelect = $(this).val();
-						var date;
-						var year;
+	$(".goodBut").on("click",function() {
+					var yearSelect = $("#listYear").val();
+					var monthSelect = $("#listMonth").val();
+					var daySelect = $(this).val();
+					var date;
+					var year;
 
-						if (yearSelect < 2100) {
-							date = yearSelect.substring(2, 4);
-							year = date;
-						} else {
-							date = yearSelect.substring(1, 4);
-							year = date;
-						}
-						if (monthSelect < 10) {
-							date = date + '/0' + String(monthSelect);
-						} else {
-							date = date + '/' + String(monthSelect);
-						}
-						if (daySelect < 10) {
-							date = date + '/0' + String(daySelect);
-						} else {
-							date = date + '/' + String(daySelect);
-						}
+					if (yearSelect < 2100) {
+						date = yearSelect.substring(2, 4);
+						year = date;
+					} else {
+						date = yearSelect.substring(1, 4);
+						year = date;
+					}
+					if (monthSelect < 10) {
+						date = date + '/0' + String(monthSelect);
+					} else {
+						date = date + '/' + String(monthSelect);
+					}
+					if (daySelect < 10) {
+						date = date + '/0' + String(daySelect);
+					} else {
+						date = date + '/' + String(daySelect);
+					}
 
-						if (!$("#save").length || $("#save").val() == "저장하기") {
+					if (!$("#save").length || $("#save").val() == "저장하기") {
+						$.ajax({
+								url : "selectCalendar.mp",
+								type : "POST",
+								contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+								dataType : "json",
+								data : {
+									"selectDate" : date
+								},
+								success : function(map) {
+									// alert(map.res);
+									printSelectDateAjax(Number(year),
+									Number(monthSelect));
+								},
+								erorr : function() {
+									alert("출력실패");
+								}
+							})
+					} else {
+						var num = $(this).attr("value");
+						if ($("#dateTd" + num).css("background-color") != "rgb(0, 128, 0)") {
+							// console.log($("#dateTd"+num).css("background-color"));
+							$("#dateTd" + num).css("background-color","green");
+							// console.log("일정 확정하기" + num);
 							$.ajax({
-									url : "selectCalendar.mp",
+									url : "fixcal.mp",
 									type : "POST",
 									contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
 									dataType : "json",
@@ -160,58 +246,32 @@ function clickBut() {
 									},
 									success : function(map) {
 										// alert(map.res);
-										printSelectDateAjax(Number(year),
-										Number(monthSelect));
+										// alert("일정 확정 성공")
 									},
 									erorr : function() {
-										alert("출력실패");
+										alert("일정 확정 실패");
 									}
 								})
 						} else {
-							var num = $(this).attr("value");
-							if ($("#dateTd" + num).css("background-color") != "rgb(0, 128, 0)") {
-								// console.log($("#dateTd"+num).css("background-color"));
-								$("#dateTd" + num).css("background-color","green");
-								// console.log("일정 확정하기" + num);
-								$.ajax({
-										url : "fixcal.mp",
-										type : "POST",
-										contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
-										dataType : "json",
-										data : {
-											"selectDate" : date
-										},
-										success : function(map) {
-											// alert(map.res);
-											// alert("일정 확정 성공")
-										},
-										erorr : function() {
-											alert("일정 확정 실패");
-										}
-									})
-							} else {
-								console.log("else");
-								$("#dateTd" + num).css("background-color",
-										"white");
+							console.log("else");
+							$("#dateTd" + num).css("background-color","white");
 
-								$.ajax({
-										url : "fixcal.mp",
-										type : "POST",
-										contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
-										dataType : "json",
-										data : {"selectDate" : date},
-										success : function(map) {
-											// alert(map.res);
-											// alert("일정 확정 성공")
-										},
-										erorr : function() {
-											alert("일정 확정 실패");
-										}
-									})
+							$.ajax({
+									url : "fixcal.mp",
+									type : "POST",
+									contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+									dataType : "json",
+									data : {"selectDate" : date},
+									success : function(map) {
+										// alert(map.res);
+										// alert("일정 확정 성공")
+									},
+									erorr : function() {
+										alert("일정 확정 실패");
+									}
+								})
 							}
-
 						}
-
 					});
 }
 
@@ -364,6 +424,7 @@ function selectYearChange() {
 	clickBut();
 	var year = String(yearVal).substring(2, 4);
 	printSelectDateAjax(year, month);
+	idHover()
 }
 
 // 셀렉트 월 변경 이벤트 '<select id = "monthList" onchange="selectMonthChange()">';
@@ -389,6 +450,8 @@ function selectMonthChange() {
 
 	var year = String(yearVal).substring(2, 4);
 	printSelectDateAjax(year, month);
+	idHover();
+	
 }
 
 // 달력 출력 함수
