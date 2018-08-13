@@ -9,6 +9,6 @@
 </head>
 <body>
 	<h1>mainPage</h1>
-	<a href="mapPage.admin?id=jieun">지도탭</a>
+	<a href="mapPage.map?id=jieun">지도탭</a>
 </body>
 </html>

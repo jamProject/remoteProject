@@ -8,7 +8,87 @@ var up_lng;
 var up_lat
 var up_latlng;
 
+$(document).ready(function(){
+	var id = document.getElementById("memberid").value;
+//	var idarray = [];
+	
+	function pickList(){
+		$('#output').empty();
+		
+		$.ajax({
+			url:'getPickList.map',
+			type: 'POST',
+			dataType : "json",
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			success:function(data){
+				$.each(data, function(index, item){
+					var output = '';
+					output += '<tr>';
+					output += '<td>' + item.id + '</td>';
+					output += '</tr>'; 
+					console.log("output:" + output);
+					$('#output').append(output);
+				});
+			},
+			error:function(){
+				alert("ajax통신실패!!!");
+		   }
+		});
+	}
+	
+	$('#pickBtn').click(function(event){		
+		//idarray.push(id);		
+		//document.getElementById('output').innerHTML = "selectMember" + "<br>" + idarray;
+		$.ajax({
+			url:'insertMember.map',
+			type: 'POST',
+			data: { "planNo": 1,
+					"id": id,
+					"userColor": "black",
+					"mapCount": 1,
+					"location":"seoul"},
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : "json",
+			success:function(retVal){ 	
+				if(retVal.res == "OK"){
+					//$('#output').html(id);						
+					pickList();					
+				}
+				else
+				{
+					alert("Insert Fail!!!");
+				}
+			},
+			error:function(){
+				alert("ajax통신실패!!!");
+			}
+		});
+	});
 
+	$('#cancelBtn').click(function(event){	// obj.parentNode 를 이용하여 삭제
+		//document.getElementById('output').innerHTML="selectMember" + "<br>" + idarray.pop();
+		$.ajax({
+			url: 'deleteMember.map',
+			type: 'POST',
+			data: {"id": id},
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : "json",
+			success:function(retVal){
+				if(retVal.res == "OK"){
+					$('#output').html("");
+				}
+				else
+				{
+					alert("Delete Fail!!!");
+				}
+			},
+			error:function(){
+				 alert("ajax통신실패!!!");
+			}
+		});
+	});	
+	pickList();
+});	
 
 function initMap() {
 	
@@ -225,19 +305,24 @@ function initMap() {
     
     function popInfoWindow(marker, latlng) {  
     	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
-		var id = $('#memberid').val();
-
+		//var id = $('#memberid').val();
+    	
+		
     	geocoder.geocode({'latLng': lat_lng}, function(results, status) {
+    		
+    		
 			if (status == google.maps.GeocoderStatus.OK)  {
 				if (results[0]){					
 					infowindow.setContent(
-						"<div><table>" +							
-							"<tr><td colspan='3'>" + results[0].formatted_address + "</td><tr>" +
-							"<tr><td id='bar'>selectMember</td><td><input id ='submitbtn' type='button' value='Pick' onclick='BarFind(" + id + ")'></td>" +
-							"<td><input type='button' value='Cancel' onclick='BarCancel(" + id + ")'></td></tr>" +
-						"</table></div>");					
-					
-					infowindow.open(map,marker);
+						"<table>" +							
+							"<tr><td colspan='3'>" + results[0].formatted_address + "</td></tr>" +
+							"<tr><td>selectMember</td></tr>" + 
+							"<tr><td><input id ='pickBtn' type='button' value='Pick' ></td>" +
+							"<td><input id='cancelBtn' type='button' value='Cancel' ></td></tr>" +
+						"</table>" + "<table id='output'></table>" 
+						
+					);				
+				infowindow.open(map,marker);
 					
 	    		} else {
 	    			alert("No results found");
@@ -266,8 +351,8 @@ function initMap() {
           }
         });
       };
+}    
     
-    }
 
 
     /*동선그리기
@@ -293,14 +378,3 @@ function initMap() {
     travelPathArray.push(flightPath);
     }*/  
 
-
-	function BarFind(id){
-		//var id = document.getElementById("memberid").value;
-		document.getElementById('bar').innerHTML = "selectMember" + "<br>" + id;
-		console.log(id);
-	}  
-	
-	
-	function BarCancel(id){	// obj.parentNode 를 이용하여 삭제
-		 document.getElementById('bar').removeChild(id);
-	 }

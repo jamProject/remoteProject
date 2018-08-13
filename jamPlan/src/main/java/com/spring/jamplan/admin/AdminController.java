@@ -26,14 +26,8 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDAOService adminDAOService;
-
-	//test
-	@RequestMapping("mapPage.admin")
-	public String mapPage() {
-		return "managePlan/mapPage";
-	}
 		
-	@RequestMapping("/getUserList.admin")	
+	@RequestMapping("getUserList.admin")	
 	public ModelAndView getUserList() {
 		ModelAndView result = new ModelAndView();
 		ArrayList<UserVO> userList = adminDAOService.getUserList();
@@ -42,37 +36,37 @@ public class AdminController {
 		return result;
 	}
 
-	@RequestMapping("/getTeamList.admin")
+	@RequestMapping("getTeamList.admin")
 	public ModelAndView getTeamList() {
 		return null;
 	}
 	
-	@RequestMapping("/getPlanList.admin")
+	@RequestMapping("getPlanList.admin")
 	public ModelAndView getPlanList(String planName) {
 		return null;
 	}
 	
-	@RequestMapping("/getUser.admin")
+	@RequestMapping("getUser.admin")
 	public ModelAndView getUser(String id) {
 		return null;
 	}
 
-	@RequestMapping("/getTeam.admin")
+	@RequestMapping("getTeam.admin")
 	public ModelAndView getTeam(String teamName) {
 		return null;
 	}
 	
-	@RequestMapping("/deleteUser.admin")
+	@RequestMapping("deleteUser.admin")
 	public ModelAndView deleteUser(String id) {
 		return null;
 	}
 	
-	@RequestMapping("/deleteTeam.admin")
+	@RequestMapping("deleteTeam.admin")
 	public ModelAndView deleteTeam(String teamName) {
 		return null;
 	}
 	
-	@RequestMapping("/deletePlan.admin")
+	@RequestMapping("deletePlan.admin")
 	public ModelAndView deletePlan(int planNo) {
 		return null;
 	}

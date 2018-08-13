@@ -6,8 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<script language="JavaScript" src="./resources/map/js/map.js" charset="UTF-8"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -17,7 +16,7 @@
 <spring:url value="/resources/map/css/semantic.min.css" var="semanticMinCss" />
 <spring:url value="/resources/map/css/map.css" var="mapCss" />
 <spring:url value="/resources/map/js/semantic.min.js" var="semanticMinJs" />
-<spring:url value="/resources/map/js/map.js" var="mapJs" />
+<spring:url value="/resources/map/js/map.js" var="mapJs"/>
  
 <link href="${semanticMinCss}" rel="stylesheet" />
 <link href="${mapCss}" rel="stylesheet" />
