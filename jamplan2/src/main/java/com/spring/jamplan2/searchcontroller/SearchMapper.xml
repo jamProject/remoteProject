@@ -38,8 +38,6 @@
 			where planDate like '%'||#{planDate, jdbcType=VARCHAR}||'%' order by planDate desc
 		</if>
 
-
-
 	</select>
 
 	<select id="clickSearch"
@@ -63,13 +61,17 @@
 
 
 	</select>
+	
+	<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
+		UPDATE PLAN SET READCOUNT = READCOUNT + 1
+	</update>
 
 
 
 
 	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
 		> update plan set readCount = (select readCount from plan where planName 
-		= #{planName, jdbcType=VARCHAR}) + 1 where planName = #{planName, jdbcType=VARCHAR} 
+		= #{planName, jdbcType=VARCHAR}) + 1 where planNo = #{planNo, jdbcType=NUMBER} 
 		</update> -->
 
 

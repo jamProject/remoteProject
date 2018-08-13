@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
+<!-- <style>
+	.thumbnail a>img{
+		display: block;
+    	max-width: 100%;
+    /* height: auto; */
+	}
+</style> -->
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -21,6 +28,16 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 	//목록
 	function selectData(){ 
 		//table내부 내용을 제거(초기화), 동적으로 제거
+		
+		
+		
+		
+		
+		
+
+		/* $(.imgClick).click(function) {
+			
+		} */
 		
 		
 		$.ajax({ //jquery에서 ajax호출할때 사용하는 방식 / jQuery.ajax=$.ajax : jquery 표현하는방식 2가지 
@@ -33,7 +50,11 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
-					output += '<p>' + item.image + '</p>';
+					//output += '<div class="imgClick"><a href = "schedule.search">' + item.image + '</a></div>';
+					//output += 
+					//output += '<div>' + item.image + '/<div>'
+					
+					output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
 					output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
 					output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
 					output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -142,7 +163,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
-					output += '<p>' + item.image + '</p>';
+					output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
 					output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
 					output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
 					output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -201,7 +222,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
   						var output = '';
   						output += '<div class="col-sm-4">';
   						output += '<div class="thumbnail">';
-  						output += '<p>' + item.image + '</p>';
+  						output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
   						output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
   						output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
   						output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -237,15 +258,15 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 	 }); */
 </script>
 
-<style>
-.navbar {
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-</style>
+
+
+
+
+
+
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-	<!-- <nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -269,14 +290,27 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 				</ul>
 			</div>
 		</div>
-	</nav> -->
-	<nav class="navbar fixed-top navbar-expand-md bg-warning navbar-dark">
-		<nav class="container">
-			<a herf="" class="navbar-brand"> <img src="swiss2.jpg" alt="">
-			</a>
-		</nav>
 	</nav>
-
+	
+	<!-- <nav class="navbar fixed-top navbar-expand-sm bg-warning navbar-dark">
+		<nav class="container">
+			<a href="" class="navbar-brand"> 
+				<img src="/search/image/sswiss2.jpg" alt="">
+			</a>
+			<button class="navbar-toggler">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse justify-content-end" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="#myroom">My Room</a></li>
+					<li class="nav-item"><a class="nav-link" href="#signup">Sign Up</a></li>
+					<li class="nav-item"><a class="nav-link" href="#login">Login</a></li>
+				</ul>
+			</div>
+		</nav>
+   	</nav> -->
+	
 	<div class="carousel-inner" role="listbox">
 		<img src="/jamplan2/resources/search/image/swiss7.jpg" alt="photo" width="1520" height="400" />
 		<div class="carousel-caption">
@@ -442,13 +476,17 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 	</div> -->
 
 	<!-- Footer -->
+	
 	<footer class="text-center">
+		<div class="col-md-12">
 		<a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TOP"> <span class="glyphicon glyphicon-chevron-up"></span>
 		</a><br> <br>
 		<p>
 			JAM Theme Made By <a href="https://www.jamplan.com" data-toggle="tooltip" title="Visit w3schools">www.jamplan.com</a>
 		</p>
+		</div>
 	</footer>
+	
 
 </body>
 </html>

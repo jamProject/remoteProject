@@ -18,7 +18,7 @@
         readCount number,
         image varchar2(2000),
         planName varchar2(2000),
-        planDate date
+        planDate varchar2(16)
         );
     
     insert into plan values (1, 1, 10, 58, '이미지', '스위스여행', '20161105');

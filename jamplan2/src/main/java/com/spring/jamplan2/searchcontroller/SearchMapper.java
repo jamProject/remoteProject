@@ -9,4 +9,5 @@ public interface SearchMapper {
 	int fileUpload(PlanVO planVO);
 	ArrayList<PlanVO> planSearch(PlanVO planVO);
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
+	void moveSchedule();
 }

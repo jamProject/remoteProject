@@ -1,8 +1,7 @@
 package com.spring.jamplan2.searchcontroller;
 
-import java.text.DateFormat;
-
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author wookim
@@ -62,6 +61,11 @@ public String getPlanDate() {
 public void setPlanDate(String planDate) {
 	this.planDate = planDate;
 }
+
+   
+   
+
+
 
    // private int isOpen;
    //private String hashTag;

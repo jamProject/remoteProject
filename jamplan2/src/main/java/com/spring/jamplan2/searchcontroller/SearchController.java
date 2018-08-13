@@ -66,7 +66,8 @@ public class SearchController {
 		System.out.println("1");
 		MultipartFile mf = multiRequest.getFile("file");
 		
-		String uploadPath = "C:\\Users\\Playdata\\Downloads\\0805ProjectHan\\jamplan2\\src\\main\\webapp\\resources\\search\\image\\";
+		String uploadPath = "C:\\BigDeep\\upload\\";
+				//"C:\\Users\\Playdata\\Downloads\\0805ProjectHan\\jamplan2\\src\\main\\webapp\\resources\\search\\image\\";
 		
 		String originalFileExtension = mf.getOriginalFilename().substring(
 				mf.getOriginalFilename().lastIndexOf("."));
@@ -75,7 +76,7 @@ public class SearchController {
 		if(mf.getSize() != 0) {
 			mf.transferTo(new File(uploadPath+storedFileName));
 			
-		planVO.setImage(storedFileName);
+			planVO.setImage(storedFileName);
 		}
 		
 		int check = searchService.fileUpload(planVO);
@@ -131,7 +132,14 @@ public class SearchController {
 		return str;
 	}
 	
-	
+	//스케쥴페이지이동
+	@RequestMapping("schedule.search")
+	public String moveSchedule() {
+		System.out.println("move1");
+		searchService.moveSchedule();
+		System.out.println("move4");
+		return "search/schedule";
+	}
 	
 	
 	

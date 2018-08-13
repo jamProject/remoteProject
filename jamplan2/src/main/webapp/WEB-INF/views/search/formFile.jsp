@@ -8,7 +8,6 @@
 </head>
 <body>
 	<form action="fileUpload.search" method="post" enctype="multipart/form-data">
-		이름 : <input type="text" name="name" /><br/>
 		파일 : <input type="file" name="file" /><br/>
 		<input type="submit" value="서버전달" />
 	</form>
