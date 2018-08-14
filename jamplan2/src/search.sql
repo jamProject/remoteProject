@@ -20,6 +20,7 @@
         planName varchar2(2000),
         planDate varchar2(16)
         );
+  
     
     insert into plan values (1, 1, 10, 58, '이미지', '스위스여행', '20161105');
     insert into plan values (1, 1, 50, 100, '이미지', '스페인여행', '20161205');
@@ -34,6 +35,21 @@
     delete from plan;
     
     commit;
+    
+    CREATE TABLE USERINFO (
+   ID VARCHAR2(10) PRIMARY KEY, 
+   EMAIL VARCHAR2(20), 
+   PASS VARCHAR2(20), 
+   ISADMIN VARCHAR2(5), 
+   SIGNDATE DATE, 
+   NATION VARCHAR2(10), 
+   GENDER VARCHAR2(10), 
+   IMG VARCHAR2(100), 
+   AGE VARCHAR2(5), 
+   SNSLINK VARCHAR2(100), 
+   TRAVELTYPE VARCHAR2(10), 
+   HOBBY VARCHAR2(20) 
+   );
     
     
     

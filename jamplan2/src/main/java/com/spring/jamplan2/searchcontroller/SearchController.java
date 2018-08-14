@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,23 @@ public class SearchController {
 	}
 	//검색페이지 이동
 	@RequestMapping("plan.search")
-	public String planLoad() {
+	public String planLoad(HttpSession session, UserVO userVO) {
+		
+		UserVO vo = searchService.getUserId(userVO.getId());
+		
+		System.out.println(vo.getId());
+		
+		session.setAttribute("checkID", vo.getId());
+		/*
+		 * System.out.println("move1");
+		 * HttpSession session, UserVO userVO
+		 * 
+		searchService.moveSchedule();
+		System.out.println("move4");
+		session.setAttribute("checkID", userVO.getId());*/
+		
+		
+		
 		return "search/searchPlanPage";
 	}
 	
@@ -38,6 +56,7 @@ public class SearchController {
 	@RequestMapping(value = "/getPlanList.search", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String getPlanGET() {
+
 		System.out.println("1");
 		List<PlanVO> list = searchService.getPlanjson();
 		System.out.println("2");
@@ -134,11 +153,19 @@ public class SearchController {
 	
 	//스케쥴페이지이동
 	@RequestMapping("schedule.search")
-	public String moveSchedule() {
+	public String moveSchedule(HttpSession session, UserVO userVO) {
+		
 		System.out.println("move1");
 		searchService.moveSchedule();
 		System.out.println("move4");
+		session.setAttribute("checkID", userVO.getId());
 		return "search/schedule";
+	}
+	
+	//login test
+	@RequestMapping("login.search")
+	public String moveLogin() {
+		return "search/login";
 	}
 	
 	

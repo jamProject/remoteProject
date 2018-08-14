@@ -134,6 +134,14 @@ public class SearchServiceImpl implements SearchService{
 		System.out.println("move3");
 	
 	}
+	//로그인 테스트
+	@Override
+	public UserVO getUserId(String id) {
+		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+		UserVO vo = searchmapper.getUserId(id);
+		
+		return vo;
+	}
 	
 	
 

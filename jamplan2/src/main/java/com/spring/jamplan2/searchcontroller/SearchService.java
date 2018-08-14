@@ -11,6 +11,7 @@ public interface SearchService {
 	ArrayList<PlanVO> planSearch(PlanVO planVO);
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
 	void moveSchedule();
+	UserVO getUserId(String id);
 }
 
 

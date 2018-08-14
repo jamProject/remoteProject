@@ -34,10 +34,26 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 		
 		
 		
-
-		/* $(.imgClick).click(function) {
+		/*
+ 		$('#scdIdCheck').click(function) {
+			schedulePage 뿌려줄 function기능 넣기
+		} 
+		*/
+		
+		
+		/*
+		//로그인한 유저인지 체크..
+		 //id session check
+  		$('#scdIdCheck').click(function(){
+		var checkID = null;
+		if(session.getAttribute("checkID") != null) {
+			alert("로그인 성공!");
+		}
+		else {
 			
-		} */
+		}
+		}); */
+
 		
 		
 		$.ajax({ //jquery에서 ajax호출할때 사용하는 방식 / jQuery.ajax=$.ajax : jquery 표현하는방식 2가지 
@@ -50,11 +66,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
-					//output += '<div class="imgClick"><a href = "schedule.search">' + item.image + '</a></div>';
-					//output += 
-					//output += '<div>' + item.image + '/<div>'
-					
-					output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
+					output += '<div><a href = "schedule.search" id="scdIdCheck"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
 					output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
 					output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
 					output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -70,6 +82,12 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 			}
 		});
 	}
+	
+	
+	
+	
+	
+	
 	//이미지클릭시 스케쥬럴로click 시 planName 정보를 받아서 전달할수있게, 이미지를눌렀을때 보내는것, 나중에 코딩해보기.
 	$('#이미지_클릭').click(function(event){
 		var params = $("#이미지_폼").serialize(); // serialize - 직렬화(문자열) 시켜주는것 ex) id=O&name=O&.... 식으로 (키&밸류) 5가지던 100가지던 문자열형태로로..
@@ -240,8 +258,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
   	});
       
       
-  		
-      
+  	
 
       
       
@@ -250,6 +267,10 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
   });
     
   	
+  
+  
+  
+
 
 
 	/*       
