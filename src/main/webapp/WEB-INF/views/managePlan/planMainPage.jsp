@@ -66,6 +66,8 @@
     <li class="nav-item">
       <a class="nav-link" href="viewall.manageplan">view all</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="upload.manageplan">file upload</a>
   </ul>
 </nav>
 	

@@ -88,4 +88,8 @@ public class ManagePlanController {
 	public String viewAllLoad() {
 		return "managePlan/viewAllPage";
 	}
+	@RequestMapping("upload.manageplan")
+	public String upLoad() {
+		return "managePlan/fileUpload";
+	}
 }

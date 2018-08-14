@@ -9,6 +9,21 @@ import org.springframework.stereotype.Component;
  * @param 
  *	
  */
+/*CREATE TABLE USERINFO
+	(	ID VARCHAR2(10) PRIMARY KEY, 
+	EMAIL VARCHAR2(20), 
+	PASS VARCHAR2(20), 
+	ISADMIN VARCHAR2(5), 
+	SIGNDATE DATE, 
+	NATION VARCHAR2(10), 
+	GENDER VARCHAR2(10), 
+	IMG VARCHAR2(100), 
+	AGE VARCHAR2(5), 
+	SNSLINK VARCHAR2(100), 
+	TRAVELTYPE VARCHAR2(10), 
+	HOBBY VARCHAR2(20) 
+	);
+*/
 @Component
 public class UserVO {
 	String id;

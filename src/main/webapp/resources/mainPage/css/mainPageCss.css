@@ -17,8 +17,9 @@
 }
 
 .container1{
-	margin-top:40px;
+	margin-top:60px;
 }
+
 
 h1, h2, h3, h4, h5, p {
     font-family: NanumSquareR, sans-serif;
@@ -91,6 +92,14 @@ body{
     width: 100%;
 }
 
+
 .carousel-caption * {
     color: white;
+}
+
+.carousel-inner img {
+    width: 100%;
+}
+img{
+    vertical-align: middle;
 }

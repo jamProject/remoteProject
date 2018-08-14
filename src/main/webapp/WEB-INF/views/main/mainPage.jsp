@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +25,7 @@
 </head>
 <body>
 <!--네비게이션-->
+
 		<nav class="navbar fixed-top navbar-expand-sm bg-success navbar-dark">
         <a href="" class="navbar-brand">
             <i class="far fa-calendar-alt"></i>&nbsp;&nbsp;jamplan
@@ -37,25 +37,42 @@
         <div class="collapse navbar-collapse justify-content-end" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="nav-item active"><a class="nav-link" href="#login">login</a></li>
-                <li class="nav-item"><a class="nav-link" href="#join">join</a></li>
+                <li class="nav-item"><a class="nav-link" href="#login">join</a></li>
                 <li class="nav-item"><a class="nav-link" href="#search">Search</a></li>
             </ul>
         </div>
         </nav>
-            
+        <!--Carousel-->
+			    	<div class="carousel-inner"  id="login">
+            <div class="carousel-item active">
+                <img src="/resources/mainPage/img/dog_carousel.jpg" alt="cat">
+                <div class="carousel-caption">
+                    <h1>강아지</h1>
+ 					<p>귀여운 강아지가 재미있게 놉니다.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                    <img src="/resources/mainPage/img/dog_carousel.jpg" alt="cat">
+                    <div class="carousel-caption">
+                        <h1>강아지</h1>
+                        <p>귀여운 강아지가 재미있게 놉니다.</p>
+                    </div>
+            </div>
+            <div class="carousel-item">
+                    <img src="/resources/mainPage/img/dog_cat_carousel.jpg" alt="cat">
+                    <div class="carousel-caption">
+                        <h1>고양이</h1>
+                        <p>고양이와 강아지는 친구입니다.</p>
+                    </div>
+            </div>
+        </div>  
 		<div class="container1">
 			<div class="row">
-				<div class="left col-sm-4">
-					<h1>jam plan</h1>
+				<div class="left col-sm-12">
+					
 				</div>
-			<div class="right">
-			<div class="col-sm-4">							
-				
-								
-			</div>
 			</div>
 		</div>
-	</div>
 	<div class="container2">
 		<div class="row">
 			<div class="col-sm-8">
@@ -76,24 +93,52 @@
    			</div>	
 		</div>
 	</div>
-
-	<div class="container3">
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>1</h3>
-				<p>일정</p>
-			</div>
-			<div class="col-sm-4">
-				<h3>2</h3>
-				<p>일정</p>
-			</div>	
-			<div class="col-sm-4">
-				<h3>3</h3>
-				<p>일정</p>
-			</div>
-		</div>
-	
-	</div>
+			
+	   		<div class="container text-center output" id="search">
+        	
+        
+        	<!-- <div class="row">
+        	
+            	<div class="col-md-4">
+                	<div class="card">
+                    	<img src="resources/mainPage/img/dog.jpg" alt="" class="card-img-top">
+                    	<div class="card-body">
+                        	<h3 class="card-title">눈 내린 겨울</h3>
+                        	<p class="card-text">눈이 좋다. 겨울이 좋다.<br>
+                            					눈길을 걸을 수 있는 겨울이 좋다.
+                        </p>
+                        <a href="#" class="btn btn-primary btn-block">자세히 보기</a>
+                    </div>
+                	</div>
+            	</div>
+           		<div class="col-md-4">
+               		<div class="card">
+                       <img src="resources/mainPage/img/dog.jpg" alt="" class="card-img-top">
+                       <div class="card-body">
+                           <h3 class="card-title">바다의 여름</h3>
+                           <p class="card-text">바다가 좋다. 여름이 좋다<br>
+                               				 바다를 즐길 수 있는 여름이 좋다
+                           </p>
+                           <a href="#" class="btn btn-danger btn-block">자세히 보기</a>
+                       </div>
+               		</div>
+           		</div>
+           		<div class="col-md-4">
+               		<div class="card">
+                       <img src="resources/mainPage/img/dog.jpg" alt="" class="card-img-top">
+                       <div class="card-body">
+                           <h3 class="card-title">바다의 여름</h3>
+                           <p class="card-text">바다가 좋다. 여름이 좋다<br>
+                               				 바다를 즐길 수 있는 여름이 좋다
+                           </p>
+                           <a href="#" class="btn btn-danger btn-block">자세히 보기</a>
+                       </div>
+               		</div>
+           		</div>
+        		</div>-->
+        		
+    			</div> 
+    			
 	  <!--모달창 login-->
 				    <div id="myModalLogin" class="modal">
 				        <!--모달의 크기 결정-->
@@ -137,7 +182,7 @@
 				        </div>
 				    </div>
 				    
-				    <!--모달창  join -->
+		 <!--모달창  join-->
 				    <div id="myModalJoin" class="modal">
 				        <!--모달의 크기 결정-->
 				        <!--modal-sm, modal-lg-->
