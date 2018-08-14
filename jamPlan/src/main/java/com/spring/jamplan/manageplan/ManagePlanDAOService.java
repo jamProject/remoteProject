@@ -26,8 +26,7 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	@Override
 	public int insertMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.insertMember(mapVO);
-		System.out.println("insertMemberDAO");
+		int res = mapMapper.insertMember(mapVO);		
 		return res;
 	}
 	
