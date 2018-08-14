@@ -19,23 +19,21 @@ public class MainController {
 	
 	@Autowired
 	MainDAOService mDAOS;
-	
 
-	
 	@Autowired
 	TeamVO teamVo;
 
 	@RequestMapping("login.main")
 	public ModelAndView loginMain(HttpSession session, UserVO userVO, ModelAndView mav) {
 
-		System.out.println("ID : " + userVO.getId() + " PW : " + userVO.getPass());
+		System.out.println("login ID : " + userVO.getId() + " PW : " + userVO.getPass());
 
 		UserVO vo = mDAOS.getUserInfo(userVO); 
 		ArrayList<TeamVO> teamList = mDAOS.getTeamInfo(userVO.getId());
 		System.out.println(teamList.get(0).getPlanNo());
 		mav.addObject("userVO", vo);
 		//mav.addObject("map",map);
-		mav.setViewName("managePlan/planMainPage");
+		mav.setViewName("managePlan/main");
 		session.setAttribute("id", userVO.getId());
 		session.setAttribute("planNo", teamList.get(0).getPlanNo());
 		//vo.printElement();

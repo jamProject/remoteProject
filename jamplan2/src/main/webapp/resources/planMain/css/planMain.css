@@ -1,1 +1,51 @@
 @charset "UTF-8";
+
+/* The sidebar menu */
+
+ul {    /* topMenu의 ID를 가진 태그 안에 <ul> 태그 안에 <li> 태그의 스타일을 지정 */
+	list-style:none;/* <li > 태그는 위의 이미지처럼 목록을 나타내는 점을 없앤다 */
+	color:white;    /* 글씨 색을 흰색으로 설정  */
+	float:left;     /* <li >태그들이 왼쪽에 흐르게 설정(그러면 아래있는 내용은 오른쪽으로 옴) */
+	line-height:30px; /*  글씨가 가운데로 오도록 설정하기 위해 한줄의 높이를 30px로 설정 */
+	vertical-align:middle; /* // 세로 정렬을 가운데로 설정(위의 line-height와 같이 설정 필요함) */
+	text-align:center; /* 글씨 정렬을 가운데로 설정 */
+	
+}
+li {    /* topMenu의 ID를 가진 태그 안에 <ul> 태그 안에 <li> 태그의 스타일을 지정 */
+	list-style:none;/* <li > 태그는 위의 이미지처럼 목록을 나타내는 점을 없앤다 */
+	color:white;    /* 글씨 색을 흰색으로 설정  */
+	float:left;     /* <li >태그들이 왼쪽에 흐르게 설정(그러면 아래있는 내용은 오른쪽으로 옴) */
+	line-height:30px; /*  글씨가 가운데로 오도록 설정하기 위해 한줄의 높이를 30px로 설정 */
+	vertical-align:middle; /* // 세로 정렬을 가운데로 설정(위의 line-height와 같이 설정 필요함) */
+	text-align:center; /* 글씨 정렬을 가운데로 설정 */
+}
+
+/* .sidenavR{
+	height: 100%; 
+    width: 8%; Set the width of the sidebar
+    z-index: 1; Stay on top
+    top: 0; Stay at the top
+    left: 0;
+    background-color: black; Black
+    overflow-x: hidden; Disable horizontal scroll
+    padding-top: 20px;
+    float: right;
+}
+
+.sidenavL {
+    height: 100%; 
+    width: 8%; Set the width of the sidebar
+    z-index: 1; Stay on top
+    top: 0; Stay at the top
+    left: 0;
+    background-color: black; Black
+    overflow-x: hidden; Disable horizontal scroll
+    padding-top: 20px;
+    float: left;
+}
+ */
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
