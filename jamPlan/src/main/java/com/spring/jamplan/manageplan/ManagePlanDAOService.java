@@ -19,15 +19,29 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 		List<MapVO> pickList = null;
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
 		pickList = mapMapper.getPickList();
-		
+		System.out.println("picklistDAOS");
 		return pickList;
+	}
+	
+	@Override
+	public int checkPick(MapVO mapVO) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		int count = mapMapper.checkPick(mapVO);		
+		return count;
 	}
 	
 	@Override
 	public int insertMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.insertMember(mapVO);		
+		int res = mapMapper.insertMember(mapVO);	
 		return res;
+	}
+	
+	@Override
+	public int markerPickCount() {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		int pickCount = mapMapper.markerPickCount();	
+		return pickCount;
 	}
 	
 	@Override
@@ -36,5 +50,7 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 		int res = mapMapper.deleteMember(id);
 		return res;
 	}
+
+	
 	
 }

@@ -25,15 +25,20 @@ LOCATION VARCHAR2(100)
 		select * from planMap 
 	</select>
 	
+	<select id="checkPick" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
+		select count(*) from planMap where planNo=#{planNo, javaType=int} and 
+			id=#{id, javaType=String} and location=#{location, javaType=String}
+	</select>
+	
 	<insert id="insertMember" parameterType="com.spring.jamplan.model.MapVO" >
 		insert into planMap values
 			(#{planNo, javaType=int}, #{id, javaType=String}, #{userColor, javaType=String},
 			 	#{mapCount, javaType=int}, #{location, javaType=String})
 	</insert>
 	
-	<select id="pickMemberCount" parameterType="String">
-		select count(*) from planMap where id=#{id, javaType=String} 
-	</select>
+	<!-- <select id="markerPickCount" resultType="int">
+		select count(*) from planMap where location = #{location, javaType=String}
+	</select> -->
 	
 	<delete id="deleteMember" parameterType="String">
 		delete planMap where id=#{id, javaType=String} 

@@ -34,12 +34,11 @@ public class ManagePlanController {
 	public String getPickList() {		//클래스 타입 확인
 		
 		List<MapVO> pickList = managePlanDAOService.getPickList();
-		//왜 mapVO안되냐
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			str = mapper.writeValueAsString(pickList);
-			
+			System.out.println("pickList 메소드: " + str);
 		}catch(Exception e) {
 			System.out.println("first() mapper: " + e.getMessage());
 		}
@@ -50,12 +49,18 @@ public class ManagePlanController {
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Object insertMember(MapVO mapVO) {
+		int count, res, pickCount = 0;
 		Map<String, Object> retVal = new HashMap<String, Object>(); 
-		System.out.println("controller insert");
+		
 		try {
 			System.out.println("mapVO.getId()=" + mapVO.getId());
-			int res = managePlanDAOService.insertMember(mapVO); 
-		
+			count = managePlanDAOService.checkPick(mapVO);
+			if(count==0) {
+				
+				res = managePlanDAOService.insertMember(mapVO); 
+				pickCount = managePlanDAOService.markerPickCount();
+			}
+			retVal.put("pickCount", pickCount);
 			retVal.put("res", "OK"); 
 		}
 		catch (Exception e)
