@@ -16,7 +16,7 @@
 <spring:url value="/resources/map/css/semantic.min.css" var="semanticMinCss" />
 <spring:url value="/resources/map/css/map.css" var="mapCss" />
 <spring:url value="/resources/map/js/semantic.min.js" var="semanticMinJs" />
-<spring:url value="/resources/map/js/map.js" var="mapJs"/>
+<spring:url value="/resources/map/js/map2.js" var="mapJs"/>
  
 <link href="${semanticMinCss}" rel="stylesheet" />
 <link href="${mapCss}" rel="stylesheet" />
@@ -75,22 +75,8 @@ top: 112px;
 </div>
 
 <aside  id = "map"> </aside>
-<!-- <div id="infowindow-content">
-      <img id="place-icon" src="" height="30" width="30">		인포안에 아이콘
-      <span id="place-name"  class="title"></span><br>
-      <span id="place-address"></span><br>
-      <span id="memberlist"></span><br>
-      <span><input type='submit' value='Pick'></span> 
-   </div>
-</div> -->
 </div>
-
-<!-- 
- <ul  id = "geoData" >
-    <li> 전체 주소 : <span  id = "location"> </span > </li >
-….
-</ul > 
- -->
+</div>
 
 </body>
 </html>

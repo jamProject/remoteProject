@@ -15,35 +15,47 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<MapVO> getPickList(){
+	public List<MapVO> getPickList(String location){
 		List<MapVO> pickList = null;
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		pickList = mapMapper.getPickList();
-		
+		pickList = mapMapper.getPickList(location);
+		System.out.println("picklistDAOS");
 		return pickList;
 	}
 	
 	@Override
 	public int checkPick(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int count = mapMapper.checkPick(mapVO);
-		System.out.println("checkPickDAOS");
+		int count = mapMapper.checkPick(mapVO);		
 		return count;
-	}	
+	}
 	
 	@Override
 	public int insertMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.insertMember(mapVO);
-		System.out.println("insertDAOS");
+		int res = mapMapper.insertMember(mapVO);	
 		return res;
 	}
 	
 	@Override
-	public int deleteMember(String id) {
+	public int markerPickCount() {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.deleteMember(id);
+		int pickCount = mapMapper.markerPickCount();	
+		return pickCount;
+	}
+	
+	@Override
+	public int deleteMember(MapVO mapVO) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		int res = mapMapper.deleteMember(mapVO);
 		return res;
 	}
+
+	public List<MapVO> getAllPickList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import com.spring.jamplan.model.MapVO;
 
 public interface MapMapper {
-	List<MapVO> getPickList();
+	List<MapVO> getPickList(String location);
 	int checkPick(MapVO mapVO);
 	int insertMember(MapVO mapVO);
-	int deleteMember(String id) ;
-	
+	int markerPickCount();
+	int deleteMember(MapVO mapVO); 
 }

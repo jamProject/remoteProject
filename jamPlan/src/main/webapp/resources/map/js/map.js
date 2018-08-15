@@ -7,76 +7,75 @@ var marker;
 var up_lng;
 var up_lat
 var up_latlng;
-
+var ClickEventHandler;
+//인포윈도우에 pick한 멤버 리스트 보여주는 함수
 function pickList(){
-	$('#output').html("");
-	
+	console.log("==picklist()==");
+	$('#output').empty();
+	console.log("outputempty");
 	$.ajax({
 		url:'getPickList.map',
 		type: 'POST',
 		dataType : "json",
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){
-			$.each(data, function(index, item){				
-				var output = '';
+			console.log("data: " + Object.values(data));
+			var output = '';
+			$.each(data, function(index, item){
 				output += '<tr>';
 				output += '<td>' + item.id + '</td>';
 				output += '</tr>'; 
-				console.log("output:" + output);
 				
-				$('#output').append(output);
+				console.log("output:" + output);			
 			});
+			$('#output').append(output);	
 		},
 		error:function(){
 			alert("ajax통신실패!!!");
 	   }
 	});
-	event.preventDefault();
 }
 
 function onPick(){		
-//idarray.push(id);		
-//document.getElementById('output').innerHTML = "selectMember" + "<br>" + idarray;
-console.log("252582525252");
-$.ajax({
-	url:'checkPick.map',
-	type: 'POST',
-	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-	dataType : "json",
-	data: { 
-		"planNo":1,
-		"id":"haha",
-		"userColor":"black",
-		"mapCount":1,
-		"location":"seoul"},
-	success:function(retVal){ 	
-		if(retVal.res == "OK"){
-			//$('#output').html(id);						
-			pickList();					
+	$.ajax({
+		url:'insertMember.map',
+		type: 'POST',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		dataType : "json",
+		data: { 
+				"planNo":1,
+				"id":$('#memberid').val(),
+				"userColor":"black",
+				"mapCount":1,
+				"location": $('#address').html()},
+		success:function(retVal){ 	
+			if(retVal.res == "OK"){	
+				
+				pickList();	
+				//$('#pickCount').html(retVal.pickCount);
+				
+			}
+			else
+			{
+				alert("Insert Fail!!!");
+			}
+		},
+		error:function(){
+			alert("ajax통신실패!!!");
 		}
-		else
-		{
-			alert("Insert Fail!!!");
-		}
-	},
-	error:function(){
-		alert("ajax통신실패!!!");
-	}
-});
-event.preventDefault();
+	});
 }
 
-function onCancel(){// obj.parentNode 를 이용하여 삭제
-//document.getElementById('output').innerHTML="selectMember" + "<br>" + idarray.pop();
+
+function onCancel(){
 $.ajax({
 	url: 'deleteMember.map',
 	type: 'POST',
-	data: {"id":$("#memberid").val()},
+	data: {"id":$('#memberid').val()},
 	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	dataType : "json",
 	success:function(retVal){
 		if(retVal.res == "OK"){
-			//$('#output').html("");
 			pickList();
 		}
 		else
@@ -88,7 +87,6 @@ $.ajax({
 		 alert("ajax통신실패!!!");
 	}
 });
-event.preventDefault();
 }
 
 function initMap() {
@@ -97,22 +95,12 @@ function initMap() {
 	//up_lng = "126.9220863";
 	//up_latlng = new google.maps.LatLng(up_lat, up_lng);
 
-    map = new google.maps.Map(document.getElementById('map'), {			/*지도생성, 지도를 표시할 div아이디가'map' */
-    	center: {lat: 37.566, lng: 126.977},			/* 지도의 중심좌표 */
-    	zoom: 18
-    	
-    	/*styles:[{
-            featureType:"poi",
-            elementType:"labels",
-            stylers:[{
-                visibility:"on"
-                //clickable: "true"
-            }]  	
-        }]*/
+    map = new google.maps.Map(document.getElementById('map'), {		
+    	center: {lat: 37.566, lng: 126.977},		
+    	zoom: 18    
     });
     
    // coordinates.push(up_latlng);        
-
 	// 마커의 수만큼 반복하여 coordinates에 push된 위치 정보값을 계산 후 
 	// 맵의 zoom level과 center를 맵에 적용
    // bounds = new google.maps.LatLngBounds();
@@ -132,31 +120,35 @@ function initMap() {
     var geocoder = new google.maps.Geocoder;
 
     var autocomplete = new google.maps.places.Autocomplete(input);			//자동 입력 기능
-    autocomplete.bindTo('bounds', map);
+   // autocomplete.bindTo('bounds', map);
        
-    var markerImage = new google.maps.Marker({
-    	 path: 'M30.6,15.737c0-8.075-6.55-14.6-14.6-14.6c-8.075,0-14.601,6.55-14.601,14.6c0,4.149,1.726,7.875,4.5,10.524c1.8,1.801,4.175,4.301,5.025,5.625c1.75,2.726,5,11.976,5,11.976s3.325-9.25,5.1-11.976c0.825-1.274,3.05-3.6,4.825-5.399C28.774,23.813,30.6,20.012,30.6,15.737z',
-         fillColor: "ffffff",
-         fillOpacity: 0.8,
+    var col="FFFF42";
+	var x= 10;
+    var markerImage = new google.maps.Marker({    	
+    	// path: 'M30.6,15.737c0-8.075-6.55-14.6-14.6-14.6c-8.075,0-14.601,6.55-14.601,14.6c0,4.149,1.726,7.875,4.5,10.524c1.8,1.801,4.175,4.301,5.025,5.625c1.75,2.726,5,11.976,5,11.976s3.325-9.25,5.1-11.976c0.825-1.274,3.05-3.6,4.825-5.399C28.774,23.813,30.6,20.012,30.6,15.737z',
+         url: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.7|0|"+ col + "|13|_|" + x ,   //마커크기|기울기|마커색|글자크기|글자기본(_)또는굵게(b)|내용
+    	 //fillColor: "FFFFFF",
+         //fillOpacity: 0.8,
          strokeColor: "FFFA82",
          strokeWeight: 1,
-         anchor: new google.maps.Point(18,34),
+         anchor: new google.maps.Point(15,40),
          labelOrigin: { x: 16, y: 16 }
     });
        
-    google.maps.event.addListener(map, 'click', function(mouseEvent) {
+   /* google.maps.event.addListener(map, 'click', function(mouseEvent) {
      	var origin = mouseEvent.latLng;
-    });
+    });*/
     
     var marker = new google.maps.Marker({
    	 icon: markerImage,
         label: {
-            text: '+1' || '●',
+            text: '+5' ,
             color: "C9C5C9"
         },
-   	draggable:true,
+   	 draggable:true,
        map: map,
      });
+    
     var placesService = new google.maps.places.PlacesService(map);
     var infowindowContent = document.getElementById('infowindow-content');
     var ClickEventHandler = function(map, origin) {
@@ -246,6 +238,7 @@ function initMap() {
        // popInfoWindow(map,marker,contentString);
         
         marker.addListener('click', function(mouseEvent){
+        	console.log("autocomplete.addListene ");
         	infowindow.open(mouseEvent.latLng, marker); 
         });
         
@@ -263,11 +256,12 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function(event) {
     	infowindow.close();
     	var latlng = event.latLng;    
+    	var pickCount = $('#pickCount').val();
     	
         marker = new google.maps.Marker({
         	 icon: markerImage,
              label: {
-                 text: '+1' || '●',
+                 text: '+' || pickCount || '●',
                  color: "FFFFFF"
              },
         	draggable:true,
@@ -282,7 +276,7 @@ function initMap() {
         	ClickEventHandler.prototype.handleClick = function(event) {
         	console.log('You clicked on place:' + event.placeId);
         	event.stop();
-            this.getPlaceInformation(event.placeId);
+            getPlaceInformation(event.placeId);
         	}
         }
         else{
@@ -291,44 +285,39 @@ function initMap() {
         }
     });                              
     
-    function popInfoWindow(marker, latlng) {  
+    function popInfoWindow(marker, latlng) { 
+    	console.log("popInfoWindow");
+
     	var lat_lng = {lat: latlng.lat(), lng: latlng.lng()};
-    	//var id = $('#memberid').val();
-//    	var idarray = [];
-    	var id = document.getElementById("memberid").value;
-    	
-    	pickList();
-    		
+
+    	console.log("marker: " + marker);
     	geocoder.geocode({'latLng': lat_lng}, function(results, status) {   		
     		
     		if (status == google.maps.GeocoderStatus.OK)  {
-    			if (results[0]){					
+    			if (results[0]){	
+    				
     				infowindow.setContent(
     					"<table>" +							
-    						"<tr><td colspan='3'>" + results[0].formatted_address + "</td></tr>" +
+    						"<tr><td colspan='3' id = 'address'>" + results[0].formatted_address + "</td></tr>" +
     						"<tr><td>selectMember</td>" + 
     						"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>" +
     						"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>" +
-    					"</table>" + "<table id='output'><tr><td>test</td></tr></table>" 					
-    				);				
+    					"</table>" + "<table id='output'></table>" 					
+    				);		
     			
-    			infowindow.open(map,marker);
-    				
-        		} else {
-        			alert("No results found");
-        		}
-        	}else{
-        		infowindow.setContent("lat: " + latlng.lat() + " lng: " + latlng.lng());
-        		infowindow.open(map, marker);
-        	}
-    	    	
-    	marker.addListener('click', function (event){    		
-    		popInfoWindow(marker,latlng); 
+	    			pickList();	
+	    			infowindow.open(map,marker);    			
+    			}
+    			
+	    		marker.addListener('click', function (event){   
+	    			console.log("popInfoWindow maker.addListner");
+	    			popInfoWindow(marker,latlng); 
+	        		
+	        	});
+    		}
     	});
-    	
-        });
     }
-    	
+}
 	/*function addMarker(latlng) {
 		marker = new google.maps.Marker({
 			position: latlng,
@@ -341,8 +330,8 @@ function initMap() {
 	   
 	    });
 	}*/
-    
-    ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
+  
+   ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
         var me = this;
         this.placesService.getDetails({placeId: placeId}, function(place, status) {
           if (status === 'OK') {
@@ -355,7 +344,7 @@ function initMap() {
           }
         });
       };
-}    
+    
     
 
 
@@ -367,7 +356,6 @@ function initMap() {
         //alert(MarkersArray);
     }
     
-
    function flightPath(){
     for (i in travelPathArray){
     	travelPathArray[i].setMap(null);
@@ -381,4 +369,3 @@ function initMap() {
     flightPath.setMap(map);
     travelPathArray.push(flightPath);
     }*/  
-

@@ -31,37 +31,59 @@ public class ManagePlanController {
 	@RequestMapping(value="getPickList.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String getPickList() {		//클래스 타입 확인
+	public String getPickList(String location) {		//클래스 타입 확인
 		
-		List<MapVO> pickList = managePlanDAOService.getPickList();
-		//왜 mapVO안되냐
+		List<MapVO> pickList = managePlanDAOService.getPickList(location);
+		//int pickCount = pickList.length;
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			System.out.println("listcontrollerfirst");
 			str = mapper.writeValueAsString(pickList);
 			System.out.println("listcontrollelast");
+			System.out.println("pickList 메소드: " + str);
 		}catch(Exception e) {
 			System.out.println("first() mapper: " + e.getMessage());
 		}
 		return str;	
 	}
 		
-	@RequestMapping(value="checkPick.map", method = RequestMethod.POST,
+	@RequestMapping(value="getAllPickList.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Object checkPick(MapVO mapVO) {
+	public String getAllPickList() {		//클래스 타입 확인	
+		List<MapVO> allPickList = managePlanDAOService.getAllPickList();
+		//int pickCount = pickList.length;
+		String str="";
+		ObjectMapper mapper = new ObjectMapper();
+	try {
+		System.out.println("listcontrollerfirst");
+		str = mapper.writeValueAsString(allPickList);
+		System.out.println("listcontrollelast");
+		System.out.println("allPickList 메소드: " + str);
+	}catch(Exception e) {
+		System.out.println("first() mapper: " + e.getMessage());
+	}
+		return str;	
+	}	
+		
+	@RequestMapping(value="insertMember.map", method = RequestMethod.POST,
+			produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public Object insertMember(MapVO mapVO) {
+		int count, res, pickCount = 0;
 		Map<String, Object> retVal = new HashMap<String, Object>(); 
 		
 		try {
 			System.out.println("mapVO.getId()=" + mapVO.getId());
-			int count = managePlanDAOService.checkPick(mapVO); 
+			count = managePlanDAOService.checkPick(mapVO); 
 			System.out.println("Checkcontrollerfirst");
-
-			if(count==0){				
-				int res = managePlanDAOService.insertMember(mapVO); 
-				System.out.println("insertcontrollerfirst");
+			if(count==0) {
+				res = managePlanDAOService.insertMember(mapVO); 
+				//pickCount = managePlanDAOService.markerPickCount();
 			}
+			System.out.println("Checkcontrollersecond");
+			System.out.println(retVal);
 			retVal.put("res", "OK"); 
 		}
 		catch (Exception e)
@@ -75,12 +97,12 @@ public class ManagePlanController {
 	@RequestMapping(value="deleteMember.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Object deleteMember(String id) {
+	public Object deleteMember(MapVO mapVO) {
 		Map<String, String> retVal = new HashMap<String, String>(); 
 		
 		try {
 			System.out.println("vo11.getId()=" + mapVO.getId());
-			int res = managePlanDAOService.deleteMember(id); 
+			int res = managePlanDAOService.deleteMember(mapVO); 
 			
 			retVal.put("res", "OK"); 
 		}
