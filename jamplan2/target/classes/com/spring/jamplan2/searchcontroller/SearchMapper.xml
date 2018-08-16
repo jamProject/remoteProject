@@ -19,6 +19,11 @@
 	<resultMap type="UserVO" id="UserResultMap">
 		<result property="id" column="id" />
 	</resultMap>
+	
+	<resultMap type="LikeVO" id="LikeResultMap">
+		<result property="likeNo" column="likeNo" />
+		<result property="likeCheck" column="likeCheck" />
+	</resultMap>
 
 
 
@@ -75,6 +80,10 @@
 	<select id="getUserId" parameterType="com.spring.jamplan2.searchcontroller.UserVO" resultMap="UserResultMap">
 		select * from userVO where id = #{id, javaType=String}
 	</select>
+	
+	<!-- <update id="heartCheck" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeResultMap">
+		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=NUMBER} + 1
+	</update> -->
 
 
 

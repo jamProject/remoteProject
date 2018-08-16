@@ -12,6 +12,7 @@ public interface SearchService {
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
 	void moveSchedule();
 	UserVO getUserId(String id);
+	int heartCheck(LikeVO likeVO);
 }
 
 

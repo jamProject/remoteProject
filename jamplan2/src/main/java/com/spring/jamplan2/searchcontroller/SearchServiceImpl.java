@@ -143,6 +143,17 @@ public class SearchServiceImpl implements SearchService{
 		return vo;
 	}
 	
-	
+	//라이크체크
+	@Override
+	public int heartCheck(LikeVO likeVO) {
+		System.out.println("like2");
+		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+		int check = searchmapper.heartCheck(likeVO);
+		System.out.println("like3");
+		
+		return check;
+		
+		
+	}
 
 }

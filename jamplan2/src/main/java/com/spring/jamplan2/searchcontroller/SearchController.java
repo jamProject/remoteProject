@@ -198,6 +198,33 @@ public class SearchController {
 		return "search/searchPlanPage";
 	}
 	
+	@RequestMapping(value = "heartCheck.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public void heartCheck(HttpSession session, LikeVO likeVO) {
+		
+		int likeNo = likeVO.getLikeNo();
+		int likeCheck = 0;
+		likeCheck = likeVO.getLikeCheck();
+		
+		if(likeCheck == 0) {
+			likeCheck++;
+		}
+		else {
+			likeCheck--;
+		}
+		
+		
+		
+		
+	}
+	
+	/*public String heartCheck(LikeVO likeVO) {
+		System.out.println("like1");
+		searchService.heartCheck(likeVO);
+		System.out.println("like4");
+		return "search/schedule";
+	}*/
+	
 
 	
 	
