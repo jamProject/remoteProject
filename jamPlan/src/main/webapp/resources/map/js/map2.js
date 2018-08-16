@@ -11,7 +11,7 @@ var init_latlng;
 var col="FFFF42";
 var x=5;
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 	$.ajax({
 		url:'getAllPickList.map',
 		type: 'POST',
@@ -24,7 +24,7 @@ $(document).ready(function(){
 			});
 		}
 	});	
-});
+});*/
 		
 		
 //인포윈도우에 pick한 멤버 리스트 보여주는 함수
@@ -36,7 +36,7 @@ function pickList(){
 		url:'getPickList.map',
 		type: 'POST',
 		dataType : "json",
-		data:{"location":$('#placename').val()},
+		data:{"location":$('#placename').html()},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){
 			console.log("data: " + Object.values(data));
@@ -46,11 +46,11 @@ function pickList(){
 				output += '<td>' + item.id + '</td>';
 				output += '</tr>'; 
 				
-				$(".ui button:nth-child("+index+")").append(place.name);
+				//$(".ui button:nth-child("+index+")").append(item.location);
 				console.log("output:" + output);			
 			});
 			$('#output').append(output);	
-			$('#pickCount').val(data.pickCount);
+			
 		},
 		error:function(){
 			alert("ajax통신실패!!!");
@@ -58,7 +58,7 @@ function pickList(){
 	});
 }
 
-function onPick(){		
+function onPick(){
 	$.ajax({
 		url:'insertMember.map',
 		type: 'POST',
@@ -68,11 +68,11 @@ function onPick(){
 				"planNo":1,
 				"id":$('#memberid').val(),
 				"userColor":"black",
-				"location": $('#placename').val()},
+				"location":$('#placename').html()},
 		success:function(retVal){ 	
 			if(retVal.res == "OK"){	
-				
-				pickList();	
+				$('#pickCount').val(retVal.newPickNum);
+				pickList();					
 			}
 			else
 			{
@@ -89,8 +89,10 @@ function onCancel(){
 $.ajax({
 	url: 'deleteMember.map',
 	type: 'POST',
-	data:{"id":$('#memberid').val(),
-		  "location": $('#placename').val()},
+	data:{
+		  "planNo":1,
+		  "id":$('#memberid').val(),
+		  "location": $('#placename').html()},
 	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	dataType : "json",
 	success:function(retVal){
@@ -193,15 +195,15 @@ function initMap() {
 	     
 	     infowindow.setContent(
 	     "<table>"+						
-	     "<tr><strong id='placename' value =" + place.name + ">" + place.name +
-	     "</tr><td>" + address + "</td>" +
+	     "<tr><td id='placename'>" + place.name + "</td></tr>" +
+	     "<tr><td>" + address + "</td></tr>" +
 	     "<tr>"+
 	     	"<td>selectMember</td>" +
 	     	"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>"+
 	     	"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>"+
 	     "</table>" + "<table id='output'></table>");
 	     
-	    pickList(); 
+	    //pickList(); 
 	    infowindow.open(map, marker); 	
 	    
 		
@@ -256,30 +258,35 @@ function initMap() {
 	    		me.infowindow.close();
 	    		marker.setPosition(place.geometry.location);
 	    		me.infowindow.setPosition(place.geometry.location);
-	    		me.infowindow.setContent(			//테이블길이정해야함
+	    		me.infowindow.setContent(			//테이블 칼럼 길이정해야함,주소가 너무길어
 	    			     "<table>"+						
-	    			     "<tr><strong id='placename' value =" + place.name + ">" + place.name +
-	    			     "</tr><td>" + place.formatted_address + "</td>" +
-	    			     "<tr>"+
-	    			     	"<td>selectMember</td>" +
+	    			     "<tr><td id='placename'>" + place.name + "</td></tr>" +
+	    			     "<tr><td id='formatted_adr'>" + place.formatted_address + "</td></tr>" +
+	    			     "<tr><td>selectMember</td>" +
 	    			     	"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>"+
 	    			     	"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>"+
 	    			     "</table>" + "<table id='output'></table>");	    		
+	    		
 	    		pickList();
-	    		me.infowindow.open(me.map);
+	    		me.infowindow.open(me.map);	    		
 	        }
+	    	
 	    	
 	    	marker.addListener('mouseover', function(mouseEvent){
 	        	console.log("autocomplete.addListene ");
 	        	//pickList();
 	        	me.infowindow.open(mouseEvent.latLng, marker);
 	        });
+	    	
+	    	//mouseout발생하고 몇초후에 인포닫히게 해야해
 	        marker.addListener('mouseout', function(mouseEvent){
 	        	console.log("autocomplete.addListene ");
 	        	me.infowindow.close(); 
 	        });
     	});
     };
+    
+    
     /* google.maps.event.addListener(map, 'click', function(mouseEvent) {
  	var origin = mouseEvent.latLng;
 });*/

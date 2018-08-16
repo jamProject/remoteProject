@@ -33,7 +33,7 @@ public class ManagePlanController {
 	@ResponseBody
 	public String getPickList(String location) {		//클래스 타입 확인		
 		List<MapVO> pickList = managePlanDAOService.getPickList(location);
-		
+		System.out.println("controllerPickList");
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -70,23 +70,29 @@ public class ManagePlanController {
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Object insertMember(MapVO mapVO) {
-		int check, res, pickCount = 0, newPickCount=0;
+		int check, pickNum = 0, newPickNum=0;
 		Map<String, Object> retVal = new HashMap<String, Object>(); 
 		
 		try {
-			 System.out.println("mapVO.getId()=" + mapVO.getId());
-			 check = managePlanDAOService.checkPick(mapVO); 
-			 System.out.println("Checkcontrollerfirst");
+			System.out.println("Checkcontrollerfirst");
+			check = managePlanDAOService.checkPick(mapVO); 
+			 
 			if(check==0) {
-				res = managePlanDAOService.insertMember(mapVO);
-				pickCount = managePlanDAOService.pickCount(mapVO);
-				newPickCount = pickCount + 1;
-				managePlanDAOService.updatePickCount(newPickCount);
+				pickNum=managePlanDAOService.pickCount(mapVO);
+				newPickNum = pickNum + 1;
+				mapVO.setPickCount(newPickNum);
+				managePlanDAOService.insertMember(mapVO);
+				
+				System.out.println("mapVO.getId()=" + mapVO.getId());
+				System.out.println("mapVO.getLocation()=" + mapVO.getLocation());
+				System.out.println(newPickNum);			
+				
+				//managePlanDAOService.updatePickCount(mapVO);				
+				retVal.put("newPickNum", String.valueOf(newPickNum));
 			}
 			System.out.println("Checkcontrollersecond");
-			retVal.put("newPickCount", String.valueOf(newPickCount));
+			
 			retVal.put("res", "OK"); 
-			System.out.println(retVal);
 		}
 		catch (Exception e)
 		{
@@ -100,18 +106,20 @@ public class ManagePlanController {
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Object deleteMember(MapVO mapVO) {
-		int res, pickCount, newPickCount = 0;
-		Map<String, String> retVal = new HashMap<String, String>(); 
+		int pickNum, check;
+		Map<String, Object> retVal = new HashMap<String, Object>(); 
 		
 		try {
 			System.out.println("vo11.getId()=" + mapVO.getId());
-			res = managePlanDAOService.deleteMember(mapVO); 
-			pickCount = managePlanDAOService.pickCount(mapVO);
-			if(pickCount!=0) {
-				newPickCount = pickCount - 1;
-				managePlanDAOService.updatePickCount(newPickCount);
+			check = managePlanDAOService.checkPick(mapVO);
+			
+			if(check==1){
+				managePlanDAOService.deleteMember(mapVO);
+				pickNum = managePlanDAOService.pickCount(mapVO);
+				mapVO.setPickCount(pickNum);
+				managePlanDAOService.updatePickCount(mapVO);
+				retVal.put("pickNum", String.valueOf(pickNum));				
 			}
-			retVal.put("newPickCount", String.valueOf(newPickCount));
 			retVal.put("res", "OK");
 		}
 		catch (Exception e)

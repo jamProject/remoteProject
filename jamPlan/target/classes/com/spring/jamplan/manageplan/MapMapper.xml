@@ -37,16 +37,19 @@ LOCATION VARCHAR2(100)
 	</insert>
 	
 	<delete id="deleteMember" parameterType="com.spring.jamplan.model.MapVO">
-		delete planMap where id=#{id, javaType=String} and location=#{location, javaType=String}
+		delete from planMap where planNo=#{planNo, javaType=int} and id=#{id, javaType=String} 
+			and location=#{location, javaType=String}
 	</delete>
 	
-	<select id="checkPick" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
-		select count(*) from planMap where planNo=#{planNo, javaType=int} and 
-			location=#{location, javaType=String}
+	<select id="pickCount" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
+		select count(*) from planMap where planNo=#{planNo, javaType=int} 
+			and	location=#{location, javaType=String}
 	</select>
 	
-	<update id="updatePickCount" parameterType="int" >
-		update planMap set pickCount=#{newPickCount, javaType=int} 
+	<update id="updatePickCount" parameterType="com.spring.jamplan.model.MapVO" >
+		update planMap set pickCount=#{pickCount, javaType=int} 
+		where planNo=#{planNo, javaType=int} 
+		and	location=#{location, javaType=String}
 	</update>
 	<!-- 지도오른쪽리스트 : 
 	<select>
