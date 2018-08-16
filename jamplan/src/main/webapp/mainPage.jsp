@@ -19,5 +19,11 @@
 	</form>
 	
 	<a href="main.jsp">planMain</a>
+	<a href = "main.search">mainPage</a>
+	<a href = "plan.search">planPage</a>
+	<a href = "formFile.search">formFile</a>
+	<a href = "view.search">view</a>
+	<a href = "schedule.search">schedule</a>
+	<a href = "login.search">login</a>
 </body>
 </html>
