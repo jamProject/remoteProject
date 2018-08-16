@@ -1,5 +1,5 @@
 <%@page import="com.spring.jamplan.model.CalendarVO"%>
-<%@page import="org.springframework.boot.autoconfigure.web.ServerProperties.Session"%>
+<%-- <%@page import="org.springframework.boot.autoconfigure.web.ServerProperties.Session"%> --%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
