@@ -9,7 +9,7 @@ var lng;
 var lat;
 var init_latlng;
 var col="FFFF42";
-var x;
+var x=5;
 
 $(document).ready(function(){
 	$.ajax({
@@ -36,7 +36,7 @@ function pickList(){
 		url:'getPickList.map',
 		type: 'POST',
 		dataType : "json",
-		data:{"location":$('#placename').html()},
+		data:{"location":$('#placename').val()},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){
 			console.log("data: " + Object.values(data));
@@ -46,12 +46,11 @@ function pickList(){
 				output += '<td>' + item.id + '</td>';
 				output += '</tr>'; 
 				
-				$(".ui button:nth-child(1)").append(place.name);
+				$(".ui button:nth-child("+index+")").append(place.name);
 				console.log("output:" + output);			
 			});
-			$('#output').append(output);
-			//x = str.pickCount;
-			
+			$('#output').append(output);	
+			$('#pickCount').val(data.pickCount);
 		},
 		error:function(){
 			alert("ajax통신실패!!!");
@@ -69,7 +68,7 @@ function onPick(){
 				"planNo":1,
 				"id":$('#memberid').val(),
 				"userColor":"black",
-				"location": $('#placename').html()},
+				"location": $('#placename').val()},
 		success:function(retVal){ 	
 			if(retVal.res == "OK"){	
 				
@@ -91,7 +90,7 @@ $.ajax({
 	url: 'deleteMember.map',
 	type: 'POST',
 	data:{"id":$('#memberid').val(),
-		  "location": $('#placename').html()},
+		  "location": $('#placename').val()},
 	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	dataType : "json",
 	success:function(retVal){

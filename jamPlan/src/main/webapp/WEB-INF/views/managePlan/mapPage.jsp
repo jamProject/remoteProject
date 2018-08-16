@@ -47,6 +47,7 @@ top: 112px;
 </head>
 <body>
 <input type="hidden" id="memberid" value=<%=id %> /> 
+<input type="text" id="pickCount" />
 
 <div class="maptotal">
 <select class="ui dropdown">

@@ -8,7 +8,7 @@ public interface ManagePlanDAO {
 	List<MapVO> getPickList(String location);
 	int checkPick(MapVO mapVO);
 	int insertMember(MapVO mapVO);
-	int markerPickCount();
+	int pickCount(MapVO mapVO); 
 	int deleteMember(MapVO mapVO);
-	
+	void updatePickCount(int newPickCount);
 }

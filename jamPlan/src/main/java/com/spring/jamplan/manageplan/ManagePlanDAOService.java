@@ -26,8 +26,8 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	@Override
 	public int checkPick(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int count = mapMapper.checkPick(mapVO);		
-		return count;
+		int check = mapMapper.checkPick(mapVO);		
+		return check;
 	}
 	
 	@Override
@@ -36,14 +36,7 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 		int res = mapMapper.insertMember(mapVO);	
 		return res;
 	}
-	
-	@Override
-	public int markerPickCount() {
-		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int pickCount = mapMapper.markerPickCount();	
-		return pickCount;
-	}
-	
+
 	@Override
 	public int deleteMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
@@ -54,6 +47,17 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	public List<MapVO> getAllPickList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void updatePickCount(int newPickCount) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		mapMapper.updatePickCount(newPickCount);
+	}
+
+	public int pickCount(MapVO mapVO) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		int pickCount = mapMapper.pickCount(mapVO);
+		return pickCount;
 	}
 
 	
