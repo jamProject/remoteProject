@@ -15,10 +15,10 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<MapVO> getPickList(){
+	public List<MapVO> getPickList(String location){
 		List<MapVO> pickList = null;
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		pickList = mapMapper.getPickList();
+		pickList = mapMapper.getPickList(location);
 		System.out.println("picklistDAOS");
 		return pickList;
 	}
@@ -45,10 +45,15 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	}
 	
 	@Override
-	public int deleteMember(String id) {
+	public int deleteMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.deleteMember(id);
+		int res = mapMapper.deleteMember(mapVO);
 		return res;
+	}
+
+	public List<MapVO> getAllPickList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

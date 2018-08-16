@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MapVO {
 	private int planNo;
-	private int mapCount;
+	/*private int mapCount;*/
 	private String id;
 	private String userColor;
 	private String location;
@@ -21,12 +21,12 @@ public class MapVO {
 	public void setPlanNo(int planNo) {
 		this.planNo = planNo;
 	}
-	public int getMapCount() {
+	/*public int getMapCount() {
 		return mapCount;
 	}
 	public void setMapCount(int mapCount) {
 		this.mapCount = mapCount;
-	}
+	}*/
 	public String getId() {
 		return id;
 	}

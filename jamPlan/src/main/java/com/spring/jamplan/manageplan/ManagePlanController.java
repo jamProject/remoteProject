@@ -31,20 +31,42 @@ public class ManagePlanController {
 	@RequestMapping(value="getPickList.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String getPickList() {		//클래스 타입 확인
+	public String getPickList(String location) {		//클래스 타입 확인
 		
-		List<MapVO> pickList = managePlanDAOService.getPickList();
+		List<MapVO> pickList = managePlanDAOService.getPickList(location);
+		//int pickCount = pickList.length;
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
+			System.out.println("listcontrollerfirst");
 			str = mapper.writeValueAsString(pickList);
+			System.out.println("listcontrollelast");
 			System.out.println("pickList 메소드: " + str);
 		}catch(Exception e) {
 			System.out.println("first() mapper: " + e.getMessage());
 		}
 		return str;	
 	}
-	
+		
+	@RequestMapping(value="getAllPickList.map", method = RequestMethod.POST,
+			produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllPickList() {		//클래스 타입 확인	
+		List<MapVO> allPickList = managePlanDAOService.getAllPickList();
+		//int pickCount = pickList.length;
+		String str="";
+		ObjectMapper mapper = new ObjectMapper();
+	try {
+		System.out.println("listcontrollerfirst");
+		str = mapper.writeValueAsString(allPickList);
+		System.out.println("listcontrollelast");
+		System.out.println("allPickList 메소드: " + str);
+	}catch(Exception e) {
+		System.out.println("first() mapper: " + e.getMessage());
+	}
+		return str;	
+	}	
+		
 	@RequestMapping(value="insertMember.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -54,13 +76,14 @@ public class ManagePlanController {
 		
 		try {
 			System.out.println("mapVO.getId()=" + mapVO.getId());
-			count = managePlanDAOService.checkPick(mapVO);
+			count = managePlanDAOService.checkPick(mapVO); 
+			System.out.println("Checkcontrollerfirst");
 			if(count==0) {
-				
 				res = managePlanDAOService.insertMember(mapVO); 
-				pickCount = managePlanDAOService.markerPickCount();
+				//pickCount = managePlanDAOService.markerPickCount();
 			}
-			retVal.put("pickCount", pickCount);
+			System.out.println("Checkcontrollersecond");
+			System.out.println(retVal);
 			retVal.put("res", "OK"); 
 		}
 		catch (Exception e)
@@ -74,12 +97,12 @@ public class ManagePlanController {
 	@RequestMapping(value="deleteMember.map", method = RequestMethod.POST,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Object deleteMember(String id) {
+	public Object deleteMember(MapVO mapVO) {
 		Map<String, String> retVal = new HashMap<String, String>(); 
 		
 		try {
 			System.out.println("vo11.getId()=" + mapVO.getId());
-			int res = managePlanDAOService.deleteMember(id); 
+			int res = managePlanDAOService.deleteMember(mapVO); 
 			
 			retVal.put("res", "OK"); 
 		}

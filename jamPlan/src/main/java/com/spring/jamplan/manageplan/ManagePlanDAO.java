@@ -5,10 +5,10 @@ import java.util.List;
 import com.spring.jamplan.model.MapVO;
 
 public interface ManagePlanDAO {
-	List<MapVO> getPickList();
+	List<MapVO> getPickList(String location);
 	int checkPick(MapVO mapVO);
 	int insertMember(MapVO mapVO);
 	int markerPickCount();
-	int deleteMember(String id);
+	int deleteMember(MapVO mapVO);
 	
 }

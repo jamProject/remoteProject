@@ -7,7 +7,7 @@ var marker;
 var up_lng;
 var up_lat
 var up_latlng;
-
+var ClickEventHandler;
 //인포윈도우에 pick한 멤버 리스트 보여주는 함수
 function pickList(){
 	console.log("==picklist()==");
@@ -52,7 +52,7 @@ function onPick(){
 			if(retVal.res == "OK"){	
 				
 				pickList();	
-				$('#pickCount').html(retVal.pickCount);
+				//$('#pickCount').html(retVal.pickCount);
 				
 			}
 			else
@@ -122,13 +122,16 @@ function initMap() {
     var autocomplete = new google.maps.places.Autocomplete(input);			//자동 입력 기능
    // autocomplete.bindTo('bounds', map);
        
-    var markerImage = new google.maps.Marker({
-    	 path: 'M30.6,15.737c0-8.075-6.55-14.6-14.6-14.6c-8.075,0-14.601,6.55-14.601,14.6c0,4.149,1.726,7.875,4.5,10.524c1.8,1.801,4.175,4.301,5.025,5.625c1.75,2.726,5,11.976,5,11.976s3.325-9.25,5.1-11.976c0.825-1.274,3.05-3.6,4.825-5.399C28.774,23.813,30.6,20.012,30.6,15.737z',
-         fillColor: "FFFFFF",
-         fillOpacity: 0.8,
+    var col="FFFF42";
+	var x= 10;
+    var markerImage = new google.maps.Marker({    	
+    	// path: 'M30.6,15.737c0-8.075-6.55-14.6-14.6-14.6c-8.075,0-14.601,6.55-14.601,14.6c0,4.149,1.726,7.875,4.5,10.524c1.8,1.801,4.175,4.301,5.025,5.625c1.75,2.726,5,11.976,5,11.976s3.325-9.25,5.1-11.976c0.825-1.274,3.05-3.6,4.825-5.399C28.774,23.813,30.6,20.012,30.6,15.737z',
+         url: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.7|0|"+ col + "|13|_|" + x ,   //마커크기|기울기|마커색|글자크기|글자기본(_)또는굵게(b)|내용
+    	 //fillColor: "FFFFFF",
+         //fillOpacity: 0.8,
          strokeColor: "FFFA82",
          strokeWeight: 1,
-         anchor: new google.maps.Point(18,34),
+         anchor: new google.maps.Point(15,40),
          labelOrigin: { x: 16, y: 16 }
     });
        
@@ -273,7 +276,7 @@ function initMap() {
         	ClickEventHandler.prototype.handleClick = function(event) {
         	console.log('You clicked on place:' + event.placeId);
         	event.stop();
-            this.getPlaceInformation(event.placeId);
+            getPlaceInformation(event.placeId);
         	}
         }
         else{
@@ -328,7 +331,7 @@ function initMap() {
 	    });
 	}*/
   
-   /* ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
+   ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
         var me = this;
         this.placesService.getDetails({placeId: placeId}, function(place, status) {
           if (status === 'OK') {
@@ -340,7 +343,7 @@ function initMap() {
             me.infowindow.open(me.map);
           }
         });
-      };*/
+      };
     
     
 
@@ -353,7 +356,6 @@ function initMap() {
         //alert(MarkersArray);
     }
     
-
    function flightPath(){
     for (i in travelPathArray){
     	travelPathArray[i].setMap(null);
@@ -367,4 +369,3 @@ function initMap() {
     flightPath.setMap(map);
     travelPathArray.push(flightPath);
     }*/  
-
