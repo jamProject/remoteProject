@@ -19,43 +19,64 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 		List<MapVO> pickList = null;
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
 		pickList = mapMapper.getPickList(location);
-		System.out.println("picklistDAOS");
+		System.out.println("getpicklistDAOS");
 		return pickList;
 	}
 	
 	@Override
 	public int checkPick(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int count = mapMapper.checkPick(mapVO);		
-		return count;
+		int check = mapMapper.checkPick(mapVO);	
+		System.out.println("checkPickDAOS");
+
+		return check;
 	}
 	
 	@Override
-	public int insertMember(MapVO mapVO) {
+	public void insertMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.insertMember(mapVO);	
-		return res;
+		System.out.println("insertMemberDAOS1");
+		mapMapper.insertMember(mapVO);	
+		System.out.println("insertMemberDAOS2");
+
 	}
-	
+
 	@Override
-	public int markerPickCount() {
+	public void deleteMember(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int pickCount = mapMapper.markerPickCount();	
-		return pickCount;
-	}
-	
-	@Override
-	public int deleteMember(MapVO mapVO) {
-		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int res = mapMapper.deleteMember(mapVO);
-		return res;
+		System.out.println("deleteMemberDAOS1");
+		
+		System.out.println(mapVO.getPlanNo());
+		mapMapper.deleteMember(mapVO);
+		System.out.println("deleteMemberDAOS2");
+
 	}
 
 	public List<MapVO> getAllPickList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<MapVO> allPickList = null;
+		MapMapper memberMapper = sqlSession.getMapper(MapMapper.class);
+		allPickList = memberMapper.getAllPickList(); 
+		
+		return allPickList;
 	}
 
-	
-	
+	public void updatePickCount(MapVO mapVO) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		System.out.println("updatePickCountDAOS1");
+
+		mapMapper.updatePickCount(mapVO);
+		System.out.println("updatePickCountDAOS2");
+
+	}
+
+	public int pickCount(MapVO mapVO) {
+		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
+		System.out.println("pickCountDAOS1");
+
+		int pickNum = mapMapper.pickCount(mapVO);
+		System.out.println("pickCountDAOS2");
+
+		return pickNum;
+	}
+
 }

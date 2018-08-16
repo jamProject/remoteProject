@@ -47,6 +47,7 @@ top: 112px;
 </head>
 <body>
 <input type="hidden" id="memberid" value=<%=id %> /> 
+<input type="text" id="pickCount" value=""/>
 
 <div class="maptotal">
 <select class="ui dropdown">
@@ -54,6 +55,8 @@ top: 112px;
   <option value="1">1월 14일</option>
   <option value="2">1월 15일</option>
 </select>
+<input id="confirm" type="button" value="confirm" />
+<input id="reset" type="button" value="reset" />
 
 <div class="ui"></div>
 <div class="content">
@@ -75,6 +78,7 @@ top: 112px;
 </div>
 
 <aside  id = "map"> </aside>
+
 </div>
 </div>
 

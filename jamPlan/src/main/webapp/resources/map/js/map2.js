@@ -9,9 +9,11 @@ var lng;
 var lat;
 var init_latlng;
 var col="FFFF42";
-var x;
+var x=5;
 
 $(document).ready(function(){
+	marker.setMap(null);
+	
 	$.ajax({
 		url:'getAllPickList.map',
 		type: 'POST',
@@ -19,15 +21,18 @@ $(document).ready(function(){
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){ //성공적응답 받아오면 이 함수 자동실행 (data)가 컨트롤러에서 반환된 데이터가 들어있다.  // 변수이름은 바꿀수 있다.
 			$.each(data, function(index, item){ // 이 데이터는 리스트니 하나의 데이터(peopleVO객체)가 아이템에 저장 / 인덱스는 고정된 값
-				var output = '';
+				
 		
 			});
+		},
+		error:function(){ //응답실패시
+				alert("ajax통신실패!!!");
 		}
 	});	
 });
 		
 		
-//인포윈도우에 pick한 멤버 리스트 보여주는 함수
+//인포윈도우(마커말풍선)에 pick한 멤버 리스트 보여주는 함수
 function pickList(){
 	console.log("==picklist()==");
 	$('#output').empty();
@@ -46,11 +51,12 @@ function pickList(){
 				output += '<td>' + item.id + '</td>';
 				output += '</tr>'; 
 				
-				$(".ui button:nth-child(1)").append(place.name);
-				console.log("output:" + output);			
+				$(".ui button:nth-child("+index+")").append(item.location);
+				console.log("output:" + output);
+				
 			});
 			$('#output').append(output);
-			//x = str.pickCount;
+			alert(data.length());
 			
 		},
 		error:function(){
@@ -59,7 +65,7 @@ function pickList(){
 	});
 }
 
-function onPick(){		
+function onPick(){
 	$.ajax({
 		url:'insertMember.map',
 		type: 'POST',
@@ -69,11 +75,11 @@ function onPick(){
 				"planNo":1,
 				"id":$('#memberid').val(),
 				"userColor":"black",
-				"location": $('#placename').html()},
+				"location":$('#placename').html()},
 		success:function(retVal){ 	
 			if(retVal.res == "OK"){	
-				
-				pickList();	
+				$('#pickCount').val(retVal.newPickNum);
+				pickList();					
 			}
 			else
 			{
@@ -90,7 +96,9 @@ function onCancel(){
 $.ajax({
 	url: 'deleteMember.map',
 	type: 'POST',
-	data:{"id":$('#memberid').val(),
+	data:{
+		  "planNo":1,
+		  "id":$('#memberid').val(),
 		  "location": $('#placename').html()},
 	contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	dataType : "json",
@@ -194,15 +202,15 @@ function initMap() {
 	     
 	     infowindow.setContent(
 	     "<table>"+						
-	     "<tr><strong id='placename' value =" + place.name + ">" + place.name +
-	     "</tr><td>" + address + "</td>" +
+	     "<tr><td id='placename'>" + place.name + "</td></tr>" +
+	     "<tr><td>" + address + "</td></tr>" +
 	     "<tr>"+
 	     	"<td>selectMember</td>" +
 	     	"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>"+
 	     	"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>"+
 	     "</table>" + "<table id='output'></table>");
 	     
-	    pickList(); 
+	    //pickList(); 
 	    infowindow.open(map, marker); 	
 	    
 		
@@ -257,30 +265,46 @@ function initMap() {
 	    		me.infowindow.close();
 	    		marker.setPosition(place.geometry.location);
 	    		me.infowindow.setPosition(place.geometry.location);
-	    		me.infowindow.setContent(			//테이블길이정해야함
+	    		me.infowindow.setContent(			//테이블 칼럼 길이정해야함,주소가 너무길어
 	    			     "<table>"+						
-	    			     "<tr><strong id='placename' value =" + place.name + ">" + place.name +
-	    			     "</tr><td>" + place.formatted_address + "</td>" +
-	    			     "<tr>"+
-	    			     	"<td>selectMember</td>" +
+	    			     "<tr><td id='placename'>" + place.name + "</td></tr>" +
+	    			     "<tr><td id='formatted_adr'>" + place.formatted_address + "</td></tr>" +
+	    			     "<tr><td>selectMember</td>" +
 	    			     	"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>"+
 	    			     	"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>"+
 	    			     "</table>" + "<table id='output'></table>");	    		
+	    		
 	    		pickList();
-	    		me.infowindow.open(me.map);
+	    		me.infowindow.open(me.map);	    		
 	        }
+	    	
 	    	
 	    	marker.addListener('mouseover', function(mouseEvent){
 	        	console.log("autocomplete.addListene ");
 	        	//pickList();
 	        	me.infowindow.open(mouseEvent.latLng, marker);
 	        });
+	    	
+	    	//mouseout발생하고 몇초후에 인포닫히게 해야해
 	        marker.addListener('mouseout', function(mouseEvent){
 	        	console.log("autocomplete.addListene ");
 	        	me.infowindow.close(); 
 	        });
     	});
     };
+    
+    /*
+     $('#confirm').click(function(){
+    	
+    });
+    */
+    
+    $('#reset').click(function(){
+    	marker.setMap(null);
+    	infowindow.close();
+    });
+    
+   
     /* google.maps.event.addListener(map, 'click', function(mouseEvent) {
  	var origin = mouseEvent.latLng;
 });*/

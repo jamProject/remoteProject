@@ -6,8 +6,10 @@ import com.spring.jamplan.model.MapVO;
 
 public interface MapMapper {
 	List<MapVO> getPickList(String location);
+	List<MapVO> getAllPickList();
 	int checkPick(MapVO mapVO);
-	int insertMember(MapVO mapVO);
-	int markerPickCount();
-	int deleteMember(MapVO mapVO); 
+	void insertMember(MapVO mapVO);
+	void deleteMember(MapVO mapVO);
+	void updatePickCount(MapVO mapVO);
+	int pickCount(MapVO mapVO); 
 }
