@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +68,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
-					output += '<div><a href = "schedule.search" id="scdIdCheck"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
+					output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
 					output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
 					output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
 					output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';

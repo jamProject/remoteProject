@@ -32,13 +32,23 @@ public class SearchController {
 	}
 	//검색페이지 이동
 	@RequestMapping("plan.search")
-	public String planLoad(HttpSession session, UserVO userVO) {
+	public String planLoad() {
+
 		
+		/*String str = "";
+	
 		UserVO vo = searchService.getUserId(userVO.getId());
 		
 		System.out.println(vo.getId());
 		
 		session.setAttribute("checkID", vo.getId());
+		
+		if (session.getAttribute("checkID") != null) {
+			str = "search/searchPlanPage";
+		}
+		else {
+			str = "//webapp/mianPage";
+		}*/
 		/*
 		 * System.out.println("move1");
 		 * HttpSession session, UserVO userVO
@@ -153,20 +163,42 @@ public class SearchController {
 	
 	//스케쥴페이지이동
 	@RequestMapping("schedule.search")
-	public String moveSchedule(HttpSession session, UserVO userVO) {
+	public String moveSchedule() {
+		System.out.println("oo");
 		
-		System.out.println("move1");
+		
+		
+		/*UserVO vo = searchService.getUserId(userVO.getId());
+		
+		System.out.println(vo.getId());*/
+
+		/*System.out.println("move1");
 		searchService.moveSchedule();
-		System.out.println("move4");
-		session.setAttribute("checkID", userVO.getId());
+		System.out.println("move4");*/
+		
+		
+		
 		return "search/schedule";
 	}
 	
 	//login test
 	@RequestMapping("login.search")
 	public String moveLogin() {
+		System.out.println("movelogin");
 		return "search/login";
 	}
+	
+	
+	@RequestMapping("inpugLogin.search")
+	public String inputLogin(HttpSession session, UserVO userVO) {
+		System.out.println("sc");
+		UserVO vo = searchService.getUserId(userVO.getId());
+		System.out.println(vo.getId());
+		session.setAttribute("checkID", vo.getId());
+		return "search/searchPlanPage";
+	}
+	
+
 	
 	
 	

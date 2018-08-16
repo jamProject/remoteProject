@@ -8,7 +8,7 @@
 <title>Login page</title>
 </head>
 <body>
-   <form action="plan.search" method="post">
+   <form action="inpugLogin.search" method="post">
       <label for="inputId">아이디</label>
       <input type="text" name="id" id="id" />
       <input type="submit" name="submitId" id="submitId"/>

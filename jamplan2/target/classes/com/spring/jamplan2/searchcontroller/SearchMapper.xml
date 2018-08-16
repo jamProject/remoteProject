@@ -20,6 +20,8 @@
 		<result property="id" column="id" />
 	</resultMap>
 
+
+
 	<select id="getPlanList" resultMap="planResultMap">
 		SELECT * FROM plan order by planDate desc
 	</select>
@@ -66,9 +68,9 @@
 
 	</select>
 	
-	<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
-		UPDATE PLAN SET READCOUNT = READCOUNT + 1<!--  WHERE PLANNO = #{PLANNO, jdbcType=NUMBER} -->
-	</update>
+	<!--<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
+		UPDATE PLAN SET READCOUNT = READCOUNT + 1 WHERE PLANNO = #{PLANNO, jdbcType=NUMBER}
+	</update>  -->
 	
 	<select id="getUserId" parameterType="com.spring.jamplan2.searchcontroller.UserVO" resultMap="UserResultMap">
 		select * from userVO where id = #{id, javaType=String}
