@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id = "dataSource" 
+		class = "org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.OracleDriver"/>
+		<!--아래의 부분은 오라클 버전이나 계정에 따라 다르게 적는다.  -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="1111203"/>
+	</bean>
+	
+	<!--세션 연결 생성 관리-->
+	<!-- SqlSession 클래스를 상속받은 클래스 -->
+	<bean id = "sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="typeAliasesPackage" value="com.spring.jamplan"/>
+		<property name="mapperLocations" value="classpath:/com/spring/jamplan/**/*.xml"></property>
+	</bean>
+	
+	<!-- 실질적인 세션 관리-->
+	<bean id ="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref = "sqlSessionFactory"/> 
+	</bean>
+		
+</beans>
