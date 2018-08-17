@@ -15,7 +15,9 @@ public class CalendarVO {
 	int planNo;
 	String selectDate;
 	int dateCount;
-	int confirmIndicator;
+	int confirmIndicator;	
+	
+	
 	public String getId() {
 		return id;
 	}
