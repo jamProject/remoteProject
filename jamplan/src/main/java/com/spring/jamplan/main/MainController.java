@@ -1,37 +1,16 @@
 package com.spring.jamplan.main;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.spring.jamplan.model.TeamVO;
-import com.spring.jamplan.model.UserVO;
-
-=======
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,12 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
 
 
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 @Controller
 public class MainController {
 	@Autowired(required = true)
@@ -55,7 +34,7 @@ public class MainController {
 	
 	@Autowired
 	MainDAOService mDAOS;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 
 	@Autowired
 	TeamVO teamVo;
@@ -78,9 +57,9 @@ public class MainController {
 
 	}
 =======
-	
+	*/
 
-	
+
 	@Autowired
 	TeamVO teamVo;
 	
@@ -111,7 +90,7 @@ public class MainController {
 			mav.addObject("userVO", vo);
 			session.setAttribute("id", vo.getId());
 			session.setAttribute("planNo", teamList.get(0).getPlanNo());
-			mav.setViewName("managePlan/planMainPage");
+			mav.setViewName("managePlan/main");
 			}
 		else
 			{	
@@ -221,5 +200,5 @@ public class MainController {
 		UserVO vo = 
 	}
 	*/
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 }

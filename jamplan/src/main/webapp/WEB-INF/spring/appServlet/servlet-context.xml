@@ -10,17 +10,17 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD
 		<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-		up static resources in the ${webappRoot}/resources directory -->
+	Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory
 	<resources mapping="/resources/**"
 		location="/resources/calendar/css/" />
 	<resources mapping="/resources/**"
 		location="/resources/calendar/js/" />
 
-=======
+======= -->
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
@@ -34,7 +34,7 @@
 <beans:bean id="naverLoginBO" class="com.spring.jamplan.snslogin.NaverLoginBO" />
 
 	
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+<!-- >>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	<beans:bean
@@ -42,24 +42,13 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-<<<<<<< HEAD
 
-	<context:component-scan
-		base-package="com.spring.jamplan" />
-	
-	
-	
-</beans:beans>
-=======
 	<!--  
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</beans:bean>
 	-->
 	<context:component-scan base-package="com.spring.jamplan" />
-
-
-
 </beans:beans>
 
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+

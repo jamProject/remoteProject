@@ -1,10 +1,9 @@
 package com.spring.jamplan.model;
 
-<<<<<<< HEAD
-=======
+
 import java.util.Date;
 
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,8 +11,7 @@ import org.springframework.stereotype.Component;
  * @param 
  *	
  */
-<<<<<<< HEAD
-=======
+
 /*CREATE TABLE USERINFO
 	(	ID VARCHAR2(10) PRIMARY KEY, 
 	EMAIL VARCHAR2(20), 
@@ -29,7 +27,7 @@ import org.springframework.stereotype.Component;
 	HOBBY VARCHAR2(20) 
 	);
 */
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 @Component
 public class UserVO {
 	String id;

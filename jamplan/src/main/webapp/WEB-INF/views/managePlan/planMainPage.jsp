@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<<<<<<< HEAD
+
 
 <%
 	String id = (String)session.getAttribute("id");
 	session.setAttribute("planNo", 1);
 	int planNo = (int)session.getAttribute("planNo");
-=======
+%>
+
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
@@ -31,31 +32,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 </head>
-<%
-	String id = (String)session.getAttribute("id");
-	session.setAttribute("planNo", 1);
-	int planNo = Integer.parseInt(session.getAttribute("planNo").toString());
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
-%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 
 <meta charset="UTF-8">
-<<<<<<< HEAD
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-=======
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 <title>Insert title here</title>
 <script type="text/javascript" src = "http://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 </head>
-<<<<<<< HEAD
+
 <body>
-=======
-<body style="height:1500px">
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 	<h1>planMainPage</h1>
 
 	<div>
@@ -67,8 +59,6 @@
 				<%-- <td>${userVO.getId()}</td> --%>
 				
 				<label>Plan Main</label>
-<<<<<<< HEAD
-				
 				<td><a href="calendar.mp">calendar</a></td>
 				<td><a href="map.mp">map</a></td>
 				<td><a href="plantable.mp">plan</a></td>
@@ -79,28 +69,3 @@
 </body>
 </html>
 
-=======
-			</tr>
-		</table>
-	</div>
-	
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-  <a class="navbar-brand" href="calendar.manageplan">calendar</a>
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="map.manageplan">map</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="plantable.manageplan">plan</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="viewall.manageplan">view all</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="upload.manageplan">file upload</a>
-  </ul>
-</nav>
-	
-</body>
-</html>
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165

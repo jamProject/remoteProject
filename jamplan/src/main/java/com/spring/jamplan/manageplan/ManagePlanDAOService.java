@@ -1,50 +1,33 @@
 package com.spring.jamplan.manageplan;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.HashMap;
-=======
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamVO;
-=======
-import com.spring.jamplan.model.PlanVO;
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 
 @Service
 public class ManagePlanDAOService {
 	@Autowired
 	private SqlSession sqlSession;// mybatis(ibatis) 라이브러리가 제공하는 클래스
-<<<<<<< HEAD
 	@Autowired
 	private TeamVO teamVO;
 	
 	private CalendarMapper calendarMapper;
 	private ArrayList<PlanVO> planList;
 	private ArrayList<CalendarVO> voList;
-=======
-
-	private CalendarMapper calendarMapper;
-	private ArrayList<PlanVO> planList;
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 
 	public ArrayList<PlanVO> getPlans(PlanVO planVO) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 
 		planList = new ArrayList<PlanVO>();
 		planList = calendarMapper.getAllPlans();
-<<<<<<< HEAD
-		// System.out.println("dao");
-=======
-		System.out.println("dao");
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 		return planList;
 	}
 
@@ -53,7 +36,7 @@ public class ManagePlanDAOService {
 
 		planList = new ArrayList<PlanVO>();
 		planList = calendarMapper.getTeamPlan(planVO);
-<<<<<<< HEAD
+
 		// System.out.println(planList.get(0).getPlanNo());
 		return planList;
 	}
@@ -186,9 +169,4 @@ public class ManagePlanDAOService {
 
 	}
 
-=======
-		System.out.println(planList.get(0).getPlanNo());
-		return planList;
-	}
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 }

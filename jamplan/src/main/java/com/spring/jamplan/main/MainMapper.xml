@@ -29,11 +29,7 @@
 		<result property="isTeamLeader" column="isTeamLeader"/>
 		<result property="chatTime" column="chatTime"/>
 	</resultMap>
-<<<<<<< HEAD
- 
-	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
-		select * from userInfo where id = #{id, javaType = String} and pass = #{pass, javaType = String}
-=======
+	
 	
 	<resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
 		<result property="image" column="image" />
@@ -42,19 +38,12 @@
 		<result property="goodCount" column="goodCount" />
 		<result property="readCount" column="readCount" />
 	</resultMap>
- 
+	
 	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
 		select * from userInfo where id = #{id, javaType = String}
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
-
 	</select>
 	
 	<select id ="getTeamInfo" parameterType = "String" resultMap = "TeamResultMap">
-<<<<<<< HEAD
-		select planNo from userteam where id = #{id, javaType = String}
-	</select>
-
-=======
 		select planNo from userTeam where id = #{id, javaType = String}
 	</select>
 	
@@ -65,6 +54,5 @@
 	<insert id="fileUpload" parameterType="com.spring.jamplan.model.PlanVO">
 		insert into plan(image) values (#{image})
 	</insert>
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 
 </mapper>

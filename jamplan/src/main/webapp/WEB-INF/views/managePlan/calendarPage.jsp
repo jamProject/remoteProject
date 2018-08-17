@@ -1,9 +1,6 @@
 <%@page import="com.spring.jamplan.model.CalendarVO"%>
-<<<<<<< HEAD
 <%-- <%@page import="org.springframework.boot.autoconfigure.web.ServerProperties.Session"%> --%>
-=======
 
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -24,10 +21,8 @@
 	/*session 객체 접근 불가 시 리퀘스트에서 session 객체 생성  */
 	HttpSession session = request.getSession();
 	String id = (String)session.getAttribute("id");
-<<<<<<< HEAD
+
 	int role = (int)session.getAttribute("role");
-=======
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 %>	
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"
@@ -55,9 +50,8 @@
 			</tr>
 		</table>
 	</div>
-<<<<<<< HEAD
-	<div>
 
+	<div>
 	<%
 		if(role==0 || role ==1){
 	%>		
@@ -67,11 +61,8 @@
 	<% 
 		}
 	%>
-	
 	</div>
-=======
-	
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 	<div>
 	   <script type="text/javascript">
 	   </script>

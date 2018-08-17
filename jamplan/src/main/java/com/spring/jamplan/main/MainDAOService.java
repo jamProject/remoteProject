@@ -1,20 +1,13 @@
 package com.spring.jamplan.main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
-=======
 import com.spring.jamplan.model.PlanVO;
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
 import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
 
@@ -29,20 +22,18 @@ public class MainDAOService {
 	TeamVO teamVO;
 	
 	private ArrayList<TeamVO> list;
-<<<<<<< HEAD
-	public UserVO getUserInfo(UserVO userVO) {
-=======
+
 	public UserVO getUserInfo(String id) {
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 		System.out.println("getUserInfo start");
 		System.out.println(sqlSession);
 		MainMapper mainMapper = sqlSession.getMapper(MainMapper.class); 
 	
-<<<<<<< HEAD
-		UserVO vo = mainMapper.getUserInfo(userVO); 
-=======
+
 		UserVO vo = mainMapper.getUserInfo(id); 
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+/*=======
+		UserVO vo = mainMapper.getUserInfo(id); 
+>>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165*/
 		return vo;
 	}
 	
@@ -52,8 +43,6 @@ public class MainDAOService {
 		
 		return list;
 	}
-<<<<<<< HEAD
-=======
 
 	public List<PlanVO> getPlanjson() {
 		List<PlanVO> planList = null;
@@ -76,5 +65,5 @@ public class MainDAOService {
 		System.out.println("returnfile");
 		return check;
 	}
->>>>>>> 77fe9338168c1f4b500958fcf4a99bb028370165
+
 }
