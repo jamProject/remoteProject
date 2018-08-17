@@ -48,13 +48,15 @@ top: 112px;
 <body>
 <input type="hidden" id="memberid" value=<%=id %> /> 
 <input type="text" id="pickCount" value=""/>
-
+<input id="confirm" type="button" value="확정" />
+<input id="reset" type="button" value="취소" />
 <div class="maptotal">
-<select class="ui dropdown">
+<!-- <select class="ui dropdown">
   <option value="0">1월 13일</option>
   <option value="1">1월 14일</option>
   <option value="2">1월 15일</option>
-</select>
+</select> -->
+
 
 <div class="ui"></div>
 <div class="content">
@@ -76,6 +78,19 @@ top: 112px;
 </div>
 
 <aside  id = "map"> </aside>
+<div id="infoContent" style="display:none">
+<table >					
+	<tr><th align=left id="placename"></th></tr>	
+	<tr><td id="address"></td></tr>
+	<tr>
+		<td>selectMember</td>
+	    <td><input id ="pickBtn" type="button" value="Pick" onclick="onPick()"></td>
+	    <td><input id="cancelBtn" type="button" value="Cancel" onclick="onCancel()"></td>
+	</tr>
+</table>
+<table id="output"></table>
+</div>
+
 </div>
 </div>
 

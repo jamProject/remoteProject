@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h1>mainPage</h1>
-	<a href="mapPage.map?id=jieun">지도탭</a>
+	<a href="mapPage.mp?id=jieun">지도탭</a>
+	<a href="getUserList.admin">어드민페이지</a>
 </body>
 </html>

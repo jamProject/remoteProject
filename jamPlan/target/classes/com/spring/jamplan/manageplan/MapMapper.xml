@@ -20,14 +20,17 @@ LOCATION VARCHAR2(100)
 		<result property="location" column="LOCATION" />
 	</resultMap>
 	
-	<!-- controller에서 list의 length는 그장소에 대한count -->
+	<select id="getAllPickList" resultMap="mapMemberResultMap">
+		 select * from planMap 
+	</select>
+
 	<select id="getPickList" parameterType="String" resultMap="mapMemberResultMap">
 		select * from planMap where location=#{location, javaType=String}  
 	</select>
-	
+		
 	<select id="checkPick" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
-		select count(*) from planMap where planNo=#{planNo, javaType=int} and 
-			id=#{id, javaType=String} and location=#{location, javaType=String}
+			select count(*) from planMap where planNo=#{planNo, javaType=int} and
+				id=#{id, javaType=String} and location=#{location, javaType=String}		
 	</select>
 	
 	<insert id="insertMember" parameterType="com.spring.jamplan.model.MapVO" >
@@ -42,19 +45,18 @@ LOCATION VARCHAR2(100)
 	</delete>
 	
 	<select id="pickCount" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
-		select count(*) from planMap where planNo=#{planNo, javaType=int} 
-			and	location=#{location, javaType=String}
+		select count(*) from planMap where planNo=#{planNo, javaType=int} and location=#{location, javaType=String}
 	</select>
 	
 	<update id="updatePickCount" parameterType="com.spring.jamplan.model.MapVO" >
 		update planMap set pickCount=#{pickCount, javaType=int} 
-		where planNo=#{planNo, javaType=int} 
-		and	location=#{location, javaType=String}
+			where planNo=#{planNo, javaType=int} and location=#{location, javaType=String}
 	</update>
-	<!-- 지도오른쪽리스트 : 
-	<select>
+	
+	<!-- 지도오른쪽리스트 --> 
+	<select id="getAllLocation" parameterType="String" >
 		select location from planMap group by location order by count(location) desc;
 	</select>
-	 -->
+	
 </mapper> 
  

@@ -15,6 +15,15 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	private SqlSession sqlSession;
 	
 	@Override
+	public List<MapVO> getAllPickList() {
+		List<MapVO> allPickList = null;
+		MapMapper memberMapper = sqlSession.getMapper(MapMapper.class);
+		allPickList = memberMapper.getAllPickList(); 
+		
+		return allPickList;
+	}
+	
+	@Override
 	public List<MapVO> getPickList(String location){
 		List<MapVO> pickList = null;
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
@@ -26,7 +35,11 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 	@Override
 	public int checkPick(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
-		int check = mapMapper.checkPick(mapVO);	
+		System.out.println("mapVO.getId():" +  mapVO.getId() );
+		System.out.println("mapVO.getPlanNo():" +  mapVO.getPlanNo() );
+		System.out.println("mapVO.getLocation():" +  mapVO.getLocation() );
+		int check = mapMapper.checkPick(mapVO);
+		System.out.println(check);
 		System.out.println("checkPickDAOS");
 
 		return check;
@@ -52,11 +65,7 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 
 	}
 
-	public List<MapVO> getAllPickList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	@Override
 	public void updatePickCount(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
 		System.out.println("updatePickCountDAOS1");
@@ -65,7 +74,8 @@ public class ManagePlanDAOService implements ManagePlanDAO{
 		System.out.println("updatePickCountDAOS2");
 
 	}
-
+	
+	@Override
 	public int pickCount(MapVO mapVO) {
 		MapMapper mapMapper = sqlSession.getMapper(MapMapper.class);
 		System.out.println("pickCountDAOS1");

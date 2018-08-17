@@ -23,12 +23,12 @@ public class ManagePlanController {
 	private ManagePlanDAOService managePlanDAOService;
 	
 	//test
-	@RequestMapping(value="mapPage.map", method = RequestMethod.GET)
+	@RequestMapping(value="mapPage.mp")
 	public String mapPage() {
 		return "managePlan/mapPage";
 	}
 	
-	@RequestMapping(value="getPickList.map", method = RequestMethod.POST,
+	@RequestMapping(value="getPickList.mp", method = RequestMethod.GET,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getPickList(String location) {		//클래스 타입 확인		
@@ -47,48 +47,50 @@ public class ManagePlanController {
 		return str;	
 	}
 		
-	/*@RequestMapping(value="getAllPickList.map", method = RequestMethod.POST,
+	@RequestMapping(value="getAllPickList.mp", method = RequestMethod.GET,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String getAllPickList() {		//클래스 타입 확인	
 		List<MapVO> allPickList = managePlanDAOService.getAllPickList();
-		//int pickCount = pickList.length;
+		
 		String str="";
 		ObjectMapper mapper = new ObjectMapper();
-	try {
-		System.out.println("listcontrollerfirst");
-		str = mapper.writeValueAsString(allPickList);
-		System.out.println("listcontrollelast");
-		System.out.println("allPickList 메소드: " + str);
-	}catch(Exception e) {
-		System.out.println("first() mapper: " + e.getMessage());
-	}
+		try {
+			System.out.println("listcontrollerfirst");
+			str = mapper.writeValueAsString(allPickList);
+			System.out.println("listcontrollelast");
+			System.out.println("allPickList 메소드: " + str);
+		}catch(Exception e) {
+			System.out.println("first() mapper: " + e.getMessage());
+		}
 		return str;	
-	}	*/
+	}	
 		
-	@RequestMapping(value="insertMember.map", method = RequestMethod.POST,
+	@RequestMapping(value="insertMember.mp", method = RequestMethod.GET,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Object insertMember(MapVO mapVO) {
-		int check, pickNum = 0, newPickNum=0;
+		int check, pickNum = 0;
 		Map<String, Object> retVal = new HashMap<String, Object>(); 
 		
 		try {
 			System.out.println("Checkcontrollerfirst");
-			check = managePlanDAOService.checkPick(mapVO); 
+			check = managePlanDAOService.checkPick(mapVO); 	//이 장소를 pick했는지 체크
 			 
-			if(check==0) {
-				pickNum=managePlanDAOService.pickCount(mapVO);
-				newPickNum = pickNum + 1;
-				mapVO.setPickCount(newPickNum);
-				managePlanDAOService.insertMember(mapVO);
+			if(check==0) {	//pick한 적 없음
+				System.out.println("Checkcontroller2");
+				managePlanDAOService.insertMember(mapVO);		//데이터 삽입
+				pickNum=managePlanDAOService.pickCount(mapVO);	//pick한 멤버카운트
+				
+				mapVO.setPickCount(pickNum);
+				managePlanDAOService.updatePickCount(mapVO);	//데이터삽입후 pickCount수정
 				
 				System.out.println("mapVO.getId()=" + mapVO.getId());
 				System.out.println("mapVO.getLocation()=" + mapVO.getLocation());
-				System.out.println(newPickNum);			
+				System.out.println(pickNum);			
 				
 				//managePlanDAOService.updatePickCount(mapVO);				
-				retVal.put("newPickNum", String.valueOf(newPickNum));
+				retVal.put("pickNum", String.valueOf(pickNum));
 			}
 			System.out.println("Checkcontrollersecond");
 			
@@ -102,7 +104,7 @@ public class ManagePlanController {
 		return retVal; 
 	}	
 	
-	@RequestMapping(value="deleteMember.map", method = RequestMethod.POST,
+	@RequestMapping(value="deleteMember.mp", method = RequestMethod.GET,
 			produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Object deleteMember(MapVO mapVO) {
@@ -113,12 +115,12 @@ public class ManagePlanController {
 			System.out.println("vo11.getId()=" + mapVO.getId());
 			check = managePlanDAOService.checkPick(mapVO);
 			
-			if(check==1){
-				managePlanDAOService.deleteMember(mapVO);
-				pickNum = managePlanDAOService.pickCount(mapVO);
+			if(check==1){	//해당 장소를 pick했을때
+				managePlanDAOService.deleteMember(mapVO);	//pick취소
+				pickNum = managePlanDAOService.pickCount(mapVO);	//pick한 멤버카운트
 				mapVO.setPickCount(pickNum);
-				managePlanDAOService.updatePickCount(mapVO);
-				retVal.put("pickNum", String.valueOf(pickNum));				
+				managePlanDAOService.updatePickCount(mapVO);		//데이터삭제후 pickCount수정
+				retVal.put("pickNum", String.valueOf(pickNum));		//pickCount를 마커에 집어넣기 위해		
 			}
 			retVal.put("res", "OK");
 		}

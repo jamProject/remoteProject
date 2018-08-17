@@ -9,32 +9,60 @@ var lng;
 var lat;
 var init_latlng;
 var col="FFFF42";
-var x=5;
+var x=1;
 
-/*$(document).ready(function(){
-	$.ajax({
-		url:'getAllPickList.map',
-		type: 'POST',
-		dataType : "json",
-		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		success:function(data){ //성공적응답 받아오면 이 함수 자동실행 (data)가 컨트롤러에서 반환된 데이터가 들어있다.  // 변수이름은 바꿀수 있다.
-			$.each(data, function(index, item){ // 이 데이터는 리스트니 하나의 데이터(peopleVO객체)가 아이템에 저장 / 인덱스는 고정된 값
-				var output = '';
+$(document).ready(function(){
+	//marker.setMap(null);
+	
+	function getAllPick(){
+		$.ajax({
+			url:'getAllPickList.mp',
+			type: 'GET',
+			dataType : "json",
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			success:function(data){ //성공적응답 받아오면 이 함수 자동실행 (data)가 컨트롤러에서 반환된 데이터가 들어있다.  // 변수이름은 바꿀수 있다.
+				$.each(data, function(index, item){ // 이 데이터는 리스트니 하나의 데이터(peopleVO객체)가 아이템에 저장 / 인덱스는 고정된 값
+					infowindow.close();
+					var place = item.location;
+								        
+					if (place.geometry.viewport) {
+			            map.fitBounds(place.geometry.viewport);
+			        } else {
+			            map.setCenter(place.geometry.location);
+			            map.setZoom(15);  // Why 17? Because it looks good.
+			        }
+					
+					marker.setPosition(place.geometry.location);
+			        marker.setVisible(true);
+			        
+					infowindow.close();
+					autocompletefun(place);
+
+					var address = '';
+				    var infowindow = new google.maps.InfoWindow();
+					
+					console.log(index);
+					$(".ui button:nth-child(" + (index+1) + ")").append(item.location);
+				});
+			},
+			error:function(){ //응답실패시
+					alert("ajax통신실패!!!");
+			}
+		});
+	};
+});
 		
-			});
-		}
-	});	
-});*/
 		
-		
-//인포윈도우에 pick한 멤버 리스트 보여주는 함수
+//인포윈도우(마커말풍선)에 pick한 멤버 리스트 보여주는 함수
 function pickList(){
+	alert($('#placename').html());
+	console.log($('#placename').html());
 	console.log("==picklist()==");
 	$('#output').empty();
 	console.log("outputempty");
 	$.ajax({
-		url:'getPickList.map',
-		type: 'POST',
+		url:'getPickList.mp',
+		type: 'GET',
 		dataType : "json",
 		data:{"location":$('#placename').html()},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
@@ -42,14 +70,15 @@ function pickList(){
 			console.log("data: " + Object.values(data));
 			var output = '';
 			$.each(data, function(index, item){
+				
 				output += '<tr>';
 				output += '<td>' + item.id + '</td>';
 				output += '</tr>'; 
 				
-				//$(".ui button:nth-child("+index+")").append(item.location);
-				console.log("output:" + output);			
+				console.log("output:" + output);
+				
 			});
-			$('#output').append(output);	
+			$('#output').append(output);
 			
 		},
 		error:function(){
@@ -59,11 +88,12 @@ function pickList(){
 }
 
 function onPick(){
+	alert($('#placename').html());
 	$.ajax({
-		url:'insertMember.map',
-		type: 'POST',
+		url:'insertMember.mp',
+		type: 'GET',
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		dataType : "json",
+		dataType :"json",
 		data: { 
 				"planNo":1,
 				"id":$('#memberid').val(),
@@ -71,7 +101,7 @@ function onPick(){
 				"location":$('#placename').html()},
 		success:function(retVal){ 	
 			if(retVal.res == "OK"){	
-				$('#pickCount').val(retVal.newPickNum);
+				$('#pickCount').val(retVal.pickNum);
 				pickList();					
 			}
 			else
@@ -87,8 +117,8 @@ function onPick(){
 
 function onCancel(){
 $.ajax({
-	url: 'deleteMember.map',
-	type: 'POST',
+	url: 'deleteMember.mp',
+	type: 'GET',
 	data:{
 		  "planNo":1,
 		  "id":$('#memberid').val(),
@@ -97,6 +127,7 @@ $.ajax({
 	dataType : "json",
 	success:function(retVal){
 		if(retVal.res == "OK"){
+			$('#pickCount').val(retVal.pickNum);
 			pickList();
 		}
 		else
@@ -119,22 +150,22 @@ function initMap() {
     	zoom: 13
     });
     
+    /*x=$('#pickCount').val();*/
     markerImage = new google.maps.Marker({    	
-     	// path: 'M30.6,15.737c0-8.075-6.55-14.6-14.6-14.6c-8.075,0-14.601,6.55-14.601,14.6c0,4.149,1.726,7.875,4.5,10.524c1.8,1.801,4.175,4.301,5.025,5.625c1.75,2.726,5,11.976,5,11.976s3.325-9.25,5.1-11.976c0.825-1.274,3.05-3.6,4.825-5.399C28.774,23.813,30.6,20.012,30.6,15.737z',
           url: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.7|0|"+ col + "|13|_|" + x ,   //마커크기|기울기|마커색|글자크기|글자기본(_)또는굵게(b)|내용
           anchor: new google.maps.Point(15,40),
           labelOrigin: { x: 16, y: 16 }     	 
      });
    
     marker = new google.maps.Marker({
-      	 icon: markerImage,         
-      	 draggable:true,
-          map: map,
+    	icon: markerImage,   
+    	map: map
     });
     
 //   coordinates.push(init_latlng);        
 //	// 마커의 수만큼 반복하여 coordinates에 push된 위치 정보값을 계산 후 
 //	// 맵의 zoom level과 center를 맵에 적용
+    //Bounds 는 반환된 결과를 완전히 포함 할 수있는 경계 상자를 저장
 //   bounds = new google.maps.LatLngBounds();
 //    
 //   for (var i=0; i < coordinates.length ; i++) {
@@ -143,14 +174,14 @@ function initMap() {
 //	map.fitBounds(bounds);
 //	
 	//addMarker(up_latlng);
-	
- 	var input = document.getElementById('searchInput');
+
+    var input = document.getElementById('searchInput');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);			//지도or위성
   
     var geocoder = new google.maps.Geocoder;   
     var infowindow = new google.maps.InfoWindow();
-    var infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
+    //var infowindowContent = document.getElementById('infowindow-content');
+    //infowindow.setContent(infowindowContent);
     
     var autocomplete = new google.maps.places.Autocomplete(input);			//자동 입력 기능
   
@@ -162,17 +193,19 @@ function initMap() {
     var clickHandler = new ClickEventHandler(map, init_latlng);   
 
     
-    autocomplete.addListener('place_changed', function() {
+    /*fn*/  // autocomplete.addListener('place_changed', autocompletefn(place));
+    autocomplete.addListener('place_changed', function autocompletefn(place){
+    	
         infowindow.close();
         marker.setVisible(false);
-        
-        var place = autocomplete.getPlace();      
+        var place = autocomplete.getPlace(); 
         if (!place.geometry) {
             window.alert("Autocomplete's returned place contains no geometry");
             return;
         }        
         
-        // If the place has a geometry, then present it on a map.
+        // If the place has a geometry, then present it on a map.  
+        //Viewport contains the recommended viewport for displaying the returned result
     	if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
         } else {
@@ -181,33 +214,13 @@ function initMap() {
         }
     	
     	marker.setPosition(place.geometry.location);
-        marker.setVisible(true);     
-           
-		 		
-		var address = '';
-	    if (place.address_components) {
-	    	  address = [
-	          (place.address_components[0] && place.address_components[0].short_name || ''),
-	          (place.address_components[1] && place.address_components[1].short_name || ''),
-	          (place.address_components[2] && place.address_components[2].short_name || '')
-	        ].join(' ');
-	      }
-	     
-	     infowindow.setContent(
-	     "<table>"+						
-	     "<tr><td id='placename'>" + place.name + "</td></tr>" +
-	     "<tr><td>" + address + "</td></tr>" +
-	     "<tr>"+
-	     	"<td>selectMember</td>" +
-	     	"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>"+
-	     	"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>"+
-	     "</table>" + "<table id='output'></table>");
-	     
-	    //pickList(); 
-	    infowindow.open(map, marker); 	
-	    
+        marker.setVisible(true);  
+        
+/*fn*/	autoInfo(place,marker);
 		
-			
+		infowindow.setContent($('#infoContent').html());
+	    infowindow.open(map, marker);
+
         marker.addListener('mouseover', function(mouseEvent){
         	console.log("autocomplete.addListene ");
         	//pickList();
@@ -217,11 +230,29 @@ function initMap() {
         marker.addListener('mouseout', function(mouseEvent){
         	console.log("autocomplete.addListene ");
         	infowindow.close(); 
-        });        
+        });  
+        
+  	
     });
+    
 }    
 
-    //var placesService = new google.maps.places.PlacesService(map);
+function autoInfo(place, marker){
+    var address = '';
+   // this.infowindow = new google.maps.InfoWindow();
+    if (place.address_components) {
+    	  address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+    
+    $('#placename').html(place.name);
+    $('#address').html(address);
+     	
+}
+
     var ClickEventHandler = function(map, init_latlng, marker) {
     	 this.init_latlng = init_latlng;
          this.map = map;
@@ -239,38 +270,25 @@ function initMap() {
         if (event.placeId) {
         	console.log('You clicked on place:' + event.placeId);
 
-        	// Calling e.stop() on the event prevents the default info window from
-        	// showing.
-        	// If you call stop here when there is no placeId you will prevent some
-        	// other map click event handlers from receiving the event.
-        	event.stop();
-        	this.getPlaceInformation(event.placeId);
+        	event.stop();		//기본 인포창 안뜨게 하기
+        	getPlaceInformation(event.placeId);
         }
         else{
-        	console.log('You clicked on: ' + event.latLng);       
+        	console.log('You clicked on: ' + event.latLng);	       
         }
     };
       
     ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
-    	var me = this;
     	this.placesService.getDetails({placeId: placeId}, function(place, status) {
 	    	if (status === 'OK') {
-	    		me.infowindow.close();
+	    		//this.infowindow.close();
 	    		marker.setPosition(place.geometry.location);
-	    		me.infowindow.setPosition(place.geometry.location);
-	    		me.infowindow.setContent(			//테이블 칼럼 길이정해야함,주소가 너무길어
-	    			     "<table>"+						
-	    			     "<tr><td id='placename'>" + place.name + "</td></tr>" +
-	    			     "<tr><td id='formatted_adr'>" + place.formatted_address + "</td></tr>" +
-	    			     "<tr><td>selectMember</td>" +
-	    			     	"<td><input id ='pickBtn' type='button' value='Pick' onclick='onPick()'></td>"+
-	    			     	"<td><input id='cancelBtn' type='button' value='Cancel' onclick='onCancel()'></td></tr>"+
-	    			     "</table>" + "<table id='output'></table>");	    		
+	    		//this.infowindow.setPosition(place.geometry.location);
 	    		
-	    		pickList();
-	    		me.infowindow.open(me.map);	    		
+	    		autoInfo(place,marker);
+	    		infowindow.setContent($('#infoContent').html());
+	    	    infowindow.open(map, marker);
 	        }
-	    	
 	    	
 	    	marker.addListener('mouseover', function(mouseEvent){
 	        	console.log("autocomplete.addListene ");
@@ -283,10 +301,23 @@ function initMap() {
 	        	console.log("autocomplete.addListene ");
 	        	me.infowindow.close(); 
 	        });
+	    	
     	});
     };
     
+	$('#reset').click(function(){
+		alert("resetButton");
+    	infowindow.close();
+    });
+    /*
+     $('#confirm').click(function(){
+    	
+    });
+    */
     
+    
+    
+   
     /* google.maps.event.addListener(map, 'click', function(mouseEvent) {
  	var origin = mouseEvent.latLng;
 });*/

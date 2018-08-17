@@ -6,6 +6,7 @@ import com.spring.jamplan.model.MapVO;
 
 public interface ManagePlanDAO {
 	List<MapVO> getPickList(String location);
+	List<MapVO> getAllPickList();
 	int checkPick(MapVO mapVO);
 	void insertMember(MapVO mapVO);
 	int pickCount(MapVO mapVO); 
