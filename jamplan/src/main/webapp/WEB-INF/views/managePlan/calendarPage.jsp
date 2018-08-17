@@ -17,6 +17,7 @@
 <spring:url value="/resources/calendar/js/calendarJs.js" var="calJs" />
 <spring:url value="/resources/calendar/css/calendarCss.css" var="calCss" />
 
+
 <%
 	/*session 객체 접근 불가 시 리퀘스트에서 session 객체 생성  */
 	HttpSession session = request.getSession();
