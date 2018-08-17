@@ -4,29 +4,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LikeVO {
-	private int likeNo;
-	private int likeCheck;
-	private int userNo;
+	private int planNo;
+	private String userId;
 	
-	public int getLikeNo() {
-		return likeNo;
+	public int getPlanNo() {
+		return planNo;
 	}
-	public void setLikeNo(int likeNo) {
-		this.likeNo = likeNo;
+	public void setPlanNo(int planNo) {
+		this.planNo = planNo;
 	}
-	public int getLikeCheck() {
-		return likeCheck;
+	public String getUserId() {
+		return userId;
 	}
-	public void setLikeCheck(int likeCheck) {
-		this.likeCheck = likeCheck;
-	}
-	public int getUserNo() {
-		return userNo;
-	}
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
+	
+	
+
 	
 	
 }

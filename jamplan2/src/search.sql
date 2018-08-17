@@ -15,7 +15,7 @@
         planNo number,
         teamNo number,
         goodCount number,
-        readCount number,
+        goodCheck number,
         image varchar2(2000),
         planName varchar2(2000),
         planDate varchar2(16)

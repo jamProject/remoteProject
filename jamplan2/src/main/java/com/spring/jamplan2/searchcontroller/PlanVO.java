@@ -19,6 +19,7 @@ public class PlanVO {
    private String planName;
    private String planDate;
    
+   
 public int getPlanNo() {
 	return planNo;
 }
@@ -37,12 +38,7 @@ public int getGoodCount() {
 public void setGoodCount(int goodCount) {
 	this.goodCount = goodCount;
 }
-public int getReadCount() {
-	return readCount;
-}
-public void setReadCount(int readCount) {
-	this.readCount = readCount;
-}
+
 public String getImage() {
 	return image;
 }
@@ -61,6 +57,13 @@ public String getPlanDate() {
 public void setPlanDate(String planDate) {
 	this.planDate = planDate;
 }
+public int getReadCount() {
+	return readCount;
+}
+public void setReadCount(int readCount) {
+	this.readCount = readCount;
+}
+
 
    
    

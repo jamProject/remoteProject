@@ -20,9 +20,15 @@
 		<result property="id" column="id" />
 	</resultMap>
 	
+	<!-- //라이크-로그인db에서 받아오기
+	<resultMap type="LikeVO" id="likeUserResultMap">
+		<result property="userId" column="userId" />
+	</resultMap> -->
+	
+	
 	<resultMap type="LikeVO" id="LikeResultMap">
-		<result property="likeNo" column="likeNo" />
-		<result property="likeCheck" column="likeCheck" />
+		<result property="planNo" column="planNo" />
+		<result property="userId" column="userId" />
 	</resultMap>
 
 
@@ -73,25 +79,45 @@
 
 	</select>
 	
-	<!--<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
+	<!--조회수도전
+	<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
 		UPDATE PLAN SET READCOUNT = READCOUNT + 1 WHERE PLANNO = #{PLANNO, jdbcType=NUMBER}
 	</update>  -->
+	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
+		> update plan set readCount = (select readCount from plan where planName 
+		= #{planName, jdbcType=VARCHAR}) + 1 where planNo = #{planNo, jdbcType=NUMBER} 
+		</update> -->
 	
 	<select id="getUserId" parameterType="com.spring.jamplan2.searchcontroller.UserVO" resultMap="UserResultMap">
 		select * from userVO where id = #{id, javaType=String}
 	</select>
 	
-	<!-- <update id="heartCheck" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeResultMap">
+	<!-- //라이크-로그인db에서 받아오기
+	<select id="likeUserId" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="likeUserResultMap">
+		select * from likeTo where userId = #{userId, jdbcType=VARCHAR}
+	</select> -->
+	
+	<!-- 좋아요도전
+	<update id="heartCheck" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeResultMap">
 		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=NUMBER} + 1
 	</update> -->
+	
+	<select id="getLikeData" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeResultMap">
+		SELECT * FROM LIKETO where userId = #{userId, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertLikeData" parameterType="com.spring.jamplan2.searchcontroller.LikeVO">
+		insert into LIKETO VALUES(#{planNo, jdbcType = INTEGER}, #{userId, jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateLikeData" parameterType="com.spring.jamplan2.searchcontroller.LikeVO">
+		UPDATE LIKETO SET planNo = #{planNo, jdbcType = INTEGER} where userId = #{userId, jdbcType=VARCHAR}
+	</update>
 
 
 
 
-	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
-		> update plan set readCount = (select readCount from plan where planName 
-		= #{planName, jdbcType=VARCHAR}) + 1 where planNo = #{planNo, jdbcType=NUMBER} 
-		</update> -->
+	
 
 
 

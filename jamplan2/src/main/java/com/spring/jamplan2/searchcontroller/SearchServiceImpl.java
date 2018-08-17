@@ -143,15 +143,42 @@ public class SearchServiceImpl implements SearchService{
 		return vo;
 	}
 	
+	/*//라이크-로그인db에서 받아오기
+	@Override
+	public LikeVO likeUserId(String userId) {
+		System.out.println("test!!!!2");
+		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+		LikeVO vo = searchmapper.likeUserId(userId);
+		System.out.println(vo);
+		
+		return vo;
+	}*/
+	
 	//라이크체크
 	@Override
-	public int heartCheck(LikeVO likeVO) {
+	public void likeCheck(LikeVO likeVO) {
 		System.out.println("like2");
 		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
-		int check = searchmapper.heartCheck(likeVO);
-		System.out.println("like3");
+		System.out.println(likeVO.getUserId());
+		//라이크정보 불러오기
+		ArrayList<LikeVO> likeList = searchmapper.getLikeData(likeVO);
+		System.out.println("likeList : " + likeList.size());
 		
-		return check;
+		int planNo = 0;
+		//값이 0(미선택), 1(선택) 일시 +1, -1
+		if(likeList.size() == 0) {
+			System.out.println("0일때 들어왔다!");
+			planNo = likeList.get(0).getPlanNo() + 1;
+			likeVO.setPlanNo(planNo);
+			searchmapper.insertLikeData(likeVO);
+			System.out.println("insertResult");
+		}
+		else {
+			planNo = likeList.get(0).getPlanNo() - 1;
+			likeVO.setPlanNo(planNo);
+			searchmapper.updateLikeData(likeVO);
+			System.out.println("updateResult");
+		}
 		
 		
 	}

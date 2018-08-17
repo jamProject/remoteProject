@@ -2,7 +2,9 @@ package com.spring.jamplan2.searchcontroller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -164,7 +166,7 @@ public class SearchController {
 	//스케쥴페이지이동
 	@RequestMapping("schedule.search")
 	public String moveSchedule() {
-		System.out.println("oo");
+		System.out.println("moveSchedule");
 		
 		
 		
@@ -200,9 +202,20 @@ public class SearchController {
 	
 	@RequestMapping(value = "heartCheck.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public void heartCheck(HttpSession session, LikeVO likeVO) {
+	public String likeCheck(HttpSession session, LikeVO likeVO) {
+		System.out.println("like1");
 		
-		int likeNo = likeVO.getLikeNo();
+		//라이크-로그인db에서 받아오기
+		/*LikeVO vo = searchService.likeUserId(likeVO.getUserId());
+		System.out.println(vo.getUserId());*/
+		
+		/*likeVO.setUserId((String)session.getAttribute("id"));*/
+		
+		searchService.likeCheck(likeVO);
+		System.out.println("like4");
+		
+		return "search/schedule";
+		/*int likeNo = likeVO.getLikeNo();
 		int likeCheck = 0;
 		likeCheck = likeVO.getLikeCheck();
 		
@@ -211,9 +224,19 @@ public class SearchController {
 		}
 		else {
 			likeCheck--;
-		}
+		}*/
 		
-		
+		/*@RequestMapping(value = "selectCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public Map<String, Object> calendarSelect(HttpSession session, CalendarVO vo) {
+		      vo.setId((String) session.getAttribute("id"));
+		      vo.setPlanNo((int) session.getAttribute("planNo"));
+		      mpDAOS.insertSelectDate(vo);
+
+		      map = new HashMap<String, Object>();
+		      map.put("res", "ok");
+		      return map;
+		   }*/
 		
 		
 	}

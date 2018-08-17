@@ -6,6 +6,8 @@
 		if(session.getAttribute("checkID") == null) {
 			response.sendRedirect("./mainPage.jsp");
 		};
+		
+		String userId = (String)session.getAttribute("checkID");
 	%>
 	
 	<%-- <% 
@@ -28,23 +30,25 @@
 
 function likeFunc() {
 	/* 유저가 하트를 체크했는지 안했는지 체크해주는 코드 써주기 : if~ */
-	
-	
-	
+	alert('1');
 	$.ajax({
 		url : '/jamplan2/heartCheck.search',
 		type : 'POST',
 		dataType : "json",
+		data : {
+			"userId" : '<%=userId%>'
+			<%-- "planNo" : '<%=userId%>' --%>
+		},
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){
+			alert('3');
 			if(data.likeNo == 0){
 				'<i class="far fa-heart" tyle= "color : #E75450;" ></i>';
 			}
 			else{
 				'<i class="fas fa-heart " style= "color : #E75450;"  ></i>';
 			}	
-					
-					
+
 				consloe.log("output:" + output);
 				$('output').append(output);
 		},
