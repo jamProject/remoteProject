@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id ="getTeamInfo" parameterType = "String" resultMap = "TeamResultMap">
-		select planNo from userTeam where id = #{id, javaType = String}
+		select * planNo from userTeam where id = #{id, javaType = String}
 	</select>
 	
 	<select id="getPlanList" resultMap="planResultMap">

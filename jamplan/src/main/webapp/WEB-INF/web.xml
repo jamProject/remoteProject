@@ -24,7 +24,6 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-<<<<<<< HEAD:jamplan/src/main/webapp/WEB-INF/web.xml
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
@@ -34,12 +33,7 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.room</url-pattern>
-=======
-		
-	<servlet-mapping>
-		<servlet-name>appServlet</servlet-name>
-		<url-pattern>*.do</url-pattern>
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d:jamplan/src/main/webapp/WEB-INF/web.xml
+
 	</servlet-mapping>
 
 	<servlet-mapping>
@@ -55,8 +49,7 @@
 	<welcome-file-list>
 		<welcome-file>home.do</welcome-file>
 	</welcome-file-list>
-	
-<<<<<<< HEAD:jamplan/src/main/webapp/WEB-INF/web.xml
+
 	<!--필터  -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -64,27 +57,6 @@
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
-=======
-	<!-- Korean Filter -->
-   <filter>
-      <filter-name>CharacterEncodingFilter</filter-name>
-      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-      <init-param>
-         <param-name>encoding</param-name>
-         <param-value>UTF-8</param-value>
-      </init-param>
-      
-      <init-param>
-         <param-name>forceEncoding</param-name>
-         <param-value>true</param-value>
-      </init-param>
-   </filter>
-   <filter-mapping>
-      <filter-name>CharacterEncodingFilter</filter-name>
-      <url-pattern>/*</url-pattern>
-   </filter-mapping>
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d:jamplan/src/main/webapp/WEB-INF/web.xml
-
 		</init-param>
 		<init-param>
 			<param-name>forceEncoding</param-name>

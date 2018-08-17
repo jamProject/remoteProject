@@ -31,11 +31,11 @@ public class MyRoomDAOService implements MyRoomDAO {
 
 
 	@Override
-	public List<TeamVO> getTeamList(TeamVO team) {
-		System.out.println(team.getId());
+	public ArrayList<TeamVO> getTeamList(String id) {
+		System.out.println(id);
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 		System.out.println("mapper suc");
-		List<TeamVO> teamList = myRoomMapper.getTeamList(team);
+		ArrayList<TeamVO> teamList = myRoomMapper.getTeamList(id);
 
 		return teamList;
 	}

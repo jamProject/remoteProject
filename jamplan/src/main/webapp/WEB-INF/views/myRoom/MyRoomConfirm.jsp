@@ -8,7 +8,7 @@
 <%@page import="com.spring.jamplan.model.TeamVO"%>
 <%@page import="com.spring.jamplan.model.PlanVO"%>
 <%-- <%@page import="com.spring.jamplan.myroom.CalendarVO"%> --%>
-<%@spring %>
+
 <%
 	if ((String) request.getAttribute("id") == null)
 		response.sendRedirect("/jamplan/home.do");

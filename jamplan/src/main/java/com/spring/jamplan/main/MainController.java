@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
+import com.spring.jamplan.myroom.MyRoomDAOService;
 
 
 @Controller
@@ -63,6 +63,9 @@ public class MainController {
 	@Autowired
 	TeamVO teamVo;
 	
+	@Autowired
+	MyRoomDAOService myRoomDAO;
+	
 	@RequestMapping("/home.do")
 	public String home(Locale locale, Model model) {
 		System.out.println("AAAAAAA");
@@ -70,43 +73,43 @@ public class MainController {
 	}
 
 	@RequestMapping("/login.do")
-	public ModelAndView loginMain(HttpSession session, UserVO userVO, ModelAndView mav,
-			HttpServletResponse response) throws Exception {
+	public String loginMain(HttpSession session, UserVO userVO,Model model, HttpServletResponse response) throws Exception {	
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
-	
-		
+		String str="";
 		System.out.println("ID : " + userVO.getId() + " PW : " + userVO.getPass());
-
 		UserVO vo = mDAOS.getUserInfo(userVO.getId());
-		ArrayList<TeamVO> teamList = mDAOS.getTeamInfo(userVO.getId());
+		/*ArrayList<TeamVO> teamList = mDAOS.getTeamInfo(userVO.getId());*/
 		
 		//mav.addObject("map",map);
 		
-		if(!(vo==null))
-		{
-		if(vo.getPass().equals(userVO.getPass()))
-			{
-			mav.addObject("userVO", vo);
-			session.setAttribute("id", vo.getId());
-			session.setAttribute("planNo", teamList.get(0).getPlanNo());
-			mav.setViewName("managePlan/main");
-			}
-		else
-			{	
-			out.println("<script>alert('password error');location.href='';</script>");
-			out.flush();
+		if (!(vo == null)) {
+			//id가 있고 pass워드가 같을 때
+			if (vo.getPass().equals(userVO.getPass())) {
+				
+				session.setAttribute("id", vo.getId());
+				ArrayList<TeamVO> teamList= myRoomDAO.getTeamList(userVO.getId());
+				model.addAttribute("teamList", teamList);
+				model.addAttribute("id",vo.getId());
+				// session.setAttribute("planNo", teamList.get(0).getPlanNo());
+				System.out.println("teamname : "+teamList.get(0).getTeamName());
+				str = "myRoom/MyRoomConfirm";
+			//아이디는 있으나 패스워드 틀렸을 때
+			} else {
+				out.println("<script>alert('password error');location.href='';</script>");
+				out.flush();
+				str = "main/mainPage";
 			}
 		}
-		
-		else
-			{	
+
+		else {
 			out.println("<script>alert('id error');location.href='';</script>");
 			out.flush();
-			//return "redirect:/loginform.me";
-			}
-		//vo.printElement();
-		return mav;
+			str = "main/mainPage";
+			// return "redirect:/loginform.me";
+		}
+		// vo.printElement();
+		return str;
 	}
 	
 	/*@RequestMapping("/snsLogin.do")

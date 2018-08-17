@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,12 +28,12 @@ public class MyRoomController {
 	private MyRoomDAO myRoomDAO;
 	
 	
-	
+/*	
 	@RequestMapping("/home.do")
 	public String myRoomMain2(String id, Model model) {
 		
 		return "home";
-	}
+	}*/
 	
 //	방(그룹)안으로들어가기
 //	@RequestMapping(value="/inRoom.do")
@@ -45,23 +47,25 @@ public class MyRoomController {
 //		return "방안으로들어가는jsp";
 //	}
 	
-	@RequestMapping(value="/printTeamList.do")
-	public String printTeamList(TeamVO team, Model model) {
+/*	@RequestMapping(value="/printTeamList.do")
+	public String printTeamList(HttpSession session, Model model) {
 		System.out.println("printTeamList IN");
-		List<TeamVO> teamList = myRoomDAO.getTeamList(team);
+		String id = (String)session.getAttribute("id");
+		List<TeamVO> teamList = myRoomDAO.getTeamList(id);
 		System.out.println("db sucess");
 		model.addAttribute("teamList", teamList);
-		model.addAttribute("id", team.getId());
+		model.addAttribute("id", id);
 		System.out.println("printTeamList OUT");
 		return "MyRoomConfirm";
-	}
+	}*/
 	
 	
 	@RequestMapping(value="/ajaxPrintTeamList.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String ajaxPrintTeamList(TeamVO team) {
+	public String ajaxPrintTeamList(HttpSession session) {
 		System.out.println("ajaxPrintTeamList IN");
-		List<TeamVO> teamList = myRoomDAO.getTeamList(team);
+		String id = (String)session.getAttribute("id");
+		List<TeamVO> teamList = myRoomDAO.getTeamList(id);
 		
 		String teamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();

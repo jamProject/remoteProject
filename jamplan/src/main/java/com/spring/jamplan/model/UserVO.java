@@ -1,10 +1,5 @@
 package com.spring.jamplan.model;
 
-<<<<<<< HEAD
-
-import java.util.Date;
-
-
 import org.springframework.stereotype.Component;
 
 /**
@@ -150,8 +145,5 @@ public class UserVO {
 	public void setSignDate(String signDate) {
 		this.signDate = signDate;
 	}
-=======
-public class UserVO {
 
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 }

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.spring.jamplan.myroom.MyRoomMapper">
 
-	<resultMap type="TeamVO" id="teamResultMap">
+	<resultMap type="com.spring.jamplan.model.TeamVO" id="teamResultMap">
 		<result property="id" column="id" />
 		<result property="role" column="role" />
 		<result property="teamName" column="teamName" />
@@ -12,7 +12,7 @@
 		<result property="planNo" column="planNo" />
 	</resultMap>
 	
-	<resultMap type="UserVO" id="userResultMap">
+	<resultMap type="com.spring.jamplan.model.UserVO" id="userResultMap">
 		<result property="id" column="id" />
 		<result property="email" column="email" />
 		<result property="pass" column="pass" />
@@ -26,14 +26,14 @@
 		<result property="signDate" column="signDate" />
 	</resultMap>
 	
-	<resultMap type="TeamInfoVO" id="teamInfoResultMap">
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
 		<result property="teamNo" column="teamNo" />
 		<result property="teamName" column="teamName" />
 		<result property="id" column="id" />
 		<result property="joinDate" column="joinDate" />
 	</resultMap>
 	
-	<resultMap type="CalendarVO" id="calendarResultMap">
+	<resultMap type="com.spring.jamplan.model.CalendarVO" id="calendarResultMap">
 		<result property="planNo" column="planNo" />
 		<result property="selectDate" column="selectDate" />
 		<result property="dateCount" column="dateCount" />
@@ -41,7 +41,7 @@
 		<result property="id" column="id" />
 	</resultMap>
 	
-	<resultMap type="PlanVO" id="planResultMap">
+	<resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
 		<result property="planNo" column="planNo" />
 		<result property="teamNo" column="teamNo" />
 		<result property="goodCount" column="goodCount" />
@@ -52,37 +52,37 @@
 		<result property="planDate" column="planDate" />
 	</resultMap>
 	
-	<resultMap type="MessageVO" id="messageResultMap">
+	<resultMap type="com.spring.jamplan.model.MessageVO" id="messageResultMap">
 		<result property="sender" column="sender" />
 		<result property="receiver" column="receiver" />
 		<result property="isRead" column="isRead" />
 	</resultMap>
 	
-	<resultMap type="PlanUpdateVO" id="planUpdateResultMap">
+	<resultMap type="com.spring.jamplan.model.PlanUpdateVO" id="planUpdateResultMap">
 		<result property="planNo" column="planNo" />
 		<result property="confirmIndicator" column="confirmIndicator" />
 		<result property="dateCheck" column="dateCheck" />
 	</resultMap>
 	
 	
-	<select id="getTeamList" parameterType="com.spring.jamplan.myroom.TeamVO" resultMap="teamResultMap">
+	<select id="getTeamList" parameterType="String" resultMap="teamResultMap">
 		SELECT * FROM USERTEAM WHERE ID=#{id, jdbcType=VARCHAR} ORDER BY TEAMNAME
 	</select>
 	
-	<select id="getTeamMember" parameterType="com.spring.jamplan.myroom.UserVO" resultMap="teamResultMap">
+	<select id="getTeamMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamResultMap">
 		SELECT ID FROM USERTEAM WHERE TEAMNO IN (SELECT DISTINCT TEAMNO FROM USERTEAM WHERE ID=#{id, jdbcType=VARCHAR})
 	</select>
 	
-	<select id="getPlanList" parameterType="com.spring.jamplan.myroom.TeamVO" resultMap="planResultMap">
+	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamVO" resultMap="planResultMap">
 		SELECT * FROM PLAN WHERE TEAMNO IN (SELECT TEAMNO FROM USERTEAM WHERE ID = #{id, jdbcType=VARCHAR })
 	</select>
 	
-	<select id="checkUpdate" parameterType="com.spring.jamplan.myroom.UserVO" resultMap="planUpdateResultMap">
+	<select id="checkUpdate" parameterType="com.spring.jamplan.model.UserVO" resultMap="planUpdateResultMap">
 		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO IN (SELECT PLANNO FROM USERTEAM WHERE ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) 
 			WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
-	<select id="getUserInfo" parameterType="com.spring.jamplan.myroom.UserVO" resultMap="userResultMap" >
+	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap" >
 		SELECT * FROM USERINFO2 WHERE ID={id, jdbcType=VARCHAR }
 	</select>
 	
@@ -91,34 +91,34 @@
 			WHERE ISREAD = 0;
 	</select>
 	
-	<select id="searchTeam" parameterType="com.spring.jamplan.myroom.TeamInfoVO" resultMap="teamInfoResultMap" >
+	<select id="searchTeam" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap" >
 		SELECT * FROM TEAMINFO WHERE TEAMNAME LIKE '%'||#{teamName, jdbcType=VARCHAR}||'%'
 		
 	</select>
 	
-	<select id="searchPlan" parameterType="com.spring.jamplan.myroom.PlanVO" resultMap="planResultMap" >
+	<select id="searchPlan" parameterType="com.spring.jamplan.model.PlanVO" resultMap="planResultMap" >
 		SELECT * FROM PLAN WHERE PLANNO=#{planNo, jdbcType=INTEGER }
 	</select>
 	
-	<insert id="makeTeam" parameterType="com.spring.jamplan.myroom.TeamVO"  >
+	<insert id="makeTeam" parameterType="com.spring.jamplan.model.TeamVO"  >
 		INSERT INTO TEAMINFO(TEAMNO, TEAMNAME, ID, JOINDATE) 
 			VALUES(TEAMINFO_SEQ.NEXTVAL, #{teamName, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR}, SYSDATE)
 	</insert>
 	
-	<insert id="makePlan" parameterType="com.spring.jamplan.myroom.PlanVO"  >
+	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO"  >
 		INSERT INTO PLAN(PLANNO, TEAMNO, PLANNAME, PLANDATE, ISOPEN)
 			VALUES(#{PLAN_SEQ.NEXTVAL}, #{teamNo}, #{planName, jdbcType=VARCHAR}, SYSDATE, #{isOpen})
 	</insert>
 	
-	<select id="validationTeamName" parameterType="com.spring.jamplan.myroom.TeamVO" resultMap="teamResultMap" >
+	<select id="validationTeamName" parameterType="com.spring.jamplan.model.TeamVO" resultMap="teamResultMap" >
 		SELECT * FROM TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR }
 	</select>
 	
-	<delete id="deleteTeam" parameterType="com.spring.jamplan.myroom.TeamVO"  >
+	<delete id="deleteTeam" parameterType="com.spring.jamplan.model.TeamVO"  >
 		DELETE FROM TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
 	</delete>
 	
-	<delete id="deletePlan" parameterType="com.spring.jamplan.myroom.PlanVO"  >
+	<delete id="deletePlan" parameterType="com.spring.jamplan.model.PlanVO"  >
 		DELETE FROM PLAN WHERE PLANNO=#{planNo}
 	</delete>
 	

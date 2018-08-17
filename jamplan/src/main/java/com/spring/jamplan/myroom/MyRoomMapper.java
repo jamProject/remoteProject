@@ -18,7 +18,7 @@ import com.spring.jamplan.model.UserVO;
 
 public interface MyRoomMapper {
 		
-	ArrayList<TeamVO> getTeamList(TeamVO team);
+	ArrayList<TeamVO> getTeamList(String id);
 	List<TeamVO> getTeamMember(UserVO user);
 	ArrayList<PlanVO> getPlanList(TeamVO team);
 	ArrayList<PlanUpdateVO> checkUpdate(UserVO user);

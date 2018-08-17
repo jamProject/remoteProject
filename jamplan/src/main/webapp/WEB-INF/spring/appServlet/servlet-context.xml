@@ -3,11 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-<<<<<<< HEAD
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-=======
+
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -17,12 +13,12 @@
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/websocket
       	http://www.springframework.org/schema/websocket/spring-websocket.xsd">
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
+
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-<<<<<<< HEAD
+
 <!-- <<<<<<< HEAD
 		<annotation-driven />
 
@@ -34,16 +30,16 @@
 		location="/resources/calendar/js/" />
 
 ======= -->
-=======
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
+
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-<<<<<<< HEAD
 	<resources mapping="/resources/**" location="/resources/mainPage/img/" />
 	<resources mapping="/resources/**" location="/resources/calendar/css/0" />
 	<resources mapping="/resources/**" location="/resources/calendar/js/" />
+	<resources mapping="/resources/**" location="/resources/myRoom/css/" />
+	<resources mapping="/resources/**" location="/resources/myRoom/js/" />
 	<resources mapping="/image/**" location="file:///C:/BigDeep/upload/" />
 	
 	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
@@ -64,21 +60,6 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</beans:bean>
 	-->
-	<context:component-scan base-package="com.spring.jamplan" />
-</beans:beans>
-
-
-=======
-	<resources mapping="/resources/**" location="/resources/myRoom/css/" />
-	<resources mapping="/resources/**" location="/resources/myRoom/js/" />
-
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	
-	<context:component-scan base-package="com.spring.jamplan" />
 	
 	<!-- WebSocket에 사용할 핸들러 객체 생성 -->
    <beans:bean id="socketHandler" class="com.spring.jamplan.myroom.SocketHandler" />
@@ -86,6 +67,7 @@
    <websocket:handlers>
       <websocket:mapping handler="socketHandler" path="/jamplanWebSocket"/>
    </websocket:handlers>
-		
+   
+	<context:component-scan base-package="com.spring.jamplan" />
 </beans:beans>
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
+

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -9,18 +9,6 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.spring</groupId>
-	<artifactId>jamplan</artifactId>
-	<name>jamplan</name> 
-	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
-
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 	<!-- WebSocket 편집 스프링 버전 편집(3.1.1을 4.1.7로 변경 -->
 	<properties>
 		<java-version>1.8</java-version>
@@ -36,11 +24,6 @@
 			<url>http://maven.jahia.org/maven2</url>
 		</repository>
 	</repositories>
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -52,11 +35,7 @@
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
-<<<<<<< HEAD
-				 </exclusion>
-=======
 				</exclusion>
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -64,7 +43,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-<<<<<<< HEAD
 		<!-- json simple -->
 		<!-- https://mvnrepository.com/artifact/com.github.jsurfer/jsurfer-jsonsimple -->
 		<dependency>
@@ -79,21 +57,14 @@
 			<artifactId>scribejava-core</artifactId>
 			<version>2.8.1</version>
 		</dependency>		
-=======
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-<<<<<<< HEAD
-		</dependency>	
-		
-=======
 		</dependency>
 
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -143,10 +114,6 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -165,10 +132,6 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 		<!-- myBatis(추가)시작 2017.06.20 -->
 		<!-- spring-jdbc -->
 		<dependency>
@@ -177,7 +140,6 @@
 			<version>3.1.1.RELEASE</version>
 		</dependency>
 
-<<<<<<< HEAD
 		<!-- 스프링 부트 마이 바티스 추가 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -186,8 +148,6 @@
 
 		</dependency> -->
 		
-=======
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -216,14 +176,6 @@
 			<version>12.1.0.2</version>
 		</dependency>
 
-<<<<<<< HEAD
-		<!-- WebSocket 기능 추가 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-
 		<!-- Jackson JSON Mapper -->
 
 		<!-- <dependency>
@@ -234,7 +186,7 @@
 		
 		<!-- jackson json mapper -->
 		<!-- jackson-core springframewokr 4.x.x에 사용 -->
-=======
+
 		<!-- WebSocket 기능 추가 <dependency> <groupId>org.springframework</groupId> 
 			<artifactId>spring-websocket</artifactId> <version>${org.springframework-version}</version> 
 			</dependency> -->
@@ -244,45 +196,27 @@
 			<version>2.5.1</version> </dependency> <dependency> <groupId>org.codehaus.jackson</groupId> 
 			<artifactId>jackson-mapper-asl</artifactId> <version>1.9.13</version> </dependency> -->
 
-		<!-- jackson 라이브러리 끝 -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.4.1.1</version>
-		</dependency>
-		
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.4.1</version>
-		</dependency>
-<<<<<<< HEAD
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.4.1.1</version>
-		</dependency>
-		<!-- Jackson JSON Mapper -->
 
-
-=======
-		
-		<!-- WebSocket 기능 추가 -->
+	<!-- WebSocket 기능 추가 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!--
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.4.1</version>
 		</dependency>
-		  -->
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.1.1</version>
+		</dependency>
+		<!-- Jackson JSON Mapper -->
+		
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -292,8 +226,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-<<<<<<< HEAD
-	
+
 		<!-- xml추가
 		<resources>
 			<resource>
@@ -304,8 +237,7 @@
 			</resource>
 		</resources>
 		 -->
-=======
->>>>>>> 6ddd09edfe1ad83f2b818f9ba9b95e094714e95d
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>

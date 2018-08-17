@@ -10,7 +10,7 @@ import com.spring.jamplan.model.UserVO;
 
 public interface MyRoomDAO {
 	
-	List<TeamVO> getTeamList(TeamVO team);
+	List<TeamVO> getTeamList(String id);
 	List<TeamVO> getTeamMember(UserVO vo);
 	List<PlanVO> getPlanList(TeamVO team);	
 	ArrayList<PlanVO> checkUpdate(UserVO vo);

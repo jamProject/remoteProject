@@ -47,9 +47,9 @@ public class MainDAOService {
 	public List<PlanVO> getPlanjson() {
 		List<PlanVO> planList = null;
 		MainMapper mainMapper = sqlSession.getMapper(MainMapper.class);
-		System.out.println("planList11="+planList);
+		// System.out.println("planList11="+planList);
 		planList = mainMapper.getPlanList();
-		System.out.println("planList(DB갓다오고나서)="+planList);
+		//System.out.println("planList(DB갓다오고나서)="+planList);
 		return planList;
 	}
 	public void InsertUser(UserVO vo) {
