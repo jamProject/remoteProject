@@ -35,8 +35,8 @@ LOCATION VARCHAR2(100)
 	
 	<insert id="insertMember" parameterType="com.spring.jamplan.model.MapVO" >
 		insert into planMap values
-			(#{planNo, javaType=int}, #{id, javaType=String}, #{userColor, javaType=String},
-			    #{pickCount, javaType=int}, #{location, javaType=String})
+			(#{planNo, javaType=int}, #{id, javaType=String}, #{pickCount, javaType=int},
+			    #{userColor, javaType=String}, #{location, javaType=String})
 	</insert>
 	
 	<delete id="deleteMember" parameterType="com.spring.jamplan.model.MapVO">
@@ -55,7 +55,7 @@ LOCATION VARCHAR2(100)
 	
 	<!-- 지도오른쪽리스트 --> 
 	<select id="getAllLocation" parameterType="String" >
-		select location from planMap group by location order by count(location) desc;
+		select location from planMap group by location order by count(location) desc
 	</select>
 	
 </mapper> 

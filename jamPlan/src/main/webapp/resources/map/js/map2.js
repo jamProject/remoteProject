@@ -97,6 +97,7 @@ function onPick(){
 		data: { 
 				"planNo":1,
 				"id":$('#memberid').val(),
+				"pickCount":0,
 				"userColor":"black",
 				"location":$('#placename').html()},
 		success:function(retVal){ 	
@@ -190,7 +191,7 @@ function initMap() {
     // bounds option in the request.
     autocomplete.bindTo('bounds', map);
   
-    var clickHandler = new ClickEventHandler(map, init_latlng);   
+    var clickHandler = new ClickEventHandler(map, marker);   
 
     
     /*fn*/  // autocomplete.addListener('place_changed', autocompletefn(place));
@@ -216,7 +217,7 @@ function initMap() {
     	marker.setPosition(place.geometry.location);
         marker.setVisible(true);  
         
-/*fn*/	autoInfo(place,marker);
+/*fn*/	autoInfo(place);
 		
 		infowindow.setContent($('#infoContent').html());
 	    infowindow.open(map, marker);
@@ -237,7 +238,7 @@ function initMap() {
     
 }    
 
-function autoInfo(place, marker){
+function autoInfo(place){
     var address = '';
    // this.infowindow = new google.maps.InfoWindow();
     if (place.address_components) {
@@ -253,12 +254,12 @@ function autoInfo(place, marker){
      	
 }
 
-    var ClickEventHandler = function(map, init_latlng, marker) {
-    	 this.init_latlng = init_latlng;
+    var ClickEventHandler = function(map, marker) {
+    	 //this.init_latlng = init_latlng;
          this.map = map;
          this.marker = marker;
          this.placesService = new google.maps.places.PlacesService(map);
-         this.infowindow = new google.maps.InfoWindow;
+         this.infoWindow = new google.maps.InfoWindow;
          //this.infowindow.setContent(this.infowindowContent);
          
          //Listen for clicks on the map.
@@ -271,7 +272,7 @@ function autoInfo(place, marker){
         	console.log('You clicked on place:' + event.placeId);
 
         	event.stop();		//기본 인포창 안뜨게 하기
-        	getPlaceInformation(event.placeId);
+        	this.getPlaceInformation(event.placeId);
         }
         else{
         	console.log('You clicked on: ' + event.latLng);	       
@@ -279,27 +280,40 @@ function autoInfo(place, marker){
     };
       
     ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
-    	this.placesService.getDetails({placeId: placeId}, function(place, status) {
+    	 var me = this;
+    	 me.placesService.getDetails({placeId: placeId}, function(place, status) {
 	    	if (status === 'OK') {
-	    		//this.infowindow.close();
-	    		marker.setPosition(place.geometry.location);
-	    		//this.infowindow.setPosition(place.geometry.location);
+	    		//this.infoWindow = new google.maps.InfoWindow;//test
+	    		me.infoWindow.close();
+	    		me.marker.setPosition(place.geometry.location);
+	    		me.infoWindow.setPosition(place.geometry.location);
 	    		
-	    		autoInfo(place,marker);
-	    		infowindow.setContent($('#infoContent').html());
-	    	    infowindow.open(map, marker);
+	    		//autoInfo(place);
+	    		 var address = '';	    		  
+	    		    if (place.address_components) {
+	    		    	  address = [
+	    		          (place.address_components[0] && place.address_components[0].short_name || ''),
+	    		          (place.address_components[1] && place.address_components[1].short_name || ''),
+	    		          (place.address_components[2] && place.address_components[2].short_name || '')
+	    		        ].join(' ');
+	    		      }
+	    		    
+	    		$('#placename').html(place.name);
+	    		$('#address').html(address);
+	    		me.infoWindow.setContent($('#infoContent').html());
+	    		me.infoWindow.open(me.map, me.marker);
 	        }
 	    	
-	    	marker.addListener('mouseover', function(mouseEvent){
+	    	marker.addListener('mouseover', function(mouseEvent,marker){
 	        	console.log("autocomplete.addListene ");
 	        	//pickList();
-	        	me.infowindow.open(mouseEvent.latLng, marker);
+	        	me.infoWindow.open(mouseEvent.latLng, me.marker);
 	        });
 	    	
 	    	//mouseout발생하고 몇초후에 인포닫히게 해야해
 	        marker.addListener('mouseout', function(mouseEvent){
 	        	console.log("autocomplete.addListene ");
-	        	me.infowindow.close(); 
+	        	me.infoWindow.close(); 
 	        });
 	    	
     	});

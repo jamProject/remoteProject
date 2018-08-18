@@ -16,8 +16,7 @@ import com.spring.jamplan.model.MapVO;
 @Controller
 public class ManagePlanController {
 
-	@Autowired(required = true)
-	MapVO mapVO;
+	
 
 	@Autowired	
 	private ManagePlanDAOService managePlanDAOService;
@@ -75,10 +74,12 @@ public class ManagePlanController {
 		
 		try {
 			System.out.println("Checkcontrollerfirst");
+			System.out.println(mapVO.getId());
 			check = managePlanDAOService.checkPick(mapVO); 	//이 장소를 pick했는지 체크
 			 
 			if(check==0) {	//pick한 적 없음
-				System.out.println("Checkcontroller2");
+				System.out.println("Checkcontroller3");
+				System.out.println("mapVO.getId():");
 				managePlanDAOService.insertMember(mapVO);		//데이터 삽입
 				pickNum=managePlanDAOService.pickCount(mapVO);	//pick한 멤버카운트
 				
