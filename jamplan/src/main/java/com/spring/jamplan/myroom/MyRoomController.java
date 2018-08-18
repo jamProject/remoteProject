@@ -1,5 +1,6 @@
 package com.spring.jamplan.myroom;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,24 @@ public class MyRoomController {
 		System.out.println("printTeamList OUT");
 		return "MyRoomConfirm";
 	}*/
-	
+	@RequestMapping(value="/idSession.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String idSession(HttpSession session) {
+		System.out.println("세션"+session.getAttribute("id"));
+		
+		map = new HashMap<String, Object>();
+		map.put("id", (String)session.getAttribute("id"));
+		String teamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			teamListToJson = mapper.writeValueAsString(map);
+			System.out.println(teamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("ajaxPrintTeamList OUT");
+		return teamListToJson;
+	}
 	
 	@RequestMapping(value="/ajaxPrintTeamList.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -96,11 +114,22 @@ public class MyRoomController {
 		
 		//id 저장
 		vo.setId((String)session.getAttribute("id"));
+		System.out.println(vo.getId());
 		//id와 teamName으로 role teamNo등등 값 가져오기
-		teamVO = myRoomDAO.getTeamInfo(vo);
+		ArrayList<TeamInfoVO> list = myRoomDAO.getTeamInfo(vo);
+		
+		System.out.println("af teanNO : "+list.get(0).getTeamNo());
+		System.out.println("af teamName : " + list.get(0).getTeamName());
+		System.out.println("af id : "+list.get(0).getId());
+		System.out.println("af role : "+list.get(0).getRole());
+		System.out.println("af planNo : "+list.get(0).getPlanno());
+		System.out.println("af planName : "+list.get(0).getPlanName());
+		System.out.println("af joinDate "+list.get(0).getJoinDate());
+		vo.setRole(list.get(0).getRole());
+		vo.setTeamNo(list.get(0).getTeamNo());
 		//planNo값이 가장 큰 값을 가져와 +1 증가시켜 planNo 설정하기
 		int maxplabNo = myRoomDAO.getMaxPlanNo() + 1;
-		teamVO.setPlanno(maxplabNo);
+		vo.setPlanno(maxplabNo);
 		//설정된 teaminfo를 insert하기
 		int check = myRoomDAO.insertPlan(vo);
 		map = new HashMap<String, Object>();
@@ -185,7 +214,7 @@ public class MyRoomController {
 	
 	
 	
-	@RequestMapping(value="/updateCheck.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/updateCheck.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String updateCheck(UserVO vo) {
 		

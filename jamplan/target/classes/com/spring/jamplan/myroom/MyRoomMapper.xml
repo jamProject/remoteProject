@@ -61,10 +61,10 @@
 	</resultMap>
 	
 	<select id = "getTeamInfo" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
-		select * from teaminfo where id = #{id, javaType = String}, teamName = #{teamName, javaType = String}
+		select * from teaminfo where id = #{id,  javaType = String} and teamName = #{teamName,  javaType = String}
 	</select>
 	<select id = "getMaxPlanNo" resultType="int">
-		select MAX(planNo) from plan
+		select MAX(planNo) as planNo from plan
 	</select>
 	<select id="getTeamList" parameterType="String" resultMap="teamInfoResultMap">
 		SELECT * FROM teaminfo WHERE ID=#{id, jdbcType=VARCHAR} ORDER BY TEAMNAME
@@ -79,8 +79,7 @@
 	</select>
 	
 	<select id="checkUpdate" parameterType="com.spring.jamplan.model.UserVO" resultMap="planUpdateResultMap">
-		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO IN (SELECT PLANNO FROM TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) 
-WHERE ROWNUM <![CDATA[<=]]> 10
+		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO IN (SELECT PLANNO FROM TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
 	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap" >

@@ -88,11 +88,8 @@ public class MainController {
 			if (vo.getPass().equals(userVO.getPass())) {
 				
 				session.setAttribute("id", vo.getId());
-				ArrayList<TeamInfoVO> teamList= myRoomDAO.getTeamList(userVO.getId());
-				model.addAttribute("teamList", teamList);
-				model.addAttribute("id",vo.getId());
-				// session.setAttribute("planNo", teamList.get(0).getPlanNo());
-				System.out.println("teamname : "+teamList.get(0).getTeamName());
+				model.addAttribute("id", vo.getId());
+				
 				str = "myRoom/MyRoomConfirm";
 			//아이디는 있으나 패스워드 틀렸을 때
 			} else {

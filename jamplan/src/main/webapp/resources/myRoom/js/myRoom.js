@@ -34,40 +34,39 @@ function onError(event) {
 var teamNameArray = [];
 
 function ajaxGetTeamList() {
-	var id = '<%=id%>';
-	$('#teamList').empty();
+	
+	
+	
+	$('#teamList').empty();	
 	$.ajax({
 				url : '/jamplan/ajaxPrintTeamList.do',
 				type : 'POST',
-				data : {
-					'id' : id
-				},
 				contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 				dataType : 'json',
 				success : function(data) {
 
-	// data에 들어있는 데이터 수만큼 반복되고 하나하나가 매번 item에 매핑된다.
-	$.each(data,function(index, item) {
-						var teamList = '';
-						teamList += '<button class="btn btn-outline-light text-dark border-0 teamList" id="myTeam'
-								+ index
-								+ '"'
-								+ ' data-toggle="collapse" data-target="#myPlan'
-								+ index
-								+ '">'
-								+ item.teamName
-								+ '</button>'
-								+ '<div id="myPlan'
-								+ index
-								+ '"'
-								+ ' class="collapse">'
-								+ 'plan' + '</div>';
-						$('#teamList').append(teamList);
-
-						// 팀명을 배열에 담고 Add plan 버튼에서의 테이블 생성에
-						// 이용한다.
-						teamNameArray[index] = item.teamName;
-					});
+						// data에 들어있는 데이터 수만큼 반복되고 하나하나가 매번 item에 매핑된다.
+						$.each(data,function(index, item) {
+											var teamList = '';
+											teamList += '<button class="btn btn-outline-light text-dark border-0 teamList" id="myTeam'
+													+ index
+													+ '"'
+													+ ' data-toggle="collapse" data-target="#myPlan'
+													+ index
+													+ '">'
+													+ item.teamName
+													+ '</button>'
+													+ '<div id="myPlan'
+													+ index
+													+ '"'
+													+ ' class="collapse">'
+													+ 'plan' + '</div>';
+											$('#teamList').append(teamList);
+					
+											// 팀명을 배열에 담고 Add plan 버튼에서의 테이블 생성에
+											// 이용한다.
+											teamNameArray[index] = item.teamName;
+										});
 },
 error : function(e) {
 	alert("unload " + e);
@@ -138,6 +137,7 @@ $(document).ready(function() {
 	// 로드 되면 업데이트 사항 바로 보여준다.
 
 	// 로드 되면 출력한다.
+	
 	ajaxGetTeamList();
 
 	
@@ -238,14 +238,10 @@ $(document).ready(function() {
 					
 					//팀을 선택한 이후 추가 버튼을 클릭 했을 때 이벤트
 					$("#planAddModal").click(function(){
-						
-						$.ajax({
-							
-						})
-						
+				
 						planName = $("#planName").val();
-						console.log(teamName);
-						console.log(planName);
+						console.log("plan add teamname"+teamName);
+						console.log("plan add planname"+planName);
 						$.ajax({
 							url : '/jamplan/insertPlan.do',
 							type : 'POST',
@@ -291,7 +287,7 @@ $(document).ready(function() {
 				$('#updateSpace').empty();
 				$.ajax({
 						url : '/jamplan/updateCheck.do',
-						type : 'GET',
+						type : 'POST',
 						data : {
 							id : id
 						},

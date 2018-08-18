@@ -28,9 +28,9 @@ public class MyRoomDAOService implements MyRoomDAO {
 	@Autowired(required=false)
 	private PlanVO plan;
 	
-	@Autowired
+/*	@Autowired
 	private TeamInfoVO vo;
-
+*/
 	@Override
 	public ArrayList<TeamInfoVO> getTeamList(String id) {
 		System.out.println(id);
@@ -157,9 +157,9 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 	
 	@Override
-	public TeamInfoVO getTeamInfo (TeamInfoVO teamVO) {
+	public ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO teamVO) {
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
-		vo = myRoomMapper.getTeamInfo(teamVO);
+		ArrayList<TeamInfoVO> vo = myRoomMapper.getTeamInfo(teamVO);
 		return vo;
 	}
 	

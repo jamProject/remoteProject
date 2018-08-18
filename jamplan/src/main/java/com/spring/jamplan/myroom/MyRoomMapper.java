@@ -30,7 +30,7 @@ public interface MyRoomMapper {
 	TeamInfoVO validationTeamName(TeamInfoVO team);
 	int deleteTeam(TeamInfoVO team);
 	int deletePlan(PlanVO plan);
-	TeamInfoVO getTeamInfo (TeamInfoVO vo);
+	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
 	int getMaxPlanNo();
 
 }

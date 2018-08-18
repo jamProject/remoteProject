@@ -21,6 +21,6 @@ public interface MyRoomDAO {
 	String validationTeamName(TeamInfoVO team);
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
-	TeamInfoVO getTeamInfo (TeamInfoVO vo);
+	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
 	public int getMaxPlanNo();
 }
