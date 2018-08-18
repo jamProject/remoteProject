@@ -20,16 +20,16 @@
 		<result property="signDate" column="signDate" />
 	</resultMap>
 	
-	<resultMap type="com.spring.jamplan.model.TeamVO" id="TeamResultMap">
-		<result property="teamNo" column="teamNo"/>
-		<result property="planNo" column="planNo"/>
-		<result property="id" column="id"/>
-		<result property="teamName" column="teamName"/>
-		<result property="role" column="role"/>
-		<result property="isTeamLeader" column="isTeamLeader"/>
-		<result property="chatTime" column="chatTime"/>
+		<!-- getTeamRole -->
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+		<result property="teamNo" column="teamNo" />
+		<result property="teamName" column="teamName" />
+		<result property="id" column="id" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />
+		<result property="jonDate" column="jonDate" />
 	</resultMap>
-	
 	
 	<resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
 		<result property="image" column="image" />
@@ -43,7 +43,7 @@
 		select * from userInfo where id = #{id, javaType = String}
 	</select>
 	
-	<select id ="getTeamInfo" parameterType = "String" resultMap = "TeamResultMap">
+	<select id ="getTeamInfo" parameterType = "String" resultMap = "teamInfoResultMap">
 		select * planNo from userTeam where id = #{id, javaType = String}
 	</select>
 	

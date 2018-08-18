@@ -700,7 +700,7 @@ footer {
 													placeholder="일정 이름을 정해보세요" type="text">
 											</div>
 											<div class="row modal-footer justify-content-center">
-												<button type="button" id="inputForm" class="btn btn-primary">추가</button>
+												<button type="button" id="planAddModal" class="btn btn-primary">추가</button>
 											</div>
 										</form>
 									</div>

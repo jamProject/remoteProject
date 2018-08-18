@@ -1,16 +1,20 @@
 package com.spring.jamplan.model;
 
 import java.sql.Date;
+import java.text.DateFormat;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class TeamInfoVO {
+
 	private int teamNo;
 	private String teamName;
-	private String id;
-	private Date joinDate;
-	
+	private String id ; 
+    private int  role;
+    private int planNo;
+    private String planName ;
+    private DateFormat joinDate ;
 	public int getTeamNo() {
 		return teamNo;
 	}
@@ -29,10 +33,30 @@ public class TeamInfoVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Date getJoinDate() {
+	public int getRole() {
+		return role;
+	}
+	public void setRole(int role) {
+		this.role = role;
+	}
+	public int getPlanno() {
+		return planNo;
+	}
+	public void setPlanno(int planno) {
+		this.planNo = planno;
+	}
+	public String getPlanName() {
+		return planName;
+	}
+	public void setPlanName(String planName) {
+		this.planName = planName;
+	}
+	public DateFormat getJoinDate() {
 		return joinDate;
 	}
-	public void setJoinDate(Date joinDate) {
+	public void setJoinDate(DateFormat joinDate) {
 		this.joinDate = joinDate;
 	}
+	
+	
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
-import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
 
 
@@ -27,7 +26,10 @@ public class MyRoomController {
 	@Autowired(required = false)
 	private MyRoomDAO myRoomDAO;
 	
+	@Autowired
+	private TeamInfoVO teamVO;
 	
+	private HashMap<String, Object> map;
 /*	
 	@RequestMapping("/home.do")
 	public String myRoomMain2(String id, Model model) {
@@ -65,7 +67,7 @@ public class MyRoomController {
 	public String ajaxPrintTeamList(HttpSession session) {
 		System.out.println("ajaxPrintTeamList IN");
 		String id = (String)session.getAttribute("id");
-		List<TeamVO> teamList = myRoomDAO.getTeamList(id);
+		List<TeamInfoVO> teamList = myRoomDAO.getTeamList(id);
 		
 		String teamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();
@@ -79,9 +81,56 @@ public class MyRoomController {
 		return teamListToJson;
 	}
 	
+	@RequestMapping(value="/insertPlan.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String insertPlan(HttpSession session, TeamInfoVO vo) {
+		System.out.println("insertplan run");
+		
+		System.out.println("teanNO : "+vo.getTeamNo());
+		System.out.println("teamName : " + vo.getTeamName());
+		System.out.println("id : "+vo.getId());
+		System.out.println("role : "+vo.getRole());
+		System.out.println("planNo : "+vo.getPlanno());
+		System.out.println("planName : "+vo.getPlanName());
+		System.out.println("joinDate "+vo.getJoinDate());
+		
+		//id 저장
+		vo.setId((String)session.getAttribute("id"));
+		//id와 teamName으로 role teamNo등등 값 가져오기
+		teamVO = myRoomDAO.getTeamInfo(vo);
+		//planNo값이 가장 큰 값을 가져와 +1 증가시켜 planNo 설정하기
+		int maxplabNo = myRoomDAO.getMaxPlanNo() + 1;
+		teamVO.setPlanno(maxplabNo);
+		//설정된 teaminfo를 insert하기
+		int check = myRoomDAO.insertPlan(vo);
+		map = new HashMap<String, Object>();
+		if(check==1) {
+			map.put("res", 1);
+		}else {
+			map.put("res",0);
+		}
+		String teamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			teamListToJson = mapper.writeValueAsString(map);
+			System.out.println(teamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("ajaxPrintTeamList OUT");
+		return teamListToJson;
+	}
+	/*@RequestMapping(value="/insertPlan.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public int getMaxPlanNo(TeamInfoVO vo) {
+		
+
+	}*/
+		
+	
 	@RequestMapping(value="/ajaxPrintPlanList.do", method=RequestMethod.GET, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String ajaxPrintPlanList(TeamVO team) {
+	public String ajaxPrintPlanList(TeamInfoVO team) {
 		System.out.println("ajaxPrintPlanList IN");
 		List<PlanVO> planList = myRoomDAO.getPlanList(team);
 		
@@ -100,9 +149,9 @@ public class MyRoomController {
 	
 	@RequestMapping(value="/makeTeam.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String makeTeam(TeamVO team) {
-		System.out.println(team.getTeamName());
-		System.out.println(team.getId());
+	public String makeTeam(TeamInfoVO team) {
+		System.out.println("teamName : " + team.getTeamName());
+		System.out.println("id : " + team.getId());
 		Map<String, Object> checkMap = new HashMap<String, Object>();	
 		String checkMapToJson = null;
 		ObjectMapper mapper = new ObjectMapper(); 
@@ -126,7 +175,7 @@ public class MyRoomController {
 
 	@RequestMapping(value="/validationCheck.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String validationCheck(TeamVO team, PlanVO plan) {
+	public String validationCheck(TeamInfoVO team, PlanVO plan) {
 		System.out.println("validationCheck In");
 		System.out.println(team.getTeamName());
 		String check = myRoomDAO.validationTeamName(team);
@@ -156,7 +205,7 @@ public class MyRoomController {
 	
 	@RequestMapping(value="/searchTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String searchTeam(TeamVO team) {
+	public String searchTeam(TeamInfoVO team) {
 		System.out.println("searchTeam In");
 		System.out.println(team.getTeamName());
 		

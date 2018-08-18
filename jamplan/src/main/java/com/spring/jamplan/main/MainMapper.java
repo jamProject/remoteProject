@@ -7,12 +7,12 @@ import java.util.List;
 
 import com.spring.jamplan.model.PlanVO;
 
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
 public interface MainMapper {
 
-	public ArrayList<TeamVO> getTeamInfo(String id);
+	public ArrayList<TeamInfoVO> getTeamInfo(String id);
 	public UserVO getUserInfo(String id); 
 	public List<PlanVO> getPlanList();
 	public int fileUpload(PlanVO planVO);

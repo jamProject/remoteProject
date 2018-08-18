@@ -5,21 +5,22 @@ import java.util.List;
 
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
-import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
 
 public interface MyRoomDAO {
 	
-	List<TeamVO> getTeamList(String id);
-	List<TeamVO> getTeamMember(UserVO vo);
-	List<PlanVO> getPlanList(TeamVO team);	
+	List<TeamInfoVO> getTeamList(String id);
+	List<TeamInfoVO> getTeamMember(UserVO vo);
+	List<PlanVO> getPlanList(TeamInfoVO team);	
 	ArrayList<PlanVO> checkUpdate(UserVO vo);
 	UserVO getUserInfo(UserVO vo);	
-	List<TeamInfoVO> searchTeam(TeamVO team);
+	List<TeamInfoVO> searchTeam(TeamInfoVO team);
 	PlanVO searchPlan(PlanVO plan);
-	int makeTeam(TeamVO team);
-	int makePlan(PlanVO plan);
-	String validationTeamName(TeamVO team);
-	Object deleteTeam(TeamVO team);
+	int makeTeam(TeamInfoVO team);
+	int insertPlan(TeamInfoVO vo);
+	String validationTeamName(TeamInfoVO team);
+	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
+	TeamInfoVO getTeamInfo (TeamInfoVO vo);
+	public int getMaxPlanNo();
 }

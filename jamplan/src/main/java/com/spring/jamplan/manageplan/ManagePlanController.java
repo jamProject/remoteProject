@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 
 
 @Controller
@@ -25,7 +25,7 @@ public class ManagePlanController {
 	private PlanVO planVO;
 
 	@Autowired(required = true)
-	private TeamVO teamVO;
+	private TeamInfoVO teamVO;
 
 	@Autowired(required = true)	
 	private ManagePlanDAOService mpDAOS;

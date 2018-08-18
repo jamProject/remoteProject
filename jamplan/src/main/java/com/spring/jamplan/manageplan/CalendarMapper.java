@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 
 
 public interface CalendarMapper {
@@ -18,7 +18,7 @@ public interface CalendarMapper {
 	public void insertSelectDate(CalendarVO calendarVO);
 	public void deleteSelectDate(CalendarVO calendarVO);
 	public void updateCountDate(CalendarVO calendarVO);
-	public TeamVO getTeamRole(HashMap<String, Object> map);
+	public TeamInfoVO getTeamRole(HashMap<String, Object> map);
 	public void updateFixDate(CalendarVO calendarVO);
 	public ArrayList<CalendarVO> getSelectFixDate(CalendarVO calendarVO);
 	public ArrayList<CalendarVO> getMemberId(int planNo);

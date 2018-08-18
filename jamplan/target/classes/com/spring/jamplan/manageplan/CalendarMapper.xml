@@ -40,13 +40,14 @@
 	</resultMap>
 	
 	<!-- getTeamRole -->
-	<resultMap type="com.spring.jamplan.model.TeamVO"
-		id="TeamResultMap">
-		<result property="id" column="id" />
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
 		<result property="teamNo" column="teamNo" />
+		<result property="teamName" column="teamName" />
+		<result property="id" column="id" />
 		<result property="role" column="role" />
 		<result property="planNo" column="planNo" />
-		<result property="teamNo" column="teamNo" />
+		<result property="planName" column="planName" />
+		<result property="jonDate" column="jonDate" />
 	</resultMap>
 	
 	<select id="getMemberId" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
@@ -64,7 +65,7 @@
 		update plandate set confirmIndicator = #{confirmIndicator, javaType = int} where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType = String}
 	</update>
 	
-	<select id ="getTeamRole" parameterType="hashmap" resultMap="TeamResultMap">
+	<select id ="getTeamRole" parameterType="hashmap" resultMap="teamInfoResultMap">
 		select * from userTeam where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
 	</select>
 

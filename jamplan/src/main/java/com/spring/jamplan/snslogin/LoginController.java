@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.spring.jamplan.main.MainDAOService;
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
 /**
@@ -29,7 +29,7 @@ public class LoginController {
 	MainDAOService mDAOS;
 	
 	@Autowired
-	TeamVO teamVo;
+	TeamInfoVO teamVo;
     /* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;

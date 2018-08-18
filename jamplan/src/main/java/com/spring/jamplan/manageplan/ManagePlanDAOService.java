@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 
 
 @Service
@@ -17,7 +17,7 @@ public class ManagePlanDAOService {
 	@Autowired
 	private SqlSession sqlSession;// mybatis(ibatis) 라이브러리가 제공하는 클래스
 	@Autowired
-	private TeamVO teamVO;
+	private TeamInfoVO teamVO;
 	
 	private CalendarMapper calendarMapper;
 	private ArrayList<PlanVO> planList;
@@ -41,7 +41,7 @@ public class ManagePlanDAOService {
 		return planList;
 	}
 	
-	public TeamVO getPlanRole(HashMap<String, Object> map) {
+	public TeamInfoVO getPlanRole(HashMap<String, Object> map) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 		teamVO = calendarMapper.getTeamRole(map);
 		return teamVO;

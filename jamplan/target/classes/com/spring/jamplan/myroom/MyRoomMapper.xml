@@ -3,14 +3,6 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.jamplan.myroom.MyRoomMapper">
-
-	<resultMap type="com.spring.jamplan.model.TeamVO" id="teamResultMap">
-		<result property="id" column="id" />
-		<result property="role" column="role" />
-		<result property="teamName" column="teamName" />
-		<result property="teamNo" column="teamNo" />
-		<result property="planNo" column="planNo" />
-	</resultMap>
 	
 	<resultMap type="com.spring.jamplan.model.UserVO" id="userResultMap">
 		<result property="id" column="id" />
@@ -30,7 +22,10 @@
 		<result property="teamNo" column="teamNo" />
 		<result property="teamName" column="teamName" />
 		<result property="id" column="id" />
-		<result property="joinDate" column="joinDate" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />
+		<result property="joniDate" column="jonDate" />
 	</resultMap>
 	
 	<resultMap type="com.spring.jamplan.model.CalendarVO" id="calendarResultMap">
@@ -50,6 +45,7 @@
 		<result property="planName" column="planName" />
 		<result property="hashTag" column="hashTag" />
 		<result property="planDate" column="planDate" />
+		<result property="image" column="image"/>
 	</resultMap>
 	
 	<resultMap type="com.spring.jamplan.model.MessageVO" id="messageResultMap">
@@ -64,22 +60,27 @@
 		<result property="dateCheck" column="dateCheck" />
 	</resultMap>
 	
-	
-	<select id="getTeamList" parameterType="String" resultMap="teamResultMap">
-		SELECT * FROM USERTEAM WHERE ID=#{id, jdbcType=VARCHAR} ORDER BY TEAMNAME
+	<select id = "getTeamInfo" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		select * from teaminfo where id = #{id, javaType = String}, teamName = #{teamName, javaType = String}
+	</select>
+	<select id = "getMaxPlanNo" resultType="int">
+		select MAX(planNo) from plan
+	</select>
+	<select id="getTeamList" parameterType="String" resultMap="teamInfoResultMap">
+		SELECT * FROM teaminfo WHERE ID=#{id, jdbcType=VARCHAR} ORDER BY TEAMNAME
 	</select>
 	
-	<select id="getTeamMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamResultMap">
-		SELECT ID FROM USERTEAM WHERE TEAMNO IN (SELECT DISTINCT TEAMNO FROM USERTEAM WHERE ID=#{id, jdbcType=VARCHAR})
+	<select id="getTeamMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
+		SELECT ID FROM teaminfo WHERE TEAMNO IN (SELECT DISTINCT TEAMNO FROM teaminfo WHERE ID=#{id, jdbcType=VARCHAR})
 	</select>
 	
-	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamVO" resultMap="planResultMap">
-		SELECT * FROM PLAN WHERE TEAMNO IN (SELECT TEAMNO FROM USERTEAM WHERE ID = #{id, jdbcType=VARCHAR })
+	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="planResultMap">
+		SELECT * FROM PLAN WHERE TEAMNO IN (SELECT TEAMNO FROM teaminfo WHERE ID = #{id, jdbcType=VARCHAR })
 	</select>
 	
 	<select id="checkUpdate" parameterType="com.spring.jamplan.model.UserVO" resultMap="planUpdateResultMap">
-		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO IN (SELECT PLANNO FROM USERTEAM WHERE ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) 
-			WHERE ROWNUM <![CDATA[<=]]> 10
+		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO IN (SELECT PLANNO FROM TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) 
+WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
 	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap" >
@@ -88,7 +89,7 @@
 	
 	<select id="getMessageList" parameterType="String" resultMap="messageResultMap">
 		SELECT * FROM (SELECT * FROM MESSAGE WHERE RECEIVER=#{receiver, jdbcType=VARCHAR }) 
-			WHERE ISREAD = 0;
+			WHERE ISREAD = 0
 	</select>
 	
 	<select id="searchTeam" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap" >
@@ -100,21 +101,24 @@
 		SELECT * FROM PLAN WHERE PLANNO=#{planNo, jdbcType=INTEGER }
 	</select>
 	
-	<insert id="makeTeam" parameterType="com.spring.jamplan.model.TeamVO"  >
+	<insert id="makeTeam" parameterType="com.spring.jamplan.model.TeamInfoVO"  >
 		INSERT INTO TEAMINFO(TEAMNO, TEAMNAME, ID, JOINDATE) 
 			VALUES(TEAMINFO_SEQ.NEXTVAL, #{teamName, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR}, SYSDATE)
 	</insert>
-	
+	<insert id = "insertPlan"  parameterType="com.spring.jamplan.model.TeamInfoVO" >
+		insert into teamInfo (teamNo,teamName,id,role,planNo,planName) values (#{teamNo},#{teamName},#{id},#{role},#{planNo},#{planName})
+	</insert>
+<!-- 	
 	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO"  >
 		INSERT INTO PLAN(PLANNO, TEAMNO, PLANNAME, PLANDATE, ISOPEN)
 			VALUES(#{PLAN_SEQ.NEXTVAL}, #{teamNo}, #{planName, jdbcType=VARCHAR}, SYSDATE, #{isOpen})
-	</insert>
+	</insert> -->
 	
-	<select id="validationTeamName" parameterType="com.spring.jamplan.model.TeamVO" resultMap="teamResultMap" >
+	<select id="validationTeamName" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap" >
 		SELECT * FROM TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR }
 	</select>
 	
-	<delete id="deleteTeam" parameterType="com.spring.jamplan.model.TeamVO"  >
+	<delete id="deleteTeam" parameterType="com.spring.jamplan.model.TeamInfoVO" >
 		DELETE FROM TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
 	</delete>
 	

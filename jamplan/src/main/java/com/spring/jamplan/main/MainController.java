@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.PlanVO;
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 import com.spring.jamplan.myroom.MyRoomDAOService;
 
@@ -61,7 +61,7 @@ public class MainController {
 
 
 	@Autowired
-	TeamVO teamVo;
+	TeamInfoVO teamVo;
 	
 	@Autowired
 	MyRoomDAOService myRoomDAO;
@@ -88,7 +88,7 @@ public class MainController {
 			if (vo.getPass().equals(userVO.getPass())) {
 				
 				session.setAttribute("id", vo.getId());
-				ArrayList<TeamVO> teamList= myRoomDAO.getTeamList(userVO.getId());
+				ArrayList<TeamInfoVO> teamList= myRoomDAO.getTeamList(userVO.getId());
 				model.addAttribute("teamList", teamList);
 				model.addAttribute("id",vo.getId());
 				// session.setAttribute("planNo", teamList.get(0).getPlanNo());

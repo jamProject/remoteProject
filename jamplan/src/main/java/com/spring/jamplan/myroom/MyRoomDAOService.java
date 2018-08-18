@@ -13,7 +13,6 @@ import com.spring.jamplan.model.MessageVO;
 import com.spring.jamplan.model.PlanUpdateVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
-import com.spring.jamplan.model.TeamVO;
 import com.spring.jamplan.model.UserVO;
 
 @Service
@@ -28,31 +27,33 @@ public class MyRoomDAOService implements MyRoomDAO {
 	// 변동사항 발생한 일정을 검색하기 위한 bean 객체 생성
 	@Autowired(required=false)
 	private PlanVO plan;
-
+	
+	@Autowired
+	private TeamInfoVO vo;
 
 	@Override
-	public ArrayList<TeamVO> getTeamList(String id) {
+	public ArrayList<TeamInfoVO> getTeamList(String id) {
 		System.out.println(id);
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 		System.out.println("mapper suc");
-		ArrayList<TeamVO> teamList = myRoomMapper.getTeamList(id);
+		ArrayList<TeamInfoVO> teamList = myRoomMapper.getTeamList(id);
 
 		return teamList;
 	}
 	
 	// 처음 myroom으로 진입 시, 같은 팀인지를 확인 후에 웹소켓으로 메시지 뿌려줄 수 있다.
 	@Override
-	public List<TeamVO> getTeamMember(UserVO vo) {
+	public List<TeamInfoVO> getTeamMember(UserVO vo) {
 		System.out.println("a");
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
-		List<TeamVO> teamList = myRoomMapper.getTeamMember(vo);
+		List<TeamInfoVO> teamList = myRoomMapper.getTeamMember(vo);
 
 		return teamList;
 	}
 	
 
 	@Override
-	public List<PlanVO> getPlanList(TeamVO team) {
+	public List<PlanVO> getPlanList(TeamInfoVO team) {
 		System.out.println("DAOService getPlanList method IN");
 		List<PlanVO> planList = new ArrayList<PlanVO>();
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
@@ -93,7 +94,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 
 	@Override
-	public List<TeamInfoVO> searchTeam(TeamVO team) {
+	public List<TeamInfoVO> searchTeam(TeamInfoVO team) {
 		
 		System.out.println("DAOService method searchTeam IN");
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
@@ -126,7 +127,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 
 	@Override
-	public int makeTeam(TeamVO team) {
+	public int makeTeam(TeamInfoVO team) {
 		System.out.println("makeTeam IN");
 		System.out.println(team.getId());
 		int check;
@@ -137,15 +138,40 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 
 	@Override
-	public int makePlan(PlanVO plan) {
-		int check;
-		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
-		check = myRoomMapper.makePlan(plan);
+	public int insertPlan(TeamInfoVO vo) {
+		int check =0;
+		try {
+			MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			myRoomMapper.insertPlan(vo);
+			check =1;
+			System.out.println("plan insert suc");
+			//성공시 1
+		}catch (Exception e) {
+			// TODO: handle exception
+			//실패시 0;
+			System.out.println("plan insert fail");
+			check = 0;
+		}
+		
 		return check;
 	}
 	
 	@Override
-	public String validationTeamName(TeamVO team) {
+	public TeamInfoVO getTeamInfo (TeamInfoVO teamVO) {
+		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		vo = myRoomMapper.getTeamInfo(teamVO);
+		return vo;
+	}
+	
+	@Override
+	public int getMaxPlanNo() {
+		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		int maxNo = myRoomMapper.getMaxPlanNo();
+		return maxNo;
+	}
+	
+	@Override
+	public String validationTeamName(TeamInfoVO team) {
 		
 		System.out.println("DAOService method validatinoTeamName IN");
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
@@ -164,7 +190,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 
 	@Override
-	public Object deleteTeam(TeamVO team) {
+	public Object deleteTeam(TeamInfoVO team) {
 		Map<String, Object> checkMap = new HashMap<String, Object>();
 		
 		int check;

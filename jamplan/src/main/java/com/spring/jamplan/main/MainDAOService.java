@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.jamplan.model.PlanVO;
-import com.spring.jamplan.model.TeamVO;
+import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
 
@@ -19,9 +19,9 @@ public class MainDAOService {
 	@Autowired
 	private SqlSession sqlSession;// mybatis(ibatis) 라이브러리가 제공하는 클래스
 	@Autowired
-	TeamVO teamVO;
+	TeamInfoVO teamVO;
 	
-	private ArrayList<TeamVO> list;
+	private ArrayList<TeamInfoVO> list;
 
 	public UserVO getUserInfo(String id) {
 
@@ -37,7 +37,7 @@ public class MainDAOService {
 		return vo;
 	}
 	
-	public ArrayList<TeamVO> getTeamInfo(String id) {
+	public ArrayList<TeamInfoVO> getTeamInfo(String id) {
 		MainMapper mainMapper = sqlSession.getMapper(MainMapper.class); 
 		list = mainMapper.getTeamInfo(id);
 		
