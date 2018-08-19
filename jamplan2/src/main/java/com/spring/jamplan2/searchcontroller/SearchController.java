@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -164,12 +166,18 @@ public class SearchController {
 	}
 	
 	//스케쥴페이지이동
-	@RequestMapping("schedule.search")
-	public String moveSchedule() {
+	@RequestMapping(value = "schedule.search", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+	public ModelAndView moveSchedule(HttpServletRequest request, PlanVO planVO) {
 		System.out.println("moveSchedule");
+		//planNo 넘기기
+		System.out.println("request!!!!" + request.getParameter("planNo"));
 		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("planNo", request.getParameter("planNo"));
+		mv.setViewName("search/schedule");
 		
-		
+		//조회수
+		searchService.updateReadCount(planVO);
 		/*UserVO vo = searchService.getUserId(userVO.getId());
 		
 		System.out.println(vo.getId());*/
@@ -180,7 +188,7 @@ public class SearchController {
 		
 		
 		
-		return "search/schedule";
+		return mv;
 	}
 	
 	//login test
@@ -193,28 +201,38 @@ public class SearchController {
 	
 	@RequestMapping("inpugLogin.search")
 	public String inputLogin(HttpSession session, UserVO userVO) {
-		System.out.println("sc");
+		System.out.println("log");
 		UserVO vo = searchService.getUserId(userVO.getId());
 		System.out.println(vo.getId());
 		session.setAttribute("checkID", vo.getId());
 		return "search/searchPlanPage";
 	}
 	
+	//like 불러오는거
 	@RequestMapping(value = "heartCheck.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String likeCheck(HttpSession session, LikeVO likeVO) {
+	@ResponseBody 
+	public Map<String, Object> likeCheck(LikeVO likeVO) {
 		System.out.println("like1");
-		
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		//라이크-로그인db에서 받아오기
 		/*LikeVO vo = searchService.likeUserId(likeVO.getUserId());
 		System.out.println(vo.getUserId());*/
 		
 		/*likeVO.setUserId((String)session.getAttribute("id"));*/
 		
-		searchService.likeCheck(likeVO);
-		System.out.println("like4");
+		String likeYn ="";
 		
-		return "search/schedule";
+		
+		likeYn =  searchService.likeCheck(likeVO);
+		
+		System.out.println("@@@@@@@@@@@@@likeYn  =  " +likeYn);
+		System.out.println("like4");
+		retVal.put("likeYn", likeYn);
+		System.out.println("likeYn값" + likeYn);
+		System.out.println("retVal값" + retVal);
+		
+		
+		return retVal; 
 		/*int likeNo = likeVO.getLikeNo();
 		int likeCheck = 0;
 		likeCheck = likeVO.getLikeCheck();
@@ -240,6 +258,33 @@ public class SearchController {
 		
 		
 	}
+	
+	//like Update
+	@RequestMapping(value = "likeUpdate.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody 
+	public Map<String, Object> likeUpdate(LikeVO likeVO) {
+		System.out.println("like1");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+
+		String likeYn ="";
+
+		searchService.likeUpdate(likeVO);
+
+		likeYn =  searchService.likeCheck(likeVO);
+		
+		System.out.println("updatelikeYn  =  " +likeYn);
+		retVal.put("likeYn", likeYn);
+		System.out.println("likeYn값" + likeYn);
+		System.out.println("retVal값" + retVal);
+		
+		
+		return retVal; 
+	
+	}
+	
+	
+	
+	
 	
 	/*public String heartCheck(LikeVO likeVO) {
 		System.out.println("like1");

@@ -68,7 +68,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
-					output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
+					output += '<div><a href = "schedule.search?planNo='+ item.planNo +'"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
 					output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
 					output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
 					output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -183,7 +183,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
 					var output = '';
 					output += '<div class="col-sm-4">';
 					output += '<div class="thumbnail">';
-					output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
+					output += '<div><a href = "schedule.search?planNo='+ item.planNo +'"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
 					output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
 					output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
 					output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -242,7 +242,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
   						var output = '';
   						output += '<div class="col-sm-4">';
   						output += '<div class="thumbnail">';
-  						output += '<div><a href = "schedule.search"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
+  						output += '<div><a href = "schedule.search?planNo='+ item.planNo +'"><img src="/jamplan2/image/' + item.image + '" style="width:400px; height:400px;"  />' + '</a></div>';
   						output += '<span>' + item.planDate + '</span>' + '&nbsp' + '&nbsp';
   						output += '<span>' + item.planName + '</span>' + '&nbsp' + '&nbsp';
   						output += '<button class="btn goodCount">' + item.goodCount + '</button>' + '&nbsp' + '&nbsp';
@@ -266,7 +266,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
       
   	
   	selectData();
-  });
+  }); 
     
   	
   

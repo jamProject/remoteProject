@@ -156,6 +156,85 @@ public class SearchServiceImpl implements SearchService{
 	
 	//라이크체크
 	@Override
+	public String likeCheck(LikeVO likeVO) {
+		System.out.println("like2");
+		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+		System.out.println(likeVO.getUserId());
+		//라이크정보 불러오기
+		ArrayList<LikeVO> likeCount = searchmapper.getLikeCount(likeVO);
+		System.out.println("likeList.get(0).getLikeCheck() : " + likeCount.get(0).getLikeCheck());
+		
+		int likeCheck = 0;
+		String likeYn = "";
+		likeCheck =likeCount.get(0).getLikeCheck();
+		
+		if(likeCheck == 0) {
+			System.out.println("0일때 들어왔다!");
+			return "N";
+		}
+		else {
+			System.out.println("0이 아닌게 들어왔다!");
+			System.out.println(likeVO.getUserId());
+			ArrayList<LikeVO> likeList = searchmapper.getLikeData(likeVO);
+			likeYn = likeList.get(0).getLikeYn();
+			System.out.println("likeYn!!!!!!!!!!" + likeYn);
+			
+			return likeYn;
+		}
+		
+	}
+	
+	//라이크 업데이트
+	@Override
+	public String likeUpdate(LikeVO likeVO) {
+		System.out.println("-------------------------------------- likeUpdate 시작  --------------------------------------");
+		System.out.println("like2");
+		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+		System.out.println(likeVO.getUserId());
+		//라이크정보 불러오기
+		ArrayList<LikeVO> likeCount = searchmapper.getLikeCount(likeVO);
+		System.out.println("likeList.get(0).getLikeCheck() : " + likeCount.get(0).getLikeCheck());
+		
+		int likeCheck = 0;
+		String likeYn = "";
+		likeCheck =likeCount.get(0).getLikeCheck();
+		
+		if(likeCheck == 0) {
+			System.out.println("0일때 들어왔다!");
+			likeVO.setLikeYn("Y");
+			searchmapper.insertLikeData(likeVO);
+			
+			
+		}
+		else {
+			System.out.println("0이 아닌게 들어왔다!");
+			searchmapper.updateLikeData(likeVO);
+			System.out.println(likeVO.getUserId());
+			System.out.println(likeVO.getPlanNo());
+			System.out.println(likeVO.getLikeYn());
+		}
+		ArrayList<LikeVO> likeList = searchmapper.getLikeData(likeVO);
+		likeYn = likeList.get(0).getLikeYn();
+		System.out.println("likeYn!!!!!!!!!!" + likeYn);
+		
+		/*int planTotalCount = searchmapper.selectLikeCount(likeVO);*/
+		
+		
+		searchmapper.updateTotalLike(likeVO);
+		
+		
+		System.out.println("-------------------------------------- likeUpdate 종료  --------------------------------------");
+		return likeYn;
+		
+	}
+	
+	
+	public void updateReadCount(PlanVO planVO) {
+		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
+		searchmapper.updateReadCount(planVO);
+	}
+	
+	/*@Override
 	public void likeCheck(LikeVO likeVO) {
 		System.out.println("like2");
 		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
@@ -181,6 +260,6 @@ public class SearchServiceImpl implements SearchService{
 		}
 		
 		
-	}
+	}*/
 
 }

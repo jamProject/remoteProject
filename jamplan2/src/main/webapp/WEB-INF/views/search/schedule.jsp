@@ -8,7 +8,13 @@
 		};
 		
 		String userId = (String)session.getAttribute("checkID");
+
 	%>
+	
+	
+	
+	
+	
 	
 	<%-- <% 
 	String userId = (String)request.getParameter("id");
@@ -28,36 +34,102 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 
-function likeFunc() {
+
+$(document).ready(function(){
+	$('#planNo').val(${planNo});
+	likeGet();
+});
+
+
+
+function likeGet() {
 	/* 유저가 하트를 체크했는지 안했는지 체크해주는 코드 써주기 : if~ */
-	alert('1');
+	
 	$.ajax({
 		url : '/jamplan2/heartCheck.search',
 		type : 'POST',
-		dataType : "json",
+		dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		data : {
-			"userId" : '<%=userId%>'
-			<%-- "planNo" : '<%=userId%>' --%>
+			"userId" : '<%=userId%>',
+			"planNo" : $('#planNo').val()
 		},
-		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		success:function(data){
-			alert('3');
-			if(data.likeNo == 0){
-				'<i class="far fa-heart" tyle= "color : #E75450;" ></i>';
+			/* alert(data.likeYn); */
+			var likeput = '';
+			
+			if('N' == data.likeYn){
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="far fa-heart" id="noneHeart" value="N" style= "color : #E75450;" ></i></a></h1>';
+				$('#likeStatus').val('N');
 			}
 			else{
-				'<i class="fas fa-heart " style= "color : #E75450;"  ></i>';
-			}	
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="fas fa-heart " id="fullHeart" style= "color : #E75450;"  ></i></a></h1>';
+				$('#likeStatus').val('Y');
+			}
+			
 
-				consloe.log("output:" + output);
-				$('output').append(output);
+				console.log("likeput:" + likeput);
+				$('#likeput').html(likeput);
 		},
 		error:function(){
 			alert("ajax통신 실패!!!");
 		}
 	});
 	
+	
+	
 }
+
+
+
+function likeFunc() {
+	/* 유저가 하트를 체크했는지 안했는지 체크해주는 코드 써주기 : if~ */
+	/* alert($('#likeStatus').val()); */
+	var likeStatus = $('#likeStatus').val();
+	var updateStatus ='';
+	if(likeStatus=='Y'){
+		updateStatus='N'
+	}else{
+		updateStatus='Y'
+		
+	}
+	
+	$.ajax({
+		url : '/jamplan2/likeUpdate.search',
+		type : 'POST',
+		dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		data : {
+			"userId" : '<%=userId%>',
+			"planNo" : $('#planNo').val(),
+			"likeYn" : updateStatus
+		},
+		success:function(data){
+			/* alert(data.likeYn); */
+			var likeput = '';
+			
+			if('N' == data.likeYn){
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="far fa-heart" style= "color : #E75450;" ></i></a></h1>';
+				$('#likeStatus').val('N');
+			}
+			else{
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="fas fa-heart " id="fullHeart" style= "color : #E75450;"  ></i></a></h1>';
+				$('#likeStatus').val('Y');
+			}
+			
+
+				console.log("likeput:" + likeput);
+				$('#likeput').html(likeput);
+		},
+		error:function(){
+			alert("ajax통신 실패!!!");
+		}
+	});
+	
+	
+	
+}
+
 
 
 
@@ -76,17 +148,10 @@ function likeFunc() {
 	</style>
 	
 	<h3>스케쥴테스트</h3>
-	<div>
-		<h1><a href="javascript:likeFunc();"><i class="far fa-heart" id="noneHeart" style= "color : #E75450;" ></i></a></h1>
-		<h1><i class="fas fa-heart " id="fullHeart" style= "color : #E75450;"  ></i></h1>
-	</div>
+	<div id="likeput"></div>
 	
-	<div>
-		
-	</div>
-	
-	
-	<div id="output"></div>
+	<input type="text" id="likeStatus" hidden="hidden">
+	<input type="text" id="planNo" hidden="hidden">
 	
 </body>
 </html>

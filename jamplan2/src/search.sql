@@ -26,7 +26,7 @@ commit;
 
 CREATE TABLE imgTable (
     img blob
-); 
+);
 
 ENGINE=Innoblob DEFAULT CHARSET=utf8;
 
@@ -86,6 +86,117 @@ commit;
 select * from liketo;
 
 delete from liketo;
+
+
+
+ create table userVO (
+        id varchar2(100)
+        );
+        
+    insert into userVO values('admin');
+    
+    create table likeTo(
+    planNo number,
+    userId varchar2(100),
+    goodCount number
+    );
+    
+    select * from likeTO;
+    
+   insert into likeTo values(1, 'admin');
+   
+   drop table liketo;
+   
+   commit;
+   
+   
+   
+   
+   -----0819-----
+   select * from liketo;
+
+insert into liketo values(1, 'admin', 'Y');
+insert into liketo values(1, 'abc', 'Y');
+insert into liketo values(1, 'jack', 'Y');
+insert into liketo values(1, 'tom', 'Y');
+insert into liketo values(1, 'hshs', 'Y');
+
+drop table liketo;
+
+create table likeTo (
+    planNo number,
+    userId varchar2(100),
+    likeYn varchar2(2)
+    );
+    
+    commit;
+    
+ --좋아요
+ 
+    SELECT case likeYn when 'Y' then 'Y' else 'N' end FROM LIKETO where userId = 'hansang';
+    
+    select NULLIF(likeYn,'N') from liketo where userid = 'hshs';
+    
+    SELECT  planNo,userId,likeYn FROM LIKETO where userId='admin';
+    
+    delete from liketo;
+    
+   
+    
+    select * from liketo;
+    
+    select * from plan;
+    
+    
+    SELECT  planNo,userId,likeYn FROM LIKETO where userId = 'admin';
+    
+    update plan set GOODCOUNT=(SELECT  count(*) FROM LIKETO where planNo=1 and likeYn ='Y')  where planNo=1;
+    
+    
+    
+    
+     SELECT  count(*) FROM LIKETO where planNo=1 and likeYn ='Y';
+    
+    
+    UPDATE LIKETO SET likeYn = 'N'  where userId = 'admin'  AND planNo =1;
+    
+    
+    
+    UPDATE LIKETO SET likeYn = 'Y'  where userId = 'admin'  AND planNo = 1;
+
+
+delete from plan;
+
+insert into plan values(1, 1, 10, null, '이미지', '스위스여행', '20170801');
+insert into plan values(2, 1, 60, 100, '이미지', '베트남여행', '20180802');
+insert into plan values(3, 1, 70, 200, '이미지', '터키여행', '20150901');
+insert into plan values(4, 1, 40, 300, '이미지', '이탈리아여행', '20181201');
+insert into plan values(5, 1, 250, 400, '이미지', '영국여행', '20201220');
+insert into plan values(6, 1, 160, 500, '이미지', '미국여행', '20181225');
+insert into plan values(7, 1, 10, 10, '이미지', '스위스프링', '20170801');
+insert into plan values(8, 1, 10, 10, '이미지', '스가', '20170801');
+insert into plan values(9, 1, 10, 10, '이미지', '스나', '20170801');
+
+
+
+ select * from uservo;
+ 
+ insert into uservo values ('jack');
+ 
+-- 조회수
+ 
+ select * from plan where planNo = 1;
+ 
+ delete from plan where planNo = 1;
+ 
+ select readCount from plan where planNo = 10;
+ 
+ update plan set readCount = nvl((select readCount from plan where planNo = 1) ,0)+1 where planNo = 1;
+ 
+ rollback;
+ 
+ commit;
+    
 
 
     

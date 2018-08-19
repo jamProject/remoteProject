@@ -12,8 +12,9 @@ public interface SearchService {
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
 	void moveSchedule();
 	UserVO getUserId(String id);
-	/*LikeVO likeUserId(String userId); //라이크-로그인db에서 받아오기*/
-	void likeCheck(LikeVO likeVO);
+	String likeCheck(LikeVO likeVO);
+	String likeUpdate(LikeVO likeVO);
+	void updateReadCount(PlanVO planVO);
 }
 
 

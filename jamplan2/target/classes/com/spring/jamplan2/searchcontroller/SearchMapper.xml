@@ -20,15 +20,15 @@
 		<result property="id" column="id" />
 	</resultMap>
 	
-	<!-- //라이크-로그인db에서 받아오기
-	<resultMap type="LikeVO" id="likeUserResultMap">
-		<result property="userId" column="userId" />
-	</resultMap> -->
 	
+	<resultMap type="LikeVO" id="LikeCountMap">
+		<result property="likeYn" column="likeYn" />
+	</resultMap>
 	
 	<resultMap type="LikeVO" id="LikeResultMap">
 		<result property="planNo" column="planNo" />
 		<result property="userId" column="userId" />
+		<result property="likeYn" column="likeYn" />
 	</resultMap>
 
 
@@ -102,17 +102,37 @@
 		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=NUMBER} + 1
 	</update> -->
 	
+	<select id="getLikeCount" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeCountMap">
+		
+		SELECT  count (*) likeCheck FROM LIKETO where userId = #{userId, jdbcType=VARCHAR} AND planNo = #{planNo, jdbcType=INTEGER}
+	</select>
+	
 	<select id="getLikeData" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeResultMap">
-		SELECT * FROM LIKETO where userId = #{userId, jdbcType=VARCHAR}
+		
+		SELECT  planNo,userId,likeYn FROM LIKETO where userId = #{userId, jdbcType=VARCHAR}  AND planNo = #{planNo, jdbcType=INTEGER}
 	</select>
 	
 	<insert id="insertLikeData" parameterType="com.spring.jamplan2.searchcontroller.LikeVO">
-		insert into LIKETO VALUES(#{planNo, jdbcType = INTEGER}, #{userId, jdbcType=VARCHAR})
+		insert into LIKETO(planNo, userId, likeYn)  VALUES(#{planNo, jdbcType = INTEGER}, #{userId, jdbcType=VARCHAR}, #{likeYn, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="updateLikeData" parameterType="com.spring.jamplan2.searchcontroller.LikeVO">
-		UPDATE LIKETO SET planNo = #{planNo, jdbcType = INTEGER} where userId = #{userId, jdbcType=VARCHAR}
+		UPDATE LIKETO SET likeYn = #{likeYn, jdbcType=VARCHAR}  where userId = #{userId, jdbcType=VARCHAR}  AND planNo = #{planNo, jdbcType=INTEGER}
 	</update>
+	
+	<update id="updateTotalLike" parameterType="com.spring.jamplan2.searchcontroller.LikeVO">
+		   update plan set GOODCOUNT=(SELECT  count(*) FROM LIKETO where planNo = #{planNo, jdbcType=INTEGER} and likeYn ='Y')  where planNo = #{planNo, jdbcType=INTEGER}
+	</update>
+	
+	
+	<!-- 조회 -->
+	<update id="updateReadCount" parameterType="com.spring.jamplan2.searchcontroller.PlanVO">
+		   update plan set readCount = nvl((select readCount from plan where planNo = #{planNo, jdbcType=INTEGER}) ,0)+1 where planNo = #{planNo, jdbcType=INTEGER}
+	</update>
+	
+	
+	
+	
 
 
 
