@@ -64,8 +64,13 @@
 		select * from teaminfo where id = #{id,  javaType = String} and teamName = #{teamName,  javaType = String}
 	</select>
 	<select id = "getMaxPlanNo" resultType="int">
-		select MAX(planNo) as planNo from plan
+		SELECT NVL(MAX(planNo),0) as planNo FROM teaminfo 
 	</select>
+	
+	<delete id = "deleteNullPlan" parameterType="String">
+		delete from teaminfo where teamName = #{teamName, javaType = String} and planName is null
+	</delete>
+	
 	<select id="getTeamList" parameterType="String" resultMap="teamInfoResultMap">
 		SELECT * FROM teaminfo WHERE ID=#{id, jdbcType=VARCHAR} ORDER BY TEAMNAME
 	</select>
@@ -101,8 +106,8 @@
 	</select>
 	
 	<insert id="makeTeam" parameterType="com.spring.jamplan.model.TeamInfoVO"  >
-		INSERT INTO TEAMINFO(TEAMNO, TEAMNAME, ID, JOINDATE) 
-			VALUES(TEAMINFO_SEQ.NEXTVAL, #{teamName, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR}, SYSDATE)
+		INSERT INTO TEAMINFO(TEAMNO, TEAMNAME, ID, role,JOINDATE) 
+			VALUES(TEAMINFO_SEQ.NEXTVAL, #{teamName, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR},0, SYSDATE)
 	</insert>
 	<insert id = "insertPlan"  parameterType="com.spring.jamplan.model.TeamInfoVO" >
 		insert into teamInfo (teamNo,teamName,id,role,planNo,planName) values (#{teamNo},#{teamName},#{id},#{role},#{planNo},#{planName})
@@ -111,7 +116,8 @@
 	<insert id="makePlan" parameterType="com.spring.jamplan.model.PlanVO"  >
 		INSERT INTO PLAN(PLANNO, TEAMNO, PLANNAME, PLANDATE, ISOPEN)
 			VALUES(#{PLAN_SEQ.NEXTVAL}, #{teamNo}, #{planName, jdbcType=VARCHAR}, SYSDATE, #{isOpen})
-	</insert> -->
+	</insert>
+	 -->
 	
 	<select id="validationTeamName" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap" >
 		SELECT * FROM TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR }

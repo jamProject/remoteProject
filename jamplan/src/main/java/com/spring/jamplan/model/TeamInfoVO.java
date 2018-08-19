@@ -39,11 +39,11 @@ public class TeamInfoVO {
 	public void setRole(int role) {
 		this.role = role;
 	}
-	public int getPlanno() {
+	public int getPlanNo() {
 		return planNo;
 	}
-	public void setPlanno(int planno) {
-		this.planNo = planno;
+	public void setPlanNo(int planNo) {
+		this.planNo = planNo;
 	}
 	public String getPlanName() {
 		return planName;

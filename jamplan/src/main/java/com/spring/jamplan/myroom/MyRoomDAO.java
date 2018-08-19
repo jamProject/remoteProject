@@ -22,5 +22,7 @@ public interface MyRoomDAO {
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
-	public int getMaxPlanNo();
+	int getMaxPlanNo();
+	void deleteNullPlanTeaminfo(String teamName);
+	ArrayList<TeamInfoVO> getPlanListById(String id);
 }

@@ -5,6 +5,17 @@ create table planDate(
     dateCount number,
     confirmIndicator number
 );
+
+create table TEAMINFO(
+    teamNo number not null,
+    teamName varchar2(30) not null,
+    id VARCHAR2(20) not null, 
+    role number,
+    planno number,
+    planName varchar2(30) not null,
+    joinDate date not null
+);
+
 create table userteam(
     id varchar2(32),
     teamno number,
@@ -12,6 +23,11 @@ create table userteam(
     planno number,
     teamname varchar2(32)
 );
+select * from plan;
+
+select * from teaminfo;
+--delete teaminfo;
+commit;
 create table userInfo(
     id varchar2(32) primary key,
     email varchar2(80) not null,

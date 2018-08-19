@@ -37,8 +37,45 @@ public class MyRoomDAOService implements MyRoomDAO {
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 		System.out.println("mapper suc");
 		ArrayList<TeamInfoVO> teamList = myRoomMapper.getTeamList(id);
-
+		
+		int k = 0;
+		int size = teamList.size();
+		//일정을 여러명이 선택 했을 때 중복 제거하고 +n 카운트 하나만 보이도록 
+		for (int i = 0; i < teamList.size(); i++) {
+			for (int j = 0; j < teamList.size(); j++) {
+				if (i != j) {
+					if (teamList.get(i).getTeamName().equals(teamList.get(j).getTeamName())) {
+						//System.out.println("remove : " + voList.get(j).getSelectDate());
+						teamList.remove(j);
+						k++;
+						i = 0;
+						break;
+					}
+				}
+			}
+			if (i > size - k) {
+				break;
+			}
+		}
 		return teamList;
+	}
+	@Override
+	public  ArrayList<TeamInfoVO> getPlanListById(String id){
+		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		System.out.println("getPlanListById start");
+		ArrayList<TeamInfoVO> teamList = myRoomMapper.getTeamList(id);
+		
+		for(int i = 0; i < teamList.size(); i++) {
+			System.out.println(teamList.get(i).getPlanNo());
+		}
+		
+		return teamList;
+	}
+	
+	@Override
+	public void deleteNullPlanTeaminfo(String teamName) {
+		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		myRoomMapper.deleteNullPlan(teamName);
 	}
 	
 	// 처음 myroom으로 진입 시, 같은 팀인지를 확인 후에 웹소켓으로 메시지 뿌려줄 수 있다.
@@ -166,8 +203,16 @@ public class MyRoomDAOService implements MyRoomDAO {
 	@Override
 	public int getMaxPlanNo() {
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
-		int maxNo = myRoomMapper.getMaxPlanNo();
-		return maxNo;
+		Object maxNo = myRoomMapper.getMaxPlanNo();
+		int max =0;
+		
+		if( maxNo == null) 
+		{
+			max = 0;
+		}else {
+			max = (int)maxNo;
+		}
+		return max;
 	}
 	
 	@Override

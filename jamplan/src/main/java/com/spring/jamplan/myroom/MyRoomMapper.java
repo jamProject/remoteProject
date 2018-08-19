@@ -32,5 +32,5 @@ public interface MyRoomMapper {
 	int deletePlan(PlanVO plan);
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
 	int getMaxPlanNo();
-
+	void deleteNullPlan(String teamName);
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,15 @@ public class MyRoomController {
 		System.out.println("printTeamList OUT");
 		return "MyRoomConfirm";
 	}*/
+	@RequestMapping(value="/movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
+		int planNo = vo.getPlanNo();
+		session.setAttribute("planNo",planNo);
+		System.out.println("컨트롤러 진입");
+		return "managePlan/main";
+	}
+	
 	@RequestMapping(value="/idSession.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String idSession(HttpSession session) {
@@ -78,6 +88,30 @@ public class MyRoomController {
 		}
 		System.out.println("ajaxPrintTeamList OUT");
 		return teamListToJson;
+	}
+	
+	@RequestMapping(value="/getPlanListById.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String getPlanListById(HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		System.out.println("start getPlanListByTeamName id : " + id);
+		
+		ArrayList<TeamInfoVO> teamList = myRoomDAO.getPlanListById(id);
+		
+		String teamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			teamListToJson = mapper.writeValueAsString(teamList);
+			System.out.println(teamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		/*System.out.println("getPlanListByTeamName OUT");*/
+		System.out.println(teamListToJson);
+		return teamListToJson;
+		
+		
+		
 	}
 	
 	@RequestMapping(value="/ajaxPrintTeamList.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
@@ -104,40 +138,30 @@ public class MyRoomController {
 	public String insertPlan(HttpSession session, TeamInfoVO vo) {
 		System.out.println("insertplan run");
 		
-		System.out.println("teanNO : "+vo.getTeamNo());
-		System.out.println("teamName : " + vo.getTeamName());
-		System.out.println("id : "+vo.getId());
-		System.out.println("role : "+vo.getRole());
-		System.out.println("planNo : "+vo.getPlanno());
-		System.out.println("planName : "+vo.getPlanName());
-		System.out.println("joinDate "+vo.getJoinDate());
-		
 		//id 저장
 		vo.setId((String)session.getAttribute("id"));
-		System.out.println(vo.getId());
+
 		//id와 teamName으로 role teamNo등등 값 가져오기
 		ArrayList<TeamInfoVO> list = myRoomDAO.getTeamInfo(vo);
 		
-		System.out.println("af teanNO : "+list.get(0).getTeamNo());
-		System.out.println("af teamName : " + list.get(0).getTeamName());
-		System.out.println("af id : "+list.get(0).getId());
-		System.out.println("af role : "+list.get(0).getRole());
-		System.out.println("af planNo : "+list.get(0).getPlanno());
-		System.out.println("af planName : "+list.get(0).getPlanName());
-		System.out.println("af joinDate "+list.get(0).getJoinDate());
-		vo.setRole(list.get(0).getRole());
-		vo.setTeamNo(list.get(0).getTeamNo());
 		//planNo값이 가장 큰 값을 가져와 +1 증가시켜 planNo 설정하기
+		vo.setRole(list.get(0).getRole());
+		vo.setTeamNo(list.get(0).getTeamNo());	
 		int maxplabNo = myRoomDAO.getMaxPlanNo() + 1;
-		vo.setPlanno(maxplabNo);
+		vo.setPlanNo(maxplabNo);
+		
 		//설정된 teaminfo를 insert하기
 		int check = myRoomDAO.insertPlan(vo);
 		map = new HashMap<String, Object>();
+		
 		if(check==1) {
-			map.put("res", 1);
+			map.put("res", "성공");
+			myRoomDAO.deleteNullPlanTeaminfo(vo.getTeamName());
+			
 		}else {
-			map.put("res",0);
+			map.put("res","실패");
 		}
+		
 		String teamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -178,13 +202,14 @@ public class MyRoomController {
 	
 	@RequestMapping(value="/makeTeam.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String makeTeam(TeamInfoVO team) {
+	public String makeTeam(TeamInfoVO team, HttpSession session) {
 		System.out.println("teamName : " + team.getTeamName());
 		System.out.println("id : " + team.getId());
 		Map<String, Object> checkMap = new HashMap<String, Object>();	
 		String checkMapToJson = null;
 		ObjectMapper mapper = new ObjectMapper(); 
 		
+		team.setId((String)session.getAttribute("id"));
 		try {
 			int check = myRoomDAO.makeTeam(team);
 			
