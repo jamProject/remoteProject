@@ -22,7 +22,7 @@
 	
 	
 	<resultMap type="LikeVO" id="LikeCountMap">
-		<result property="likeYn" column="likeYn" />
+		<result property="likeCheck" column="likeCheck" />
 	</resultMap>
 	
 	<resultMap type="LikeVO" id="LikeResultMap">
