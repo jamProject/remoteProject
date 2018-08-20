@@ -14,5 +14,6 @@
 	<a href = "view.search">view</a>
 	<a href = "schedule.search">schedule</a>
 	<a href = "login.search">login</a>
+	<a href = "planMainPage.plan">planMainPage</a>
 </body>
 </html>

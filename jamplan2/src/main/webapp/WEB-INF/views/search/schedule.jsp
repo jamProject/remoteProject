@@ -41,9 +41,8 @@ $(document).ready(function(){
 });
 
 
-
+//처음 접속시 유저가 좋아요를 체크했는지 안했는지 
 function likeGet() {
-	/* 유저가 하트를 체크했는지 안했는지 체크해주는 코드 써주기 : if~ */
 	
 	$.ajax({
 		url : '/jamplan2/heartCheck.search',
@@ -81,9 +80,9 @@ function likeGet() {
 }
 
 
-
+//클릭시 좋아요 선택,취소
 function likeFunc() {
-	/* 유저가 하트를 체크했는지 안했는지 체크해주는 코드 써주기 : if~ */
+
 	/* alert($('#likeStatus').val()); */
 	var likeStatus = $('#likeStatus').val();
 	var updateStatus ='';

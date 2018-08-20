@@ -16,10 +16,13 @@
    
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">      <!-- session을 유지관리 -->
       <property name="dataSource"   ref="dataSource" />  <!-- dataSource를 이용해서 쓰겟다 (참조) -->  <!-- ref에는 기존에 만들어놓은 빈객체를 참조할때 사용. ref놈을 참조하기 위해서 dataSource라는 이름을 사용하겠다. --> 
-      <property name="typeAliasesPackage" value="com.spring.jamplan2.searchcontroller" />
+      <property name="typeAliasesPackage" value="com.spring.jamplan2" />
       <property name="mapperLocations" 
             value="classpath:/com/spring/jamplan2/**/*.xml" /> <!--springmybatis에 있는 모든하위문서(**)중  모든xml파일 탐색해서 매핑--> <!-- ★하위에있는 모든 xml을 맵핑하겠다 -->
    </bean>
+   
+   
+
    
    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
       <constructor-arg ref="sqlSessionFactory" />            <!-- 이 객체가 생성될 때 생성자의 입력 파라미터(constructor-arg)로 sqlSessionFactory(바로 위에 있는놈)를 사용하겠다. -->

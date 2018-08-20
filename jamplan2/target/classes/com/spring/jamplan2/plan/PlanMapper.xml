@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper
+	namespace="com.spring.jamplan2.plan.PlanMapper">
+	
+	<resultMap type="PlanTableVO" id="planTableMap">
+		<result property="calendar" column="calendar" />
+		<result property="map" column="map" />
+	</resultMap>
+	
+	<select id="planTable" parameterType="com.spring.jamplan2.plan.PlanTableVO" resultMap="planTableMap">
+		select * from planTable
+	</select>
+
+	
+</mapper>

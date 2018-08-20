@@ -196,7 +196,21 @@ insert into plan values(9, 1, 10, 10, '이미지', '스나', '20170801');
  rollback;
  
  commit;
+
+
+------------0820-------------------
+create table planTable (
+    calendar varchar2(2000),
+        map varchar2(2000)
+    );
     
+    insert into planTable values ('8월25일', '서울');
+    insert into planTable values ('8월26일', '부산');
+    insert into planTable values ('8월27일', '여수');
+    
+    select * from planTable;
+    
+    commit;
 
 
     
