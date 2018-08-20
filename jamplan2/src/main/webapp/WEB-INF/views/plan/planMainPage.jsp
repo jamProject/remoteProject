@@ -323,7 +323,7 @@
 						var planput = '';
 						planput += '<div>' + item.calendar + '</div>';
 						planput += '<div>' + item.map + '</div>';
-						
+						planput += '<div><textarea rows="5" cols="30" ></textarea></div>';
 						
 						console.log("planput" + planput);
 						$('#planput').append(planput);
