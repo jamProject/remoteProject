@@ -25,4 +25,5 @@ public interface MyRoomDAO {
 	int getMaxPlanNo();
 	void deleteNullPlanTeaminfo(String teamName);
 	ArrayList<TeamInfoVO> getPlanListById(String id);
+	TeamInfoVO getRole(TeamInfoVO team);
 }

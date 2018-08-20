@@ -1,4 +1,4 @@
-package com.spring.jamplan.myroom;
+	package com.spring.jamplan.myroom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.PlanVO;
@@ -62,12 +64,18 @@ public class MyRoomController {
 		System.out.println("printTeamList OUT");
 		return "MyRoomConfirm";
 	}*/
-	@RequestMapping(value="/movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
-	@ResponseBody
+	@RequestMapping(value="movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
-		int planNo = vo.getPlanNo();
-		session.setAttribute("planNo",planNo);
-		System.out.println("컨트롤러 진입");
+
+		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
+		vo.setId((String)session.getAttribute("id"));
+
+		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
+		session.setAttribute("planNo",vo.getPlanNo());
+		System.out.println("role"+ teamVO.getRole());
+		session.setAttribute("role", teamVO.getRole());
+		System.out.println("페이지 이동 컨트롤러 진입");
+		
 		return "managePlan/main";
 	}
 	
@@ -107,7 +115,7 @@ public class MyRoomController {
 			e.printStackTrace();
 		}
 		/*System.out.println("getPlanListByTeamName OUT");*/
-		System.out.println(teamListToJson);
+		//System.out.println(teamListToJson);
 		return teamListToJson;
 		
 		
@@ -203,13 +211,17 @@ public class MyRoomController {
 	@RequestMapping(value="/makeTeam.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String makeTeam(TeamInfoVO team, HttpSession session) {
+		System.out.println("팀만들기 컨트롤러");
 		System.out.println("teamName : " + team.getTeamName());
+		team.setId((String)session.getAttribute("id"));
 		System.out.println("id : " + team.getId());
+		
+		/*ArrayList<TeamInfoVO> list  = myRoomDAO.getPlanListById(team.getId());*/
+		
 		Map<String, Object> checkMap = new HashMap<String, Object>();	
 		String checkMapToJson = null;
 		ObjectMapper mapper = new ObjectMapper(); 
-		
-		team.setId((String)session.getAttribute("id"));
+				
 		try {
 			int check = myRoomDAO.makeTeam(team);
 			

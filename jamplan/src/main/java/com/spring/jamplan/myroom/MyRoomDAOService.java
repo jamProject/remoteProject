@@ -32,6 +32,14 @@ public class MyRoomDAOService implements MyRoomDAO {
 	private TeamInfoVO vo;
 */
 	@Override
+	public TeamInfoVO getRole(TeamInfoVO vo) {
+		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		TeamInfoVO teamVO = myRoomMapper.getRole(vo);
+		
+		return teamVO;
+	}
+	
+	@Override
 	public ArrayList<TeamInfoVO> getTeamList(String id) {
 		System.out.println(id);
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
