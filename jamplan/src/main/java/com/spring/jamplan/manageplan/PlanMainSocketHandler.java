@@ -1,6 +1,5 @@
 package com.spring.jamplan.manageplan;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,20 +30,23 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 	private final Logger logger = LogManager.getLogger(getClass());
 	HttpServletRequest request;
 	
-	// 실질적으로 팀마다 채팅방을 개설, 유지하도록 관리해주는 set.
-	// 만약 같은 session일 경우에 list에 넣는다면 중복될 가능성이 있지만 
-	// set에 넣어줄 경우, 중복이 발생하지 않는다.
+	
 	private Set<WebSocketSession> sessionSet = new HashSet<WebSocketSession>();
 	
 	// team마다 한개의 채팅방을 가지기위해 session들을 모아놓은 List별로 관리한다. 
-	private Map<Integer, List<WebSocketSession>> chatGroupList = new HashMap<Integer, List<WebSocketSession>>();
+	private Map<Integer, Set<WebSocketSession>> chatSetGroupMap = new HashMap<Integer, Set<WebSocketSession>>();
 	
 	// session을 id와 teamNo별로 관리하기 위한 Map 생성.
 	private Map<WebSocketSession, String> idMap = new HashMap<WebSocketSession, String>();
 	private Map<WebSocketSession, Integer> teamNoMap = new HashMap<WebSocketSession, Integer>();
 	
+	
+	// 실질적으로 팀마다 채팅방을 개설, 유지하도록 관리해주는 list.
+	// 만약 같은 session일 경우에 list에 넣는다면 중복될 가능성이 있지만 
+	// set에 넣어줄 경우, 중복이 발생하지 않는다.
+	private Set<WebSocketSession> chatListSet;
 	private List<TeamInfoVO> teamList;
-	private List<WebSocketSession> sessionList;
+	
 	
 	public PlanMainSocketHandler() {
 		super();
@@ -56,8 +58,8 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		super.afterConnectionClosed(session, status);
 		System.out.println("afterConnectionClosed IN");
-		idMap.remove(session);
-		System.out.println("afterConnectionClosed idMap에서 remove 됐는지");
+//		idMap.remove(session);
+//		System.out.println("afterConnectionClosed idMap에서 remove 됐는지");
 
 		teamNoMap.remove(session);
 		System.out.println("afterConnectionClosed teamNoMap에서 remove 됐는지");
@@ -65,11 +67,20 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		
 		Map<String, Object> map = session.getAttributes();
 		String id = (String)map.get("id");
-		if(map.containsValue(id)) {
-			System.out.println("afterConnectionClosed if문 들어와서 getChatGroup 들어가기 전");
-			sessionList = getChatGroup(idMap, id);
-			System.out.println("afterConnectionClosed sessionList 들어왔는지 : " + sessionList.get(0));
-
+		String teamNo = (String)map.get("teamNo");
+		
+		// 같은 팀 사람 중에 남아있는 사람이 있는지 알기 위해 DB에서 리스트 받아와서 비교한다.
+		for (int i=0; i < chatDAOService.chatConnect(teamInfo).size(); i++) {
+			System.out.println("for문 들어왔나??");
+			for(TeamInfoVO teamInfo : chatDAOService.chatConnect(teamInfo)) {
+				// idMap에 같은 팀 사람이 남아있는지 체크하는 부분
+				if(idMap.containsValue(teamInfo.getId())) {
+					System.out.println("아직 같은 팀 중에 남아있는 사람이 있다.");
+				}else {
+					System.out.println("남아있는 사람이 없다.");
+					chatSetGroupMap.remove(Integer.parseInt(teamNo));
+				}
+			}
 		}
 		
 		sessionSet.remove(session);
@@ -104,17 +115,17 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		System.out.println("for문 들어가기 전 teamList 나왔나 점검" + teamList.get(0).getId());
 		for(int i=0; i<teamList.size(); i++) {
 			TeamInfoVO teamResult = teamList.get(i);
-			System.out.println("teamResult 나왔나 점검" + teamResult.getId());
+			System.out.println("teamResult 나왔나 점검 : " + teamResult.getId());
 			// 이미 team의 채팅방에 대한 set이 만들어져있는 상태라면 그곳에 session을 넣어준다.
 			System.out.println("소켓핸들러에서 형변환 필요한지 전");
-			if(chatGroupList.containsKey(teamInfo.getTeamNo())) {
+			if(chatSetGroupMap.containsKey(teamInfo.getTeamNo())) {
 				System.out.println("소켓핸들러에서 형변환 필요한지 후1");
 				
 				// 특정 team의 채팅방 관리하는 set에 session을 넣는다.
-				chatGroupList.get(teamInfo.getTeamNo()).add(session);
+				chatSetGroupMap.get(teamInfo.getTeamNo()).add(session);
 				
 				// session 집합을 teamNo를 key값으로해서 저장한다.
-				for(WebSocketSession assignedSession : chatGroupList.get(teamInfo.getTeamNo())) {
+				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getTeamNo())) {
 					assignedSession.sendMessage(new TextMessage("message/" + id + "님이 참여했습니다."));
 				}
 				
@@ -123,10 +134,11 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 				// 즉, 어떠한 팀에 누군가가 처음 접속했을 때 각 사용자들을 팀에 따라 구분하기 위해 list 생성
 				System.out.println("소켓핸들러에서 형변환 필요한지 후2");
 				
-				// 새로운 set을 만들고 session을 넣어준다.
-				sessionList = getChatGroup(idMap, id);
+				// 새로운 list를 만들고 session을 넣어준다.
+				chatListSet = getChatGroup(idMap, id);
 				sessionSet.add(session);
-				chatGroupList.put(teamInfo.getTeamNo(), sessionList);
+				chatSetGroupMap.put(teamInfo.getTeamNo(), chatListSet);
+				System.out.println("메시지 전송되기 직전!!!!");
 				session.sendMessage(new TextMessage("message/" + teamResult.getTeamName() + " 방으로 입장했습니다."));
 			}
 			
@@ -144,7 +156,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		Integer teamNo = (Integer)map.get("teamNo");
 		
 		
-		List<WebSocketSession> instantSessionList = chatGroupList.get(teamNo);
+		Set<WebSocketSession> instantSessionList = chatSetGroupMap.get(teamNo);
 		
 		for(WebSocketSession client_session : instantSessionList) {
 			if(client_session.isOpen()) {
@@ -172,17 +184,18 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		return false;
 	}
 	
-	public List<WebSocketSession> getChatGroup(Map<WebSocketSession, String> group, String value) {
-		List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+	
+	public Set<WebSocketSession> getChatGroup(Map<WebSocketSession, String> group, String value) {
+		Set<WebSocketSession> chatListSet = new HashSet<WebSocketSession>();
 		System.out.println("getChatGroup IN");
 		for(WebSocketSession one : group.keySet()) {
 			if(group.get(one).equals(value)) {
-				sessionList.add(one);
-				System.out.println(sessionList.get(0));
+				chatListSet.add(one);
+				System.out.println(chatListSet.size());
 			}
 		}
 		System.out.println("getChatGroup OUT");
 
-		return sessionList;
+		return chatListSet;
 	}
 }

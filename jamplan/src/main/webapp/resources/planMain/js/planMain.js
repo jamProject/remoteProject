@@ -71,7 +71,6 @@ var id = 'thkim9198';
 var teamNo = '3';
 
 w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
-//w = new WebSocket("ws://localhost:8800/jamplan/planMainChat");
 // 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
 w.onopen = function () {
 	alert("WebSocket Connected!");

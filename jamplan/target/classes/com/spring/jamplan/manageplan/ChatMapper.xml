@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.spring.jamplan.manageplan.Chat">
+<mapper namespace="com.spring.jamplan.manageplan.ChatMapper">
 	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
 		<result property="teamNo" column="teamNo" />
 		<result property="teamName" column="teamName" />
