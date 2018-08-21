@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class PlanTableVO {
 	private String calendar;
 	private String map;
+	private String memo;
 	
 	public String getCalendar() {
 		return calendar;
@@ -19,6 +20,14 @@ public class PlanTableVO {
 	public void setMap(String map) {
 		this.map = map;
 	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	
+	
 	
 	
 }

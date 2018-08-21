@@ -13,6 +13,14 @@
 	<select id="planTable" parameterType="com.spring.jamplan2.plan.PlanTableVO" resultMap="planTableMap">
 		select * from planTable
 	</select>
+	
+	<insert id="insertPlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
+		insert into planTable(calendar, map) values('test', 'test')
+	</insert>
+	
+	<update id="savePlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
+		update planTable set memo = #{memo, jdbcType=VARCHAR}
+	</update>
 
 	
 </mapper>

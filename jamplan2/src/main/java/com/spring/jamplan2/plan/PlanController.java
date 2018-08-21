@@ -49,6 +49,19 @@ public class PlanController {
 		
 	}
 	
+	//savePlanTable : 저장
+	@RequestMapping(value = "savePlanTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public int savePlanTable (PlanTableVO planTableVO) {
+		System.out.println("memo" + planTableVO.getMemo());
+		System.out.println("save1");
+		int list = planService.savePlanTable(planTableVO);
+		System.out.println("save4" + list);
+		
+		return list;
+		
+	}
+	
 	
 	
 }

@@ -47,15 +47,15 @@
 	
 	
 	<style>
-	
-	/*구글 한글폰트 불러오는 곳
+
+	/* 구글 한글폰트 불러오는 곳 
 	@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
     
-	* {
+	 {
 	   	font-family: 'Jeju Myeongjo', serif;
 	   	font-weight: 600;
 	  }
-	구글 한글폰트 불러오는 부분 끝*/
+	 	구글 한글폰트 불러오는 부분 끝 */
 	
 		* {box-sizing: border-box;}
 	
@@ -304,7 +304,7 @@
 		
 		
 		
-		//planTable 시작
+		//planTable : 불러오기
 		function planTableGo() {
 			
 			
@@ -324,7 +324,7 @@
 					
 					var put = '';
 						put += '<br><br>';
-						put += '<button class="btn btn-primary pull-right" >저장</button>';
+						put += '<a href="javascript:savePlanTable();"><button class="btn btn-primary pull-right" >저장</button></a>';
 						$('#put').append(put);
 						
 					$.each(data, function(index, item){
@@ -339,7 +339,7 @@
 						planput += '<tr>';
 						planput += '<td>' + item.calendar + '</td>';
 						planput += '<td>' + item.map + '</td>';
-						planput += '<td><textarea class="form-control" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" ></textarea></td>';
+						planput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >' + item.memo + '</textarea></td>';
 						planput += '</tr>';
 						planput += '</tbody>';
 						planput += '</table>';
@@ -353,6 +353,27 @@
 				}
 			});
 		}
+		
+		// savePlanTable : 저장
+		function savePlanTable(){
+			$.ajax({
+				url : '/jamplan2/savePlanTable.plan',
+				type : 'POST',
+				dataType: "json",
+		        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		        data : {
+		        	"memo" : $('#memo').val()
+
+		        	}, 
+		        success:function() {
+			        	alert("저장성공!!!");
+		        	},
+		        	error:function() {
+		        		alert('ajax통신실패!!!');
+		        	}
+		        });
+		}
+		
 		
 		
 	</script>
@@ -408,6 +429,7 @@
 						<div class="tab-pane container fade" id="planTable"></div>
 						<div class="tab-pane container fade" id="viewAll"></div>
 					</div>
+					
 				<!-- DB에 저장하기 -->
 				<div id="put"></div>
 				

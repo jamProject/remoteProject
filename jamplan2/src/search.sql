@@ -213,7 +213,33 @@ create table planTable (
     commit;
 
 
+  -----------0821-------------------
+  create table planTable (
+--    planNo number,
+    calendar varchar2(2000),
+    map varchar2(2000),
+    memo varchar2(2000)
+    );
     
+    insert into planTable values ( '8월25일', '서울', '서울여행');
+    insert into planTable values ( '8월26일', '부산', '부산여행');
+    insert into planTable values ( '8월27일', '여수', '여수밤바다');
+    
+    insert into planTable(calendar, map) values('8월21일', '엔코아');
+    
+    
+    update planTable set memo = 'test';
+    
+    select * from planTable;
+    
+    delete from planTable;
+    
+    update planTable set memo = '여행';
+    rollback;
+    
+    drop table planTable;
+    
+    commit;
     
  
     
