@@ -48,14 +48,14 @@
 	
 	<style>
 	
-	/*구글 한글폰트 불러오는 곳*/
+	/*구글 한글폰트 불러오는 곳
 	@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
     
 	* {
 	   	font-family: 'Jeju Myeongjo', serif;
 	   	font-weight: 600;
 	  }
-	/*구글 한글폰트 불러오는 부분 끝*/
+	구글 한글폰트 불러오는 부분 끝*/
 	
 		* {box-sizing: border-box;}
 	
@@ -319,11 +319,30 @@
 					"likeYn" : updateStatus
 				}, --%>
 				success:function(data){
+					$('#planput').empty();
+					$('#put').empty();
+					
+					var put = '';
+						put += '<br><br>';
+						put += '<button class="btn btn-primary pull-right" >저장</button>';
+						$('#put').append(put);
+						
 					$.each(data, function(index, item){
 						var planput = '';
-						planput += '<div>' + item.calendar + '</div>';
-						planput += '<div>' + item.map + '</div>';
-						planput += '<div><textarea rows="5" cols="30" ></textarea></div>';
+						planput += '<table class="table">';
+						planput += '<thead>';
+						planput += '<th>날짜 </th>';
+						planput += '<th>장소</th>';
+						planput += '<th>일정</th>';
+						planput += '</thead>';
+						planput += '<tbody>';
+						planput += '<tr>';
+						planput += '<td>' + item.calendar + '</td>';
+						planput += '<td>' + item.map + '</td>';
+						planput += '<td><textarea class="form-control" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" ></textarea></td>';
+						planput += '</tr>';
+						planput += '</tbody>';
+						planput += '</table>';
 						
 						console.log("planput" + planput);
 						$('#planput').append(planput);
@@ -378,7 +397,7 @@
 								Calendar</a></li>
 						<li><a href="#map" data-toggle="tab" class="nav-link">
 								Map</a></li>
-						<li><a href="javascript:planTableGo();">
+						<li><a href="javascript:planTableGo();" class="nav-link">
 								PlanTable</a></li>
 						<li><a href="viewAll" data-toggle="tab" class="nav-link">
 								View all</a></li>
@@ -389,9 +408,17 @@
 						<div class="tab-pane container fade" id="planTable"></div>
 						<div class="tab-pane container fade" id="viewAll"></div>
 					</div>
-					
+				<!-- DB에 저장하기 -->
+				<div id="put"></div>
+				
+				
 				<!-- palnTable 뿌려주기 -->	
-				<div id="planput"></div>
+				<br><br>
+				<div class="container" id="planput">
+					
+				</div>
+			
+				
 					
 				</div>
 				<div class="col-md-3">
