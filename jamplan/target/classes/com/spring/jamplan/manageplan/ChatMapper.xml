@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.spring.jamplan.manageplan.Chat">
+	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+		<result property="teamNo" column="teamNo" />
+		<result property="teamName" column="teamName" />
+		<result property="id" column="id" />
+		<result property="role" column="role" />
+		<result property="planNo" column="planNo" />
+		<result property="planName" column="planName" />
+		<result property="jonDate" column="jonDate" />
+	</resultMap>
+	
+	
+	<select id="chatConnect" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		SELECT ID FROM TEAMINFO WHERE TEAMNO=#{teamNo, jdbcType=INTEGER}
+	</select>
+</mapper>
