@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.jamplan2.searchcontroller.PlanVO;
 
 @Controller
 public class PlanController {
@@ -27,17 +26,19 @@ public class PlanController {
 	//플랜테이블
 	@RequestMapping(value = "planTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String planTable(PlanTableVO planTableVO) {
+	public String planTable(PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO) {
 
 		System.out.println("pt1");
-		ArrayList<PlanTableVO> list = planService.planTable(planTableVO);
+		ArrayList planList = planService.planTable(planTableVO,planCalendarVO,planMapVO);
+		/*ArrayList<PlanTableVO> calendarList = planService.planCalendar(planCalendarVO);
+		ArrayList<PlanTableVO> mapList = planService.planMap(planMapVO);*/
 		System.out.println("pt2");
 		
 		String str = "";
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			str = mapper.writeValueAsString(list);
+			str = mapper.writeValueAsString(planList);
 		}
 		catch (Exception e)
 		{

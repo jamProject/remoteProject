@@ -21,6 +21,10 @@
 	<update id="savePlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
 		update planTable set memo = #{memo, jdbcType=VARCHAR}
 	</update>
-
+	
+	<select id="getPlanCalendar" parameterType="com.spring.jamplan2.plan.PlanCalendarVO">
+		select * from planCalendar
+	</select>
+	
 	
 </mapper>

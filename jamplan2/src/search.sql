@@ -214,12 +214,24 @@ create table planTable (
 
 
   -----------0821-------------------
-  create table planTable (
+   create table planTable (
 --    planNo number,
     calendar varchar2(2000),
     map varchar2(2000),
     memo varchar2(2000)
     );
+    
+    create table planCalendar (
+    calendar varchar2(100)
+    );
+    
+    create table planMap (
+    map varchar2(100)
+    );
+    
+    insert into planCalendar values ('8월22일');
+    select * from planCalendar;
+    commit;
     
     insert into planTable values ( '8월25일', '서울', '서울여행');
     insert into planTable values ( '8월26일', '부산', '부산여행');

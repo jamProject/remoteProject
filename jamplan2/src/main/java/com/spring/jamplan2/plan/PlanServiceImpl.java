@@ -14,19 +14,35 @@ public class PlanServiceImpl implements PlanService {
 	@Autowired
 	private SqlSession sqlsession;
 	
+	
+	@Autowired
+	private PlanCalendarVO planCalendarVO;
+	
+	@Autowired
+	private PlanMapVO planMapVO;
+	
+	
 	@Override
-	public ArrayList<PlanTableVO> planTable(PlanTableVO planTableVO){
+	public ArrayList planTable(PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO){
 		ArrayList<PlanTableVO> planTableList = null;
-		/*먼저 if문으로 경우calendar와 지은이map이있는지 체크한다 
-		있으면 select문으로 가져와서 뿌려주고 (메모는 저장시에 업데이트되게)
-		없으면 기본 폼양식을 뿌려줄 수 있게한다
-		----
-		카톡참고
-		*/
-		PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
-		planTableList = planMapper.planTable(planTableVO);
+		ArrayList<PlanCalendarVO> planCalendarList = null;
+		ArrayList<PlanMapVO> planMapList = null;
+		//하나의 오버라이드에서 여러가지 객체를 파라미터로 다룰수있나?? 
+		//날짜테이블의 정보를 불러와 있는지없는지 체크함과동시에 지도도 체크가가능??
 		
-		if(planTableList.size() != 0) {
+		/*System.out.println("캘린더확인:" + planCalendarVO.getCalendar());*/
+ 		
+		PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
+		
+		planCalendarList = planMapper.getPlanCalendar(planCalendarVO);
+		System.out.println("11");
+		System.out.println("planCalendarList : " + planCalendarList);
+		
+		/*calendarList = planMapper.getPlanCalendar(planCalendarVO);
+		mapList = planMapper.getPlanMap(planMapVO.);*/
+		
+		/*첫테스트한것
+		 	if(planTableList.size() != 0) {
 			System.out.println("0이 아닐때 들어왔다@@@@@");
 			
 			
@@ -36,7 +52,7 @@ public class PlanServiceImpl implements PlanService {
 			planMapper.insertPlanTable(planTableVO);
 			System.out.println("test");
 			
-		}
+		}*/
 		
 		return planTableList;
 		

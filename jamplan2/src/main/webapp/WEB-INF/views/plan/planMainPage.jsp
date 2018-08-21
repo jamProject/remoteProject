@@ -320,14 +320,33 @@
 				}, --%>
 				success:function(data){
 					$('#planput').empty();
-					$('#put').empty();
+					$('#saveput').empty();
 					
 					var put = '';
-						put += '<br><br>';
-						put += '<a href="javascript:savePlanTable();"><button class="btn btn-primary pull-right" >저장</button></a>';
+					var saveput = '';
+						saveput += '<br><br>';
+						saveput += '<a href="javascript:savePlanTable();"><button class="btn btn-primary pull-right" >저장</button></a>';
+						$('#saveput').append(saveput);
+						//put : 기본 뿌려주기
+						put += '<table class="table">';
+						put += '<thead>';
+						put += '<th>날짜 </th>';
+						put += '<th>장소</th>';
+						put += '<th>일정</th>';
+						put += '</thead>';
+						put += '<tbody>';
+						put += '<tr>';
+						put += '<td></td>';
+						put += '<td></td>';
+						//id : memo 쓰임새 고민해보기
+						put += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" ></textarea></td>';
+						put += '</tr>';
+						put += '</tbody>';
+						put += '</table>';
 						$('#put').append(put);
 						
 					$.each(data, function(index, item){
+						$('#put').empty();
 						var planput = '';
 						planput += '<table class="table">';
 						planput += '<thead>';
@@ -431,6 +450,9 @@
 					</div>
 					
 				<!-- DB에 저장하기 -->
+				<div id="saveput"></div>
+				
+				<!-- 기본 뿌려주기 -->
 				<div id="put"></div>
 				
 				
