@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.jamplan.model.MessageVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
@@ -268,6 +269,22 @@ public class MyRoomController {
 		
 		return updateListToJson;
 	}
+	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String applyToTeam(MessageVO vo) {
+		
+		insertApplyMessage(vo);
+		String searchTeamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			searchTeamListToJson = mapper.writeValueAsString();
+			System.out.println(searchTeamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("applyTeam Out");
+		return searchTeamListToJson;
+	}
 	
 	@RequestMapping(value="/searchTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -275,8 +292,12 @@ public class MyRoomController {
 		System.out.println("searchTeam In");
 		System.out.println(team.getTeamName());
 		
-		List<TeamInfoVO> teamList = myRoomDAO.searchTeam(team);
+		ArrayList<TeamInfoVO> teamList = myRoomDAO.searchTeam(team);
 		
+/*		if(teamList == null) {
+			map = new HashMap<String, Object>();
+			map.put("res", "null");
+		}*/
 		String searchTeamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {

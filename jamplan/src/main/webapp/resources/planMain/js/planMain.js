@@ -39,7 +39,6 @@ $(document).ready(function() {
 	});
 	
 	
-	
 	document.getElementById("sendButton").onclick = function() {
 		var input = document.getElementById('inputText').value;
 		w.send(id + "/" + input);

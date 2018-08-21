@@ -200,7 +200,7 @@
 									<input type="text" id="searchTeamName" name="teamName" class="search-query" placeholder="어떤 팀을 찾으세요?">
 									<div id="searchButtonParent">
 									<button id="searchButton" type="button" class="btn">
-										<i class="icon-search"><strong>search</strong></i>
+										<i class="fas fa-search"></i>
 									</button>
 									</div>
 								</div>
@@ -208,7 +208,7 @@
 						</div>
 					</div>
 					<div id="updateSpace">
-						<div class="media p-3">
+						<div class="media p-3" id = "teamListSearch">
 							<img
 								src="http://alumnes.org/wp-content/uploads/2017/06/fa-user-circle-o-c0a2bd7a.png"
 								alt="John Doe" class="mr-3 mt-3 rounded-circle"

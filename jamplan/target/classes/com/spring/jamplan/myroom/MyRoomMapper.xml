@@ -52,6 +52,7 @@
 		<result property="sender" column="sender" />
 		<result property="receiver" column="receiver" />
 		<result property="isRead" column="isRead" />
+		<result property="teamName" column="teamName" />
 	</resultMap>
 	
 	<resultMap type="com.spring.jamplan.model.PlanUpdateVO" id="planUpdateResultMap">
@@ -59,6 +60,18 @@
 		<result property="confirmIndicator" column="confirmIndicator" />
 		<result property="dateCheck" column="dateCheck" />
 	</resultMap>
+	
+	<insert id="insertApplyMessage" parameterType = "com.spring.jamplan.model.MessageVO">
+		insert into message (sender, receiver, isRead, teamName) values(#{sender},#{receiver},#{isRead},#{teamName})
+	</insert>
+	
+	<select id ="getTeamReceiver" parameterType = "com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		select * from teamInfo where teamName =#{teamNmae} and (role = 0 or role =1) 
+	</select>
+	
+	<delete id="deleteCansleMessage">
+		delete from message where //
+	</delete>
 	
 	<select id = "getRole" parameterType = "com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
 		select * from teaminfo where planNo = #{planNo} and id = #{id}

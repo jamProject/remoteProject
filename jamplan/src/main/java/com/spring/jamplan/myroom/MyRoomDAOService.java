@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,10 +47,10 @@ public class MyRoomDAOService implements MyRoomDAO {
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 		System.out.println("mapper suc");
 		ArrayList<TeamInfoVO> teamList = myRoomMapper.getTeamList(id);
-		
-		int k = 0;
+		teamList = deleteValByTeamName(teamList);
+		/*int k = 0;
 		int size = teamList.size();
-		//일정을 여러명이 선택 했을 때 중복 제거하고 +n 카운트 하나만 보이도록 
+		//팀명을 출력 할  때 중복 vo 중복 제거
 		for (int i = 0; i < teamList.size(); i++) {
 			for (int j = 0; j < teamList.size(); j++) {
 				if (i != j) {
@@ -64,7 +66,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 			if (i > size - k) {
 				break;
 			}
-		}
+		}*/
 		return teamList;
 	}
 	@Override
@@ -88,19 +90,19 @@ public class MyRoomDAOService implements MyRoomDAO {
 	
 	// 처음 myroom으로 진입 시, 같은 팀인지를 확인 후에 웹소켓으로 메시지 뿌려줄 수 있다.
 	@Override
-	public List<TeamInfoVO> getTeamMember(UserVO vo) {
+	public ArrayList<TeamInfoVO> getTeamMember(UserVO vo) {
 		System.out.println("a");
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
-		List<TeamInfoVO> teamList = myRoomMapper.getTeamMember(vo);
+		ArrayList<TeamInfoVO> teamList = myRoomMapper.getTeamMember(vo);
 
 		return teamList;
 	}
 	
 
 	@Override
-	public List<PlanVO> getPlanList(TeamInfoVO team) {
+	public ArrayList<PlanVO> getPlanList(TeamInfoVO team) {
 		System.out.println("DAOService getPlanList method IN");
-		List<PlanVO> planList = new ArrayList<PlanVO>();
+		ArrayList<PlanVO> planList = new ArrayList<PlanVO>();
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 		planList = myRoomMapper.getPlanList(team);
 		System.out.println("DAOService getPlanList method OUT");
@@ -137,19 +139,41 @@ public class MyRoomDAOService implements MyRoomDAO {
 		UserVO userVO = myRoomMapper.getUserInfo(vo);
 		return userVO;
 	}
-
 	@Override
-	public List<TeamInfoVO> searchTeam(TeamInfoVO team) {
+	public void insertApplyMessage( HttpSession session,MessageVO vo) {
+		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		System.out.println("insertApplyMessage 진입");
+		
+		String teamName = vo.getTeamName();
+		TeamInfoVO team =new TeamInfoVO();
+		team.setTeamName(teamName);
+		String receiver = myRoomMapper.getTeamReceiver(team).getId();
+		String sender = (String)session.getAttribute("id");
+		
+		vo.setIsRead(1);
+		vo.setReceiver(receiver);
+		vo.setSender(sender);
+		vo.setTeamName(teamName);
+	}
+	
+	@Override
+	public void deleteCansleMessage(MessageVO vo) {
+		
+	}
+	@Override
+	public ArrayList<TeamInfoVO> searchTeam(TeamInfoVO team) {
 		
 		System.out.println("DAOService method searchTeam IN");
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 		
-		List<TeamInfoVO> teamInfo = myRoomMapper.searchTeam(team);
+		ArrayList<TeamInfoVO> teamInfo = myRoomMapper.searchTeam(team);
 		System.out.println("mapper out");
 		if(teamInfo.get(0).getTeamName() != null) {
-			System.out.println("teamInfo에 뭔가가 담겨있음");
+			System.out.println("teamInfo에 데이터 저장됨");
 			System.out.println(teamInfo.get(0).getTeamName());
 			System.out.println("DAOService method searchTeam out SUCCESS");
+			//중복된 팀명 제거 - plan에 의해 같은 팀명이 중복이 됨
+			teamInfo = deleteValByTeamName(teamInfo);
 			return teamInfo;
 		}else {
 			System.out.println("DAOService method searchTeam out NULL");
@@ -275,4 +299,28 @@ public class MyRoomDAOService implements MyRoomDAO {
 		
 		return checkMap;
 	}
+	
+	public ArrayList<TeamInfoVO> deleteValByTeamName(ArrayList<TeamInfoVO> teamList) {
+		int k = 0;
+		int size = teamList.size();
+		//팀명을 출력 할  때 중복 vo 중복 제거
+		for (int i = 0; i < teamList.size(); i++) {
+			for (int j = 0; j < teamList.size(); j++) {
+				if (i != j) {
+					if (teamList.get(i).getTeamName().equals(teamList.get(j).getTeamName())) {
+						//System.out.println("remove : " + voList.get(j).getSelectDate());
+						teamList.remove(j);
+						k++;
+						i = 0;
+						break;
+					}
+				}
+			}
+			if (i > size - k) {
+				break;
+			}
+		}
+		return teamList;
+	}
+	
 }

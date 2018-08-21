@@ -17,7 +17,7 @@ ajaxGetTeamList();
 
 $(".move").on("click",function(){
 	var planNo = $(this).attr("value");
-console.log(planNo);
+	//console.log(planNo);
 	alert("planNo : " + planNo);
 	planClickEvent(planNo);
 	
@@ -25,10 +25,34 @@ console.log(planNo);
 
 /*.css('visibility', 'hidden');*/
 
-$(".btn btn-outline-light text-dark border-0 teamList").on("click", function(){
-	$(".collapse planlist").css('visibility', 'hidden');
+$(".btn.btn-outline-light.text-dark.border-0.teamList").on("click", function(){
+	$(".collapse.planlist").css('visibility', 'hidden');
 })
 
+//요기
+$(".appplyBut").on("click", function(){
+	$.ajax({
+		url : '/jamplan/applyToTeam.do',
+		type : 'GET',
+		data : {
+				'teamName' : teamName,
+				'isRead' : 1
+				},
+		dataType : 'json',
+		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+		success : function(data) {
+			
+		},
+		error: function(data){
+			
+		}
+	});
+})
+
+$(".applyButCan").on("click", function(){
+	
+})
+//applyBut,applyButCan
 // 팀명 클릭했을 경우 팀명을 보내고 해당 팀의 멤버들을 불러와야한다.
 
 /*
@@ -96,28 +120,24 @@ $('#addPlan').click(function() {
 	$('#planSpace').empty();
 	//일정 추가 버튼 클릭 시 추가 버튼 비활성화 > 팀을 선택한 이후 일정을 추가할 수 있도록
 	$("#planAddModal").attr('disabled', 'true');
-	console.log('테이블 생성하는 부분까지는 들어옴');
+	//console.log('테이블 생성하는 부분까지는 들어옴');
 	var html = '<table id="teamNameTable" class="table table-hover text-center">'
 			+ '<thead><tr><th>No.</th><th>가입된 팀</th>'
 			+ '</tr></thead><tbody>';
-	console.log('테이블 생성하기 직전');
+	//console.log('테이블 생성하기 직전');
 	for (var index = 0; index < teamNameArray.length; index++) {
 		html += '<tr><td>' + (index + 1)
-				+ '</td><td class = "teamNameBox">'
-				+ teamNameArray[index]
-				+ '</td></tr>';
+				+ '</td><td class = "teamNameBox">' + teamNameArray[index] + '</td></tr>';
 	}
 
 	html += '</tbody></table>';
-	console.log('테이블 생성 태그는 모두 완성');
+	//console.log('테이블 생성 태그는 모두 완성');
 	$('#planSpace').append(html);
-	console.log('append했지만 과연??!!');
+	//console.log('append했지만 과연??!!');
 	
 	planAddbut();
 	addPlanToDB();
-	
-	
-	
+
 });
 	
 
@@ -125,17 +145,17 @@ $('#addPlan').click(function() {
 // Add plan 모달 창에서 테이블 내의 각 팀명 클릭 시, 팀명 값을 가져온다.
 $('#teamNameTable tr').click(function() {
 
-var teamNameTable = $('#teamNameTable').val();
-var str = '';
-var tr = $(this);
-var td = tr.children();
-
-// 값을 잘 받아왔는지 확인
-console.log('td: ' + td);
-str = '' + td + '';
-
-$('#teamNameByTable').val(str);
-alert($('#teamNameByTable').val());
+	var teamNameTable = $('#teamNameTable').val();
+	var str = '';
+	var tr = $(this);
+	var td = tr.children();
+	
+	// 값을 잘 받아왔는지 확인
+	//console.log('td: ' + td);
+	str = '' + td + '';
+	
+	$('#teamNameByTable').val(str);
+	alert($('#teamNameByTable').val());
 })
 
 // 업데이트된 사항이 있는지 5초마다 체크한다.
@@ -157,13 +177,9 @@ $.ajax({
 								+ '<img src="http://alumnes.org/wp-content/uploads/2017/06/fa-user-circle-o-c0a2bd7a.png"'
 								+ 'alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">'
 								+ '<div class="media-body">'
-								+ '<h4>'
-								+ item.planName
-								+ '</h4>'
+								+ '<h4>'+ item.planName+ '</h4>'
 								+ '<p>일정에 변화가 있어요. 확인해 보세요.</p>'
-								+ '</div>'
-								+ '</div>'
-								+ '</br></br>';
+								+ '</div>'+ '</div>'+ '</br></br>';
 						$('#updateSpace').append(update);
 					})
 		},
@@ -173,88 +189,68 @@ $.ajax({
 	});
 
 }, 30000000)
-
+//요기
 // 팀검색을 시도할 경우 업데이트 사항 보여주기를 멈추고 비슷한 이름들의 팀을 나열해서 보여준다.
-$('#searchButton')
-.click(
-	function() {
+$('#searchButton').click(function() {
 		// updateSpace에 나오던 업데이트 작업을 중단한다.
 		clearInterval(interval);
 
-		var teamName = $('#searchTeamName')
-				.val();
+		var teamName = $('#searchTeamName').val();
 
 		// 테이블 형태로 바꿔주기 위해 기존에 있던 업데이트 사항들을
 		// 지워준다.
-		$('#updateSpace').empty();
+		$('.media.p-3').empty();
 
-		var tableHead = '<table class="table table-hover">'
-				+ '<thead><tr>'
-				+ '<th scope="col">팀 이름 검색결과</th>'
-				+ '</thead></tr><tbody>';
+		var tableHead = '<table class="table table-hover">'+'<thead><tr>'+'<th scope="col">팀 이름 검색결과</th>'+'</thead></tr><tbody>';
 
 		var tableTail = '</tbody></table>';
-
-		console.log('ajax전까지는 왔다.');
-		$
-				.ajax({
-					url : '/jamplan/searchTeam.do',
-					type : 'GET',
-					data : {
-						'teamName' : teamName
-					},
-					dataType : 'json',
-					contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-					success : function(data) {
-
-						$
-								.each(
-										data,
-										function(
-												index,
-												item) {
-											var update = '';
-											update += '<tr><td>'
-													+ item.teamName
-													+ '</td></tr>';
-											$(
-													'tableHead')
-													.append(
-															update);
-										})
-						$('tableTail').append(
-								tableHead);
-						$('#updateSpace')
-								.append(
-										tableTail);
+		var update = '';
+		console.log('ajax전까지 ');
+		$.ajax({
+				url : '/jamplan/searchTeam.do',
+				type : 'GET',
+				data : {'teamName' : teamName},
+				dataType : 'json',
+				contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+				success : function(data) {
+					$.each(data, function(index, item) {			
+							update += '<tr><td>'+ item.teamName+ '</td>'
+							+'<td><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
+							+ '<td><button class = "btn btn-primary applyButCan" value = '+item.teamName+'>취소</button></td></tr>';
+							console.log("팀 검색 결과 : " + item.teamName);
+						})
+						console.log("update 글 : " + update);
+						tableHead += update;
+						tableHead += tableTail;
+						//$('tableTail').append(tableHead);
+						$('#teamListSearch').append(tableHead);
 					},
 					error : function() {
 						alert("searchTeam ERROR");
 					}
-				});
+			});
 	});
 })
-//onready end
+
+//onready end===========================================================================
 
 
 //팀 모달창 나온 이후 팀을 선택해야만 선택 창을 클릭 할 수 있도록 설정 
 function planAddbut(){
 	$(".teamNameBox").click(function(){
 		teamName = $(this).html();
-		console.log("팀네임 이벤트 : " +teamName );
+		//console.log("팀네임 이벤트 : " +teamName );
 		$("#planAddModal").removeAttr("disabled");
-		
 	})
 }
 
 //팀을 선택한 이후 추가 버튼을 클릭 했을 때 이벤트
 function addPlanToDB() {
-	
 	$("#planAddModal").click(function(){
-
+		
 		planName = $("#planName").val();
-		console.log("plan add teamname"+teamName);
-		console.log("plan add planname"+planName);
+		//console.log("plan add teamname"+teamName);
+		//console.log("plan add planname"+planName);
 		$.ajax({
 			url : '/jamplan/insertPlan.do',
 			type : 'POST',
@@ -263,24 +259,23 @@ function addPlanToDB() {
 			data : { 'teamName' : teamName,
 					 'planName' : planName},
 			success : function(str){
-				console.log(str.res);
+				//console.log(str.res);
 				alert("플랜 추가 : 데이터 전송 성공");
 				teamName ="";
 				planName="";
 				ajaxGetTeamList();
 			},
 			error:function(str){
-				console.log(str.res);
+				//console.log(str.res);
 				alert("플랜 추가 : 데이터 전송 실패");
 				teamName ="";
 				planName="";
 			}
 		});
-		
 	});
 }
 	
-
+/*
 // 메시지를 실시간으로 처리하기 위한 웹소켓 개통 부분
 var domain = "ws://localhost:8800/jamplan/jamplanWebSocket";
 
@@ -308,97 +303,65 @@ function onMessage(event) {
 }
 
 function onError(event) {
-}
+}*/
+
+
 // 메시지를 실시간으로 처리하기 위한 웹소켓 개통 부분 끝 --%>
 
 // 배열을 생성하고 팀 이름들을 저장한다.
+//btn btn-primary, btn btn-danger  
 var teamNameArray = [];
 
 function ajaxGetTeamList() {
 
 	$('#teamList').empty();	
 	$.ajax({
-				url : '/jamplan/ajaxPrintTeamList.do',
-				type : 'POST',
-				contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-				async: false,
-				dataType : 'json',
-				//async: false,
-				success : function(data) {
-
-						// data에 들어있는 데이터 수만큼 반복되고 하나하나가 매번 item에 매핑된다.
-						$.each(data,function(index, item) {
-											var teamList = '';
-											teamList += '<button class="btn btn-outline-light text-dark border-0 teamList" id="myTeam'
-													+ index
-													+ '"'
-													+ ' data-toggle="collapse" data-target="#myPlan'
-													//+ ' data-toggle="collapse" data-target=".collapse planLink'
-													+ index
-													+ '">'
-													+ item.teamName
-													+ '</button>';
-													
-											var RetrunList = teamList;
-											var teamN =  item.teamName;
-											var i = index;
-											$.ajax({	
-												url : '/jamplan/getPlanListById.do',
-												type : 'POST',
-												contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-												async: false,
-												dataType : 'json',
-												success : function(data) {
-													//console.log("ajax get teamName"+teamName);
-													$.each(data,function(index,item){
-														//console.log(item.teamName);
-														if(teamN == item.teamName && item.planNo != 0){
-															
-															console.log("if문 플랜 정보 "+item.planNo);
-															//console.log("플랜이름"+item.planName);
-															
-															teamList += '<div id="myPlan' + item.planNo + ' class ="collapse planlist" ><p class = "move" value = '+item.planNo+'>'+ item.planName +'</p></div>';
-															//$('#myTeam'+i).append(RetrunList);
-															
-														}
-														
-													})
-													//return RetrunList;
-													//planClickEvent();
-												}
-											})
-													//console.log("return값 확인 : "+planListAdd(teamList, item.teamName));
-													//teamList = planListAdd(teamList, item.teamName);
-												/*	+ '<div id="myPlan'
-													+ index
-													+ '"'
-													+ ' class="collapse">'
-													+ 'plan' + '</div>';*/
-											console.log(teamList);
-											$('#teamList').append(teamList);
-					
-											// 팀명을 배열에 담고 Add plan 버튼에서의 테이블 생성에
-											// 이용한다.
-											teamNameArray[index] = item.teamName;
-										});
-				}, error : function(e) {
-					alert("unload " + e);
-								},
-							});
-	/*for(var i = 0; i < teamNameArray.length; i++){
-		console.log("i : " + i);
-		planListAdd(teamNameArray[i],i);
+			url : '/jamplan/ajaxPrintTeamList.do',
+			type : 'POST',
+			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+			async: false,
+			dataType : 'json',
+			//async: false,
+			success : function(data){ $.each(data,function(index, item) {
+					var teamList = '';
+					teamList += '<button class="btn btn-outline-light text-dark border-0 teamList" id="myTeam'
+							+ index+ '"' + ' data-toggle="collapse" data-target="#myPlan'+ index+ '">'+ item.teamName+ '</button>';
+							
+					var RetrunList = teamList;
+					var teamN =  item.teamName;
+					var i = index;
+					$.ajax({	
+						url : '/jamplan/getPlanListById.do',
+						type : 'POST',
+						contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+						async: false,
+						dataType : 'json',
+						success : function(data) {
+							//console.log("ajax get teamName"+teamName);
+							$.each(data,function(index,item){
+								//console.log(item.teamName);
+								if(teamN == item.teamName && item.planNo != 0){
+									teamList += '<div id="myPlan' + item.planNo + ' class ="collapse planlist" ><p class = "move" value = '+item.planNo+'>'+ item.planName +'</p></div>';
+								}
+							})
+						}
+					})
 		
-	}*/
-	//$(".collapse planlist").css('visibility', 'hidden');
-	console.log("플랜 클릭 이벤 트 추가");
-	console.log("플랜링크 값 : "+$(".planLink").length);
+					$('#teamList').append(teamList);
+	
+					// 팀명을 배열에 담고 Add plan 버튼에서의 테이블 생성에
+					// 이용한다.
+					teamNameArray[index] = item.teamName;
+				});
+			}, error : function(e) {}
+	});
 } 
 
+//플랜 클릭시 페이지 이동 이벤트 
 function planClickEvent(planNo){
 
 	var planNO = planNo;
-	console.log("플랜 이벤트 플랜 번호  : " + planNO)
+	//console.log("플랜 이벤트 플랜 번호  : " + planNO)
 	
 	var form = document.createElement("form");
 	form.setAttribute("method","post");
@@ -412,7 +375,7 @@ function planClickEvent(planNo){
 	form.appendChild(input);
 	
 	form.submit();
-	console.log("done");
+	//console.log("done");
 	/*$.ajax({
 		url : '/jamplan/movePlanMainPage.do',
 		type : 'GET',
@@ -422,7 +385,6 @@ function planClickEvent(planNo){
 		data : {"planNo" : planNO}
 	})*/
 }
-
 
 function planListAdd(teamName, indexI){
 	var RetrunList ="";
@@ -440,19 +402,14 @@ function planListAdd(teamName, indexI){
 				//console.log(item.teamName);
 				if(teamN == item.teamName && item.planNo != 0){
 					
-					console.log("if문 플랜 정보 "+item.planNo);
+					//console.log("if문 플랜 정보 "+item.planNo);
 					//console.log("플랜이름"+item.planName);
 					RetrunList = '<div id="planSelectList' + item.planNo + ' class ="movePlan" value = "'+item.planNo+'">' + item.planName + '</div>';
-					$('#myTeam'+i).append(RetrunList);
-					
+					$('#myTeam'+i).append(RetrunList);	
 				}
-				
 			})
-			//return RetrunList;
-			//planClickEvent();
 		}
 	})
-
 }
 
 function validationCheck() {
@@ -485,9 +442,7 @@ function validationCheck() {
 				} else {
 					alert("focus out");
 				}
-
 			}
-
 		},
 		error : function() {
 			alert("error!!");
