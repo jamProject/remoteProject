@@ -8,9 +8,14 @@
 			height: 100%;
 		}
 		
-		.row {
-			margin: auto;
+		.container-fluid {
+			padding: 0px;
 		}
+		
+		#main-container {
+			margin: 0 auto;
+		}
+		
 	
 		/*>>>>>>>>>>>>>> top bar에 대한 css <<<<<<<<<<<<<<<<*/
 		.topnav {
@@ -57,102 +62,138 @@
 		/*>>>>>>>>>>>>>>> top bar에 대한 css 끝 <<<<<<<<<<<<*/
 		
 		
-		#main-container {
-			margin: 0 auto;
-			margin-top: 120px;
-		}
-		
-		#planManage {
-			margin: auto;
-		}
-		
-		.nav-tabs {
-			margin: 0 auto;
-		}
-		
-		
 		/*>>>>>>>>>>>>>>>> 사이드바에 대한 css<<<<<<<<<<<<<<<< */
-	    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-	    .row.content {height: 1500px}
+	    .row.content {
+	    	margin: auto;
+	    	height: 1500px
+	    }
 	    
-	    /* Set gray background color and 100% height */
 	    .sidenav {
 	      background-color: #f1f1f1;
 	      height: 100%;
 	    }
 	    
-	    /* Set black background color, white text and some padding */
+	    .input-group-btn {
+	    	padding-left: 5px;
+	    }
+	    
 	    footer {
 	      background-color: #555;
 	      color: white;
 	      padding: 15px;
 	    }
 	    
-	    /* On small screens, set height to 'auto' for sidenav and grid */
 	    @media screen and (max-width: 767px) {
 	      .sidenav {
 	        height: auto;
 	        padding: 15px;
 	      }
+	      
 	      .row.content {height: auto;} 
 	    }
 		/*>>>>>>>>>>>>>>>> 사이드바에 대한 css<<<<<<<<<<<<<<<< */
+		
+		
+		/*>>>>>>>>>>>>>>>>> nav-tabs에 대한 css <<<<<<<<<<<<<<<<<*/
+		.nav-tabs {
+			margin: 0 auto;
+		}
+		
+		.nav-tabs .search-container {
+			float: right;
+		}
+		
+		.nav-tabs input[type=text] {
+		  padding: 6px;
+		  
+		  font-size: 17px;
+		  border: none;
+		}
+		
+		.nav-tabs .search-container button {
+		  float: right;
+		  padding: 6px;
+		  margin-right: 16px;
+		  background: #ddd;
+		  font-size: 17px;
+		  border: none;
+		  cursor: pointer;
+		}
+		/*>>>>>>>>>>>>>>>>> nav-tabs에 대한 css 끝<<<<<<<<<<<<<<<<<*/
 	
-
-		
-		
-		
-		
-		
-		
-		
-/* 
-The sidebar menu
-
-ul {    topMenu의 ID를 가진 태그 안에 <ul> 태그 안에 <li> 태그의 스타일을 지정
-	list-style:none;<li > 태그는 위의 이미지처럼 목록을 나타내는 점을 없앤다
-	color:white;    글씨 색을 흰색으로 설정 
-	float:left;     <li >태그들이 왼쪽에 흐르게 설정(그러면 아래있는 내용은 오른쪽으로 옴)
-	line-height:30px;  글씨가 가운데로 오도록 설정하기 위해 한줄의 높이를 30px로 설정
-	vertical-align:middle; // 세로 정렬을 가운데로 설정(위의 line-height와 같이 설정 필요함)
-	text-align:center; 글씨 정렬을 가운데로 설정
 	
-}
-li {    topMenu의 ID를 가진 태그 안에 <ul> 태그 안에 <li> 태그의 스타일을 지정
-	list-style:none;<li > 태그는 위의 이미지처럼 목록을 나타내는 점을 없앤다
-	color:white;    글씨 색을 흰색으로 설정 
-	float:left;     <li >태그들이 왼쪽에 흐르게 설정(그러면 아래있는 내용은 오른쪽으로 옴)
-	line-height:30px;  글씨가 가운데로 오도록 설정하기 위해 한줄의 높이를 30px로 설정
-	vertical-align:middle; // 세로 정렬을 가운데로 설정(위의 line-height와 같이 설정 필요함)
-	text-align:center; 글씨 정렬을 가운데로 설정
-}
-
-.sidenavR{
-	height: 100%; 
-    width: 8%; Set the width of the sidebar
-    z-index: 1; Stay on top
-    top: 0; Stay at the top
-    left: 0;
-    background-color: black; Black
-    overflow-x: hidden; Disable horizontal scroll
-    padding-top: 20px;
-    float: right;
-}
-
-.sidenavL {
-    height: 100%; 
-    width: 8%; Set the width of the sidebar
-    z-index: 1; Stay on top
-    top: 0; Stay at the top
-    left: 0;
-    background-color: black; Black
-    overflow-x: hidden; Disable horizontal scroll
-    padding-top: 20px;
-    float: left;
-}
-
-On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size)
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-} */
+		/*>>>>>>>>>>>>>>>>> form에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
+		#infoForm {
+        width: 35%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 50px;
+        border-right: 1px solid;
+        border-left: 1px solid;
+        position: relative;
+        font-family: 'Libre Franklin', sans-serif;
+	    }
+	
+	    #infoForm > div {
+	        float: left;
+	        margin-bottom: 30px;
+	    }
+	    #infoForm > div > p{
+	        font-size: 12px;
+	        margin-bottom: 3px;
+	    }
+	    #infoForm > div > input{
+	        font-size:12px;
+	        letter-spacing:1px;
+	        padding: 5px;
+	        border: 0;
+	        border-bottom: 1px solid silver;
+	        width: 100%;
+	        color: gray;
+	    }
+	
+	    #infoForm > p:last-of-type{
+	        text-align: center;
+	        padding-top: 50px;
+	        display: table;
+	        width: 100%;
+	        color:white;
+	    }
+	
+	    #infoForm > p:last-of-type > a{
+	        cursor:pointer;
+	        border:0;
+	        padding: 10px 25px;
+	        background: silver;
+	        border-radius: 28px;
+	        font-size: 12px; 
+	    }
+	
+	    .term{
+	        padding-top: 40px;
+	        display: flex;
+	        width: 100%;
+	        align-items: center;
+	    }
+	
+	    .term > i{
+	        cursor: pointer;
+	        width: 20px;
+	    }
+	
+	    .term > span{
+	        font-size:12px;
+	    }
+	
+	    /* delete */
+	    #infoForm > a:last-of-type{
+	        position: absolute;
+	        bottom: 10px;
+	        right: 15px;
+	        font-size:  10px;
+	        letter-spacing:  1px;
+	        font-style: italic;
+	    }
+	    /*>>>>>>>>>>>>>>>>> form에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
+	    
+	

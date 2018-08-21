@@ -59,6 +59,7 @@
 			  <!-- Right-aligned links -->
 			  <div class="topnav-right">
 			    <a href="#search">Message</a>
+			    <a href="#myInfo">My Info</a>
 			    <a href="#about">Search</a>
 			  </div>
 			</div>
@@ -76,28 +77,52 @@
 				    <div class="input-group">
 				      	<input type="text" class="form-control" placeholder="Search Blog..">
 				        <span class="input-group-btn">
-				       		<button class="btn btn-default" type="button">
-				        		<span class="glyphicon glyphicon-search"></span>
+				       		<button class="btn btn-primary" type="button">
+				        		<i class="fas fa-search"></i>
 				        	</button>
 				        </span>
 				    </div>
 				</div>
 				<div class="col-sm-9">
-					<ul class="nav nav-tabs">
-							<li><a href="#calendar" data-toggle="tab" class="nav-link active">
-									</a></li>
-							<li><a href="#map" data-toggle="tab" class="nav-link">
-									Map</a></li>
-							<li><a href="#planTable" data-toggle="tab" class="nav-link">
-									PlanTable</a></li>
-							<li><a href="viewAll" data-toggle="tab" class="nav-link">
-									View all</a></li>
+					
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="info-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+									내 정보</a></li>
+							<li class="nav-item"><a class="nav-link" id="teamManage-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+									팀 관리</a></li>	
+							<div class="search-container">
+							    <form action="/">
+							      <input type="text" placeholder="Search ..." name="search">
+							      <button type="submit">Submit</button>
+							    </form>
+							</div>
 					</ul>
-					<div class="tab-content">
-						<div class="tab-pane container active" value = "calendarajax.mp" id="calendar"></div>
-						<div class="tab-pane container fade" value = "mapajax.mp" id="map"></div>
-						<div class="tab-pane container fade" value = "plantableajax.mp" id="planTable"></div>
-						<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
+							<div style="display:flex;width:100%;">
+							    <form id="infoForm" action="/" method="post">
+							        <div style="width:100%;">
+							            <p>FULL NAME</p>
+							            <input name="name" autofocus>
+							        </div>
+							        <div style="width:100%;">
+							            <p>IDENTIFICATION</p>
+							            <input name="id">
+							        </div>
+							
+							        <div style="width:47%;">
+							            <p>EMAIL</p>
+							            <input name="email">
+							        </div>
+							        <div style="width:47%;margin-left:6%">
+							            <p>PHONE</p>
+							            <input name="phone">
+							        </div>
+							    </form> 
+							</div>
+						</div>
+						<div class="tab-pane fade" value="teamManage.mp" id="teamManage" role="tabpanel" aria-labelledby="teamManage-tab"></div>
 					</div>
 				</div>
 			</div>
