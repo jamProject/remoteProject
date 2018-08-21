@@ -22,6 +22,7 @@ public class PlanMainHandshakeInterceptor extends HttpSessionHandshakeIntercepto
 		HttpServletRequest req = ssreq.getServletRequest();
 		
 		String id = (String)req.getSession().getAttribute("id");
+		System.out.println(id);
 		String teamNo = (String)req.getSession().getAttribute("teamNo");
 		map.put("id", id);
 		map.put("teamNo", teamNo);

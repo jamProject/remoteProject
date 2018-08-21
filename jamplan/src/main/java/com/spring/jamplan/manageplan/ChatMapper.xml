@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 
 <mapper namespace="com.spring.jamplan.manageplan.Chat">
 	<resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
@@ -8,7 +11,6 @@
 		<result property="role" column="role" />
 		<result property="planNo" column="planNo" />
 		<result property="planName" column="planName" />
-		<result property="jonDate" column="jonDate" />
 	</resultMap>
 	
 	

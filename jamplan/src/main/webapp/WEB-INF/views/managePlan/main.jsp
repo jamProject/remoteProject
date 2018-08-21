@@ -13,7 +13,7 @@
 	<spring:url value="/resources/planMain/js/planMain.js" var="mainPageJs" />
 	<spring:url value="/resources/planMain/css/planMain.css" var="mainPageCss" />
 	
-	<script src="${mainPageJs}"></script>
+	<script src="${mainPageJs }"></script>
 	<link href="${mainPageCss}" rel="stylesheet" />
 	
 	<meta charset="UTF-8">
@@ -39,41 +39,26 @@
 	<title>JAM</title>
 
 <%
-	String id = (String)session.getAttribute("id");
+	session.setAttribute("id", "thkim9198");
+	session.setAttribute("teamNo", "3");
 %>
 
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<style>
+		/*구글 한글폰트 불러오는 곳*/
+		@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+    
+		* {
+			font-family: 'Jeju Myeongjo', serif;
+			font-weight: 600;
+		}
+/*구글 한글폰트 불러오는 부분 끝*/
+	</style>
 </head>
 
-<body>
-<!-- <body style="height: 1500px">
 
-	<h1>planMainPage</h1>
-	<div>
-		<label>Plan Main</label>
-	</div>
-	
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top" id ="navCenter">
-		<table>
-			<tr>
-				<td class = "linkMp" value = "calendarajax.mp" style="color:white">calendar</td>
-				<td class = "linkMp" value = "mapajax.mp" style="color:white">map</td>
-				<td class = "linkMp" value = "plantableajax.mp" style="color:white">plantable</td>
-				<td class = "linkMp" value = "viewallajax.mp" style="color:white">view all</td>
-			</tr>
-		</table>
-	</nav>
-	
-	Side navigation left
-	<div class="sidenavL"></div>
-	
-	Side navigation right
-	<div class="sidenavR"></div>
-
-	<div class = "content"></div>
- -->
- <body class="drawer drawer--left">
+<body class="drawer drawer--left">
 	<header>
 		<div role="banner">
 			<!-- side bar 삽입 -->
@@ -146,7 +131,7 @@
 	<footer>
 	</footer>
 	<script>
-	$('.drawer').drawer({
+	/* $('.drawer').drawer({
 		  class: {
 		    nav: 'drawer-nav',
 		    toggle: 'drawer-toggle',
@@ -159,7 +144,7 @@
 		    preventDefault: false
 		  },
 		  showOverlay: true
-		});
+		}); */
 	</script>
 </body>
 </html>

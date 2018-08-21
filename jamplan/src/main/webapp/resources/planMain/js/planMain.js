@@ -4,9 +4,11 @@
 
 //문서 전체 출력 후
 $(document).ready(function() {
-	$('.drawer').drawer();
+	
+	
+//	$('.drawer').drawer();
 	/*var link = $(".tab-pane container active").attr("value");
-	console.log(link);*/
+	console.log(link);
 	$.ajax({
 		url : "calendarajax.mp",
 		type : "post",
@@ -14,13 +16,13 @@ $(document).ready(function() {
 		dataType : "json",
 		success:function(str){
 			$(".content").load(str.link);
-			console.log('로드 후')
+			console.log('로드 후11')
 		},	
 		error:function(){
 			alert("페이지 이동 ajax실패")
 		}
 	})
-	
+	*/
 	document.getElementById("sendButton").onclick = function() {
 		var input = document.getElementById('inputText').value;
 		w.send(id + "/" + input);
@@ -69,21 +71,21 @@ var id = 'thkim9198';
 var teamNo = '3';
 
 w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
+//w = new WebSocket("ws://localhost:8800/jamplan/planMainChat");
 // 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
 w.onopen = function () {
 	alert("WebSocket Connected!");
 }
 w.onmessage = function(e) {
-	log(e.data.toString());
+	alert("AAAA");
+//	log(e.data.toString());
 }
 w.onclose = function(e) {
-	log("WebSocket closed!!");
+	alert("BBBB");
+//	log("WebSocket closed!!");
 }
 w.onerror = function(e) {
-	log("WebSocket error!!");
+	alert("CCCC");
+//	log("WebSocket error!!");
 }
 // websocket 부분에 대한 스크립트 끝
-
-
-
-	

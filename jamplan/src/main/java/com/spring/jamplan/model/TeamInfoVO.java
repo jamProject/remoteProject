@@ -14,7 +14,8 @@ public class TeamInfoVO {
     private int  role;
     private int planNo;
     private String planName ;
-    private String joinDate ;
+//    private String joinDate ;
+    
 	public int getTeamNo() {
 		return teamNo;
 	}
@@ -51,12 +52,12 @@ public class TeamInfoVO {
 	public void setPlanName(String planName) {
 		this.planName = planName;
 	}
-	public String getJoinDate() {
-		return joinDate;
-	}
-	public void setJoinDate(String joinDate) {
-		this.joinDate = joinDate;
-	}
+//	public String getJoinDate() {
+//		return joinDate;
+//	}
+//	public void setJoinDate(String joinDate) {
+//		this.joinDate = joinDate;
+//	}
 	
 	
 }
