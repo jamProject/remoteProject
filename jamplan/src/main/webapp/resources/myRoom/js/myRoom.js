@@ -375,15 +375,7 @@ function planClickEvent(planNo){
 	form.appendChild(input);
 	
 	form.submit();
-	//console.log("done");
-	/*$.ajax({
-		url : '/jamplan/movePlanMainPage.do',
-		type : 'GET',
-		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-		async: false,
-		dataType : 'json',
-		data : {"planNo" : planNO}
-	})*/
+
 }
 
 function planListAdd(teamName, indexI){
