@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+CREATE TABLE PLANMAP(
+PLANNO NUMBER NOT NULL,
+ID VARCHAR2(50),
+PICKCOUNT NUMBER DEFAULT 0,
+USERCOLOR VARCHAR2(50),
+PLACENAME VARCHAR2(200),
+LAT NUMBER,
+LNG NUMBER,
+ADDRESS VARCHAR2(200)
+);
+ -->
+<mapper namespace="com.spring.jamplan.manageplan.MapMapper">
+	
+	<resultMap type="com.spring.jamplan.model.MapVO" id="mapMemberResultMap">
+		<result property="planNo" column="PLANNO" />
+		<result property="id" column="ID" />
+		<result property="pickCount" column="PICKCOUNT" />
+		<result property="userColor" column="USERCOLOR" />
+		<result property="placeName" column="PLACENAME" />
+		<result property="lat" column="LAT" />
+		<result property="lng" column="LNG" />
+		<result property="address" column="ADDRESS" />		
+	</resultMap>
+	
+	<select id="getAllPickList" resultMap="mapMemberResultMap">
+		select  placeName, max(pickCount) as pickCount, max(lat) as lat, max(lng) as lng, address
+		from planMap	
+        group by placeName, address
+		order by pickCount desc
+	</select>
+
+	<select id="getPickList" parameterType="String" resultMap="mapMemberResultMap">
+		select * 
+		from planMap 
+		where placeName=#{placeName, javaType=String}  
+	</select>
+		
+	<select id="checkPick" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
+		select count(*) 
+		from planMap 
+		where planNo=#{planNo, javaType=int}
+		and	id=#{id, javaType=String}
+		and placeName=#{placeName, javaType=String}		
+	</select>
+	
+	<insert id="insertMember" parameterType="com.spring.jamplan.model.MapVO" >
+		insert into planMap values
+			(#{planNo, javaType=int}, 
+			#{id, javaType=String}, 
+			#{pickCount, javaType=int},
+			#{userColor, javaType=String}, 
+			#{placeName, javaType=String},
+			#{lat, javaType=double}, 
+			#{lng, javaType=double}, 
+			#{address, javaType=String})
+	</insert>
+	
+	<delete id="deleteMember" parameterType="com.spring.jamplan.model.MapVO">
+		delete from planMap 
+		where planNo=#{planNo, javaType=int}
+		and id=#{id, javaType=String} 
+		and placeName=#{placeName, javaType=String}
+	</delete>
+	
+	<select id="pickCount" parameterType="com.spring.jamplan.model.MapVO" resultType="int">
+		select count(*) 
+		from planMap 
+		where planNo=#{planNo, javaType=int} 
+		and placeName=#{placeName, javaType=String}
+	</select>
+	
+	<update id="updatePickCount" parameterType="com.spring.jamplan.model.MapVO" >
+		update planMap set pickCount=#{pickCount, javaType=int} 
+		where planNo=#{planNo, javaType=int} 
+		and placeName=#{placeName, javaType=String}
+	</update>
+	
+	<!-- 지도오른쪽리스트
+	<select id="getAllLocation" parameterType="String" >
+		select placeName from planMap group by placeName order by count(placeName) desc
+	</select> -->
+	
+</mapper> 
+ 

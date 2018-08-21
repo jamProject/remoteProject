@@ -1,0 +1,34 @@
+CREATE TABLE USERINFO(
+    ID VARCHAR2(30) PRIMARY KEY,
+    EMAIL VARCHAR2(50) NOT NULL,
+    PASS VARCHAR2(30) NOT NULL,
+    ISADMIN VARCHAR2(3) NOT NULL,
+    SIGNDATE NUMBER,
+    NATION VARCHAR2(20),
+    GENDER VARCHAR2(3),
+    AGE NUMBER,
+    SNSLINK VARCHAR2(50),
+    TRAVELTYPE VARCHAR2(30),
+    IMAGE VARCHAR2(30),
+    HOBBY VARCHAR2(30),
+    NAME  VARCHAR2(30)
+) ;
+
+CREATE TABLE PLANMAP(
+PLANNO NUMBER NOT NULL,
+ID VARCHAR2(50),
+PICKCOUNT NUMBER DEFAULT 0,
+USERCOLOR VARCHAR2(50),
+PLACENAME VARCHAR2(200),
+LAT NUMBER,
+LNG NUMBER,
+ADDRESS VARCHAR2(200)
+);
+
+select * from planmap;
+select *from planmap order by pickcount desc;
+select placeName, lat, lng, address, pickCount from planMap;
+
+INSERT INTO PLANMAP values (1, 'haha', 2, 'black', 'seoul');
+
+delete from planmap where id='jieun'; 

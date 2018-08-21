@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+      
+<mapper namespace="com.spring.jamplan.admin.AdminMapper">
+	<resultMap id="AdminUserResultMap" type="com.spring.jamplan.model.UserVO">
+		<result property="id" column="ID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pass" column="PASS"/>
+		<result property="nation" column="NATION"/>
+		<result property="gender" column="GENDER"/>
+		<result property="snsLink" column="SNSLINK"/>
+		<result property="travelType" column="TRAVELTYPE"/>
+		<result property="hobby" column="HOBBY"/>
+		<result property="age" column="AGE"/>
+		<result property="signDate" column="SIGNDATE"/>
+		<result property="name" column="NAME"/>
+		<!-- image랑 isAdmin 안넣움...... -->
+	</resultMap>
+	
+	<resultMap id="AdminTeamResultMap" type="com.spring.jamplan.model.TeamVO">
+		<result property="teamNo" column="TEAMNO"/>
+		<result property="planNo" column="PLANNO"/>
+		<result property="id" column="ID"/>
+		<result property="teamName" column="TEAMNAME"/>
+		<result property="role" column="ROLE"/>
+		<result property="chatTime" column="CHATTIME"/>
+	</resultMap>
+	
+	<resultMap id="AdminPlanResultMap" type="com.spring.jamplan.model.PlanVO">
+		<result property="planNo" column="PLANNO"/>
+		<result property="teamNo" column="TEAMNO"/>
+		<result property="goodCount" column="GOODCOUNT"/>
+		<result property="readCount" column="READCOUNT"/>
+		<result property="isOpen" column="ISOPEN"/>
+		<result property="planName" column="PLANNAME"/>
+		<result property="hashtag" column="HASHTAG"/>
+		<result property="planDate" column="PLANDATE"/>
+	</resultMap>
+
+	<select id="getUserList" resultMap="AdminUserResultMap">
+		select id, name, email, gender, snsLink, signDate from userInfo
+	</select>			
+	
+	<select id="getTeamList" resultMap="AdminTeamResultMap">
+		select * from userTeam
+	</select>
+
+	<select id="getPlanList" parameterType="String" resultMap="AdminPlanResultMap">
+		select * from plan where planName = #{planName, javaType = String}
+	</select>
+	
+	<select id="getUser" parameterType="String" resultMap="AdminUserResultMap">
+		select * from userInfo where id = #{id, javaType = String }
+	</select>
+	
+	<select id="getTeam" parameterType="String" resultMap="AdminTeamResultMap">
+		select * from userTeam where teamName = #{teamName, javaType = String }
+	</select>
+	
+	<delete id="deleteUser" parameterType="String"> 
+		delete from userInfo WHERE id=#{id, javaType = String} 
+	</delete>
+	
+	<delete id="deleteTeam" parameterType="String"> 
+		delete from userTeam WHERE teamName=#{teamName, javaType = String} 
+	</delete>
+	
+	<delete id="deletePlan" parameterType="int"> 
+		delete from plan WHERE planNo=#{planNo} 
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
