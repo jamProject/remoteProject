@@ -29,8 +29,11 @@ $(".btn.btn-outline-light.text-dark.border-0.teamList").on("click", function(){
 	$(".collapse.planlist").css('visibility', 'hidden');
 })
 
+
 //요기
-$(".appplyBut").on("click", function(){
+
+$(document).on("click", ".applyBut", function(){
+	var teamName = $("button.applyBut").attr("value");
 	$.ajax({
 		url : '/jamplan/applyToTeam.do',
 		type : 'GET',
@@ -41,13 +44,18 @@ $(".appplyBut").on("click", function(){
 		dataType : 'json',
 		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
-			
+			alert(data.res);
 		},
 		error: function(data){
-			
+			alert(data.res);
 		}
 	});
 })
+//$(".applyBut").on("click", function(){
+//	alert("applyBut 버튼 클릭 이벤트");
+//	
+//	});
+//})
 
 $(".applyButCan").on("click", function(){
 	

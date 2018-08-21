@@ -11,14 +11,14 @@ public interface MyRoomDAO {
 	
 	int makeTeam(TeamInfoVO team);
 	int insertPlan(TeamInfoVO vo);
+	int insertApplyMessage(String id,MessageVO vo);
 	int getMaxPlanNo();
 	
 	String validationTeamName(TeamInfoVO team);
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
 	
-	void deleteNullPlanTeaminfo(String teamName);
-	void insertApplyMessage(MessageVO vo);
+	void deleteNullPlanTeaminfo(String teamName);	
 	void deleteCansleMessage(MessageVO vo);
 	
 	UserVO getUserInfo(UserVO vo);	

@@ -37,5 +37,5 @@ public interface MyRoomMapper {
 	TeamInfoVO getTeamReceiver(TeamInfoVO team);
 	void insertApplyMessage(MessageVO vo);
 	void deleteCansleMessage(MessageVO vo);
-	
+	ArrayList<MessageVO> checkApplyMessage(MessageVO vo);	
 }

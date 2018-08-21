@@ -140,20 +140,64 @@ public class MyRoomDAOService implements MyRoomDAO {
 		return userVO;
 	}
 	@Override
-	public void insertApplyMessage( HttpSession session,MessageVO vo) {
+	public int insertApplyMessage( String id, MessageVO message) {
 		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+		//이미 가입된 팀 0, 이미 신청함 1, 신청 저장 2;
+		int check = 0;
 		System.out.println("insertApplyMessage 진입");
+		String sender = id;
+		String teamName = message.getTeamName();
+		message.setSender(sender);
 		
-		String teamName = vo.getTeamName();
-		TeamInfoVO team =new TeamInfoVO();
-		team.setTeamName(teamName);
-		String receiver = myRoomMapper.getTeamReceiver(team).getId();
-		String sender = (String)session.getAttribute("id");
+		//신청자가 해당 팀에 이미 신청했는지를 판단
+		TeamInfoVO team1 = new TeamInfoVO();
+		team1.setId(id);
+		team1.setTeamName(teamName);
+		ArrayList<TeamInfoVO> teamList = myRoomMapper.getTeamInfo(team1);
 		
-		vo.setIsRead(1);
-		vo.setReceiver(receiver);
-		vo.setSender(sender);
-		vo.setTeamName(teamName);
+		if(teamList.size()!=0 ) {
+			System.out.println("이미 팀원임");
+			check = 0;
+		}else {
+			System.out.println("팀원은 아님");
+			//이전에 신청을 했는지 확인
+			ArrayList<MessageVO> messageList = myRoomMapper.checkApplyMessage(message);
+			
+			if(messageList.size() !=0) {
+				System.out.println("근데 이미 신청 함");
+				check =1;
+			}else {
+				check =2;
+				System.out.println("팀원도 아니고 신청도 안함");
+				String receiver="";
+				team1 =new TeamInfoVO();	
+				team1.setTeamName(teamName);
+				team1.setRole(0);
+				try {
+					//받는 사람을 설정
+					team1 = myRoomMapper.getTeamReceiver(team1);
+					receiver = team1.getId();
+					System.out.println("insertApplyMessage 리더 아이디 가져오기 성공");
+				}catch (Exception e) {
+					System.out.println("insertApplyMessage 리더 아이디 가져오기 실패");
+				}	
+				//1일때 읽지 않은 메세지
+				message.setIsRead(1);
+				message.setReceiver(receiver);
+				message.setSender(sender);
+				message.setTeamName(teamName);
+				
+				try {
+					//메세지 디비에 해당 신청 메세지 저장
+					myRoomMapper.insertApplyMessage(message);
+					System.out.println("insertApplyMessage 삽입 성공");
+				}catch (Exception e) {
+					System.out.println("insertApplyMessage 삽입 실패");
+				}
+			}
+			
+		}		
+		return check;
 	}
 	
 	@Override
