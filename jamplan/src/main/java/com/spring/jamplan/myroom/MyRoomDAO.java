@@ -12,6 +12,7 @@ public interface MyRoomDAO {
 	int makeTeam(TeamInfoVO team);
 	int insertPlan(TeamInfoVO vo);
 	int insertApplyMessage(String id,MessageVO vo);
+	int deleteCansleMessage(String id,MessageVO vo);
 	int getMaxPlanNo();
 	
 	String validationTeamName(TeamInfoVO team);
@@ -19,7 +20,6 @@ public interface MyRoomDAO {
 	Object deletePlan(PlanVO plan);
 	
 	void deleteNullPlanTeaminfo(String teamName);	
-	void deleteCansleMessage(MessageVO vo);
 	
 	UserVO getUserInfo(UserVO vo);	
 	PlanVO searchPlan(PlanVO plan);

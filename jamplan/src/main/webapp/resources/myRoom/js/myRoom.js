@@ -32,11 +32,12 @@ $(".btn.btn-outline-light.text-dark.border-0.teamList").on("click", function(){
 
 //요기
 
-$(document).on("click", ".applyBut", function(){
-	var teamName = $("button.applyBut").attr("value");
+$(document).on("click", "button.applyBut", function(){
+	alert("신청 버튼 이벤트 ")
+	var teamName = $(this).attr("value");
 	$.ajax({
 		url : '/jamplan/applyToTeam.do',
-		type : 'GET',
+		type : 'POST',
 		data : {
 				'teamName' : teamName,
 				'isRead' : 1
@@ -51,14 +52,31 @@ $(document).on("click", ".applyBut", function(){
 		}
 	});
 })
+
 //$(".applyBut").on("click", function(){
 //	alert("applyBut 버튼 클릭 이벤트");
 //	
 //	});
 //})
 
-$(".applyButCan").on("click", function(){
-	
+$(document).on("click", "button.applyButCan", function(){
+	alert("신청 버튼 이벤트 ")
+	var teamName = $(this).attr("value");
+	$.ajax({
+		url : "/deleteMessageToTeam.do",
+		type : 'POST',
+		data : {
+				'teamName' : teamName
+				},
+		dataType : 'json',
+		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+		success : function(data) {
+			alert(data.res);
+		},
+		error: function(data){
+			alert(data.res);
+		}
+	});
 })
 //applyBut,applyButCan
 // 팀명 클릭했을 경우 팀명을 보내고 해당 팀의 멤버들을 불러와야한다.

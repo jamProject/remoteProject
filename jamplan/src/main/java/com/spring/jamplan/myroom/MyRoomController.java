@@ -269,13 +269,13 @@ public class MyRoomController {
 		
 		return updateListToJson;
 	}
-	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String applyToTeam(HttpSession session, MessageVO vo) {
 		String id = (String)session.getAttribute("id");
 		String teamName = vo.getTeamName();
 		map = new HashMap<String, Object>();
-
+		vo.setSender(id);
 		try {
 			int check = myRoomDAO.insertApplyMessage(id,vo);		
 			if(check==0) {
@@ -301,6 +301,40 @@ public class MyRoomController {
 		System.out.println("applyTeam Out");
 		return searchTeamListToJson;
 	}
+	//deleteCansleMessage
+	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteMessageToTeam(HttpSession session, MessageVO vo) {
+		String id = (String)session.getAttribute("id");
+		String teamName = vo.getTeamName();
+		map = new HashMap<String, Object>();
+		vo.setSender(id);
+		try {
+			int check = myRoomDAO.deleteCansleMessage(id,vo);		
+			if(check==0) {
+				map.put("res", "이미 해당 팀원임");
+			}else if (check ==1) {
+				map.put("res", "메세지 삭제");
+			}else {
+				map.put("res", "신청한적 없음");
+			}
+			
+		}catch (Exception e) {
+			map.put("res", "fail");
+		}
+		
+		String searchTeamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			searchTeamListToJson = mapper.writeValueAsString(map);
+			System.out.println(searchTeamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("applyTeam Out");
+		return searchTeamListToJson;
+	}
+	
 	
 	@RequestMapping(value="/searchTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody

@@ -34,7 +34,7 @@ public interface MyRoomMapper {
 	int getMaxPlanNo();
 	void deleteNullPlan(String teamName);
 	TeamInfoVO getRole(TeamInfoVO team);
-	TeamInfoVO getTeamReceiver(TeamInfoVO team);
+	ArrayList<TeamInfoVO> getTeamReceiver(TeamInfoVO team);
 	void insertApplyMessage(MessageVO vo);
 	void deleteCansleMessage(MessageVO vo);
 	ArrayList<MessageVO> checkApplyMessage(MessageVO vo);	
