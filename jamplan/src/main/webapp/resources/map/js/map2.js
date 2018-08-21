@@ -13,20 +13,29 @@ var z="0";
 var placeName;
 var address;
 var newPickCount;
+var infowindow;
 
-$(document).ready(function(){
-	function getAllPick(){		
+
+//index의 값이 매번 바뀜..
+$(document).ready(function(){	
+		function  getAllPick(){
 		markersArray = []; 
 		infoArray = [];
-		
+		alert("cancelBtnCHECK");
 		$.ajax({
 			url:'getAllPickList.mp',
 			type: 'POST',
 			dataType : "json",
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			success:function(data){ //성공적응답 받아오면 이 함수 자동실행 (data)가 컨트롤러에서 반환된 데이터가 들어있다.  // 변수이름은 바꿀수 있다.
+			success:function(data){ //성공적응답 받아오면 이 함수 자동실행 (data)가 컨트롤러에서 반환된 데이터가 들어있다.  // 변수이름은 바꿀수 있다.	
+				alert(data.length);
+				if(data.length==0){
+					alert("hhhhh");
+				}
+				
 				for(var i=0;i<data.length; i++){
 					newPickCount = data[i].pickCount;
+					
 					marker = new google.maps.Marker({
 				    	icon: {
 				    		url: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.7|0|"+ col + "|13|_|" + newPickCount ,   //마커크기|기울기|마커색|글자크기|글자기본(_)또는굵게(b)|내용
@@ -39,11 +48,9 @@ $(document).ready(function(){
 				        },
 				        map: map
 				    }); 
-					/*if(data.length==0){
-						alert("newpickcount==0이다!");
-						//pickList(data);
-					}*/
+					
 					markersArray.push(marker);
+					alert("canceltest2");
 					
 					/*var init_latlng = {lat : data[i].lat, lng : data[i].lng};
 					var coordinates=[];	
@@ -58,27 +65,28 @@ $(document).ready(function(){
 					}
 					map.fitBounds(bounds);*/
 					
-					var infowindow = new google.maps.InfoWindow();
-						
+					infowindowDB = new google.maps.InfoWindow();
+					
 					$('#placeName').html(data[i].placeName);
 					$('#address').html(data[i].address);
-					
-					pickList(data[i].placeName);
-				
-					infowindow.setContent($('#infoContent').html());	
+					pickList(data[i].placeName);						
+								
+					infowindowDB.setContent($('#infoContent').html());
 					
 					$(".ui button:nth-child(" + (i+1) + ")").text(data[i].placeName);
 					/*$(".ui button").click(function(){
 						map.set()
 					})
 				 */
-				google.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+				
+				google.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindowDB));
 				//google.maps.event.addListener(marker, 'dbclick', makeOutListener(infowindow));
+				
 				}
 				
-				function makeOverListener(map, marker, infowindow){
+				function makeOverListener(map, marker, infowindowDB){
 					return function(){						
-						infowindow.open(map,marker);
+						infowindowDB.open(map, marker);
 					};
 				}
 				
@@ -96,7 +104,9 @@ $(document).ready(function(){
 	}
 
 	$(document).on("click","#pickBtn", function(){
-	//function onPick(){
+		//marker.setVisible(false);
+		//infowindow.close();	
+		//function onPick(){
 		alert("clickBtnFN");
 		$.ajax({
 			url:'insertMember.mp',
@@ -114,8 +124,8 @@ $(document).ready(function(){
 					"address":$('#address').html()					
 				},
 			success:function(retVal){ 	
-				if(retVal.res == "OK"){	
-					$('#pickCount').val(retVal.pickNum);
+				if(retVal.res == "OK"){						
+					$('#pickCount').val(retVal.pickNum);					
 					getAllPick();
 				}
 				else
@@ -129,10 +139,10 @@ $(document).ready(function(){
 		});
 	});
 	
-	$(document).on("click","#cancelBtn", function(){
-		marker.setVisible(false);
+	$(document).on("click","#cancelBtn", function(){		
 		alert("mark");
 		alert("cancelBtnFN");
+		
 		$.ajax({
 			url: 'deleteMember.mp',
 			type: 'POST',
@@ -141,15 +151,24 @@ $(document).ready(function(){
 				  "id":$('#memberid').val(),
 				  "placeName": $('#placeName').html()},
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			async:false,
 			dataType : "json",
 			success:function(retVal){
 				if(retVal.res == "OK"){			
 					$('#pickCount').val(retVal.pickNum);
-					/*if(retVal.pickNum==0){
+					marker.setVisible(false);
+					alert(retVal.pickNum);
+					
+					if(retVal.pickNum==0){
+						$('#output').text("");
+						alert($('#output').text());
 						marker.setVisible(false);
-					}*/
+						$(".ui button").text();					
+					}
+					else{
 					getAllPick();
+					}
+					
+					
 				}
 				else
 				{
@@ -178,21 +197,17 @@ function pickList(placeName){
 		async:false,		//false: 동기->비동기적 일처리 방식으로 처리해라(이걸안하면 selectMember가 제대로 출력안됨)
 		success:function(data){
 				$('#output').empty();
+				
 				$.each(data, function(index, item){
-					//alert("item.id=" + item.id);
-					//output += item.id;
-	
-					//alert("item.id=" + item.id);
 					output += '<tr>';
 					output += '<td>' + item.id + '</td>';
-					output += '</tr>'; 
-	
+					output += '</tr>';	
 				});
-				//$('#output').html(output);
 				$('#output').append(output);
-				//return output;
-				//alert($('#output').val());
-			
+				
+				alert(output);
+				return output;
+				
 		},
 		error:function(){
 			alert("ajax통신실패!!!");
@@ -314,19 +329,18 @@ function autoInfo(place){
     $('#output').empty();
 }
 
-var ClickEventHandler = function(map, marker) {
+var ClickEventHandler = function(map, marker) {			//prototype: 자바스크립트의 클래스같은거
 	 //this.init_latlng = init_latlng;
      this.map = map;
      this.marker = marker;
      this.placesService = new google.maps.places.PlacesService(map);
      this.infoWindow = new google.maps.InfoWindow;
-     //this.infowindow.setContent(this.infowindowContent);
-     
+    
      //Listen for clicks on the map.
      this.map.addListener('click', this.handleClick.bind(this));	//.bind() : event가 발생하면 실행될 함수를 지정한다. (이미 생성된 DOM에 대하여)
 }     
 
-ClickEventHandler.prototype.handleClick = function(event) {    	
+ClickEventHandler.prototype.handleClick = function(event) {    	//메소드 만들어줌
 	// If the event has a placeId, use it.
     if (event.placeId) {
     	console.log('You clicked on place:' + event.placeId);
@@ -348,7 +362,6 @@ ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
 	 var me = this;
 	 me.placesService.getDetails({placeId: placeId}, function(place, status) {
     	if (status === 'OK') {
-    		//this.infoWindow = new google.maps.InfoWindow;//test
     		me.infoWindow.close();
     		me.marker.setPosition(place.geometry.location);
     		me.infoWindow.setPosition(place.geometry.location);
@@ -357,7 +370,8 @@ ClickEventHandler.prototype.getPlaceInformation = function(placeId) {
     		
     		me.infoWindow.setContent($('#infoContent').html());
     		me.infoWindow.open(me.map, me.marker);
-        }
+
+    	}
     	
     	//getAllPick();
     	/*me.marker.addListener('mouseover',function(e){

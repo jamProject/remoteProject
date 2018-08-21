@@ -126,6 +126,8 @@ public class ManagePlanController {
 				managePlanDAOService.updatePickCount(mapVO);		//데이터삭제후 pickCount수정
 				System.out.println("deleteController2");
 				retVal.put("pickNum", pickNum);		//pickCount를 마커에 집어넣기 위해		
+				System.out.println(pickNum);			
+
 			}
 			retVal.put("res", "OK");
 		}
