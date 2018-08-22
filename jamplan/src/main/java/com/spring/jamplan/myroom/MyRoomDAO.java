@@ -20,6 +20,7 @@ public interface MyRoomDAO {
 	Object deletePlan(PlanVO plan);
 	
 	void deleteNullPlanTeaminfo(String teamName);	
+	void updateReadMessage(String receiver);
 	
 	UserVO getUserInfo(UserVO vo);	
 	PlanVO searchPlan(PlanVO plan);

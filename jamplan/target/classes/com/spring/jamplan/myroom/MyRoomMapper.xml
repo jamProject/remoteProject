@@ -61,6 +61,10 @@
 		<result property="dateCheck" column="dateCheck" />
 	</resultMap>
 	
+	<update id = "updateMessage" parameterType= "com.spring.jamplan.model.MessageVO" >
+		update message set isRead = #{isRaed} where receiver = #{receiver}
+	</update>
+	
 	<select id="getMessageListById"  parameterType = "com.spring.jamplan.model.MessageVO" resultMap="messageResultMap">
 		select * from message where receiver = #{receiver} order by isread desc
 	</select>

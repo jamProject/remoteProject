@@ -24,6 +24,38 @@ public class MyRoomDAOService implements MyRoomDAO {
 	private MyRoomMapper myRoomMapper;
 
 	@Override
+	//receiver의 메세지 테이블을 가져와서  읽음 처리
+	public void updateReadMessage(String receiver) {
+		System.out.println("==DAO updateReadMessage IN");
+		ArrayList<MessageVO>messageList;
+		MessageVO vo= new MessageVO();
+		vo.setReceiver(receiver);
+		try {
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			messageList = myRoomMapper.getMessageListById(vo);
+			int readCheck = 0;
+			System.out.println("==for문 전까지");
+			if(messageList.size() != 0) {
+				for(int i = 0; i < messageList.size(); i++) {
+					if(messageList.get(i).getIsRead() == 0 ||
+					   messageList.get(i).getIsRead() == 2 ||
+					   messageList.get(i).getIsRead() == 4 ) {
+						readCheck= messageList.get(i).getIsRead()+1;
+						System.out.println("=="+readCheck);
+						messageList.get(i).setIsRead(readCheck);
+						myRoomMapper.updateMessage(messageList.get(i));
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("==DAO updateReadMessage out");
+	}
+	
+	@Override
 	public TeamInfoVO getRole(TeamInfoVO vo) {
 		System.out.println("DAO getRole IN");
 
@@ -231,8 +263,8 @@ public class MyRoomDAOService implements MyRoomDAO {
 					System.out.println("insertApplyMessage 리더 아이디 가져오기 실패");
 					e.printStackTrace();
 				}
-				// 1일때 읽지 않은 메세지
-				message.setIsRead(1);
+				// 0일때 읽지 않은 메세지
+				message.setIsRead(0);
 				message.setReceiver(receiver);
 				message.setSender(sender);
 				message.setTeamName(teamName);

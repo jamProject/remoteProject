@@ -87,6 +87,24 @@ public class MyRoomController {
 		//System.out.println(teamListToJson);
 		return teamListToJson;
 	}
+	
+
+	@RequestMapping(value="/acceptToMember.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public void acceptToMember(HttpSession session) {
+		
+	}
+	
+	@RequestMapping(value="/updateMessage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public void updateMessage(HttpSession session) {
+		System.out.println("CONT updateMessage IN");
+		String receiver = (String)session.getAttribute("id");
+		myRoomDAO.updateReadMessage(receiver);
+		
+		System.out.println("CONT updateMessage OUT");
+	}
+	
 	@RequestMapping(value="/getMessageById.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public ArrayList<MessageVO> getMessageById(HttpSession session, MessageVO vo) {

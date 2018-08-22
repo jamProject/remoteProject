@@ -27,6 +27,7 @@ public interface MyRoomMapper {
 	PlanVO searchPlan(PlanVO plan);
 	int makeTeam(TeamInfoVO team);
 	void insertPlan(TeamInfoVO vo);
+	void updateMessage(MessageVO vo);
 	TeamInfoVO validationTeamName(TeamInfoVO team);
 	int deleteTeam(TeamInfoVO team);
 	int deletePlan(PlanVO plan);
