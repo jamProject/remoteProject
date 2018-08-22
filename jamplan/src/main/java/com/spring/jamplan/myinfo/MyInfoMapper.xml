@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.jamplan.myinfo.MyInfoMapper">
+
+    <resultMap type="com.spring.jamplan.model.UserVO" id="userResultMap">
+        <result property="id" column="id" />
+        <result property="email" column="email" />
+        <result property="pass" column="pass" />
+        <result property="nation" column="nation" />
+        <result property="gender" column="gender" />
+        <result property="travelType" column="travelType" />
+        <result property="hobby" column="hobby" />
+        <result property="image" column="image" />
+        <result property="age" column="age" />
+        <result property="isAdmin" column="isAdmin" />
+        <result property="signDate" column="signDate" />
+    </resultMap>
+    
+    <resultMap type="com.spring.jamplan.model.TeamInfoVO" id="teamInfoResultMap">
+        <result property="teamNo" column="teamNo" />
+        <result property="teamName" column="teamName" />
+        <result property="id" column="id" />
+        <result property="role" column="role" />
+        <result property="planNo" column="planNo" />
+        <result property="planName" column="planName" />
+        <result property="joinDate" column="joinDate" />
+    </resultMap>
+    
+    <select id="getMyInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap">
+        SELECT * FROM USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
+    </select>
+    
+    <update id="updateMyInfo" parameterType="com.spring.jamplan.model.UserVO">
+        UPDATE USERINFO(EMAIL, PASS, NATION, GENDER, AGE, TRAVELTYPE, HOBBY) 
+            SET EMAIL=#{email, jdbcTyp=VARCHAR}, PASS
+    </update>
+    
+    <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
+    
+    </select>
+    
+    <select id="getTeamListAsMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
+    
+    </select>
+    
+    <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.UserVO">
+    
+    </delete>
+    
+    <delete id="signOutTeamAsMember" parameterType="com.spring.jamplan.model.UserVO">
+    
+    </delete>
+</mapper>

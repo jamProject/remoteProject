@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<%
+	session.setAttribute("id", "thkim9198");
+	session.setAttribute("teamNo", "3");
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -84,45 +88,97 @@
 				    </div>
 				</div>
 				<div class="col-sm-9">
-					
+					</br></br>
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="info-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+								<a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="home" aria-selected="true">
 									내 정보</a></li>
-							<li class="nav-item"><a class="nav-link" id="teamManage-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+							<li class="nav-item"><a class="nav-link" id="teamManage-tab" data-toggle="tab" href="#teamManage" role="tab" aria-controls="profile" aria-selected="false">
 									팀 관리</a></li>	
 							<div class="search-container">
 							    <form action="/">
 							      <input type="text" placeholder="Search ..." name="search">
-							      <button type="submit">Submit</button>
+							      <button type="submit">검색</button>
 							    </form>
 							</div>
 					</ul>
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
 							<div style="display:flex;width:100%;">
-							    <form id="infoForm" action="/" method="post">
-							        <div style="width:100%;">
-							            <p>FULL NAME</p>
-							            <input name="name" autofocus>
+							    <form autocomplete="off" id="infoForm" action="/" method="post">
+							        <div style="width: 80%;">
+							            <p>아이디</p>
+							            <input name="id" value="${id }" readonly autofocus>
 							        </div>
-							        <div style="width:100%;">
-							            <p>IDENTIFICATION</p>
-							            <input name="id">
-							        </div>
-							
-							        <div style="width:47%;">
-							            <p>EMAIL</p>
+							        <div style="width: 80%;">
+							            <p>이메일</p>
 							            <input name="email">
 							        </div>
-							        <div style="width:47%;margin-left:6%">
-							            <p>PHONE</p>
-							            <input name="phone">
+                                    <div style="width:30%;margin-right:7%">
+                                        <p>비밀번호 확인</p>
+                                        <input name="pass">
+                                    </div>						
+							        <div style="width:37%;margin-right:6%">
+							            <p>비밀번호</p>
+							            <input name="pass">
+							        </div>
+							        
+							       	
+							       	<div style="width:37%;">
+							            <p>가입일</p>
+							            <input name="signDate">
+							        </div>
+							        <div class="autocomplete" style="width:37%;margin-right:6%">
+							            <p>국적</p>
+							            <input id="myNation" type="text" name="nation">
+							        </div>
+							        <div style="width:37%;margin-left:6%">
+							            <p>성별</p>
+							            <input name="gender">
+							        </div>
+							        <div style="width:37%;">
+							            <p>나이</p>
+							            <input name="age">
+							        </div>
+							        <div style="width:37%;">
+							            <p>여행 타입</p>
+							            <input name="travelType">
 							        </div>
 							    </form> 
 							</div>
 						</div>
-						<div class="tab-pane fade" value="teamManage.mp" id="teamManage" role="tabpanel" aria-labelledby="teamManage-tab"></div>
+						<div class="tab-pane fade" value="teamManage.mp" id="teamManage" role="tabpanel" aria-labelledby="teamManage-tab">
+						  <div style="display:flex;width:100%;">
+						      <table class="table table-borderless table-hover">
+								  <thead>
+								    <tr>
+								      <th scope="col">팀번호</th>
+								      <th scope="col">팀명</th>
+								      <th scope="col">팀 지우기</th>
+								      
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <th scope="row">1</th>
+								      <td>Mark</td>
+								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
+								    </tr>
+								    <tr>
+								      <th scope="row">2</th>
+								      <td>Jacob</td>
+								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
+								      
+								    </tr>
+								    <tr>
+								      <th scope="row">3</th>
+								      <td>Larry the Bird</td>
+								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
+								    </tr>
+								  </tbody>
+						      </table>
+						  </div>
+						</div>
 					</div>
 				</div>
 			</div>

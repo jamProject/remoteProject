@@ -50,9 +50,14 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>*.mi</url-pattern>
+    </servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>main.mp</welcome-file>
+		<welcome-file>myInfo.mi</welcome-file>
 	</welcome-file-list>
 
 	<!--필터  -->

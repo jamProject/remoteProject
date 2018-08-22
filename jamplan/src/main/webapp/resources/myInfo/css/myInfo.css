@@ -1,5 +1,10 @@
 @charset "UTF-8";
-	* {box-sizing: border-box;}
+/**@author Taehyuk, Kim
+
+ * 
+ */
+ 
+		* {box-sizing: border-box;}
 	
 	
 	
@@ -122,20 +127,20 @@
 		/*>>>>>>>>>>>>>>>>> nav-tabs에 대한 css 끝<<<<<<<<<<<<<<<<<*/
 	
 	
-		/*>>>>>>>>>>>>>>>>> form에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
+		/*>>>>>>>>>>>>>>>>> infoForm에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
 		#infoForm {
-        width: 35%;
+        width: 80%;
         margin-left: auto;
         margin-right: auto;
-        padding: 50px;
-        border-right: 1px solid;
-        border-left: 1px solid;
+        margin: 30px;
+        padding: 20px;
+        /* border-right: 1px solid;
+        border-left: 1px solid; */
         position: relative;
-        font-family: 'Libre Franklin', sans-serif;
 	    }
 	
 	    #infoForm > div {
-	        float: left;
+	        float: right;
 	        margin-bottom: 30px;
 	    }
 	    #infoForm > div > p{
@@ -143,13 +148,13 @@
 	        margin-bottom: 3px;
 	    }
 	    #infoForm > div > input{
-	        font-size:12px;
+	        font-size:16px;
 	        letter-spacing:1px;
 	        padding: 5px;
 	        border: 0;
 	        border-bottom: 1px solid silver;
 	        width: 100%;
-	        color: gray;
+	       
 	    }
 	
 	    #infoForm > p:last-of-type{
@@ -175,25 +180,47 @@
 	        width: 100%;
 	        align-items: center;
 	    }
+
 	
-	    .term > i{
-	        cursor: pointer;
-	        width: 20px;
-	    }
-	
-	    .term > span{
-	        font-size:12px;
-	    }
-	
-	    /* delete */
-	    #infoForm > a:last-of-type{
-	        position: absolute;
-	        bottom: 10px;
-	        right: 15px;
-	        font-size:  10px;
-	        letter-spacing:  1px;
-	        font-style: italic;
-	    }
 	    /*>>>>>>>>>>>>>>>>> form에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
 	    
+	    
+	    /*>>>>>>>>>>>>>>>>> autocomplete에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
+	    .autocomplete {
+		  /*the container must be positioned relative:*/
+		  position: relative;
+		  display: inline-block;
+		}
+		
+		.autocomplete-items {
+		  position: absolute;
+		  border: 1px solid #d4d4d4;
+		  border-bottom: none;
+		  border-top: none;
+		  z-index: 99;
+		  /*position the autocomplete items to be the same width as the container:*/
+		  top: 100%;
+		  left: 0;
+		  right: 0;
+		}
+		
+		.autocomplete-items div {
+		  padding: 10px;
+		  cursor: pointer;
+		  background-color: #fff; 
+		  border-bottom: 1px solid #d4d4d4; 
+		}
+		
+		.autocomplete-items div:hover {
+		  /*when hovering an item:*/
+		  background-color: #e9e9e9; 
+		}
+		
+		.autocomplete-active {
+		  /*when navigating through the items using the arrow keys:*/
+		  background-color: DodgerBlue !important; 
+		  color: #ffffff; 
+		}
+		
+		/*>>>>>>>>>>>>>>>>> autocomplete에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
 	
