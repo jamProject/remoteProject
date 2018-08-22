@@ -45,20 +45,22 @@
     </insert>
     
     <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
-      <![CDATA[SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
-            WHERE ID=#{id, jdbcType=VARCHAR} AND TEAMNAME=#{teamName, jdbcType=VARCHAR}]]>
-            
+        <![CDATA[SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
+            WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=0]]>
     </select>
     
     <select id="getTeamListAsMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
-    
+        <![CDATA[SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
+            WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=2]]>
     </select>
     
     <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.UserVO">
-    
+        <![CDATA[DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=0
+            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}]]>
     </delete>
     
     <delete id="signOutTeamAsMember" parameterType="com.spring.jamplan.model.UserVO">
-    
+        <![CDATA[DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=2
+            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}]]>
     </delete>
 </mapper>

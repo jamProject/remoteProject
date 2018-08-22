@@ -170,22 +170,13 @@
 								    </tr>
 								  </thead>
 								  <tbody>
+								  <c:forEach items="${teamListAsLeader }" var="${team }">
 								    <tr>
-								      <th scope="row">1</th>
-								      <td>Mark</td>
+								      <th scope="row">${team.getTeamNo()}</th>
+								      <td>${team.getTeamName() }</td>
 								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
 								    </tr>
-								    <tr>
-								      <th scope="row">2</th>
-								      <td>Jacob</td>
-								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
-								      
-								    </tr>
-								    <tr>
-								      <th scope="row">3</th>
-								      <td>Larry the Bird</td>
-								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
-								    </tr>
+								    </c:forEach>
 								  </tbody>
 						      </table>
 						      
@@ -198,22 +189,13 @@
                                     </tr>
                                   </thead>
                                   <tbody>
+                                  <c:forEach items="${teamListAsMember }" var="${team }">
                                     <tr>
-                                      <th scope="row">1</th>
-                                      <td>Mark</td>
+                                      <th scope="row">${team.getTeamNo()}</th>
+                                      <td>${team.getTeamName() }</td>
                                       <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
                                     </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>Jacob</td>
-                                      <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
-                                      
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td>Larry the Bird</td>
-                                      <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
-                                    </tr>
+                                  </c:forEach>
                                   </tbody>
                               </table>
 						  </div>

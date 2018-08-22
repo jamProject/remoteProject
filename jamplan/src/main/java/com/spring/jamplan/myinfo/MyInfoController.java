@@ -1,9 +1,8 @@
 package com.spring.jamplan.myinfo;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.UUID;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
 @Controller
@@ -22,24 +23,29 @@ public class MyInfoController {
 	private MyInfoDAO myInfoDAO;
 	
 	@RequestMapping(value="myInfo.mi")
-	public String getMyInfo(HttpSession session) {
-
-		System.out.println("실행됨");
+	public ModelAndView getMyInfo(ModelAndView mov, UserVO user) {
+		System.out.println("getMyInfo IN");
+		ArrayList<TeamInfoVO> teamListAsLeader = null;
+		ArrayList<TeamInfoVO> teamListAsMember = null;
 		
-//		String id = (String) session.getAttribute("id");
-//		int teamNo = (int) session.getAttribute("teamNo");
+		try {
+			teamListAsLeader = myInfoDAO.getTeamListAsLeader(user);
+			teamListAsMember = myInfoDAO.getTeamListAsMember(user);
+			
+			mov.addObject("teamListAsLeader", teamListAsLeader);
+			mov.addObject("teamListAsMember", teamListAsMember);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		mov.setViewName("myInfo/infoPage");
 		
-//		map = new HashMap<String, Object>();
-//		map.put("id", id);
-//		map.put("planNo", planNo);
-//		
-//		teamVO = mpDAOS.getPlanRole(map);
-//		session.setAttribute("role", teamVO.getRole());
-
-		return "myInfo/infoPage";
+		System.out.println("getMyInfo OUT");
+		
+		return mov;
 	}
 	
-	@RequestMapping(value="imageUpload.mi", method=RequestMethod.POST)
+	@RequestMapping(value="/imageUpload.mi", method=RequestMethod.POST)
 	@ResponseBody
 	public String fileUpload(MultipartHttpServletRequest multiRequest, UserVO user) throws Exception {
 		System.out.println("1");

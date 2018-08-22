@@ -20,56 +20,74 @@ public class MyInfoDAOService implements MyInfoDAO {
 
 	@Override
 	public UserVO getMyInfo(UserVO user) {
+		System.out.println("getMyInfo IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		user = myInfoMapper.getMyInfo(user);
+		
+		System.out.println("getMyInfo OUT");
 		return user;
 	}
 
 	@Override
 	public int updateMyInfo(UserVO user) {
+		System.out.println("updateMyInfo IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		int result = myInfoMapper.updateMyInfo(user);
+		
+		System.out.println("updateMyInfo OUT");
 		return result;
 	}
 	
 	// user의 프로필 사진을 등록하는 메소드
 	@Override
 	public int setProfileImage(UserVO user) {
+		System.out.println("setProfileImage IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		int result = myInfoMapper.setProfileImage(user);
 		
+		System.out.println("setProfileImage OUT");
 		return result;
 	}
 
 	@Override
 	public ArrayList<TeamInfoVO> getTeamListAsLeader(UserVO user) {
+		System.out.println("getTeamListAsLeader IN");
 		ArrayList<TeamInfoVO> teamList = null;
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		teamList = myInfoMapper.getTeamListAsLeader(user);
 		
+		System.out.println("getTeamListAsLeader OUT");
 		return teamList;
 	}
 
 	@Override
 	public ArrayList<TeamInfoVO> getTeamListAsMember(UserVO user) {
+		System.out.println("getTeamListAsMember IN");
 		ArrayList<TeamInfoVO> teamList = null;
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		teamList = myInfoMapper.getTeamListAsMember(user);
 		
+		System.out.println("getTeamListAsMember OUT");
 		return teamList;
 	}
 
 	@Override
 	public int removeTeamAsLeader(UserVO user) {
+		System.out.println("removeTeamAsLeader IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		int result = myInfoMapper.removeTeamAsLeader(user);
+		
+		System.out.println("removeTeamAsLeader OUT");
 		return result;
 	}
 
 	@Override
 	public int signOutTeamAsMember(UserVO user) {
+		System.out.println("signOutTeamAsMember IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		int result = myInfoMapper.signOutTeamAsMember(user);
+		
+		System.out.println("signOutTeamAsMember OUT");
 		return result;
 	}
 
