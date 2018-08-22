@@ -104,7 +104,7 @@
 			<div class="collapse navbar-collapse justify-content-end"
 				id="collapsibleNavbar">
 				<ul class="nav navbar-nav">
-					<li class="nav-item active"><button type="button" class="btn btn-primary">Message&nbsp;<span id="countLabel" class="label label-primary"></span></button></li>
+					<li class="nav-item active"><button type="button" class="btn btn-primary" id = "messageBut">Message&nbsp;<span id="countLabel" class="label label-primary"></span></button></li>
 					<li class="nav-item active"><a><i
 							class="material-icons nav-link">account_circle</i></a></li>
 					<li class="nav-item active"><a><i

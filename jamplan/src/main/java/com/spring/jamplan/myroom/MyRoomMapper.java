@@ -38,4 +38,5 @@ public interface MyRoomMapper {
 	void insertApplyMessage(MessageVO vo);
 	void deleteCansleMessage(MessageVO vo);
 	ArrayList<MessageVO> checkApplyMessage(MessageVO vo);	
+	ArrayList<MessageVO> getMessageListById(MessageVO vo);	
 }

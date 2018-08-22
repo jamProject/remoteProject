@@ -28,43 +28,11 @@ import com.spring.jamplan.model.UserVO;
 @Controller
 public class MyRoomController {
 
-	@Autowired(required = false)
-	private MyRoomDAO myRoomDAO;
-	
 	@Autowired
-	private TeamInfoVO teamVO;
-	
-	private HashMap<String, Object> map;
-/*	
-	@RequestMapping("/home.do")
-	public String myRoomMain2(String id, Model model) {
+	private MyRoomDAO myRoomDAO;
 		
-		return "home";
-	}*/
-	
-//	방(그룹)안으로들어가기
-//	@RequestMapping(value="/inRoom.do")
-//	public String inRoom(UserVO user, Model model, HttpSession session) {
-//		//여기에다가 방 pk 값 넣기 session에 넣기
-//		session.setAttribute("roomId", "roomid pk값 넣어버리기");
-//		//여기에 넣는 이유 나중에 웹소켓에서 이 사람이 수정한 글이 속한 room_id에 속해있는 다른 사용자에게 알림 날리기 위해.
-//		//만약에 html화면단에서 pk아이디를 직접 서버로 주게되면 내가 수정한 그룹이 아닌 다른 그룹 pk를 강제로 싣어서 웹소켓에 전송하면
-//		//엉뚱한 사람이 알림 받게됨.
-//		//웹소켓에서 session.get어쩌고를 이용해서 이 사람이 속한 그룹의 사용자에게 for돌면서 웹소켓 쏴줄예정.
-//		return "방안으로들어가는jsp";
-//	}
-	
-/*	@RequestMapping(value="/printTeamList.do")
-	public String printTeamList(HttpSession session, Model model) {
-		System.out.println("printTeamList IN");
-		String id = (String)session.getAttribute("id");
-		List<TeamVO> teamList = myRoomDAO.getTeamList(id);
-		System.out.println("db sucess");
-		model.addAttribute("teamList", teamList);
-		model.addAttribute("id", id);
-		System.out.println("printTeamList OUT");
-		return "MyRoomConfirm";
-	}*/
+	private HashMap<String, Object> map;
+
 	@RequestMapping(value="movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
 
@@ -118,9 +86,25 @@ public class MyRoomController {
 		/*System.out.println("getPlanListByTeamName OUT");*/
 		//System.out.println(teamListToJson);
 		return teamListToJson;
+	}
+	@RequestMapping(value="/getMessageById.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public ArrayList<MessageVO> getMessageById(HttpSession session, MessageVO vo) {
+		System.out.println("CONT getMessage IN");
+		//server에서 id값으로 메세지 테이블 값 가져오기
 		
-		
-		
+		String receiver = (String)session.getAttribute("id");
+		vo.setReceiver(receiver);
+	
+		ArrayList<MessageVO> messageList=null;
+		try {
+			messageList	= myRoomDAO.getMessageList(vo);
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		System.out.println("CONT getMessage out");
+		return messageList;
 	}
 	
 	@RequestMapping(value="/ajaxPrintTeamList.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
@@ -182,13 +166,6 @@ public class MyRoomController {
 		System.out.println("ajaxPrintTeamList OUT");
 		return teamListToJson;
 	}
-	/*@RequestMapping(value="/insertPlan.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
-	@ResponseBody
-	public int getMaxPlanNo(TeamInfoVO vo) {
-		
-
-	}*/
-		
 	
 	@RequestMapping(value="/ajaxPrintPlanList.do", method=RequestMethod.GET, produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -302,15 +279,16 @@ public class MyRoomController {
 		return searchTeamListToJson;
 	}
 	//deleteCansleMessage
-	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String deleteMessageToTeam(HttpSession session, MessageVO vo) {
+		System.out.println("deleteMessageToTeam 진입");
 		String id = (String)session.getAttribute("id");
 		String teamName = vo.getTeamName();
 		map = new HashMap<String, Object>();
 		vo.setSender(id);
 		try {
-			int check = myRoomDAO.deleteCansleMessage(id,vo);		
+			int check = myRoomDAO.deleteCansleMessage(vo);		
 			if(check==0) {
 				map.put("res", "이미 해당 팀원임");
 			}else if (check ==1) {
@@ -320,6 +298,7 @@ public class MyRoomController {
 			}
 			
 		}catch (Exception e) {
+			e.printStackTrace();
 			map.put("res", "fail");
 		}
 		
@@ -331,7 +310,7 @@ public class MyRoomController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("applyTeam Out");
+		System.out.println("deleteApplyMessageTeam Out");
 		return searchTeamListToJson;
 	}
 	

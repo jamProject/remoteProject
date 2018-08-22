@@ -63,8 +63,8 @@ public class MainController {
 	@Autowired
 	TeamInfoVO teamVo;
 	
-	@Autowired
-	MyRoomDAOService myRoomDAO;
+	/*@Autowired
+	MyRoomDAOService myRoomDAO;*/
 	
 	@RequestMapping("/home.do")
 	public String home(Locale locale, Model model) {
