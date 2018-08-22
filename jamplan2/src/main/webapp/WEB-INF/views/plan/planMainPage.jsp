@@ -321,7 +321,7 @@
 				success:function(data){
 					$('#planput').empty();
 					$('#saveput').empty();
-					
+					$('#put').empty();
 					var put = '';
 					var saveput = '';
 						saveput += '<br><br>';
@@ -346,6 +346,7 @@
 						$('#put').append(put);
 						
 					$.each(data, function(index, item){
+						$('#planput').empty();
 						$('#put').empty();
 						var planput = '';
 						planput += '<table class="table">';

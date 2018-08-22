@@ -10,7 +10,17 @@
 		<result property="map" column="map" />
 	</resultMap>
 	
-	<select id="planTable" parameterType="com.spring.jamplan2.plan.PlanTableVO" resultMap="planTableMap">
+	<resultMap type="PlanCalendarVO" id="planCalendarMap">
+		<result property="calendar" column="calendar" />
+	</resultMap>
+	
+	<resultMap type="PlanMapVO" id="planMapMap">
+		<result property="map" column="map" />
+	</resultMap>
+	
+	
+	
+	<select id="getplanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO" resultMap="planTableMap">
 		select * from planTable
 	</select>
 	
@@ -22,9 +32,22 @@
 		update planTable set memo = #{memo, jdbcType=VARCHAR}
 	</update>
 	
-	<select id="getPlanCalendar" parameterType="com.spring.jamplan2.plan.PlanCalendarVO">
+	<!--  -->
+	<select id="getPlanCalendar" parameterType="com.spring.jamplan2.plan.PlanCalendarVO" resultMap="planCalendarMap">
 		select * from planCalendar
 	</select>
+	
+	<select id="getPlanMap" parameterType="com.spring.jamplan2.plan.PlanMapVO" resultMap="planMapMap">
+		select * from planMap
+	</select>
+	
+	<insert id="insertPlanCalendar" parameterType="com.spring.jamplan2.plan.PlanCalendarVO">
+		insert into planTable(calendar)(select calendar from planCalendar) 
+	</insert>
+	
+	<update id="updatePlanMap" parameterType="com.spring.jamplan2.plan.PlanMapVO">
+		update planTable set map = (select map from planMap)
+	</update>
 	
 	
 </mapper>

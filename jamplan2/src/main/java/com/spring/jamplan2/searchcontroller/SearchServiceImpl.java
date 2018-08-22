@@ -166,7 +166,8 @@ public class SearchServiceImpl implements SearchService{
 		
 		int likeCheck = 0;
 		String likeYn = "";
-		likeCheck =likeCount.get(0).getLikeCheck();
+		//get(0) : 어레이리스트안으로가서 0번재 인덱스에있는..
+		likeCheck = likeCount.get(0).getLikeCheck();
 		
 		if(likeCheck == 0) {
 			System.out.println("0일때 들어왔다!");
@@ -197,8 +198,8 @@ public class SearchServiceImpl implements SearchService{
 		
 		int likeCheck = 0;
 		String likeYn = "";
-		likeCheck =likeCount.get(0).getLikeCheck();
-		
+		likeCheck = likeCount.get(0).getLikeCheck();
+		System.out.println("0822");
 		if(likeCheck == 0) {
 			System.out.println("0일때 들어왔다!");
 			likeVO.setLikeYn("Y");

@@ -13,30 +13,63 @@ public class PlanServiceImpl implements PlanService {
 	
 	@Autowired
 	private SqlSession sqlsession;
-	
-	
-	@Autowired
-	private PlanCalendarVO planCalendarVO;
-	
-	@Autowired
-	private PlanMapVO planMapVO;
-	
-	
+
 	@Override
 	public ArrayList planTable(PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO){
+		//질문. arraylist를 안써도 되지않나유?
 		ArrayList<PlanTableVO> planTableList = null;
 		ArrayList<PlanCalendarVO> planCalendarList = null;
 		ArrayList<PlanMapVO> planMapList = null;
+		int i = 0;
 		//하나의 오버라이드에서 여러가지 객체를 파라미터로 다룰수있나?? 
 		//날짜테이블의 정보를 불러와 있는지없는지 체크함과동시에 지도도 체크가가능??
-		
+	
 		/*System.out.println("캘린더확인:" + planCalendarVO.getCalendar());*/
- 		
-		PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
 		
+		PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
+
 		planCalendarList = planMapper.getPlanCalendar(planCalendarVO);
-		System.out.println("11");
-		System.out.println("planCalendarList : " + planCalendarList);
+		planMapList = planMapper.getPlanMap(planMapVO);
+		
+		System.out.println("planCalendarList사이즈=" + planCalendarList.size());
+		System.out.println("planMapList사이즈=" + planMapList.size());
+		
+		
+		
+		if(planCalendarList.size() != 0 && planMapList.size() != 0) {
+			planTableList = planMapper.getplanTable(planTableVO);
+			System.out.println("planTableList의존재=" + planTableList.size());
+			if(planTableList.size() == 0) {
+				System.out.println("플랜테이블이0일때 들어오고 둘다 null이아닐때 들어왔다!!!!");
+				//두테이블에 값이 있을경우 플랜테이블에 값들을 넣어주는과정
+				planMapper.insertPlanCalendar(planCalendarVO);
+				System.out.println("planC=insert");
+				
+				for (i = 0; i<planMapList.size(); i++) {
+					
+				}
+				
+				
+				
+				planMapper.updatePlanMap(planMapVO);
+				System.out.println("planM=update");
+				return planTableList;
+			}
+			else {
+				return planTableList;
+			}
+			
+			/*문제(골머리썩혔던)똑같은 planNo일때 딜리트? -> if문으로  planTableList가 (번호planNo에대한)있으면 (!=null)안넣고, 없으면 셀렉
+			=> 먼저 내 테이블을 조회후 인서트해줬어야함.. 난 인서트부터 시킨후 생각해서 너무 복잡하게생각하게됐었음 */
+			
+			
+		}
+		else {
+			System.out.println("다른 경우일때 들어왓다@@@@@@");
+			return null;
+		}
+		
+		
 		
 		/*calendarList = planMapper.getPlanCalendar(planCalendarVO);
 		mapList = planMapper.getPlanMap(planMapVO.);*/
@@ -54,7 +87,7 @@ public class PlanServiceImpl implements PlanService {
 			
 		}*/
 		
-		return planTableList;
+		
 		
 		
 	}
@@ -65,7 +98,7 @@ public class PlanServiceImpl implements PlanService {
 		ArrayList<PlanTableVO> checkList = null;
 		PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
 		
-		checkList = planMapper.planTable(planTableVO);
+		checkList = planMapper.getplanTable(planTableVO);
 		System.out.println("checkList:" + checkList.get(0));
 		
 		int list = planMapper.savePlanTable(planTableVO);

@@ -103,7 +103,7 @@
 	</update> -->
 	
 	<select id="getLikeCount" parameterType="com.spring.jamplan2.searchcontroller.LikeVO" resultMap="LikeCountMap">
-		
+		<!-- row체크하는것 -->
 		SELECT  count (*) likeCheck FROM LIKETO where userId = #{userId, jdbcType=VARCHAR} AND planNo = #{planNo, jdbcType=INTEGER}
 	</select>
 	
@@ -123,7 +123,6 @@
 	<update id="updateTotalLike" parameterType="com.spring.jamplan2.searchcontroller.LikeVO">
 		   update plan set GOODCOUNT=(SELECT  count(*) FROM LIKETO where planNo = #{planNo, jdbcType=INTEGER} and likeYn ='Y')  where planNo = #{planNo, jdbcType=INTEGER}
 	</update>
-	
 	
 	<!-- 조회 -->
 	<update id="updateReadCount" parameterType="com.spring.jamplan2.searchcontroller.PlanVO">

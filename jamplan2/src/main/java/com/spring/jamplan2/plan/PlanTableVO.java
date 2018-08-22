@@ -8,6 +8,7 @@ public class PlanTableVO {
 	private String map;
 	private String memo;
 	
+	
 	public String getCalendar() {
 		return calendar;
 	}
@@ -26,6 +27,8 @@ public class PlanTableVO {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	
+	
 	
 	
 	

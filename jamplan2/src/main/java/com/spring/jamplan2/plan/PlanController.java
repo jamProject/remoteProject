@@ -2,6 +2,8 @@ package com.spring.jamplan2.plan;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +25,28 @@ public class PlanController {
 		return "plan/planMainPage";
 	}
 	
-	//플랜테이블
+	//get플랜테이블
 	@RequestMapping(value = "planTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String planTable(PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO) {
-
+	public String planTable(HttpSession session, PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO) {
+		/*session체크
+		String id = (String)session.getAttribute("id");*/
+		
+		/*String no = (String)session.getAttribute("plnaNo");
+		int planNo = Integer.parseInt(no);
+		
+		System.out.println("session플랜번호=" + planNo);*/
+		
+		
 		System.out.println("pt1");
-		ArrayList planList = planService.planTable(planTableVO,planCalendarVO,planMapVO);
-		/*ArrayList<PlanTableVO> calendarList = planService.planCalendar(planCalendarVO);
-		ArrayList<PlanTableVO> mapList = planService.planMap(planMapVO);*/
+		ArrayList getPlanList = planService.planTable(planTableVO,planCalendarVO,planMapVO);
 		System.out.println("pt2");
 		
 		String str = "";
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			str = mapper.writeValueAsString(planList);
+			str = mapper.writeValueAsString(getPlanList);
 		}
 		catch (Exception e)
 		{
