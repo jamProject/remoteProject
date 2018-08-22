@@ -125,6 +125,26 @@
 		  cursor: pointer;
 		}
 		/*>>>>>>>>>>>>>>>>> nav-tabs에 대한 css 끝<<<<<<<<<<<<<<<<<*/
+		
+		
+	    /*>>>>>>>>>>>>>>>>> 프로필 사진 업로드 부분에 대한 css <<<<<<<<<<<<<<<<<*/
+	    #imageSearch {
+	       border-radius: 5px;
+	       padding: 10px;
+		   background: red; 
+		   display: table;
+		   color: #fff;
+	    }
+	    
+	    input[type="file"] {
+		    display: none;
+		    
+		}
+		
+		#imagePreview {
+		  border-radius: 50%;
+		}
+	    /*>>>>>>>>>>>>>>>>> 프로필 사진 업로드 부분에 대한 css 끝<<<<<<<<<<<<<<<<<*/
 	
 	
 		/*>>>>>>>>>>>>>>>>> infoForm에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
@@ -132,7 +152,7 @@
         width: 80%;
         margin-left: auto;
         margin-right: auto;
-        margin: 30px;
+        margin: 15px;
         padding: 20px;
         /* border-right: 1px solid;
         border-left: 1px solid; */
@@ -180,8 +200,6 @@
 	        width: 100%;
 	        align-items: center;
 	    }
-
-	
 	    /*>>>>>>>>>>>>>>>>> form에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
 	    
 	    
@@ -223,4 +241,15 @@
 		}
 		
 		/*>>>>>>>>>>>>>>>>> autocomplete에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
+		
+		/*>>>>>>>>>>>>>>>>> 팀관리 테이블에 대한 css <<<<<<<<<<<<<<<<<<<<<<<*/
+		#leaderTable {
+		  margin: 50px auto;
+		}
+		
+		#leaderTable tr {
+		  margin: 0px auto;
+		}
+		
+		/*>>>>>>>>>>>>>>>>> 팀관리 테이블에 대한 css 끝 <<<<<<<<<<<<<<<<<<<<<<<*/
 	

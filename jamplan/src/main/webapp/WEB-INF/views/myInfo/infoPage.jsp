@@ -15,8 +15,8 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		
-		<spring:url value="/resources/myInfo/js/myInfo.js" var="myInfoJs" />
-		<spring:url value="/resources/myInfo/css/myInfo.css" var="myInfoCss" />
+		<spring:url value="/resources/myInfo/js/myInfoJs.js" var="myInfoJs" />
+		<spring:url value="/resources/myInfo/css/myInfoCss.css" var="myInfoCss" />
 	
 		<script src="${myInfoJs }"></script>
 		<link href="${myInfoCss}" rel="stylesheet" />
@@ -105,16 +105,21 @@
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
 							<div style="display:flex;width:100%;">
+							    <form action="/imageUpload.mi" method="post" enctype="multipart/form-data">
+								    <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
+								    <label id="imageSearch">사진 찾기<input id="searchImage" type="file" name="image" accept="image/*"></label>
+								    <button class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
+								</form>
 							    <form autocomplete="off" id="infoForm" action="/" method="post">
-							        <div style="width: 80%;">
+							        <div style="width: 80%;margin-right:10%">
 							            <p>아이디</p>
 							            <input name="id" value="${id }" readonly autofocus>
 							        </div>
-							        <div style="width: 80%;">
+							        <div style="width: 80%;margin-right:10%">
 							            <p>이메일</p>
 							            <input name="email">
 							        </div>
-                                    <div style="width:30%;margin-right:7%">
+                                    <div style="width:30%;margin-right:17%">
                                         <p>비밀번호 확인</p>
                                         <input name="pass">
                                     </div>						
@@ -124,23 +129,30 @@
 							        </div>
 							        
 							       	
-							       	<div style="width:37%;">
+							       	<div style="width:37%;margin-right:10%">
 							            <p>가입일</p>
-							            <input name="signDate">
+							            <input readonly name="signDate">
 							        </div>
 							        <div class="autocomplete" style="width:37%;margin-right:6%">
 							            <p>국적</p>
 							            <input id="myNation" type="text" name="nation">
 							        </div>
-							        <div style="width:37%;margin-left:6%">
-							            <p>성별</p>
-							            <input name="gender">
-							        </div>
-							        <div style="width:37%;">
+							        <div style="width:37%;margin-right:10%;margin-bottom:5%">
+                                      <p>성별</p>
+                                      <div class="custom-control custom-radio">
+                                          <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios">
+                                          <label class="custom-control-label" for="defaultUnchecked">여자</label>
+                                      </div>
+                                      <div class="custom-control custom-radio">
+                                          <input type="radio" class="custom-control-input" id="defaultChecked" name="defaultExampleRadios" checked>
+                                          <label class="custom-control-label" for="defaultChecked">남자</label>
+                                      </div>
+                                    </div>
+							        <div style="width:37%;margin-right:6%">
 							            <p>나이</p>
 							            <input name="age">
 							        </div>
-							        <div style="width:37%;">
+							        <div style="width:37%;margin-right:6%">
 							            <p>여행 타입</p>
 							            <input name="travelType">
 							        </div>
@@ -148,14 +160,13 @@
 							</div>
 						</div>
 						<div class="tab-pane fade" value="teamManage.mp" id="teamManage" role="tabpanel" aria-labelledby="teamManage-tab">
-						  <div style="display:flex;width:100%;">
-						      <table class="table table-borderless table-hover">
+						  <div style="display:block;width:100%;">
+						      <table id="leaderTable" class="table table-borderless table-hover">
 								  <thead>
 								    <tr>
 								      <th scope="col">팀번호</th>
 								      <th scope="col">팀명</th>
 								      <th scope="col">팀 지우기</th>
-								      
 								    </tr>
 								  </thead>
 								  <tbody>
@@ -177,6 +188,34 @@
 								    </tr>
 								  </tbody>
 						      </table>
+						      
+						      <table id="memberTable" class="table table-borderless table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">팀번호</th>
+                                      <th scope="col">팀명</th>
+                                      <th scope="col">팀 나가기</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>Mark</td>
+                                      <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td>Jacob</td>
+                                      <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
+                                      
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>Larry the Bird</td>
+                                      <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
+                                    </tr>
+                                  </tbody>
+                              </table>
 						  </div>
 						</div>
 					</div>

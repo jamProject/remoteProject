@@ -148,6 +148,18 @@ var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla"
 				"Yemen","Zambia","Zimbabwe"];
 
 
+// 프로필 사진을 등록하기 전에 올린 사진 미리보기 기능
+function readURL(input) {
+	if(input.files && input.files[0]) {
+		var reader = new FileReader();
+		
+		reader.onload = function (e) {
+			$('#imagePreview').attr('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
 $(document).ready(function() {
 	
 	$(".tab-pane.container").click(function(){
@@ -169,6 +181,11 @@ $(document).ready(function() {
 	})
 	
 	autocomplete(document.getElementById("myNation"), countries);
+	
+	// 이미지를 찾으면 readURL함수를 통해 프리뷰 이미지를 생성한다.
+	$('#searchImage').change(function () {
+		readURL(this);
+	})
 
 });
 

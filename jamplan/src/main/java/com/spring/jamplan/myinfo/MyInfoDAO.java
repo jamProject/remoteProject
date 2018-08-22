@@ -9,6 +9,7 @@ public interface MyInfoDAO {
 	
 	UserVO getMyInfo(UserVO user);
 	int updateMyInfo(UserVO user);
+	int setProfileImage(UserVO user);
 	
 	ArrayList<TeamInfoVO> getTeamListAsLeader(UserVO user);
 	ArrayList<TeamInfoVO> getTeamListAsMember(UserVO user);

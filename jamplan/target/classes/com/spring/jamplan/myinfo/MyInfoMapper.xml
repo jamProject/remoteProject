@@ -34,11 +34,20 @@
     
     <update id="updateMyInfo" parameterType="com.spring.jamplan.model.UserVO">
         UPDATE USERINFO(EMAIL, PASS, NATION, GENDER, AGE, TRAVELTYPE, HOBBY) 
-            SET EMAIL=#{email, jdbcTyp=VARCHAR}, PASS
+            SET EMAIL=#{email, jdbcType=VARCHAR}, PASS=#{pass, jdbcType=INTEGER}, NATION=#{nation, jdbcType=VARCHAR},
+                 GENDER=#{gender, jdbcType=VARCHAR}, AGE=#{age, jdbcType=INTEGER}, 
+                    TRAVELTYPE=#{travelType, jdbcType=VARCHAR}, HOBBY=#{hobby, jdbcType=VARCHAR}
+                        WHERE ID=#{id, jdbcType=VARCHAR}
     </update>
     
-    <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
+    <insert id="setProfileImage" parameterType="com.spring.jamplan.model.UserVO">
+        INSERT INTO USERINFO(IMAGE) VALUES(#{image, jdbcType=VARCHAR})
+    </insert>
     
+    <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
+      <![CDATA[SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
+            WHERE ID=#{id, jdbcType=VARCHAR} AND TEAMNAME=#{teamName, jdbcType=VARCHAR}]]>
+            
     </select>
     
     <select id="getTeamListAsMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">

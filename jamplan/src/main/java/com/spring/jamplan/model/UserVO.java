@@ -31,11 +31,10 @@ public class UserVO {
 	String pass;
 	String nation;
 	String gender;
-	String snsLink;
 	String travelType;
 	String hobby;
 	
-	//image
+	String image;
 	
 	int age;
 	
@@ -49,9 +48,9 @@ public class UserVO {
 		System.out.println(email);
 		System.out.println(nation);
 		System.out.println(gender);
-		System.out.println(snsLink);
 		System.out.println(travelType);
 		System.out.println(hobby);
+		System.out.println(image);
 		System.out.println(age);
 		System.out.println(isAdmin);
 		System.out.println(signDate);
@@ -98,14 +97,6 @@ public class UserVO {
 		this.gender = gender;
 	}
 
-	public String getSnsLink() {
-		return snsLink;
-	}
-
-	public void setSnsLink(String snsLink) {
-		this.snsLink = snsLink;
-	}
-
 	public String getTravelType() {
 		return travelType;
 	}
@@ -122,6 +113,14 @@ public class UserVO {
 		this.hobby = hobby;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public int getAge() {
 		return age;
 	}
@@ -134,7 +133,7 @@ public class UserVO {
 		return isAdmin;
 	}
 
-	public void setAdmin(int isAdmin) {
+	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 
@@ -145,5 +144,7 @@ public class UserVO {
 	public void setSignDate(String signDate) {
 		this.signDate = signDate;
 	}
+
+	
 
 }

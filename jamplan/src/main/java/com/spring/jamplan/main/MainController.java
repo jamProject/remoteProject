@@ -150,25 +150,7 @@ public class MainController {
 	}
 
 	*/
-	@RequestMapping("/fileUpload.do")
-	public String fileUpload(MultipartHttpServletRequest multiRequest, PlanVO planVO) throws Exception {
-		System.out.println("1");
-		
-		MultipartFile mf = multiRequest.getFile("file");
-		String uploadPath = "C:\\BigDeep\\upload\\";
-				//"C:\\Users\\Playdata\\Downloads\\0805ProjectHan\\jamplan2\\src\\main\\webapp\\resources\\search\\image\\";
-		
-		String originalFileExtension = mf.getOriginalFilename().substring(
-				mf.getOriginalFilename().lastIndexOf("."));
-		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
-		System.out.println("storedFileName="+storedFileName);
-		if(mf.getSize() != 0) {
-			mf.transferTo(new File(uploadPath+storedFileName));
-			planVO.setImage(storedFileName);
-		}
-		int check = mDAOS.fileUpload(planVO);
-		return "main/mainPage";
-	}
+	
 	
 	
 	@RequestMapping(value ="/imgJson.do", method = RequestMethod.GET, produces="application/json;charset=utf-8")
