@@ -30,10 +30,12 @@ $(document).ready(function() {
 	})
 	
 	
-	
+	//메세지 클릭 이벤트
 	$("#messageBut").click(function(){
 		alert("메세지 클릭 이벤트");
 		//server에서 id값으로 메세지 테이블 값 가져오기
+		$("#messageContent").empty();
+		$("#countLabel").empty();
 		$.ajax({
 			url : '/jamplan/getMessageById.do',
 			type : 'POST',dataType : 'json',
@@ -41,19 +43,39 @@ $(document).ready(function() {
 			success : function(data) {
 				alert("메세지 리스트 가져오기 성공");
 				var notReadMessageCount = 0;
-				var messageHtml = "";
+				var messageHtml = "<table id = 'messageTable'>";
 				$.each(data,function(index,item) {
-					//안읽은 메세지 수 세기
-					if(item.isRead == 1 || item.isRead ==2 || item.isRead==4){
-						notReadMessageCount++;
-					}	
+					//메세지 분류하기
+					if(item.isRead == 0){ //팀장이 안 읽은 "신청" 메세지
+						messageHtml += '<tr><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.' + '<span class="label label-primary"> new</span>'
+									+"<button class = 'btn btn-primary acceptTeamBut'>수락</button><button class = 'btn btn-primary rejectTeamBut'>거절</button></td></tr>";
+					}else if(item.isRead == 1){//팀장이 이미 읽은 "신청" 메세지
+						messageHtml += '<tr><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.'
+									+"<button class = 'btn btn-primary acceptTeamBut'>수락</button><button class = 'btn btn-primary rejectTeamBut'>거절</button></td></tr>";
+					}else if(item.isRead == 2){//팀원에 신청을 한 유저가  "팀에 초대 수락 알림"을 받고 안 읽음
+						messageHtml += '<tr><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'+ '<span class="label label-primary"> new</span>'
+									+"<button class = 'btn btn-primary deleteMessageBut'>삭제</button></td></tr>"
+					}else if(item.isRead == 3){//팀원에 신청을 한 유저가  "팀에 초대 수락 알림"을 받고 읽음
+						messageHtml += '<tr><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
+									+"<button class = 'btn btn-primary deleteMessageBut'>삭제</button></td></tr>"
+					}else if(item.isRead == 4){//팀원에 신청을 한 유저가  "팀에 초대 거절 알림" 을 받고  안 읽음
+						messageHtml += '<tr><td>'+item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'+ '<span class="label label-primary"> new</span>'
+									+"<button class = 'btn btn-primary deleteMessageBut'>삭제</button></td></tr>"
+					}else if(item.isRead == 5){//팀원에 신청을 한 유저가  "팀에 초대 거절 알림" 을 받고 읽음
+						messageHtml +='<tr><td>'+ item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
+									+"<button class = 'btn btn-primary deleteMessageBut'>삭제</button></td></tr>"
+					}
 			})
-				
+			messageHtml += "</table>"
+			$("#messageContent").append(messageHtml);
+			$("#countLabel").append(notReadMessageCount);
 			},
 			error : function() {
 				alert("메세지 리스트 가져오기 실패");
 			}
 		})
+		
+		//
 	})
 	
 	//요기

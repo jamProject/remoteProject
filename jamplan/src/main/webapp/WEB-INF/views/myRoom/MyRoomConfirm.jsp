@@ -104,16 +104,35 @@
 			<div class="collapse navbar-collapse justify-content-end"
 				id="collapsibleNavbar">
 				<ul class="nav navbar-nav">
-					<li class="nav-item active"><button type="button" class="btn btn-primary" id = "messageBut">Message&nbsp;<span id="countLabel" class="label label-primary"></span></button></li>
-					<li class="nav-item active"><a><i
-							class="material-icons nav-link">account_circle</i></a></li>
-					<li class="nav-item active"><a><i
-							class="material-icons nav-link">search</i></a></li>
+					<li class="nav-item active">
+						<!-- <button type="button" class="btn btn-primary" id = "messageBut">Message</button> -->
+						<!--모달 버튼  -->
+						<button type="button" class="btn btn-primary btn-rounded" id ="messageBut"  data-toggle="modal" data-target="#messageModal">Message <span id="countLabel" class="label label-primary"></span></button>
+					</li>
+					<li class="nav-item active"><a><i class="material-icons nav-link">account_circle</i></a></li>
+					<li class="nav-item active"><a><i class="material-icons nav-link">search</i></a></li>
 				</ul>
 			</div>
 		</nav>
+		<!--------------------------- 외부에서 가져온 모달 예제 -->
+						<div class="modal fade myModal" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-full-height" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title w-100" id="myModalLabel">메세지</strong></h4>
+										<button type="button" class="close" data-dismiss="modal"aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div id = "messageContent" class="modal-body"></div>
+								</div>
+							</div>
+						</div>
+		<!---------------------------외부에서 가져온 모달 예제 끝 -->
 	</header>
 	<section>
+	
+	
 		<div id="main-container" class="container-fluid text-center">
 			<div class="row">
 				<div id="teamListSpace" class="col-md-3">
@@ -125,7 +144,7 @@
 						<!-- teamList 자리 -->
 						<button type="button"
 							class="btn btn-outline-primary btn-sm btn-rounded" data-toggle="modal"
-							data-target=".myModal"><strong>+TEAM</strong></button>
+							data-target="#fullHeightModal"><strong>+TEAM</strong></button>
 						<!-- 외부에서 가져온 모달 예제 -->
 						<div class="modal fade myModal" id="fullHeightModal" tabindex="-1"
 							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -157,6 +176,7 @@
 							</div>
 						</div>
 						<!-- 외부에서 가져온 모달 예제 끝 -->
+						
 						<!-- 일정 만들기위한 모달 -->
 						<button id="addPlan" type="button"
 							class="btn btn-outline-primary btn-sm btn-rounded" data-toggle="modal"

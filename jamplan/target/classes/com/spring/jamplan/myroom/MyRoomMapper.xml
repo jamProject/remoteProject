@@ -62,7 +62,7 @@
 	</resultMap>
 	
 	<select id="getMessageListById"  parameterType = "com.spring.jamplan.model.MessageVO" resultMap="messageResultMap">
-		select * from message where receiver = #{receiver}
+		select * from message where receiver = #{receiver} order by isread desc
 	</select>
 	
 	<insert id="insertApplyMessage" parameterType = "com.spring.jamplan.model.MessageVO" >
