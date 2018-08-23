@@ -25,11 +25,11 @@
         <result property="role" column="role" />
         <result property="planNo" column="planNo" />
         <result property="planName" column="planName" />
-        <result property="joinDate" column="joinDate" />
     </resultMap>
     
     <select id="getMyInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap">
-        SELECT * FROM USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
+        SELECT ID,EMAIL,PASS,NATION,GENDER,TRAVELTYPE,HOBBY,IMAGE,AGE
+            FROM USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
     </select>
     
     <update id="updateMyInfo" parameterType="com.spring.jamplan.model.UserVO">
@@ -45,22 +45,31 @@
     </insert>
     
     <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
-        <![CDATA[SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
-            WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=0]]>
+        SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
+            WHERE ID=#{id, jdbcType=VARCHAR}
+         <if test="id != null">
+           AND ROLE=0 ORDER BY TEAMNAME
+        </if>
     </select>
     
     <select id="getTeamListAsMember" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
-        <![CDATA[SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
-            WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=2]]>
+        SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
+            WHERE ID=#{id, jdbcType=VARCHAR}
+        <if test="id != null">
+           AND ROLE=2 ORDER BY TEAMNAME
+        </if>
+        
     </select>
     
     <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.UserVO">
-        <![CDATA[DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=0
-            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}]]>
+        DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=0
+            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}
+        
     </delete>
     
     <delete id="signOutTeamAsMember" parameterType="com.spring.jamplan.model.UserVO">
-        <![CDATA[DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=2
-            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}]]>
+        DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=2
+            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}
+       
     </delete>
 </mapper>

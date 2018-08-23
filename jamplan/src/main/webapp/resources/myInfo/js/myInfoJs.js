@@ -1,5 +1,6 @@
 /**@author Taehyuk, Kim
 
+
  * 
  */
 
@@ -72,26 +73,25 @@ function autocomplete(inp, arr) {
   });
   
   function addActive(x) {
-    /*a function to classify an item as "active":*/
+    /*active클래스만 고른다.*/
     if (!x) return false;
-    /*start by removing the "active" class on all items:*/
+    /*active 클래스 지운다.*/
     removeActive(x);
     if (currentFocus >= x.length) currentFocus = 0;
     if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
+    /*"autocomplete-active"클래스 더하는 부분*/
     x[currentFocus].classList.add("autocomplete-active");
   }
   
   function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
+    /*active 상태 없애는 부분*/
     for (var i = 0; i < x.length; i++) {
       x[i].classList.remove("autocomplete-active");
     }
   }
   
   function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
+    /*하나 선택되면 창 닫는다.*/
     var x = document.getElementsByClassName("autocomplete-items");
     for (var i = 0; i < x.length; i++) {
       if (elmnt != x[i] && elmnt != inp) {
@@ -177,7 +177,24 @@ $(document).ready(function() {
 			error:function(){
 				alert("페이지 이동 ajax실패")
 			}
-		})
+		});
+	})
+	
+	$("#imageUpload").on('click', function() {
+		$.ajax({
+			url: '/jamplan/imageUpload.mi',
+			dataType: text,
+			success: function(result) {
+				if(result == '1') {
+					alert('프로필 사진을 업로드했습니다.');
+				}else {
+					alert('프로필 사진 등록을 실패했습니다.');
+				}
+			},
+			error: function () {
+				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
+			}
+		});
 	})
 	
 	autocomplete(document.getElementById("myNation"), countries);

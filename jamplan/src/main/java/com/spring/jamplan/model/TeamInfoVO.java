@@ -11,7 +11,7 @@ public class TeamInfoVO {
     private int  role;
     private int planNo;
     private String planName ;
-//    private String joinDate ;
+
     
 	public int getTeamNo() {
 		return teamNo;

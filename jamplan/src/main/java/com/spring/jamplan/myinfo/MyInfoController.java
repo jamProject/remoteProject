@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +25,17 @@ public class MyInfoController {
 	private MyInfoDAO myInfoDAO;
 	
 	@RequestMapping(value="myInfo.mi")
-	public ModelAndView getMyInfo(ModelAndView mov, UserVO user) {
+	public ModelAndView getMyInfo(HttpSession session, ModelAndView mov, UserVO user) {
 		System.out.println("getMyInfo IN");
 		ArrayList<TeamInfoVO> teamListAsLeader = null;
 		ArrayList<TeamInfoVO> teamListAsMember = null;
-		
+		user.setId("thkim9198");
+		System.out.println(user.getId());
 		try {
 			teamListAsLeader = myInfoDAO.getTeamListAsLeader(user);
 			teamListAsMember = myInfoDAO.getTeamListAsMember(user);
-			
+			System.out.println(teamListAsLeader.get(0).getTeamName());
+			System.out.println(teamListAsMember.get(0).getTeamName());
 			mov.addObject("teamListAsLeader", teamListAsLeader);
 			mov.addObject("teamListAsMember", teamListAsMember);
 			
@@ -65,9 +69,9 @@ public class MyInfoController {
 			mf.transferTo(new File(uploadPath+storedFileName));
 			user.setImage(storedFileName);
 		}
-		myInfoDAO.setProfileImage(user);
-		String imagePath = user.getImage();
+		String result = String.valueOf(myInfoDAO.setProfileImage(user));
 		
-		return imagePath;
+		
+		return result;
 	}
 }

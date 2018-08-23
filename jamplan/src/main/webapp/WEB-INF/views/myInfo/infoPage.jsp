@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<%
-	session.setAttribute("id", "thkim9198");
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.spring.jamplan.model.TeamInfoVO" %>
+
+<%  
+    session.setAttribute("id", "thkim9198");   
 	session.setAttribute("teamNo", "3");
 %>
 <!DOCTYPE html>
@@ -108,7 +113,7 @@
 							    <form action="/imageUpload.mi" method="post" enctype="multipart/form-data">
 								    <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
 								    <label id="imageSearch">사진 찾기<input id="searchImage" type="file" name="image" accept="image/*"></label>
-								    <button class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
+								    <button id="imageUpload" class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
 								</form>
 							    <form autocomplete="off" id="infoForm" action="/" method="post">
 							        <div style="width: 80%;margin-right:10%">
@@ -162,23 +167,23 @@
 						<div class="tab-pane fade" value="teamManage.mp" id="teamManage" role="tabpanel" aria-labelledby="teamManage-tab">
 						  <div style="display:block;width:100%;">
 						      <table id="leaderTable" class="table table-borderless table-hover">
-								  <thead>
-								    <tr>
-								      <th scope="col">팀번호</th>
-								      <th scope="col">팀명</th>
-								      <th scope="col">팀 지우기</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								  <c:forEach items="${teamListAsLeader }" var="${team }">
-								    <tr>
-								      <th scope="row">${team.getTeamNo()}</th>
-								      <td>${team.getTeamName() }</td>
-								      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
-								    </tr>
-								    </c:forEach>
-								  </tbody>
-						      </table>
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">팀번호</th>
+                                      <th scope="col">팀명</th>
+                                      <th scope="col">팀 지우기</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  <c:forEach items="${teamListAsLeader }" var="team">
+                                    <tr>
+                                      <th scope="row"><c:out value="${team.teamNo }" escapeXml="false"/></th>
+                                      <td><c:out value="${team.teamName }" escapeXml="false"/></td>
+                                      <td><button class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
+                                    </tr>
+                                  </c:forEach>
+                                  </tbody>
+                              </table>
 						      
 						      <table id="memberTable" class="table table-borderless table-hover">
                                   <thead>
@@ -189,15 +194,16 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                  <c:forEach items="${teamListAsMember }" var="${team }">
+                                  <c:forEach items="${teamListAsMember }" var="team">
                                     <tr>
-                                      <th scope="row">${team.getTeamNo()}</th>
-                                      <td>${team.getTeamName() }</td>
+                                      <th scope="row"><c:out value="${team.teamNo}" escapeXml="false"/></th>
+                                      <td><c:out value="${team.teamName }" escapeXml="false"/></td>
                                       <td><button class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
                                     </tr>
                                   </c:forEach>
                                   </tbody>
                               </table>
+                               
 						  </div>
 						</div>
 					</div>
