@@ -69,20 +69,29 @@ public class MyInfoController {
 		return check;
 	}
 	
-	@RequestMapping(value="imageUpload.info", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	
+	@RequestMapping(value="imageUpload.info", method=RequestMethod.POST)
 	@ResponseBody
 	public String fileUpload(MultipartHttpServletRequest multiRequest, HttpSession session, UserVO user) throws Exception {
 		System.out.println("fileUpload IN");
-		
+		System.out.println(multiRequest.getFile("data"));
 		user.setId((String)session.getAttribute("id"));
 		MultipartFile mf = multiRequest.getFile("image");
+		System.out.println(mf.getOriginalFilename());
+		System.out.println(mf.getContentType());
+		System.out.println(mf.getName());
+		System.out.println(mf.toString());
 		// 해당 경로에 지정해준 이름의 폴더가 없으면 만들어주게된다.
 		String uploadPath = "C:\\BigDeep\\upload\\";
 				//"C:\\Users\\Playdata\\Downloads\\0805ProjectHan\\jamplan2\\src\\main\\webapp\\resources\\search\\image\\";
 		
+		System.out.println("originalFileExtension 들어가기 전");
+
 		// 실제 파일의 확장자
 		String originalFileExtension = mf.getOriginalFilename().substring(
 				mf.getOriginalFilename().lastIndexOf("."));
+		System.out.println(originalFileExtension);
+
 		// 실제 파일명
 		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
 		System.out.println("storedFileName=" + storedFileName);

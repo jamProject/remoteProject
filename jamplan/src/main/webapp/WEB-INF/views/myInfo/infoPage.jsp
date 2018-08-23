@@ -115,7 +115,6 @@
 						      <table id="leaderTable" class="table table-borderless table-hover">
                                   <thead>
                                     <tr>
-                                      
                                       <th scope="col">팀명</th>
                                       <th scope="col">팀 지우기</th>
                                     </tr>
@@ -123,41 +122,35 @@
                                   <tbody>
                                   <c:forEach items="${teamListAsLeader }" var="team" varStatus="status">
                                     <tr>
-                                     
-                                      <td><c:out value="${team.teamName }" escapeXml="false"/></td>
+                                	  <td><c:out value="${team.teamName }" escapeXml="false"/></td>
                                       <td><button id="<c:out value="${status.index}"/>" class="btn btn-outline-danger btn-rounded" type="submit">지우기</button></td>
                                     </tr>
                                   </c:forEach>
                                   </tbody>
-                              </table>
-						      
+                              </table>						      
 						      <table id="memberTable" class="table table-borderless table-hover">
                                   <thead>
-                                    <tr>
-                                     
+                                    <tr>                                    
                                       <th scope="col">팀명</th>
                                       <th scope="col">팀 나가기</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                   <c:forEach items="${teamListAsMember }" var="team" varStatus="status">
-                                    <tr>
-                                      
+                                    <tr>                                    
                                       <td><c:out value="${team.teamName }" escapeXml="false"/></td>
                                       <td><button id="<c:out value="${status.index}"/>" class="btn btn-outline-danger btn-rounded" type="submit">나가기</button></td>
                                     </tr>
                                   </c:forEach>
                                   </tbody>
-                              </table>
-                               
+                              </table>                              
 						  </div>
 						</div>
 						<div class="tab-pane fade" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
                             <div style="display:flex;width:100%;">
-                                <form>
+                                <form id="imageForm" enctype="multipart/form-data">
                                     <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
-                                    <label id="imageSearch">사진 찾기<input id="searchImage" type="file" name="image" accept="image/*"></label>
-                               
+                                    <label id="imageSearch">사진 찾기<input id="searchImage" type="file" name="image" accept="image/*"></label>                              
                                     <button id="imageUpload" class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
                                 </form>
                                 <form autocomplete="off" id="infoForm" action="/" method="post">

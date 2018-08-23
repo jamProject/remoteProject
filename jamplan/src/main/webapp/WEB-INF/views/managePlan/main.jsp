@@ -40,7 +40,7 @@
 
 <%
 	session.setAttribute("id", "thkim9198");
-	session.setAttribute("teamNo", "33");
+	session.setAttribute("teamNo", "21");
 %>
 
 

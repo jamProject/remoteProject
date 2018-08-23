@@ -180,10 +180,55 @@ $(document).ready(function() {
 		});
 	})
 	
-	$("#imageUpload").on('click', function() {
+	/*$("#imageUpload").click(function(event) {
+		
+		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
+		event.preventDefault();
+		
+		var fileName = $('#searchImage').val();
+		console.log(fileName);
+		var data = new FormData(fileName);
+		console.log(data);
+		
+		
 		$.ajax({
 			url: '/jamplan/imageUpload.info',
-			dataType: text,
+			type: 'POST',
+			data: data,
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function(result) {
+				if(result == '1') {
+					alert('프로필 사진을 업로드했습니다.');
+				}else {
+					alert('프로필 사진 등록을 실패했습니다.');
+				}
+			},
+			error: function () {
+				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
+			}
+		});
+	})*/
+	
+	
+	$("#imageUpload").click(function(event) {
+		
+		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
+		event.preventDefault();
+		
+		var image = $('#searchImage').val();
+		console.log(image);
+		
+		$.ajax({
+			url: '/jamplan/imageUpload.info',
+			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+			type: 'POST',
+			data: {
+				"image" : image
+			},
+			dataType : "json",
+			contentType: false,
 			success: function(result) {
 				if(result == '1') {
 					alert('프로필 사진을 업로드했습니다.');
@@ -196,6 +241,7 @@ $(document).ready(function() {
 			}
 		});
 	})
+	
 	
 	// 팀 삭제시 팀명 바로 없애주기 위한 ajax
 	$("#leaderTable button").click(function(){
@@ -251,29 +297,29 @@ $(document).ready(function() {
 	})
 	
 	// 이미지 파일을 비동기적으로 업로드(정확하게는 파일의 경로만 저장)
-	$("#imageUpload").click(function(){
-		var image = $('#imagePreview').val();
-		console.log(image);
-		$.ajax({
-			url : '/jamplan/imageUpload.info',
-			type : "post",
-			data : {
-				'image': image
-			},
-			enctype: 'multipart/form-data',
-			dataType : "text",
-			success:function(result){
-				if(result != '0') {
-					alert('프로필 사진이 등록됐습니다.');
-				}else {
-					alert('다시 시도해주세요.');
-				}
-			},	
-			error:function(){
-				console.log('프로필 사진 등록 ajax 실패');
-			}
-		});
-	})
+//	$("#imageUpload").click(function(){
+//		var image = $('#imagePreview').val();
+//		console.log(image);
+//		$.ajax({
+//			url : '/jamplan/imageUpload.info',
+//			type : "POST",
+//			data : {
+//				'image': image
+//			},
+//			enctype: 'multipart/form-data',
+//			dataType : "text",
+//			success:function(result){
+//				if(result != '0') {
+//					alert('프로필 사진이 등록됐습니다.');
+//				}else {
+//					alert('다시 시도해주세요.');
+//				}
+//			},	
+//			error:function(){
+//				console.log('프로필 사진 등록 ajax 실패');
+//			}
+//		});
+//	})
 	
 	autocomplete(document.getElementById("myNation"), countries);
 	
