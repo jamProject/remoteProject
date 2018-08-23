@@ -4,11 +4,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PlanTableVO {
+	private int planNo;
 	private String calendar;
 	private String map;
 	private String memo;
 	
-	
+	public int getPlanNo() {
+		return planNo;
+	}
+	public void setPlanNo(int planNo) {
+		this.planNo = planNo;
+	}
 	public String getCalendar() {
 		return calendar;
 	}
@@ -27,6 +33,9 @@ public class PlanTableVO {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	
+	
+	
 	
 	
 	

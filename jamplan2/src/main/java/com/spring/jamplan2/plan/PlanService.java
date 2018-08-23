@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 
 public interface PlanService {
-	ArrayList planTable(PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO);
-	int savePlanTable (PlanTableVO planTableVO);
+	ArrayList planTable(PlanTableVO planTableVO, PlanMapVO planMapVO);
+	ArrayList savePlanTable (PlanTableVO planTableVO);
 }

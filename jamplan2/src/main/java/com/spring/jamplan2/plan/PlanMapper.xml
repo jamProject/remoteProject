@@ -10,44 +10,40 @@
 		<result property="map" column="map" />
 	</resultMap>
 	
+	<!-- Calendar 테이블 쓰려한거.
 	<resultMap type="PlanCalendarVO" id="planCalendarMap">
+		<result property="planNo" column="planNo" />
 		<result property="calendar" column="calendar" />
-	</resultMap>
+	</resultMap> -->
 	
 	<resultMap type="PlanMapVO" id="planMapMap">
+		<result property="planNo" column="planNo" />
 		<result property="map" column="map" />
 	</resultMap>
 	
 	
 	
 	<select id="getplanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO" resultMap="planTableMap">
-		select * from planTable
+		select * from planTable order by calendar
 	</select>
 	
-	<insert id="insertPlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
-		insert into planTable(calendar, map) values('test', 'test')
-	</insert>
-	
-	<update id="savePlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
-		update planTable set memo = #{memo, jdbcType=VARCHAR}
-	</update>
 	
 	<!--  -->
+	<!-- Calendar 테이블 쓰려한거.
 	<select id="getPlanCalendar" parameterType="com.spring.jamplan2.plan.PlanCalendarVO" resultMap="planCalendarMap">
-		select * from planCalendar
-	</select>
+		select * from planCalendar where planNo = #{planNo, jdbcType=INTEGER}
+	</select> -->
 	
 	<select id="getPlanMap" parameterType="com.spring.jamplan2.plan.PlanMapVO" resultMap="planMapMap">
-		select * from planMap
+		select * from planMap where planNo = #{planNo, jdbcType=INTEGER} order by calendar
 	</select>
+	 
+	 <insert id="insertPlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
+	 	insert into planTable(calendar,map) values(#{calendar, jdbcType=VARCHAR}, #{map, jdbcType=VARCHAR})
+	 </insert>
 	
-	<insert id="insertPlanCalendar" parameterType="com.spring.jamplan2.plan.PlanCalendarVO">
-		insert into planTable(calendar)(select calendar from planCalendar) 
-	</insert>
-	
-	<update id="updatePlanMap" parameterType="com.spring.jamplan2.plan.PlanMapVO">
-		update planTable set map = (select map from planMap)
+	<update id="savePlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
+		update planTable set memo = #{memo, jdbcType=VARCHAR} where map = #{map, jdbcType=VARCHAR})
 	</update>
-	
-	
+
 </mapper>

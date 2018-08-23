@@ -28,7 +28,8 @@ public class PlanController {
 	//get플랜테이블
 	@RequestMapping(value = "planTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String planTable(HttpSession session, PlanTableVO planTableVO, PlanCalendarVO planCalendarVO, PlanMapVO planMapVO) {
+	public String planTable(HttpSession session, PlanTableVO planTableVO, PlanMapVO planMapVO) {
+		System.out.println("?");
 		/*session체크
 		String id = (String)session.getAttribute("id");*/
 		
@@ -36,10 +37,21 @@ public class PlanController {
 		int planNo = Integer.parseInt(no);
 		
 		System.out.println("session플랜번호=" + planNo);*/
+		session.setAttribute("no", "1");
+		String no = (String)session.getAttribute("no");
+		int planNo = Integer.parseInt(no);
+		
+		System.out.println("planNo확인=" + planNo);
+		
+		planTableVO.setPlanNo(planNo);
+		/*planCalendarVO.setPlanNo(planNo);*/
+		planMapVO.setPlanNo(planNo);
+		
+		
 		
 		
 		System.out.println("pt1");
-		ArrayList getPlanList = planService.planTable(planTableVO,planCalendarVO,planMapVO);
+		ArrayList getPlanList = planService.planTable(planTableVO,planMapVO);
 		System.out.println("pt2");
 		
 		String str = "";
@@ -61,13 +73,13 @@ public class PlanController {
 	//savePlanTable : 저장
 	@RequestMapping(value = "savePlanTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public int savePlanTable (PlanTableVO planTableVO) {
+	public void savePlanTable (PlanTableVO planTableVO) {
 		System.out.println("memo" + planTableVO.getMemo());
 		System.out.println("save1");
-		int list = planService.savePlanTable(planTableVO);
-		System.out.println("save4" + list);
+		planService.savePlanTable(planTableVO);
 		
-		return list;
+		
+		
 		
 	}
 	

@@ -200,8 +200,10 @@ public class SearchServiceImpl implements SearchService{
 		String likeYn = "";
 		likeCheck = likeCount.get(0).getLikeCheck();
 		System.out.println("0822");
+		
 		if(likeCheck == 0) {
 			System.out.println("0일때 들어왔다!");
+			//처음 좋아요를 누를때 row는 0인값, 즉 likeCheck == 0 으로 들어오게되고 눌렀을때 꽉찬하트로 표현해주기위해서 likeYn에 Y 값을 넣어주는 작업
 			likeVO.setLikeYn("Y");
 			searchmapper.insertLikeData(likeVO);
 			

@@ -313,7 +313,7 @@
 				type : 'POST',
 				dataType: "json",
 		        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-				<%-- data : { 나중에 planNo에대한 데이터 넘겨줘야함.
+				<%-- data : { 
 					"userId" : '<%=userId%>',
 					"planNo" : $('#planNo').val(),
 					"likeYn" : updateStatus
@@ -346,7 +346,7 @@
 						$('#put').append(put);
 						
 					$.each(data, function(index, item){
-						$('#planput').empty();
+						/* $('#planput').empty(); */
 						$('#put').empty();
 						var planput = '';
 						planput += '<table class="table">';

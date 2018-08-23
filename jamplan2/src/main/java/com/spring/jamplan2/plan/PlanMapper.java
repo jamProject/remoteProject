@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 public interface PlanMapper {
 	ArrayList<PlanTableVO> getplanTable(PlanTableVO planTableVO);
-	ArrayList<PlanCalendarVO> getPlanCalendar(PlanCalendarVO planCalendarVO);
+	/*ArrayList<PlanCalendarVO> getPlanCalendar(PlanCalendarVO planCalendarVO);*/
 	ArrayList<PlanMapVO> getPlanMap(PlanMapVO planMapVO);
-	void insertPlanCalendar(PlanCalendarVO planCalendarVO);
-	void updatePlanMap(PlanMapVO planMapVO);
+
+	void insertPlanTable(PlanTableVO planTableVO);
 	
 	
-	
-	void insertPlanTable (PlanTableVO planTableVO);
-	int savePlanTable (PlanTableVO planTableVO);
+	ArrayList<PlanTableVO> savePlanTable (PlanTableVO planTableVO);
 }

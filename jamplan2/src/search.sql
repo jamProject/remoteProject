@@ -332,3 +332,96 @@ create table planTable (
      
      SELECT  count (*) likeCheck FROM LIKETO where userId = 'admin' AND planNo = 1;
     
+    
+    
+    
+    ----0823-----
+    
+    
+      create table planTable (
+    planNo number,
+    calendar varchar2(2000),
+    map varchar2(2000),
+    memo varchar2(2000)
+    );
+    
+    create table planCalendar (
+    planNo number,
+    calendar varchar2(100)
+    );
+    
+    create table planMap (
+    planNo number,
+    calendar varchar2(100),
+    map varchar2(100)
+    );
+    
+    
+    drop table planTable;
+    drop table planCalendar;
+    drop table planMap;
+    
+    insert into planCalendar values (1, 'test5');
+    
+    insert into planMap values (1, '8월1일', '서울한강');
+    insert into planMap( values (1, '8월4일', '포항');
+    
+    delete from planCalendar;
+    delete from planMap;
+    delete from planTable;
+    
+    select * from planCalendar;
+    select * from planMap;
+    select * from planTable;
+    
+    select * from planMap where planNo = 1 order by calendar;
+    
+    update planTable set memo = 'test' where map = '서울한강';
+    
+    insert into planTable(calendar)(select calendar from planCalendar);
+    update planTable set map = (select map from planMap);
+    commit;
+    
+    insert into planTable values ( '8월25일', '서울', '서울여행');
+    insert into planTable values ( '8월26일', '부산', '부산여행');
+    insert into planTable values ( '8월27일', '여수', '여수밤바다');
+    
+    insert into planTable(calendar, map) values('8월21일', '엔코아');
+    
+    
+    update planTable set memo = 'test';
+    
+    select * from planTable;
+    
+    delete from planTable;
+    
+    update planTable set memo = '여행';
+    rollback;
+    
+    drop table planTable;
+    
+    commit;
+    
+    
+    
+     
+  
+     insert into planTable(calendar) (select calendar from planCalendar);
+     update planTable set map = (select map from planMap);
+     
+     select * from planTable;
+     delete from planTable;
+     
+     commit;
+     
+     insert into planTable(calendar)(select calendar from planCalendar);
+     update planTable set map = (select map from planMap);
+     
+     
+        --좋아요 체크
+     select * from liketo;
+     
+     SELECT  count (*) likeCheck FROM LIKETO where userId = 'admin' AND planNo = 1;
+     
+     
+     
