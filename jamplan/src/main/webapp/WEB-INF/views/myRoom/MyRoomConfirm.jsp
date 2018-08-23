@@ -124,7 +124,8 @@
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
-									<div id = "messageContent" class="modal-body"></div>
+									<div id = "messageContent" class="modal-body">
+									</div>
 								</div>
 							</div>
 						</div>

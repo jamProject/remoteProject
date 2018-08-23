@@ -62,11 +62,12 @@
 	</resultMap>
 	
 	<insert id="insertToMember" parameterType= "com.spring.jamplan.model.TeamInfoVO" >
-		insert into teaminfo (id, planName, planNo, role, teamName, teamNo) values (#{id},#{planName},#{planNo},#{role},#t{teamName},#{teamNo})
+		insert into teaminfo (id, planName, planNo, role, teamName, teamNo, joinDate) 
+		values ( #{id}, #{planName, jdbcType=VARCHAR}, #{planNo, jdbcType=VARCHAR}, #{role}, #{teamName}, #{teamNo}, sysdate)
 	</insert>
 	
 	<update id = "updateMessage" parameterType= "com.spring.jamplan.model.MessageVO" >
-		update message set isRead = #{isRaed} where receiver = #{receiver}
+		update message set isRead = #{isRead} where receiver = #{receiver}
 	</update>
 	
 	<select id="getMessageListById"  parameterType = "com.spring.jamplan.model.MessageVO" resultMap="messageResultMap">

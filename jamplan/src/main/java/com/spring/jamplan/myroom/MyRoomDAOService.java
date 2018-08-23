@@ -65,16 +65,27 @@ public class MyRoomDAOService implements MyRoomDAO {
 			ArrayList<TeamInfoVO> teamList = new ArrayList<TeamInfoVO>();
 			teamList = myRoomMapper.validationTeamName(team);
 			System.out.println("== teamName : " + team.getTeamName());
+			System.out.println("== id : " + vo.getSender());
 			for(int i = 0; i < teamList.size(); i++) {
 				System.out.println("==set start"+i);
-				team.setId(vo.getSender());
+				/*team.setId(vo.getSender());
 				team.setPlanName(teamList.get(i).getPlanName());
 				team.setPlanNo(teamList.get(i).getPlanNo());
 				team.setRole(2);
-//				team.setJoinDate("");
+				team.setJoinDate(teamList.get(i).getJoinDate());
 				team.setTeamName(vo.getTeamName());
-				team.setTeamNo(teamList.get(i).getTeamNo());
-				myRoomMapper.insertToMember(team);		
+				team.setTeamNo(teamList.get(i).getTeamNo());*/
+				teamList.get(i).setId(vo.getSender());
+				teamList.get(i).setRole(2);
+				System.out.println("==============================");
+				System.out.println(teamList.get(i).getId());
+				System.out.println(teamList.get(i).getJoinDate());
+				System.out.println(teamList.get(i).getPlanName());
+				System.out.println(teamList.get(i).getPlanNo());
+				System.out.println(teamList.get(i).getRole());
+				System.out.println(teamList.get(i).getTeamNo());
+				System.out.println("==============================");
+				myRoomMapper.insertToMember(teamList.get(i));		
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -337,6 +348,11 @@ public class MyRoomDAOService implements MyRoomDAO {
 
 		if (teamList.size() != 0) {
 			System.out.println("deleteCansleMessage : 이미 팀원임");
+			try {
+				myRoomMapper.deleteCansleMessage(vo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			check = 0;
 		} else {
 			System.out.println("deleteCansleMessage : 팀원은 아님");
