@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.MessageVO;
 import com.spring.jamplan.model.PlanVO;
@@ -91,10 +92,27 @@ public class MyRoomController {
 
 	@RequestMapping(value="/acceptToMember.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public void acceptToMember(HttpSession session, MessageVO vo) {
+	public String acceptToMember(HttpSession session, MessageVO vo) throws JsonProcessingException {
 		System.out.println("CONT acceptToMember IN");
 		myRoomDAO.insertToMember(vo);
-		System.out.println("CONT acceptToMember IN");
+		
+		
+		String teamListToJson = "";
+		map = new HashMap<String, Object>();
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			map.put("res", "ok");
+			teamListToJson = mapper.writeValueAsString(map);
+			System.out.println(teamListToJson);
+			
+		}catch (Exception e) {
+			map.put("res", "fail");
+			teamListToJson = mapper.writeValueAsString(map);
+			e.printStackTrace();
+			
+		}
+		System.out.println("CONT acceptToMember OUT");
+		return teamListToJson;
 	}
 	
 	@RequestMapping(value="/updateMessage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
@@ -303,10 +321,10 @@ public class MyRoomController {
 	@ResponseBody
 	public String deleteMessageToTeam(HttpSession session, MessageVO vo) {
 		System.out.println("deleteMessageToTeam 진입");
-		String id = (String)session.getAttribute("id");
-		String teamName = vo.getTeamName();
+		System.out.println("sender : "+ vo.getSender());
+		System.out.println("teamName : "+vo.getTeamName());
+		//String teamName = vo.getTeamName();
 		map = new HashMap<String, Object>();
-		vo.setSender(id);
 		try {
 			int check = myRoomDAO.deleteCansleMessage(vo);		
 			if(check==0) {

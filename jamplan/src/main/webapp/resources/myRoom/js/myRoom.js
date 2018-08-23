@@ -30,11 +30,20 @@ $(document).ready(function() {
 	})
 	
 	//팀장이 해당 팀에 신청을 한 유저의 요청을 수락 할 때
+/*	alert("?");
+		var header = new Array();
+		
+		$("#messageTable tr td").each(function(i, v){
+	        header[i] = $(this).text();
+	        alert($(this).text());
+		})*/
+		
 	$(document).on("click","button.acceptTeamBut",function(){
-		alert("팀원초대 이벤트");
+		//alert("팀원초대 이벤트");
 		//console.log($(this));
 		console.log($(this).data("teamName"));
 		console.log($(this).data("sender"));
+		var index1 = $(this).data("trIndex");
 		$.ajax({
 			url : '/jamplan/acceptToMember.do',
 			type : 'POST',dataType : 'json',
@@ -42,8 +51,9 @@ $(document).ready(function() {
 			data :{'sender':$(this).data("sender"),
 				   'teamName':$(this).data("teamName")},
 			success : function(data) {
-				alert("팀원초대 성공");
-				//$(this).closest('tr').remove();
+				//alert("팀원초대 성공");
+				console.log(index1);
+				$('#tr'+index1).remove();
 			},
 			erorr : function(data){
 				alert("팀원초대 실패");
@@ -55,14 +65,18 @@ $(document).ready(function() {
 	
 	$(document).on("click", "button.rejectTeamBut", function(){
 		var teamName = $(this).attr("value");
-		deleteMessage(teamName)
+		var sender = $(this).data("sender");
+		var index1 = $(this).data("trIndex");
+		deleteMessageTR(teamName,sender,index1)
 			});
-	$(document).on("click", "button.applyButCan", function(){
+/*	$(document).on("click", "button.applyButCan", function(){
 		var teamName = $(this).attr("value");
-		deleteMessage(teamName)
-			});
+		var sender = $(this).data("sender");
+		deleteMessageTR(teamName,sender)
+			});*/
 	$(document).on("click", "button.deleteMessageBut", function(){
 		var teamName = $(this).attr("value");
+		//var sender = $(this).data("sender");
 		deleteMessage(teamName)
 			});
 			
@@ -85,65 +99,80 @@ $(document).ready(function() {
 				$("#messageContent").append(messageHtml);
 			
 				$.each(data,function(index,item) {
-					console.log(item.sender);
-					console.log(item.teamName);
+					//console.log(index);
+					//console.log(item.sender);
+					//console.log(item.teamName);
 					//메세지 분류하기
 					if(item.isRead == 0){ //팀장이 안 읽은 "신청" 메세지
 						messageHtml='';
-						messageHtml += '<tr><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.' 
+						messageHtml += '<tr id = tr'+ index+'><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.' 
 									+ '<span class="label label-primary messageNew"></span>'
-									+"<button id = acceptTeam"+index+" class = 'btn btn-primary acceptTeamBut'>수락</button>" 	
-									+"<button class = 'btn btn-primary rejectTeamBut' value = "+item.teamName+">거절</button></td></tr>";
+									+ "<button id = acceptTeam"+index+" class = 'btn btn-primary acceptTeamBut'>수락</button>" 	
+									+ "<button id = rejectTeamBut"+index+" class = 'btn btn-primary rejectTeamBut' value = "+item.teamName+">거절</button></td></tr>";
 						
 						$("#messageTable").append(messageHtml);
 						$("#acceptTeam"+index).data("sender",item.sender);
 						$("#acceptTeam"+index).data("teamName",item.teamName);
+						$("#acceptTeam"+index).data("trIndex" ,index);
+						$("#rejectTeamBut"+index).data("sender",item.sender)
+						$("#rejectTeamBut"+index).data("trIndex",index);
+						//console.log($("#acceptTeam"+index).data("trIndex"));
 						//$(".table"+item.teamName).data("teamName")
 
 					}else if(item.isRead == 1){//팀장이 이미 읽은 "신청" 메세지
 						messageHtml='';
-						messageHtml += '<tr><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.'
+						messageHtml += '<tr id = tr'+ index+'><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.'
 									+"<button id = acceptTeam"+index+" class = 'btn btn-primary acceptTeamBut'>수락</button>" 
-									+"<button class = 'btn btn-primary rejectTeamBut' value = "+item.teamName+">거절</button></td></tr>";
+									+"<button id = rejectTeamBut"+index+" class = 'btn btn-primary rejectTeamBut' value = "+item.teamName+">거절</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#acceptTeam"+index).data("sender",item.sender);
 						$("#acceptTeam"+index).data("teamName",item.teamName);
+						$("#acceptTeam"+index).data("trIndex" ,index);
+						$("#rejectTeamBut"+index).data("sender",item.sender)
+						$("#rejectTeamBut"+index).data("trIndex",index);
+						//console.log($("#acceptTeam"+index).data("trIndex"));  rejectTeamBut i    canTeam i
 
 					}else if(item.isRead == 2){//팀원에 신청을 한 유저가  "팀에 초대 수락 알림"을 받고 안 읽음
 						messageHtml='';
-						messageHtml += '<tr><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
+						messageHtml += '<tr id = tr'+ index+'><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
 									+ '<span class="label label-primary messageNew"></span>'
 									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#acceptTeam"+index).data("trIndex" ,index);
+						$("#rejectTeamBut"+index).data("trIndex",index);
 					}else if(item.isRead == 3){//팀원에 신청을 한 유저가  "팀에 초대 수락 알림"을 받고 읽음
 						messageHtml='';
-						messageHtml += '<tr><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
+						messageHtml += '<tr id = tr'+ index+'><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
 									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
-									
+						$("#acceptTeam"+index).data("trIndex" ,index);
+						$("#rejectTeamBut"+index).data("trIndex",index);
 					}else if(item.isRead == 4){//팀원에 신청을 한 유저가  "팀에 초대 거절 알림" 을 받고  안 읽음
 						messageHtml='';
-						messageHtml += '<tr><td>'+item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
+						messageHtml += '<tr id = tr'+ index+'><td>'+item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
 									+ '<span class="label label-primary messageNew"></span>'
 									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#acceptTeam"+index).data("trIndex" ,index);
+						$("#rejectTeamBut"+index).data("trIndex",index);
 					}else if(item.isRead == 5){//팀원에 신청을 한 유저가  "팀에 초대 거절 알림" 을 받고 읽음
 						messageHtml='';
-						messageHtml +='<tr><td>'+ item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
+						messageHtml +='<tr id = tr'+ index+'><td>'+ item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
 									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#acceptTeam"+index).data("trIndex" ,index);
+						$("#rejectTeamBut"+index).data("trIndex",index);
 					}
 			})
 
-			$("#messageContent").append(messageHtml);
 			$("#countLabel").append(notReadMessageCount);
 			$(".messageNew").append("new");
 			},
@@ -158,7 +187,7 @@ $(document).ready(function() {
 			type : 'POST',dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 			success : function(data) {
-				alert("메세지 읾음 처리 완료")
+				//alert("메세지 읾음 처리 완료")
 			},
 			erorr : function(data){
 				alert("메세지 읾음 처리 실패")
@@ -170,7 +199,7 @@ $(document).ready(function() {
 	//요기
 	
 	$(document).on("click", "button.applyBut", function(){
-		alert("신청 버튼 이벤트 ")
+		//alert("신청 버튼 이벤트 ")
 		var teamName = $(this).attr("value");
 		$.ajax({
 			url : '/jamplan/applyToTeam.do',
@@ -182,7 +211,7 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 			success : function(data) {
-				alert(data.res);
+				//alert(data.res);
 			},
 			error: function(data){
 				alert(data.res);
@@ -229,7 +258,7 @@ $(document).ready(function() {
 			/*var params = $('#makeTeamForm').serialize();*/
 			var teamName = $("#teamName").val();
 			
-			alert("teamNmae: " + teamName);
+			//alert("teamNmae: " + teamName);
 			$.ajax({
 					url : '/jamplan/makeTeam.do',
 					type : 'POST',
@@ -298,7 +327,7 @@ $(document).ready(function() {
 		str = '' + td + '';
 		
 		$('#teamNameByTable').val(str);
-		alert($('#teamNameByTable').val());
+		//alert($('#teamNameByTable').val());
 	})
 	
 	// 업데이트된 사항이 있는지 5초마다 체크한다.
@@ -358,11 +387,11 @@ $(document).ready(function() {
 					success : function(data) {
 						$.each(data, function(index, item) {			
 								update += '<tr><td>'+ item.teamName+ '</td>'
-								+'<td><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
-								+ '<td><button class = "btn btn-primary applyButCan" value = '+item.teamName+'>취소</button></td></tr>';
+								+'<td class="tdOdd"><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
+								+ '<td class="tdOdd"><button class = "btn btn-danger applyButCan" value = '+item.teamName+'>취소</button></td></tr>';
 								console.log("팀 검색 결과 : " + item.teamName);
 							})
-							console.log("update 글 : " + update);
+						//	console.log("update 글 : " + update);
 							tableHead += update;
 							tableHead += tableTail;
 							//$('tableTail').append(tableHead);
@@ -373,13 +402,41 @@ $(document).ready(function() {
 						}
 				});
 		});
+
 })
 
+
 //onready end===========================================================================
-function deleteMessage(teamName){
-	alert("취소 버튼 이벤트 ")
+function deleteMessageTR(teamName, sender,index1){
+	//alert("취소 버튼 이벤트 ")
 	var teamNAME = teamName;
+	var Sender = sender;
+	var index2 = index1;
 	alert("팀이름 : " + teamName);
+	$.ajax({
+		url : "/jamplan/deleteMessageToTeam.do",
+		type : 'POST',
+		data : {
+				'teamName' : teamNAME,
+				'sender' : Sender
+				},
+		dataType : 'json',
+		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+		success : function(data) {
+			alert(data.res);
+			$('#tr'+index2).remove();
+		},
+		error: function(data){ 
+			alert(data.res);
+		}
+	});
+}
+
+function deleteMessage(teamName){
+	//alert("취소 버튼 이벤트 ")
+	var teamNAME = teamName;
+	var Sender = sender;
+	//alert("팀이름 : " + teamName);
 	$.ajax({
 		url : "/jamplan/deleteMessageToTeam.do",
 		type : 'POST',
@@ -391,7 +448,7 @@ function deleteMessage(teamName){
 		success : function(data) {
 			alert(data.res);
 		},
-		error: function(data){
+		error: function(data){ 
 			alert(data.res);
 		}
 	});
@@ -465,6 +522,8 @@ function addPlanToDB() {
 		});
 	});
 }
+
+
 	
 /*
 // 메시지를 실시간으로 처리하기 위한 웹소켓 개통 부분
@@ -605,7 +664,7 @@ function planListAdd(teamName, indexI){
 
 function validationCheck() {
 	var params = $('#teamName').val();
-	alert(params);
+	//alert(params);
 	jQuery.ajax({
 		url : '/jamplan/validationCheck.do',
 		type : 'GET',

@@ -68,13 +68,6 @@ public class MyRoomDAOService implements MyRoomDAO {
 			System.out.println("== id : " + vo.getSender());
 			for(int i = 0; i < teamList.size(); i++) {
 				System.out.println("==set start"+i);
-				/*team.setId(vo.getSender());
-				team.setPlanName(teamList.get(i).getPlanName());
-				team.setPlanNo(teamList.get(i).getPlanNo());
-				team.setRole(2);
-				team.setJoinDate(teamList.get(i).getJoinDate());
-				team.setTeamName(vo.getTeamName());
-				team.setTeamNo(teamList.get(i).getTeamNo());*/
 				teamList.get(i).setId(vo.getSender());
 				teamList.get(i).setRole(2);
 				System.out.println("==============================");
@@ -85,8 +78,12 @@ public class MyRoomDAOService implements MyRoomDAO {
 				System.out.println(teamList.get(i).getRole());
 				System.out.println(teamList.get(i).getTeamNo());
 				System.out.println("==============================");
-				myRoomMapper.insertToMember(teamList.get(i));		
+				myRoomMapper.insertToMember(teamList.get(i));				
 			}
+			System.out.println("== 신청 메세지 삭제" + vo.getTeamName());	
+			myRoomMapper.deleteCansleMessage(vo);
+			System.out.println("== 신청 메세지 삭제" + vo.getSender());
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -243,7 +240,12 @@ public class MyRoomDAOService implements MyRoomDAO {
 		ArrayList<MessageVO> messageList = null;
 		try {
 			messageList = myRoomMapper.getMessageListById(vo);
-			System.out.println("====="+messageList.get(0).getTeamName());
+			if(messageList.size()!=0) {
+				System.out.println("====="+messageList.get(0).getTeamName());
+			}else {
+				System.out.println("인덱스 바운드 익셉션");
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -349,6 +351,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 		if (teamList.size() != 0) {
 			System.out.println("deleteCansleMessage : 이미 팀원임");
 			try {
+				
 				myRoomMapper.deleteCansleMessage(vo);
 			} catch (Exception e) {
 				e.printStackTrace();
