@@ -91,8 +91,10 @@ public class MyRoomController {
 
 	@RequestMapping(value="/acceptToMember.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public void acceptToMember(HttpSession session) {
-		
+	public void acceptToMember(HttpSession session, MessageVO vo) {
+		System.out.println("CONT acceptToMember IN");
+		myRoomDAO.insertToMember(vo);
+		System.out.println("CONT acceptToMember IN");
 	}
 	
 	@RequestMapping(value="/updateMessage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")

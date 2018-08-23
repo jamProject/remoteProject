@@ -30,14 +30,17 @@ $(document).ready(function() {
 	})
 	
 	//팀장이 해당 팀에 신청을 한 유저의 요청을 수락 할 때
-	$(document).on("click",".acceptTeamBut",function(){
+	$(document).on("click","button.acceptTeamBut",function(){
 		alert("팀원초대 이벤트");
+		console.log($(this));
+		console.log($(this).data("teamName"));
+		console.log($(this).data("sender"));
 		$.ajax({
 			url : '/jamplan/acceptToMember.do',
 			type : 'POST',dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-			data :{"sender":$(this).data("sender"),
-				   "teamName":$(this).data("teamName")},
+			data :{'sender':$(this).data("sender"),
+				   'teamName':$(this).data("teamName")},
 			success : function(data) {
 				alert("팀원초대 성공");
 			},
@@ -62,17 +65,21 @@ $(document).ready(function() {
 				var notReadMessageCount = "";
 				var messageHtml = "<table id = 'messageTable'>";
 				$.each(data,function(index,item) {
+					console.log(item.sender);
+					console.log(item.teamName);
 					//메세지 분류하기
 					if(item.isRead == 0){ //팀장이 안 읽은 "신청" 메세지
 						messageHtml += '<tr><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.' + '<span class="label label-primary messageNew"></span>'
 									+"<button id = acceptTeam"+index+" class = 'btn btn-primary acceptTeamBut'>수락</button><button class = 'btn btn-primary rejectTeamBut'>거절</button></td></tr>";
 						$("#acceptTeam"+index).data("sender",item.sender);
 						$("#acceptTeam"+index).data("teamName",item.teamName);
+
 					}else if(item.isRead == 1){//팀장이 이미 읽은 "신청" 메세지
 						messageHtml += '<tr><td>'+item.sender + '님이 ' + item.teamName + '에 신청을 하셨습니다.'
 									+"<button id = acceptTeam"+index+" class = 'btn btn-primary acceptTeamBut'>수락</button><button class = 'btn btn-primary rejectTeamBut'>거절</button></td></tr>";
 						$("#acceptTeam"+index).data("sender",item.sender);
 						$("#acceptTeam"+index).data("teamName",item.teamName);
+
 					}else if(item.isRead == 2){//팀원에 신청을 한 유저가  "팀에 초대 수락 알림"을 받고 안 읽음
 						messageHtml += '<tr><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'+ '<span class="label label-primary messageNew"></span>'
 									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'>삭제</button></td></tr>";

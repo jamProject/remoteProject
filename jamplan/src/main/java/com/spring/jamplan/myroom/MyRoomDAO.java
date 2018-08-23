@@ -21,6 +21,7 @@ public interface MyRoomDAO {
 	
 	void deleteNullPlanTeaminfo(String teamName);	
 	void updateReadMessage(String receiver);
+	void insertToMember(MessageVO vo);
 	
 	UserVO getUserInfo(UserVO vo);	
 	PlanVO searchPlan(PlanVO plan);

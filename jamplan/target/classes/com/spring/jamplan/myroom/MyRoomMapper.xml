@@ -61,12 +61,16 @@
 		<result property="dateCheck" column="dateCheck" />
 	</resultMap>
 	
+	<insert id="insertToMember" parameterType= "com.spring.jamplan.model.TeamInfoVO" >
+		insert into teaminfo (id, planName, planNo, role, teamName, teamNo) values (#{id},#{planName},#{planNo},#{role},#t{teamName},#{teamNo})
+	</insert>
+	
 	<update id = "updateMessage" parameterType= "com.spring.jamplan.model.MessageVO" >
 		update message set isRead = #{isRaed} where receiver = #{receiver}
 	</update>
 	
 	<select id="getMessageListById"  parameterType = "com.spring.jamplan.model.MessageVO" resultMap="messageResultMap">
-		select * from message where receiver = #{receiver} order by isread desc
+		select * from message where receiver = #{receiver}
 	</select>
 	
 	<insert id="insertApplyMessage" parameterType = "com.spring.jamplan.model.MessageVO" >

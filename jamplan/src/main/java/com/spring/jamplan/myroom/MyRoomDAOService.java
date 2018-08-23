@@ -56,6 +56,34 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 	
 	@Override
+	public void insertToMember(MessageVO vo) {
+		System.out.println("==DAO insertToMember IN");
+		try {
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			TeamInfoVO team = new TeamInfoVO();
+			team.setTeamName(vo.getTeamName());
+			ArrayList<TeamInfoVO> teamList = new ArrayList<TeamInfoVO>();
+			teamList = myRoomMapper.validationTeamName(team);
+			System.out.println("== teamName : " + team.getTeamName());
+			for(int i = 0; i < teamList.size(); i++) {
+				System.out.println("==set start"+i);
+				team.setId(vo.getSender());
+				team.setPlanName(teamList.get(i).getPlanName());
+				team.setPlanNo(teamList.get(i).getPlanNo());
+				team.setRole(2);
+//				team.setJoinDate("");
+				team.setTeamName(vo.getTeamName());
+				team.setTeamNo(teamList.get(i).getTeamNo());
+				myRoomMapper.insertToMember(team);		
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		System.out.println("==DAO insertToMember OUT");
+	}
+	
+	@Override
 	public TeamInfoVO getRole(TeamInfoVO vo) {
 		System.out.println("DAO getRole IN");
 
@@ -204,6 +232,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 		ArrayList<MessageVO> messageList = null;
 		try {
 			messageList = myRoomMapper.getMessageListById(vo);
+			System.out.println("====="+messageList.get(0).getTeamName());
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -466,7 +495,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 		try {
 			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 
-			if (myRoomMapper.validationTeamName(team) != null) {
+			if (myRoomMapper.validationTeamName(team).size() != 0) {
 				System.out.println("DAOService method validationTeamName out FAIL");
 				validationTeamName = "FAIL";
 				return validationTeamName;
