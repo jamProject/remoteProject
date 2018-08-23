@@ -24,7 +24,7 @@ public class MyInfoController {
 	@Autowired(required=false)
 	private MyInfoDAO myInfoDAO;
 	
-	@RequestMapping(value="myInfo.mi")
+	@RequestMapping(value="myInfo.info")
 	public ModelAndView getMyInfo(HttpSession session, ModelAndView mov, UserVO user) {
 		System.out.println("getMyInfo IN");
 		ArrayList<TeamInfoVO> teamListAsLeader = null;
@@ -49,11 +49,32 @@ public class MyInfoController {
 		return mov;
 	}
 	
-	@RequestMapping(value="/imageUpload.mi", method=RequestMethod.POST)
+	@RequestMapping(value="/removeTeam.info", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String fileUpload(MultipartHttpServletRequest multiRequest, UserVO user) throws Exception {
-		System.out.println("1");
+	public String removeTeam(TeamInfoVO teamInfo) {
+		System.out.println("removeTeam In");
+		System.out.println(teamInfo.getTeamName());
+		String check = String.valueOf(myInfoDAO.removeTeamAsLeader(teamInfo));
+		System.out.println("removeTeam Out");
+		return check;
+	}
+	
+	@RequestMapping(value="/signOutTeam.info", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String signOutTeam(TeamInfoVO teamInfo) {
+		System.out.println("signOutTeam In");
+		System.out.println(teamInfo.getTeamName());
+		String check = String.valueOf(myInfoDAO.signOutTeamAsMember(teamInfo));
+		System.out.println("signOutTeam Out");
+		return check;
+	}
+	
+	@RequestMapping(value="imageUpload.info", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String fileUpload(MultipartHttpServletRequest multiRequest, HttpSession session, UserVO user) throws Exception {
+		System.out.println("fileUpload IN");
 		
+		user.setId((String)session.getAttribute("id"));
 		MultipartFile mf = multiRequest.getFile("image");
 		// 해당 경로에 지정해준 이름의 폴더가 없으면 만들어주게된다.
 		String uploadPath = "C:\\BigDeep\\upload\\";
@@ -70,7 +91,7 @@ public class MyInfoController {
 			user.setImage(storedFileName);
 		}
 		String result = String.valueOf(myInfoDAO.setProfileImage(user));
-		
+		System.out.println("fileUpload OUT");
 		
 		return result;
 	}

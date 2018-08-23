@@ -53,11 +53,11 @@
 	
 	<servlet-mapping>
         <servlet-name>appServlet</servlet-name>
-        <url-pattern>*.mi</url-pattern>
+        <url-pattern>*.info</url-pattern>
     </servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>myInfo.mi</welcome-file>
+		<welcome-file>myInfo.info</welcome-file>
 	</welcome-file-list>
 
 	<!--필터  -->

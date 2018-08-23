@@ -61,15 +61,15 @@
         
     </select>
     
-    <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.UserVO">
-        DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=0
-            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}
-        
+    <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.TeamInfoVO">
+        DELETE TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
     </delete>
     
-    <delete id="signOutTeamAsMember" parameterType="com.spring.jamplan.model.UserVO">
-        DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR} AND ROLE=2
-            AND TEAMNAME=#{teamName, jdbcType=VARCHAR}
-       
+    <delete id="signOutTeamAsMember" parameterType="com.spring.jamplan.model.TeamInfoVO">
+        DELETE TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR}
+            
+       <if test="id != null">
+           AND TEAMNAME=#{teamName, jdbcType=VARCHAR} AND ROLE=2
+        </if>
     </delete>
 </mapper>

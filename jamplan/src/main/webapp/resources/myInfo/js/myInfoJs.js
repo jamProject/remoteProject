@@ -182,7 +182,7 @@ $(document).ready(function() {
 	
 	$("#imageUpload").on('click', function() {
 		$.ajax({
-			url: '/jamplan/imageUpload.mi',
+			url: '/jamplan/imageUpload.info',
 			dataType: text,
 			success: function(result) {
 				if(result == '1') {
@@ -193,6 +193,84 @@ $(document).ready(function() {
 			},
 			error: function () {
 				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
+			}
+		});
+	})
+	
+	// 팀 삭제시 팀명 바로 없애주기 위한 ajax
+	$("#leaderTable button").click(function(){
+		var teamName = $(this).parent().siblings().text();
+		console.log(teamName);
+		$(this).empty();
+		$.ajax({
+			url : '/jamplan/removeTeam.info',
+			type : "post",
+			data : {
+				'id' : 'thkim9198',
+				'teamName': teamName
+			},
+			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+			dataType : "text",
+			success:function(result){
+				if(result != '0') {
+					location.reload();
+				}else {
+					alert('팀 삭제에 실패했습니다.');
+				}
+			},	
+			error:function(){
+				console.log('팀 삭제 ajax 실패');
+			}
+		});
+	})
+	
+	// 팀 탈퇴시 바로 팀명 없애주기 위한 ajax
+	$("#memberTable button").click(function(){
+		var teamName = $(this).parent().siblings().text();
+		console.log(teamName);
+		$.ajax({
+			url : '/jamplan/signOutTeam.info',
+			type : "post",
+			data : {
+				'id' : 'thkim9198',
+				'teamName': teamName
+			},
+			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+			dataType : "text",
+			success:function(result){
+				if(result != '0') {
+					location.reload();
+				}else {
+					alert('팀 탈퇴에 실패했습니다.');
+				}
+			},	
+			error:function(){
+				console.log('팀 탈퇴 ajax 실패');
+			}
+		});
+	})
+	
+	// 이미지 파일을 비동기적으로 업로드(정확하게는 파일의 경로만 저장)
+	$("#imageUpload").click(function(){
+		var image = $('#imagePreview').val();
+		console.log(image);
+		$.ajax({
+			url : '/jamplan/imageUpload.info',
+			type : "post",
+			data : {
+				'image': image
+			},
+			enctype: 'multipart/form-data',
+			dataType : "text",
+			success:function(result){
+				if(result != '0') {
+					alert('프로필 사진이 등록됐습니다.');
+				}else {
+					alert('다시 시도해주세요.');
+				}
+			},	
+			error:function(){
+				console.log('프로필 사진 등록 ajax 실패');
 			}
 		});
 	})

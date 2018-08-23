@@ -72,21 +72,21 @@ public class MyInfoDAOService implements MyInfoDAO {
 	}
 
 	@Override
-	public int removeTeamAsLeader(UserVO user) {
+	public int removeTeamAsLeader(TeamInfoVO teamInfo) {
 		System.out.println("removeTeamAsLeader IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
-		int result = myInfoMapper.removeTeamAsLeader(user);
-		
+		int result = myInfoMapper.removeTeamAsLeader(teamInfo);
+		System.out.println(result);
 		System.out.println("removeTeamAsLeader OUT");
 		return result;
 	}
 
 	@Override
-	public int signOutTeamAsMember(UserVO user) {
+	public int signOutTeamAsMember(TeamInfoVO teamInfo) {
 		System.out.println("signOutTeamAsMember IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
-		int result = myInfoMapper.signOutTeamAsMember(user);
-		
+		int result = myInfoMapper.signOutTeamAsMember(teamInfo);
+		System.out.println(result);
 		System.out.println("signOutTeamAsMember OUT");
 		return result;
 	}
