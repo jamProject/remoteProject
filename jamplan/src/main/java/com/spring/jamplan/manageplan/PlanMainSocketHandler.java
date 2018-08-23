@@ -58,20 +58,21 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		super.afterConnectionClosed(session, status);
 		System.out.println("afterConnectionClosed IN");
-//		idMap.remove(session);
+		idMap.remove(session);
 //		System.out.println("afterConnectionClosed idMap에서 remove 됐는지");
 
 		teamNoMap.remove(session);
-		System.out.println("afterConnectionClosed teamNoMap에서 remove 됐는지");
+		System.out.println("afterConnectionClosed teamNoMap에서 remove 됐는지? =>>" + teamNoMap.get(session));
 
 		
 		Map<String, Object> map = session.getAttributes();
 		String id = (String)map.get("id");
 		String teamNo = (String)map.get("teamNo");
 		
-		// 같은 팀 사람 중에 남아있는 사람이 있는지 알기 위해 DB에서 리스트 받아와서 비교한다.
+		// 같은 팀 사람 중에 남아있는 사람이 있는지 알기 위해 DB에서 같은 팀 사람들의 리스트 받아와서 비교한다.
 		for (int i=0; i < chatDAOService.chatConnect(teamInfo).size(); i++) {
 			System.out.println("for문 들어왔나??");
+			// 같은 팀 사람들에 대한 team정보를 하나하나 teamInfo에 맵핑시킨다.
 			for(TeamInfoVO teamInfo : chatDAOService.chatConnect(teamInfo)) {
 				// idMap에 같은 팀 사람이 남아있는지 체크하는 부분
 				if(idMap.containsValue(teamInfo.getId())) {
@@ -112,14 +113,15 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		
 		// 같은 팀멤버들을 select해서 모아놓은 list
 		teamList = chatDAOService.chatConnect(teamInfo);
-		System.out.println("for문 들어가기 전 teamList 나왔나 점검" + teamList.get(0).getId());
+		System.out.println("for문 들어가기 전 teamList 나왔나 점검" + teamList.size());
+		
 		for(int i=0; i<teamList.size(); i++) {
 			TeamInfoVO teamResult = teamList.get(i);
 			System.out.println("teamResult 나왔나 점검 : " + teamResult.getId());
 			// 이미 team의 채팅방에 대한 set이 만들어져있는 상태라면 그곳에 session을 넣어준다.
-			System.out.println("소켓핸들러에서 형변환 필요한지 전");
+			System.out.println("chatSetGroupMap에 채팅방이 개설됐는지 확인 전");
 			if(chatSetGroupMap.containsKey(teamInfo.getTeamNo())) {
-				System.out.println("소켓핸들러에서 형변환 필요한지 후1");
+				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 있다.");
 				
 				// 특정 team의 채팅방 관리하는 set에 session을 넣는다.
 				chatSetGroupMap.get(teamInfo.getTeamNo()).add(session);
@@ -133,7 +135,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 			}else {
 				// 특정 팀에 속해있지만 각 팀의 사용자들 구분을 위한 session들의 집합은 만들어지지 않았을때.
 				// 즉, 어떠한 팀에 누군가가 처음 접속했을 때 각 사용자들을 팀에 따라 구분하기 위해 list 생성
-				System.out.println("소켓핸들러에서 형변환 필요한지 후2");
+				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 없다.");
 				
 				// 새로운 list를 만들고 session을 넣어준다.
 				chatListSet = getChatGroup(idMap, id);
@@ -163,7 +165,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 			if(client_session.isOpen()) {
 				try {
 					System.out.println("메시지 전송되기 직전!!!");
-					client_session.sendMessage(new TextMessage("message/"+(String)message.getPayload()));
+					client_session.sendMessage(new TextMessage((String)message.getPayload()));
 				}catch(Exception ignored) {
 					
 					this.logger.error("fail to send message!", ignored);

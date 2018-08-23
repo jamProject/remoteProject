@@ -23,10 +23,7 @@ $(document).ready(function() {
 		}
 	})
 	*/
-	document.getElementById("sendButton").onclick = function() {
-		var input = document.getElementById('inputText').value;
-		w.send('thkim9198' + "/" + input);
-	}
+	
 	
 	$(".tab-pane.container").click(function(){
 		console.log($(this).attr("value"));

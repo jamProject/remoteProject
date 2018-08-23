@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
+import com.spring.jamplan.model.UserVO;
 
 
 @Controller
@@ -35,8 +36,19 @@ public class ManagePlanController {
 	private ObjectMapper mapper;
 
 	
+//	@RequestMapping(value = "/main.mp")
+//	public String mainLoad() {
+//		
+//		
+//		return "managePlan/main";
+//	}
+	
+	// 웹소켓 테스트를 위한 부분
 	@RequestMapping(value = "/main.mp")
-	public String mainLoad() {
+	public String mainLoad(HttpSession session, UserVO user) {
+		
+		session.setAttribute("id", user.getId());
+		
 		return "managePlan/main";
 	}
 

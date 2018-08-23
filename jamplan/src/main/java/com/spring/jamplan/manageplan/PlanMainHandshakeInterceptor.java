@@ -27,6 +27,7 @@ public class PlanMainHandshakeInterceptor extends HttpSessionHandshakeIntercepto
 		map.put("id", id);
 		map.put("teamNo", teamNo);
 		System.out.println("HttpSession에 저장된 id: " + id);
+		System.out.println("HttpSession에 저장된 teamNo: " + teamNo);
 		
 		return super.beforeHandshake(request, response, wsHandler, map);
 	}

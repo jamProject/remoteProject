@@ -39,8 +39,8 @@
 	<title>JAM</title>
 
 <%
-	session.setAttribute("id", "thkim9198");
-	session.setAttribute("teamNo", "21");
+	String id = (String)session.getAttribute("id");
+	session.setAttribute("teamNo", "3");
 %>
 
 
@@ -62,8 +62,15 @@
 		document.getElementById("chatTextarea").textContent += (s + "\n");
 	}
 
-	var id = 'thkim9198';
-	var teamNo = '33';
+	var id = '${id}';
+	var teamNo = '3';
+	
+	
+	$("#sendButton").click(function() {
+		var input = document.getElementById('inputText').value;
+		w.send('${id}' + "/" + input);
+	});
+	
 
 	w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
 	// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
@@ -71,16 +78,16 @@
 		alert("WebSocket Connected!");
 	}
 	w.onmessage = function(e) {
-		alert("AAAA");
+		alert("success");
 		log(e.data.toString());
 	}
 	w.onclose = function(e) {
-		alert("BBBB");
+		alert("closed");
 		console.log('닫힌다는 메시지가 창에 뜨기 전');
 		log("WebSocket closed!!");
 	}
 	w.onerror = function(e) {
-		alert("CCCC");
+		alert("failure");
 		log("WebSocket error!!");
 	}
 	// websocket 부분에 대한 스크립트 끝
