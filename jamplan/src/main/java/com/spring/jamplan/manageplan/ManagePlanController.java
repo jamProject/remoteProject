@@ -35,9 +35,9 @@ public class ManagePlanController {
 	private ObjectMapper mapper;
 
 	
-	@RequestMapping(value = "/main.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/main.mp")
 	public String mainLoad() {
-		return "manageplan/main";
+		return "managePlan/main";
 	}
 
 	@RequestMapping(value = "/selectCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

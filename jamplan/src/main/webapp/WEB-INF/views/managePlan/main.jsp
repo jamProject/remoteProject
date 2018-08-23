@@ -40,7 +40,7 @@
 
 <%
 	session.setAttribute("id", "thkim9198");
-	session.setAttribute("teamNo", "3");
+	session.setAttribute("teamNo", "33");
 %>
 
 
@@ -55,6 +55,37 @@
 		}
 /*구글 한글폰트 불러오는 부분 끝*/
 	</style>
+	<script>
+	//websocket 부분에 대한 스크립트
+	var log = function (s) {
+		// 이 부분에 메시지 형식 넣어야함.
+		document.getElementById("chatTextarea").textContent += (s + "\n");
+	}
+
+	var id = 'thkim9198';
+	var teamNo = '33';
+
+	w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
+	// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
+	w.onopen = function () {
+		alert("WebSocket Connected!");
+	}
+	w.onmessage = function(e) {
+		alert("AAAA");
+		log(e.data.toString());
+	}
+	w.onclose = function(e) {
+		alert("BBBB");
+		console.log('닫힌다는 메시지가 창에 뜨기 전');
+		log("WebSocket closed!!");
+	}
+	w.onerror = function(e) {
+		alert("CCCC");
+		log("WebSocket error!!");
+	}
+	// websocket 부분에 대한 스크립트 끝
+
+	</script>
 </head>
 
 
@@ -116,7 +147,7 @@
 					<div class="form-popup" id="myForm">
 						<div class="form-container">
 					   <!--  	<label for="exampleFormControlTextarea3">Rounded corners</label> -->
-    						<textarea class="form-control" id="exampleFormControlTextarea3" readonly rows="10"></textarea>
+    						<textarea class="form-control" id="chatTextarea" readonly rows="10"></textarea>
 					    	<input id="inputText" type="text" placeholder="대화를 해보세요" required>
 					
 					    	<button id="sendButton" class="btn">Enter</button>

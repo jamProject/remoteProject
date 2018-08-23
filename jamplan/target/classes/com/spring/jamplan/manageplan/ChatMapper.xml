@@ -15,6 +15,6 @@
 	
 	
 	<select id="chatConnect" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
-		SELECT ID FROM TEAMINFO WHERE TEAMNO=#{teamNo, jdbcType=INTEGER}
+		SELECT * FROM TEAMINFO WHERE TEAMNO=#{teamNo, jdbcType=INTEGER}
 	</select>
 </mapper>

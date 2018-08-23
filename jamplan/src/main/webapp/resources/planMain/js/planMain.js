@@ -25,7 +25,7 @@ $(document).ready(function() {
 	*/
 	document.getElementById("sendButton").onclick = function() {
 		var input = document.getElementById('inputText').value;
-		w.send(id + "/" + input);
+		w.send('thkim9198' + "/" + input);
 	}
 	
 	$(".tab-pane.container").click(function(){
@@ -61,30 +61,3 @@ function closeForm() {
 }
 
 
-//websocket 부분에 대한 스크립트
-var log = function (s) {
-	// 이 부분에 메시지 형식 넣어야함.
-	document.getElementById("exampleFormControlTextarea3").textContent += (s + "\n");
-}
-
-var id = 'thkim9198';
-var teamNo = '3';
-
-w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
-// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
-w.onopen = function () {
-	alert("WebSocket Connected!");
-}
-w.onmessage = function(e) {
-	alert("AAAA");
-//	log(e.data.toString());
-}
-w.onclose = function(e) {
-	alert("BBBB");
-//	log("WebSocket closed!!");
-}
-w.onerror = function(e) {
-	alert("CCCC");
-//	log("WebSocket error!!");
-}
-// websocket 부분에 대한 스크립트 끝

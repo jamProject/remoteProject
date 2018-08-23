@@ -18,10 +18,10 @@ public class ChatDAOService {
 		ArrayList<TeamInfoVO> chatList = null;
 		System.out.println("chatConnect IN");
 		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
-		
+		System.out.println(teamInfo.getTeamNo());
 		try {
 			chatList = mapper.chatConnect(teamInfo);
-			System.out.println("chatConnect에서 chatList가 나왔는지: " + chatList.get(0).getId());
+			System.out.println("chatConnect에서 chatList가 나왔는지: " + chatList.size());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

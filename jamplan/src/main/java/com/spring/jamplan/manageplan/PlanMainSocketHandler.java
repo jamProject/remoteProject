@@ -126,6 +126,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 				
 				// session 집합을 teamNo를 key값으로해서 저장한다.
 				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getTeamNo())) {
+					System.out.println(chatSetGroupMap.get(teamInfo.getTeamNo()));
 					assignedSession.sendMessage(new TextMessage("message/" + id + "님이 참여했습니다."));
 				}
 				
@@ -138,8 +139,8 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 				chatListSet = getChatGroup(idMap, id);
 				sessionSet.add(session);
 				chatSetGroupMap.put(teamInfo.getTeamNo(), chatListSet);
-				System.out.println("메시지 전송되기 직전!!!!");
-				session.sendMessage(new TextMessage("message/" + teamResult.getTeamName() + " 방으로 입장했습니다."));
+				System.out.println("누군가가 처음 접속하면 이렇게 된다!!!");
+				session.sendMessage(new TextMessage(teamResult.getTeamName() + " 방으로 입장했습니다."));
 			}
 			
 		}
@@ -161,6 +162,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		for(WebSocketSession client_session : instantSessionList) {
 			if(client_session.isOpen()) {
 				try {
+					System.out.println("메시지 전송되기 직전!!!");
 					client_session.sendMessage(new TextMessage("message/"+(String)message.getPayload()));
 				}catch(Exception ignored) {
 					
