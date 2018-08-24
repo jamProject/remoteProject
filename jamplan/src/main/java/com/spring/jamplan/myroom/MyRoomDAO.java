@@ -1,28 +1,39 @@
 package com.spring.jamplan.myroom;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import com.spring.jamplan.model.MessageVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
 public interface MyRoomDAO {
 	
-	List<TeamInfoVO> getTeamList(String id);
-	List<TeamInfoVO> getTeamMember(UserVO vo);
-	List<PlanVO> getPlanList(TeamInfoVO team);	
-	ArrayList<PlanVO> checkUpdate(UserVO vo);
-	UserVO getUserInfo(UserVO vo);	
-	List<TeamInfoVO> searchTeam(TeamInfoVO team);
-	PlanVO searchPlan(PlanVO plan);
 	int makeTeam(TeamInfoVO team);
 	int insertPlan(TeamInfoVO vo);
+	int insertApplyMessage(String id,MessageVO vo);
+	int deleteCansleMessage(MessageVO vo);
+	int getMaxPlanNo();
+	
 	String validationTeamName(TeamInfoVO team);
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
-	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
-	int getMaxPlanNo();
-	void deleteNullPlanTeaminfo(String teamName);
+	
+	void deleteNullPlanTeaminfo(String teamName);	
+	void updateReadMessage(String receiver);
+	void insertToMember(MessageVO vo);
+	
+	UserVO getUserInfo(UserVO vo);	
+	PlanVO searchPlan(PlanVO plan);
+	TeamInfoVO getRole(TeamInfoVO team);
+	
+	ArrayList<TeamInfoVO> getTeamList(String id);
 	ArrayList<TeamInfoVO> getPlanListById(String id);
+	ArrayList<PlanVO> checkUpdate(UserVO vo);
+	ArrayList<TeamInfoVO> getTeamMember(UserVO vo);
+	ArrayList<PlanVO> getPlanList(TeamInfoVO team);	
+	ArrayList<TeamInfoVO> searchTeam(TeamInfoVO team);
+	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO team);
+	ArrayList<MessageVO>getMessageList(MessageVO vo);
+
 }

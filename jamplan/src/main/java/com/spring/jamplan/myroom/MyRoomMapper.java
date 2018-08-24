@@ -18,19 +18,27 @@ import com.spring.jamplan.model.UserVO;
 public interface MyRoomMapper {
 		
 	ArrayList<TeamInfoVO> getTeamList(String id);
-	List<TeamInfoVO> getTeamMember(UserVO user);
+	ArrayList<TeamInfoVO> getTeamMember(UserVO user);
 	ArrayList<PlanVO> getPlanList(TeamInfoVO team);
 	ArrayList<PlanUpdateVO> checkUpdate(UserVO user);
 	UserVO getUserInfo(UserVO user);
 	ArrayList<MessageVO> getMessageList(String receiver);
-	List<TeamInfoVO> searchTeam(TeamInfoVO team);
+	ArrayList<TeamInfoVO> searchTeam(TeamInfoVO team);
 	PlanVO searchPlan(PlanVO plan);
 	int makeTeam(TeamInfoVO team);
 	void insertPlan(TeamInfoVO vo);
-	TeamInfoVO validationTeamName(TeamInfoVO team);
+	void updateMessage(MessageVO vo);
+	void insertToMember(TeamInfoVO team);
+	ArrayList<TeamInfoVO> validationTeamName(TeamInfoVO team);
 	int deleteTeam(TeamInfoVO team);
 	int deletePlan(PlanVO plan);
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
 	int getMaxPlanNo();
 	void deleteNullPlan(String teamName);
+	TeamInfoVO getRole(TeamInfoVO team);
+	ArrayList<TeamInfoVO> getTeamReceiver(TeamInfoVO team);
+	void insertApplyMessage(MessageVO vo);
+	void deleteCansleMessage(MessageVO vo);
+	ArrayList<MessageVO> checkApplyMessage(MessageVO vo);	
+	ArrayList<MessageVO> getMessageListById(MessageVO vo);	
 }

@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.jamplan.model.MessageVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
@@ -25,49 +29,23 @@ import com.spring.jamplan.model.UserVO;
 @Controller
 public class MyRoomController {
 
-	@Autowired(required = false)
-	private MyRoomDAO myRoomDAO;
-	
 	@Autowired
-	private TeamInfoVO teamVO;
-	
-	private HashMap<String, Object> map;
-/*	
-	@RequestMapping("/home.do")
-	public String myRoomMain2(String id, Model model) {
+	private MyRoomDAO myRoomDAO;
 		
-		return "home";
-	}*/
-	
-//	방(그룹)안으로들어가기
-//	@RequestMapping(value="/inRoom.do")
-//	public String inRoom(UserVO user, Model model, HttpSession session) {
-//		//여기에다가 방 pk 값 넣기 session에 넣기
-//		session.setAttribute("roomId", "roomid pk값 넣어버리기");
-//		//여기에 넣는 이유 나중에 웹소켓에서 이 사람이 수정한 글이 속한 room_id에 속해있는 다른 사용자에게 알림 날리기 위해.
-//		//만약에 html화면단에서 pk아이디를 직접 서버로 주게되면 내가 수정한 그룹이 아닌 다른 그룹 pk를 강제로 싣어서 웹소켓에 전송하면
-//		//엉뚱한 사람이 알림 받게됨.
-//		//웹소켓에서 session.get어쩌고를 이용해서 이 사람이 속한 그룹의 사용자에게 for돌면서 웹소켓 쏴줄예정.
-//		return "방안으로들어가는jsp";
-//	}
-	
-/*	@RequestMapping(value="/printTeamList.do")
-	public String printTeamList(HttpSession session, Model model) {
-		System.out.println("printTeamList IN");
-		String id = (String)session.getAttribute("id");
-		List<TeamVO> teamList = myRoomDAO.getTeamList(id);
-		System.out.println("db sucess");
-		model.addAttribute("teamList", teamList);
-		model.addAttribute("id", id);
-		System.out.println("printTeamList OUT");
-		return "MyRoomConfirm";
-	}*/
-	@RequestMapping(value="/movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
-	@ResponseBody
+	private HashMap<String, Object> map;
+
+	@RequestMapping(value="movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
-		int planNo = vo.getPlanNo();
-		session.setAttribute("planNo",planNo);
-		System.out.println("컨트롤러 진입");
+
+		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
+		vo.setId((String)session.getAttribute("id"));
+
+		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
+		session.setAttribute("planNo",vo.getPlanNo());
+		System.out.println("role"+ teamVO.getRole());
+		session.setAttribute("role", teamVO.getRole());
+		System.out.println("페이지 이동 컨트롤러 진입");
+		
 		return "managePlan/main";
 	}
 	
@@ -107,11 +85,64 @@ public class MyRoomController {
 			e.printStackTrace();
 		}
 		/*System.out.println("getPlanListByTeamName OUT");*/
-		System.out.println(teamListToJson);
+		//System.out.println(teamListToJson);
 		return teamListToJson;
+	}
+	
+
+	@RequestMapping(value="/acceptToMember.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String acceptToMember(HttpSession session, MessageVO vo) throws JsonProcessingException {
+		System.out.println("CONT acceptToMember IN");
+		myRoomDAO.insertToMember(vo);
 		
 		
+		String teamListToJson = "";
+		map = new HashMap<String, Object>();
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			map.put("res", "ok");
+			teamListToJson = mapper.writeValueAsString(map);
+			System.out.println(teamListToJson);
+			
+		}catch (Exception e) {
+			map.put("res", "fail");
+			teamListToJson = mapper.writeValueAsString(map);
+			e.printStackTrace();
+			
+		}
+		System.out.println("CONT acceptToMember OUT");
+		return teamListToJson;
+	}
+	
+	@RequestMapping(value="/updateMessage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public void updateMessage(HttpSession session) {
+		System.out.println("CONT updateMessage IN");
+		String receiver = (String)session.getAttribute("id");
+		myRoomDAO.updateReadMessage(receiver);
 		
+		System.out.println("CONT updateMessage OUT");
+	}
+	
+	@RequestMapping(value="/getMessageById.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@ResponseBody
+	public ArrayList<MessageVO> getMessageById(HttpSession session, MessageVO vo) {
+		System.out.println("CONT getMessage IN");
+		//server에서 id값으로 메세지 테이블 값 가져오기
+		
+		String receiver = (String)session.getAttribute("id");
+		vo.setReceiver(receiver);
+	
+		ArrayList<MessageVO> messageList=null;
+		try {
+			messageList	= myRoomDAO.getMessageList(vo);
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		System.out.println("CONT getMessage out");
+		return messageList;
 	}
 	
 	@RequestMapping(value="/ajaxPrintTeamList.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
@@ -173,13 +204,6 @@ public class MyRoomController {
 		System.out.println("ajaxPrintTeamList OUT");
 		return teamListToJson;
 	}
-	/*@RequestMapping(value="/insertPlan.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
-	@ResponseBody
-	public int getMaxPlanNo(TeamInfoVO vo) {
-		
-
-	}*/
-		
 	
 	@RequestMapping(value="/ajaxPrintPlanList.do", method=RequestMethod.GET, produces="application/json;charset=utf-8")
 	@ResponseBody
@@ -203,13 +227,17 @@ public class MyRoomController {
 	@RequestMapping(value="/makeTeam.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String makeTeam(TeamInfoVO team, HttpSession session) {
+		System.out.println("팀만들기 컨트롤러");
 		System.out.println("teamName : " + team.getTeamName());
+		team.setId((String)session.getAttribute("id"));
 		System.out.println("id : " + team.getId());
+		
+		/*ArrayList<TeamInfoVO> list  = myRoomDAO.getPlanListById(team.getId());*/
+		
 		Map<String, Object> checkMap = new HashMap<String, Object>();	
 		String checkMapToJson = null;
 		ObjectMapper mapper = new ObjectMapper(); 
-		
-		team.setId((String)session.getAttribute("id"));
+				
 		try {
 			int check = myRoomDAO.makeTeam(team);
 			
@@ -256,6 +284,74 @@ public class MyRoomController {
 		
 		return updateListToJson;
 	}
+	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String applyToTeam(HttpSession session, MessageVO vo) {
+		String id = (String)session.getAttribute("id");
+		String teamName = vo.getTeamName();
+		map = new HashMap<String, Object>();
+		vo.setSender(id);
+		try {
+			int check = myRoomDAO.insertApplyMessage(id,vo);		
+			if(check==0) {
+				map.put("res", "이미 해당 팀원임");
+			}else if (check ==1) {
+				map.put("res", "이미 신청 했음");
+			}else {
+				map.put("res", "메세지 저장 완료");
+			}
+			
+		}catch (Exception e) {
+			map.put("res", "fail");
+		}
+		
+		String searchTeamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			searchTeamListToJson = mapper.writeValueAsString(map);
+			System.out.println(searchTeamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("applyTeam Out");
+		return searchTeamListToJson;
+	}
+	//deleteCansleMessage
+	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteMessageToTeam(HttpSession session, MessageVO vo) {
+		System.out.println("deleteMessageToTeam 진입");
+		System.out.println("sender : "+ vo.getSender());
+		System.out.println("teamName : "+vo.getTeamName());
+		//String teamName = vo.getTeamName();
+		map = new HashMap<String, Object>();
+		try {
+			int check = myRoomDAO.deleteCansleMessage(vo);		
+			if(check==0) {
+				map.put("res", "이미 해당 팀원임");
+			}else if (check ==1) {
+				map.put("res", "메세지 삭제");
+			}else {
+				map.put("res", "신청한적 없음");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			map.put("res", "fail");
+		}
+		
+		String searchTeamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			searchTeamListToJson = mapper.writeValueAsString(map);
+			System.out.println(searchTeamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("deleteApplyMessageTeam Out");
+		return searchTeamListToJson;
+	}
+	
 	
 	@RequestMapping(value="/searchTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -263,8 +359,12 @@ public class MyRoomController {
 		System.out.println("searchTeam In");
 		System.out.println(team.getTeamName());
 		
-		List<TeamInfoVO> teamList = myRoomDAO.searchTeam(team);
+		ArrayList<TeamInfoVO> teamList = myRoomDAO.searchTeam(team);
 		
+/*		if(teamList == null) {
+			map = new HashMap<String, Object>();
+			map.put("res", "null");
+		}*/
 		String searchTeamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {

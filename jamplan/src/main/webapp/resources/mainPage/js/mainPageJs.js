@@ -8,7 +8,7 @@ $(document).ready(function(){
 		/* $(.imgClick).click(function) {
 			
 		} */
-		alert("hahaha");
+		//alert("hahaha");
 		$.ajax({ //jquery에서 ajax호출할때 사용하는 방식 / jQuery.ajax=$.ajax : jquery 표현하는방식 2가지 
 			url:'/jamplan/imgJson.do',
 			type:'GET',
@@ -30,7 +30,7 @@ $(document).ready(function(){
 					output += '<button class="btn">' + item.readCount + '</button>' + '&nbsp' + '&nbsp';
 					output += '</div>';
 					output += '</div>';
-					console.log("output:" + output);
+					//console.log("output:" + output);
 					$('#search').append(output);
 				
 				});
@@ -50,7 +50,7 @@ function check()
 if ($('.login [name="id"]').val()=="")
 	
 {
-	console.log("dd");
+	//console.log("dd");
 	alert("아이디를 입력하세요!!!");
 	$('.login [name="id"]').focus();
 	return false;

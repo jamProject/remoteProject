@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MessageVO {
-	String sender;
+	String sender; //session에서 아이디 체크
 	String receiver;
-	int isRead;
-	
+	String teamName;
+	int isRead; //1이면 안읽음
 	
 	public String getSender() {
 		return sender;
@@ -26,10 +26,18 @@ public class MessageVO {
 	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
 	public int getIsRead() {
 		return isRead;
 	}
 	public void setIsRead(int isRead) {
 		this.isRead = isRead;
 	}
+	
+	
 }

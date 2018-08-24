@@ -167,3 +167,11 @@ ul {
 footer {
 	background-color: rgba(0, 0, 0, .5);
 }
+.tdOdd, .tdEven {
+	padding : 12px 0 12px 0;
+	width: 60px;
+}
+.tdOdd {
+	margin-right : -32px;
+}
+
