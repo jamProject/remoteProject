@@ -154,18 +154,34 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		super.handleMessage(session, message);
 		
+//		System.out.println("handleMessage 1");
 		Map<String, Object> map = session.getAttributes();
+//		System.out.println("handleMessage 2");
+
 		String userId = (String)map.get("id");
-		Integer teamNo = (Integer)map.get("teamNo");
+//		System.out.println("handleMessage 2 이후의 " + userId);
+//		System.out.println("handleMessage 3");
+
+		String teamNo = (String)map.get("teamNo");
+//		System.out.println("handleMessage 3 이후의" + teamNo);
+//		System.out.println("handleMessage 4");
+
 		
 		
-		Set<WebSocketSession> instantSessionList = chatSetGroupMap.get(teamNo);
-		
+		Set<WebSocketSession> instantSessionList = chatSetGroupMap.get(Integer.valueOf(teamNo));
+//		System.out.println("handleMessage 5");
+
 		for(WebSocketSession client_session : instantSessionList) {
+//			System.out.println("handleMessage 6");
+
 			if(client_session.isOpen()) {
+//				System.out.println("handleMessage 7");
+
 				try {
-					System.out.println("메시지 전송되기 직전!!!");
+//					System.out.println("메시지 전송되기 직전!!!");
 					client_session.sendMessage(new TextMessage((String)message.getPayload()));
+//					System.out.println("handleMessage 8");
+
 				}catch(Exception ignored) {
 					
 					this.logger.error("fail to send message!", ignored);

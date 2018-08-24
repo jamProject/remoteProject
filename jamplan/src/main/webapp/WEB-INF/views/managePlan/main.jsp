@@ -66,11 +66,13 @@
 	var teamNo = '3';
 	
 	
-	$("#sendButton").click(function() {
-		var input = document.getElementById('inputText').value;
-		w.send('${id}' + "/" + input);
-	});
-	
+	$(document).ready(function () {
+		$("#sendButton").click(function() {
+			var input = $('#inputText').val();
+			w.send('${id}' + "/" + input);
+		});
+	})
+		
 
 	w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
 	// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
