@@ -244,6 +244,9 @@
 	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript">
+		//동적태그를사용하기위해 사용한 memoList -> 전역변수로 사용한 이유는 어디서든 사용할수있게(먼저 get할때 length를 저장하고 update할때 length값을 쓰기위해 전역변수로 사용함)
+		var memoList = [];
+	
 		$(document).ready(function() {
 				$('.drawer').drawer();
 				
@@ -364,6 +367,7 @@
 						planput += '</tbody>';
 						planput += '</table>';
 						
+						memoList[index] = item.map;
 						console.log("planput" + planput);
 						$('#planput').append(planput);
 					});
@@ -374,20 +378,51 @@
 			});
 		}
 		
+		
+		
 		// savePlanTable : 저장
 		function savePlanTable(){
+			
+			var i = 0;
+			var params = {};
+			
+			for(i=0; i<memoList.length; i++){
+				params = {"memo" : $('#memo').val()};
+				console.log(params);
+			}
+			
 			$.ajax({
 				url : '/jamplan2/savePlanTable.plan',
 				type : 'POST',
 				dataType: "json",
 		        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		        data : {
-		        	"memo" : $('#memo').val()
-
-		        	}, 
-		        success:function() {
-			        	alert("저장성공!!!");
-		        	},
+		        data : params,
+		        success:function(data) {
+		        	$.each(data, function(index, item){
+		        		alert('성공!');
+						/* $('#planput').empty(); */
+						$('#updateput').empty();
+						var updateput = '';
+						updateput += '<table class="table">';
+						updateput += '<thead>';
+						updateput += '<th>날짜 </th>';
+						updateput += '<th>장소</th>';
+						updateput += '<th>일정</th>';
+						updateput += '</thead>';
+						updateput += '<tbody>';
+						updateput += '<tr>';
+						updateput += '<td>' + item.calendar + '</td>';
+						updateput += '<td>' + item.map + '</td>';
+						updateput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >' + item.memo + '</textarea></td>';
+						updateput += '</tr>';
+						updateput += '</tbody>';
+						updateput += '</table>';
+						
+						
+						console.log("updateput" + updateput);
+						$('#updateput').append(updateput);
+					});
+				},
 		        	error:function() {
 		        		alert('ajax통신실패!!!');
 		        	}

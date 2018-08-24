@@ -10,5 +10,6 @@ public interface PlanMapper {
 	void insertPlanTable(PlanTableVO planTableVO);
 	
 	
-	ArrayList<PlanTableVO> savePlanTable (PlanTableVO planTableVO);
+	int savePlanTable (PlanTableVO planTableVO);
+	
 }

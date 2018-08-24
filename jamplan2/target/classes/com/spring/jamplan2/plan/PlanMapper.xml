@@ -43,7 +43,7 @@
 	 </insert>
 	
 	<update id="savePlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
-		update planTable set memo = #{memo, jdbcType=VARCHAR} where map = #{map, jdbcType=VARCHAR})
+		update planTable set memo = #{memo, jdbcType=VARCHAR} where map = #{map, jdbcType=VARCHAR}
 	</update>
 
 </mapper>

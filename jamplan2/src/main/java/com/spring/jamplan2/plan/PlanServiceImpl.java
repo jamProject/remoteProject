@@ -165,15 +165,16 @@ public class PlanServiceImpl implements PlanService {
 		
 		System.out.println("checkList사이즈="+checkList.size());
 		
-		//for문 돌리면안됌..
+		
+		//for문 돌리면안됌..?
 		for (i=0; i < checkList.size(); i++) {
 			String getMap = checkList.get(i).getMap();
 			planTableVO.setMap(getMap);
-			planMapper.savePlanTable(planTableVO);
+			int check = planMapper.savePlanTable(planTableVO);
+			
 		}
 		System.out.println("for문");
 		
-		planMapper.savePlanTable(planTableVO);
 		System.out.println("mapper연결되고나옴");
 		
 		return checkList;

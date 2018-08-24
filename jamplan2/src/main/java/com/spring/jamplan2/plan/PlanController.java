@@ -73,12 +73,26 @@ public class PlanController {
 	//savePlanTable : 저장
 	@RequestMapping(value = "savePlanTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public void savePlanTable (PlanTableVO planTableVO) {
-		System.out.println("memo" + planTableVO.getMemo());
+	public String savePlanTable (PlanTableVO planTableVO) {
+		System.out.println("memo의값  = " + planTableVO.getMemo());
 		System.out.println("save1");
-		planService.savePlanTable(planTableVO);
 		
+		ArrayList savePlanList = planService.savePlanTable(planTableVO);
 		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(savePlanList);
+		}
+		catch (Exception e)
+		{
+			System.out.println("firest() mapper :" + e.getMessage());
+		}
+		
+		System.out.println("str:" + str);
+		return str;
+	
 		
 		
 	}
