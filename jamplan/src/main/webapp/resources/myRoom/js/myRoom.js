@@ -310,10 +310,12 @@ function onError(event) {
 
 // 배열을 생성하고 팀 이름들을 저장한다.
 //btn btn-primary, btn btn-danger  
+
 var teamNameArray = [];
 
 function ajaxGetTeamList() {
 
+		
 	$('#teamList').empty();	
 	$.ajax({
 			url : '/jamplan/ajaxPrintTeamList.do',

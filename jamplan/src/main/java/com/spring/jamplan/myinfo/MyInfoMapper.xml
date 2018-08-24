@@ -41,7 +41,7 @@
     </update>
     
     <insert id="setProfileImage" parameterType="com.spring.jamplan.model.UserVO">
-        INSERT INTO USERINFO(IMAGE) VALUES(#{image, jdbcType=VARCHAR})
+        UPDATE USERINFO SET IMAGE=#{image, jdbcType=VARCHAR} WHERE ID=#{id, jdbcType=VARCHAR}
     </insert>
     
     <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">

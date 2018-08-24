@@ -70,11 +70,11 @@ public class MyInfoController {
 	}
 	
 	
-	@RequestMapping(value="imageUpload.info", method=RequestMethod.POST)
+	@RequestMapping(value="imageUpload.info", produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String fileUpload(MultipartHttpServletRequest multiRequest, HttpSession session, UserVO user) throws Exception {
 		System.out.println("fileUpload IN");
-		System.out.println(multiRequest.getFile("data"));
+		System.out.println(multiRequest.getParameter("image"));
 		user.setId((String)session.getAttribute("id"));
 		MultipartFile mf = multiRequest.getFile("image");
 		System.out.println(mf.getOriginalFilename());
@@ -103,5 +103,55 @@ public class MyInfoController {
 		System.out.println("fileUpload OUT");
 		
 		return result;
+	}
+	
+//	@RequestMapping(value="imageUpload.info", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+//	@ResponseBody
+//	public String imageUpload(HttpServletRequest request, HttpSession session, UserVO user) throws Exception {
+//		System.out.println("fileUpload IN");
+//		System.out.println(request.getParameter("image"));
+//		user.setId((String)session.getAttribute("id"));
+//		String fileName = request.getParameter("image");
+////		MultipartFile mf = request.getFile("image");
+////		System.out.println(mf.getOriginalFilename());
+////		System.out.println(mf.getContentType());
+////		System.out.println(mf.getName());
+////		System.out.println(mf.toString());
+//		// 해당 경로에 지정해준 이름의 폴더가 없으면 만들어주게된다.
+//		String uploadPath = "C:\\BigDeep\\upload\\";
+//				//"C:\\Users\\Playdata\\Downloads\\0805ProjectHan\\jamplan2\\src\\main\\webapp\\resources\\search\\image\\";
+//		
+//		System.out.println("originalFileExtension 들어가기 전");
+//
+//		// 실제 파일의 확장자
+//		String originalFileExtension = fileName.substring(
+//				fileName.lastIndexOf("."));
+//		System.out.println(originalFileExtension);
+//
+//		// 실제 파일명
+//		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
+//		System.out.println("storedFileName=" + storedFileName);
+//		if(storedFileName.length() != 0) {
+////			mf.transferTo(new File(uploadPath+storedFileName));
+//			user.setImage(storedFileName);
+//			System.out.println("user객체에서의 getImage() >> " + user.getImage());
+//			System.out.println("user객체에서의 getId() >> " + user.getId());
+//
+//		}
+//		String result = String.valueOf(myInfoDAO.setProfileImage(user));
+//		System.out.println("fileUpload OUT");
+//		
+//		return result;
+//	}
+	
+	
+	@RequestMapping(value="/updateMyInfo.info", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String updateMyInfo(TeamInfoVO teamInfo) {
+		System.out.println("signOutTeam In");
+		System.out.println(teamInfo.getTeamName());
+		String check = String.valueOf(myInfoDAO.signOutTeamAsMember(teamInfo));
+		System.out.println("signOutTeam Out");
+		return check;
 	}
 }

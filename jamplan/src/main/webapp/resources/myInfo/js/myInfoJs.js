@@ -160,6 +160,85 @@ function readURL(input) {
 	}
 }
 
+
+// 유효성 체크
+function joinCheck()
+{
+   var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+   var getCheck= RegExp(/^[a-zA-Z0-9]{4,12}$/);
+   
+   // 1살부터 99살까지 가입가능.
+   var ageCheck = RegExp(/^[1-9]|[0-9]/);
+   
+   var prePassword = $('#prePassword').val();
+   var password = $('#password').val();
+   
+// 이메일 체크 ----> 
+if ($('.join [name="email"]').val()=="")      
+{
+   console.log("join");
+   alert("이메일을 입력하세요");
+   $('.join [name="email"]').focus();
+//   return false;
+   }
+
+if(!getMail.test($('.join [name="email"]').val()))
+{
+    alert("이메일형식에 맞게 입력해주세요")
+    $('.join [name="email"]').val("")
+    $('.join [name="email"]').focus();
+//    return false;
+  }
+
+/*//아이디 체크 ---->    
+if ($('.join [name="id"]').val()=="")   
+{ 
+   alert("아이디를 입력하세요");
+   $('.join [name="id"]').focus();
+//   return false;
+   }
+if(!getCheck.test($('.join [name="id"]').val())){
+  alert("아이디 형식에 맞게 입력해주세요");
+  $('.join [name="id"]').val("");
+  $('.join [name="id"]').focus();
+//  return false;
+}*/
+ 
+// 패스워드 체크 <------
+if ($('#password').val()=="")
+{
+   alert("패스워드를 입력하세요");
+   $('#password').focus();
+//   return false;
+   }
+
+if(!getCheck.test($('#password').val()))
+{
+    alert("비밀번호는 영어,숫자,특수문자 조합으로 해주세요.(글자수는 6~12)")
+    $('#password').focus();
+//    return false;
+   }
+
+   //return true;
+//   return true;
+
+if(password !== prePassword)
+{
+	alert("비밀번호가 일치되지 않습니다.");
+	$('#password').focus();
+	
+	}
+
+
+if(!ageCheck.test($('#age').val())) {
+	alert('나이를 정확히 입력해주세요.');
+	$('#age').focus();
+}
+
+}
+
+
+
 $(document).ready(function() {
 	
 	$(".tab-pane.container").click(function(){
@@ -180,7 +259,7 @@ $(document).ready(function() {
 		});
 	})
 	
-	/*$("#imageUpload").click(function(event) {
+	$("#imageUpload").click(function(event) {
 		
 		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
 		event.preventDefault();
@@ -209,10 +288,10 @@ $(document).ready(function() {
 				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
 			}
 		});
-	})*/
+	})
 	
 	
-	$("#imageUpload").click(function(event) {
+	/*$("#imageUpload").click(function(event) {
 		
 		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
 		event.preventDefault();
@@ -220,15 +299,15 @@ $(document).ready(function() {
 		var image = $('#searchImage').val();
 		console.log(image);
 		
+		
 		$.ajax({
 			url: '/jamplan/imageUpload.info',
-			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
 			type: 'POST',
 			data: {
-				"image" : image
+				image: image
 			},
-			dataType : "json",
-			contentType: false,
+			dataType: "json",
+			contentType: 'application/x-www-form-urlencoded; charsert=utf-8',
 			success: function(result) {
 				if(result == '1') {
 					alert('프로필 사진을 업로드했습니다.');
@@ -240,7 +319,7 @@ $(document).ready(function() {
 				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
 			}
 		});
-	})
+	})*/
 	
 	
 	// 팀 삭제시 팀명 바로 없애주기 위한 ajax
@@ -327,6 +406,8 @@ $(document).ready(function() {
 	$('#searchImage').change(function () {
 		readURL(this);
 	})
+	
+	
 
 });
 

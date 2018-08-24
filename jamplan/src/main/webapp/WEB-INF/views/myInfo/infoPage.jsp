@@ -148,30 +148,28 @@
 						</div>
 						<div class="tab-pane fade" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
                             <div style="display:flex;width:100%;">
-                                <form id="imageForm" enctype="multipart/form-data">
+                                <form id="imageForm" name="image" action="imageUpload.info" enctype="multipart/form-data">
                                     <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
                                     <label id="imageSearch">사진 찾기<input id="searchImage" type="file" name="image" accept="image/*"></label>                              
                                     <button id="imageUpload" class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
                                 </form>
-                                <form autocomplete="off" id="infoForm" action="/" method="post">
+                                <form autocomplete="off" id="infoForm" action="/updateMyInfo.info" method="post">
                                     <div style="width: 80%;margin-right:10%">
                                         <p>아이디</p>
                                         <input name="id" value="${id }" readonly autofocus>
                                     </div>
                                     <div style="width: 80%;margin-right:10%">
                                         <p>이메일</p>
-                                        <input name="email">
+                                        <input id="email" name="email">
                                     </div>
                                     <div style="width:30%;margin-right:17%">
                                         <p>비밀번호 확인</p>
-                                        <input name="pass">
+                                        <input id="password" name="pass">
                                     </div>                      
                                     <div style="width:37%;margin-right:6%">
                                         <p>비밀번호</p>
-                                        <input name="pass">
-                                    </div>
-                                    
-                                    
+                                        <input id="prePassword">
+                                    </div>                                    
                                     <div style="width:37%;margin-right:10%">
                                         <p>가입일</p>
                                         <input readonly name="signDate">
@@ -193,11 +191,15 @@
                                     </div>
                                     <div style="width:37%;margin-right:6%">
                                         <p>나이</p>
-                                        <input name="age">
+                                        <input id="age" name="age">
                                     </div>
                                     <div style="width:37%;margin-right:6%">
                                         <p>여행 타입</p>
-                                        <input name="travelType">
+                                        <input id="travelType" name="travelType">
+                                    </div>
+                                    </br></br>
+                                    <div style="width:37%;margin-right:25%">
+                                    	<button class="btn success" type="submit">정보 수정</button>
                                     </div>
                                 </form> 
                             </div>
