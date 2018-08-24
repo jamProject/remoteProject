@@ -24,9 +24,9 @@ create table userteam(
     teamname varchar2(32)
 );
 select * from plan;
-
 select * from teaminfo;
---delete teaminfo;
+select * from teaminfo order by teamno asc ;
+delete teaminfo;
 commit;
 create table userInfo(
     id varchar2(32) primary key,
@@ -51,6 +51,7 @@ create table plan(
     readcount number,
     isopen number not null
 );
+select * from plan;
 select * from plandate where planNo =1 and SELECTDATE ='18/08/01'; 
 commit;
 select * from plandate order by selectdate asc;

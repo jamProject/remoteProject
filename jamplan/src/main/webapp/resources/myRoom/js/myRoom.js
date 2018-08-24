@@ -126,9 +126,10 @@ function ajaxGetTeamList() {
 	for(var i = 0; i < teamNameArray.length; i++){
 		console.log("i : "+i);
 		planListAdd(teamNameArray[i],i);
-		planClickEvent();
 	}
+	planClickEvent();
 	console.log("플랜 클릭 이벤 트 추가");
+	console.log("planLink val : " + $(".planLink").attr("value"));
 	
 } 
 
@@ -173,6 +174,7 @@ function planListAdd(teamName, indexI){
 					console.log("if문 플랜 정보 "+item.planNo);
 					//console.log("플랜이름"+item.planName);
 					RetrunList = '<div id="myPlan' + item.planNo + ' class = "collapse planLink" value = "'+item.planNo+'">' + item.planName + '</div>';
+					//RetrunList = '<div id="myPlan' + item.planNo + ' class = "planLink" value = "'+item.planNo+'">' + item.planName + '</div>';
 					$('#myTeam'+i).append(RetrunList);
 				}
 			})
