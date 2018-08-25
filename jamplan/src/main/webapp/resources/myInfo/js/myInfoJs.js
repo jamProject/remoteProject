@@ -264,19 +264,18 @@ $(document).ready(function() {
 		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
 		event.preventDefault();
 		
-		var fileName = $('#searchImage').val();
-		console.log(fileName);
-		var data = new FormData(fileName);
-		console.log(data);
+		var fileName = $('#imageForm')[0];
+		
+		var formData = new FormData(fileName);
 		
 		
 		$.ajax({
 			url: '/jamplan/imageUpload.info',
 			type: 'POST',
-			data: data,
+			data: formData,
+			dataType: 'json',
 			processData: false,
 			contentType: false,
-			cache: false,
 			success: function(result) {
 				if(result == '1') {
 					alert('프로필 사진을 업로드했습니다.');
@@ -408,6 +407,54 @@ $(document).ready(function() {
 	})
 	
 	
+	
+	// 셀렉트 박스의 동작에 대한 스크립트
+	/* ===== Logic for creating fake Select Boxes ===== */
+	$('.sel').each(function() {
+	  $(this).children('select').css('display', 'none');
+	  
+	  var $current = $(this);
+	  
+	  $(this).find('option').each(function(i) {
+	    if (i == 0) {
+	      $current.prepend($('<div>', {
+	        class: $current.attr('class').replace(/sel/g, 'sel__box')
+	      }));
+	      
+	      var placeholder = $(this).text();
+	      $current.prepend($('<span>', {
+	        class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+	        text: placeholder,
+	        'data-placeholder': placeholder
+	      }));
+	      
+	      return;
+	    }
+	    
+	    $current.children('div').append($('<span>', {
+	      class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+	      text: $(this).text()
+	    }));
+	  });
+	});
+
+	// Toggling the `.active` state on the `.sel`.
+	$('.sel').click(function() {
+	  $(this).toggleClass('active');
+	});
+
+	// Toggling the `.selected` state on the options.
+	$('.sel__box__options').click(function() {
+	  var txt = $(this).text();
+	  var index = $(this).index();
+	  
+	  $(this).siblings('.sel__box__options').removeClass('selected');
+	  $(this).addClass('selected');
+	  
+	  var $currentSel = $(this).closest('.sel');
+	  $currentSel.children('.sel__placeholder').text(txt);
+	  $currentSel.children('select').prop('selectedIndex', index + 1);
+	});
 
 });
 

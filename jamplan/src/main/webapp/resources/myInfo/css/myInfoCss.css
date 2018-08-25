@@ -168,7 +168,7 @@
 	        margin-bottom: 3px;
 	    }
 	    #infoForm > div > input{
-	        font-size:16px;
+	        font-size: 1em;
 	        letter-spacing:1px;
 	        padding: 5px;
 	        border: 0;
@@ -191,7 +191,7 @@
 	        padding: 10px 25px;
 	        background: silver;
 	        border-radius: 28px;
-	        font-size: 12px; 
+	        font-size: 1em; 
 	    }
 	
 	    .term{
@@ -200,6 +200,128 @@
 	        width: 100%;
 	        align-items: center;
 	    }
+	    
+	    
+	    /* select에 대한 css  */
+	    /* ===== Horizontal Rule ===== */
+		.rule {
+		  margin: 10px 0;
+		  border: none;
+		  height: 1.5px;
+		  background-image: linear-gradient(left, #f0f0f0, #c9bbae, #f0f0f0);
+		}
+		
+		/* ===== Select Box ===== */
+		.sel {
+		  font-size: 1em;
+		  display: inline-block;
+		  margin: 1em 1em;
+		  width: 100%;
+		  background-color: transparent;
+		  position: relative;
+		  cursor: pointer;
+		}
+		
+		
+		
+		.sel.active::before {
+		  transform: rotateX(-180deg);
+		}
+		
+		.sel__placeholder {
+		  display: block;
+		  font-size: 1em;
+		  padding: 0.2em 0.5em;
+		  text-align: left;
+		  pointer-events: none;
+		  user-select: none;
+		  visibility: visible;
+		}
+		
+		.sel.active .sel__placeholder {
+		  visibility: hidden;
+		}
+		
+		.sel__placeholder::before {
+		  position: absolute;
+		  top: 0;
+		  bottom: 0;
+		  left: 0;
+		  right: 0;
+		  padding: 0.2em 0.5em;
+		  content: attr(data-placeholder);
+		  visibility: hidden;
+		}
+		
+		.sel.active .sel__placeholder::before {
+		  visibility: visible;
+		}
+		
+		.sel__box {
+		  position: absolute;
+		  top: calc(100% + 4px);
+		  
+		  display: none;
+		  list-style-type: none;
+		  text-align: left;
+		  font-size: 1em;
+		  background-color: #FFF;
+		  width: calc(100% + 8px);
+		  box-sizing: border-box;
+		}
+		
+		.sel.active .sel__box {
+		  display: block;
+		  animation: fadeInUp 500ms;
+		}
+		
+		.sel__box__options {
+		  display: list-item;
+		  font-size: 1em;
+		  padding: 0.5em 1em;
+		  user-select: none;
+		}
+		
+		.sel__box__options::after {
+		  content: '\f00c';
+		  font-size: 0.5em;
+		  margin-left: 5px;
+		  display: none;
+		}
+		
+		.sel__box__options.selected::after {
+		  display: inline;
+		}
+		
+		/* ----- Select Box Black Panther ----- */
+		.sel {
+		  border-bottom: 1px solid silver;
+		}
+		
+		
+		/* ===== Keyframes ===== */
+		@keyframes fadeInUp {
+		  from {
+		    opacity: 0;
+		    transform: translate3d(0, 20px, 0);
+		  }
+		
+		  to {
+		    opacity: 1;
+		    transform: none;
+		  }
+		}
+		
+		@keyframes fadeOut {
+		  from {
+		    opacity: 1;
+		  }
+		
+		  to {
+		    opacity: 0;
+		  }
+		}
+	    /* select에 대한 css 끝 */
 	    
 	    
 	    /* submit 버튼에 대한 css */

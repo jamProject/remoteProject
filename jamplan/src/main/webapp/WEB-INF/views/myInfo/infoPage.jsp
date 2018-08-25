@@ -20,6 +20,7 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		
+		
 		<spring:url value="/resources/myInfo/js/myInfoJs.js" var="myInfoJs" />
 		<spring:url value="/resources/myInfo/css/myInfoCss.css" var="myInfoCss" />
 	
@@ -148,9 +149,9 @@
 						</div>
 						<div class="tab-pane fade" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
                             <div style="display:flex;width:100%;">
-                                <form id="imageForm" name="image" action="imageUpload.info" enctype="multipart/form-data">
+                                <form id="imageForm" name="imageForm" action="imageUpload.info" enctype="multipart/form-data">
                                     <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
-                                    <label id="imageSearch">사진 찾기<input id="searchImage" type="file" name="image" accept="image/*"></label>                              
+                                    <label id="imageSearch">사진 찾기<input id="image" type="file" name="image" accept="image/*"></label>                              
                                     <button id="imageUpload" class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
                                 </form>
                                 <form autocomplete="off" id="infoForm" action="/updateMyInfo.info" method="post">
@@ -195,7 +196,16 @@
                                     </div>
                                     <div style="width:37%;margin-right:6%">
                                         <p>여행 타입</p>
-                                        <input id="travelType" name="travelType">
+                                        
+                                        <div class="sel sel--black-panther">
+										  <select name="select-profession" id="select-profession">
+										    <option value="alone">나홀로</option>
+										    <option value="friend">친구들과 함께</option>
+										    <option value="family">가족과 함께</option>
+										    <option value="stranger">동행 구하기</option>
+										    <option value="love">연인과 함께</option>
+										  </select>
+										</div>
                                     </div>
                                     </br></br>
                                     <div style="width:37%;margin-right:25%">

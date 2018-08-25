@@ -70,11 +70,13 @@ public class MyInfoController {
 	}
 	
 	
-	@RequestMapping(value="imageUpload.info", produces="application/json;charset=UTF-8")
+	@RequestMapping(value="imageUpload.info", method=RequestMethod.POST)
 	@ResponseBody
 	public String fileUpload(MultipartHttpServletRequest multiRequest, HttpSession session, UserVO user) throws Exception {
 		System.out.println("fileUpload IN");
-		System.out.println(multiRequest.getParameter("image"));
+		System.out.println(multiRequest.getFile("image"));
+		
+		
 		user.setId((String)session.getAttribute("id"));
 		MultipartFile mf = multiRequest.getFile("image");
 		System.out.println(mf.getOriginalFilename());
