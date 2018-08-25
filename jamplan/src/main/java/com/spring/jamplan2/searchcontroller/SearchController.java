@@ -114,7 +114,7 @@ public class SearchController {
 	}
 	
 	//일정검색컨트롤러
-	@RequestMapping(value = "planSearch.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@RequestMapping(value = "planSearch.do", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String planSearch(PlanVO planVO) {
 		//데이터 확인

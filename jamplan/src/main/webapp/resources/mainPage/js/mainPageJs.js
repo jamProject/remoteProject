@@ -1,13 +1,13 @@
 /* @author wookim
  */
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 	
 	function selectData(){ 
 		//table내부 내용을 제거(초기화), 동적으로 제거
-		/* $(.imgClick).click(function) {
+		 $(.imgClick).click(function) {
 			
-		} */
+		} 
 		//alert("hahaha");
 		$.ajax({ //jquery에서 ajax호출할때 사용하는 방식 / jQuery.ajax=$.ajax : jquery 표현하는방식 2가지 
 			url:'/jamplan/imgJson.do',
@@ -42,29 +42,130 @@ $(document).ready(function(){
 	}
 
 	selectData();
+});*/
+
+
+//아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1 )
+$(document).ready(function(){
+	
+	$("#myroomBtn").click(function(){
+	
+		location.href="myroom.do";
+	});
+	
+	$("#searchBtn").click(function(){
+		var planName = $("city_search").val();
+		location.href="searchplan.do";
+	});
 });
-
-function check()
-{
-// 아이디 체크 ----> 
-if ($('.login [name="id"]').val()=="")
-	
-{
-	//console.log("dd");
-	alert("아이디를 입력하세요!!!");
-	$('.login [name="id"]').focus();
-	return false;
-	}
+var idck = 0;
+$(function() {
+    //idck 버튼을 클릭했을 때 
+    $("#idck").click(function() {
+        
+        //userid 를 param.
+        var userid =  $("#usr2").val(); 
+        
+        $.ajax({
+            async: true,
+            type : 'POST',
+            data : userid,
+            url : "idcheck.do",
+            dataType : "json",
+            contentType: "application/json; charset=UTF-8",
+            success : function(data) {
+                if (data.cnt > 0) {
+                    
+                    alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
+                    $("#usr2").addClass("has-error")
+                    $("#usr2").removeClass("has-success")
+                    $("#usr2").focus();
+                    
+                
+                } else {
+                    alert("사용가능한 아이디입니다.");
+                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
+                    $("#usr2").addClass("has-success")
+                    $("#usr2").removeClass("has-error")
+                    $("#usr2").focus();
+                    //아이디가 중복하지 않으면  idck = 1 
+                    idck = 1;
+                    
+                }
+            },
+            error : function(error) {
+                
+                alert("error : " + error);
+            }
+        });
+    });
+});
  
-if ($('.login [name="pass"]').val()=="")
 
-{
-	alert("패스워드를 입력하세요!!!");
-	$('.login [name="pass"]').focus();
-	return false;
-	}
-	 // 패스워드 체크 <------
-	
-	//return true;
-	return true;
-}
+$(function() {
+	 
+	$("#joinB").click(function() {
+		
+		var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+		var getIdCheck = RegExp(/^[a-z0-9_]+$/);
+		var getPassCheck= RegExp(/^[a-zA-Z0-9]{6,12}$/);
+	 
+		var userid = $("#usr2").val();
+		var userpwd = $("#pwd2").val();
+		var email = $("#email").val();
+		 
+		    if(email.length == 0){
+		        alert("이메일을 입력해주세요");
+		    $("#email").focus();
+		    return false;
+		}
+		    if(!getMail.test(email))
+		    {
+		        alert("이메일형식에 맞게 입력해주세요")
+		        $("#email").val("");
+		        $("#email").focus();
+		        return false;
+		     }
+		
+		if(userid.length == 0){
+		    alert("아이디를 입력해 주세요"); 
+		    $("#usr2").focus();
+		    return false;
+		}
+		
+		if(!getIdCheck.test(userid)){
+			  alert("아이디는 오직 문자와 숫자, _ 기호만 입력가능");
+			  $("#usr2").val("");
+			  $("#usr2").focus();
+			  return false;
+			}
+		
+		if(userpwd.length == 0){
+		    alert("비밀번호를 입력해 주세요"); 
+		    $("#pwd2").focus();
+		    return false;
+		}
+		
+		if(!getPassCheck.test(userpwd))
+		{
+		    alert("비밀번호는 영어,숫자,특수문자 조합으로 해주세요.(글자수는 6~12)")
+		    $("#pwd2").val("");
+			$("#pwd2").focus();
+			return false;
+			}
+		
+		if(confirm("회원가입을 하시겠습니까?"))
+			{
+		    	if(idck==0){
+			        alert('아이디 중복체크를 해주세요');
+			        return false;
+		    	}
+			    else
+			    {
+				    alert("디비가기전");
+				    location.href="join.do?id="+userid+"&pass="+userpwd+"&email="+email;
+		        }
+		    }
+		});
+	});

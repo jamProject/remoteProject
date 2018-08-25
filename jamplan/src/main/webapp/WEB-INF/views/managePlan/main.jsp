@@ -116,6 +116,7 @@
 		  <!-- Centered link -->
 		  <div class="topnav-centered">
 		    <h2><strong><a href="#home" class="active">Jam Planner</a></strong></h2>
+		    <p style="text-align:center"><%=id%>의 planner</p>
 		  </div>
 		  <!-- Right-aligned links -->
 		  <div class="topnav-right">

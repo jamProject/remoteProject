@@ -1,19 +1,21 @@
 package com.spring.jamplan.snslogin;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonParser;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.spring.jamplan.main.MainDAOService;
+
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
@@ -26,7 +28,7 @@ public class LoginController {
 	UserVO userVO;
 	
 	@Autowired
-	MainDAOService mDAOS;
+	SnsDAOService sDAOS;
 	
 	@Autowired
 	TeamInfoVO teamVo;
@@ -59,7 +61,7 @@ public class LoginController {
     
     //네이버 로그인 성공시 callback호출 메소드
     @RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+    public String callback(UserVO vo, Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
             throws IOException {
         System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
@@ -77,7 +79,21 @@ public class LoginController {
         System.out.println("email="+email);
         System.out.println("name="+name);
 
-        UserVO vo = new UserVO();
+        vo = sDAOS.getUserInfo(email);
+        
+        if(!(vo==null))
+        {
+        	session.setAttribute("id",vo.getId());
+        	System.out.println("vo.getId()="+vo.getId());
+        }
+        else
+        {
+        	System.out.println("SetId 하기 전 vo.getId()="+null);
+        	UserVO userVO = new UserVO();
+        	userVO.setId(email);
+        	System.out.println("SetId 하고 난 후 vo.getId()="+userVO.getId());
+        	sDAOS.insertUser(userVO);
+        }
 //      UserVO vo = new UserVO();
 //      vo.setUser_snsId(snsId);
 //      vo.setUser_name(name);
@@ -91,7 +107,6 @@ public class LoginController {
 //      }
 
 
-//      session.setAttribute("login",vo);
 //      return new ModelAndView("user/loginPost", "result", vo);
         
         return "main/callback";
