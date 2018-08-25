@@ -38,7 +38,7 @@ public class UserVO {
 	
 	int age;
 	
-	int isAdmin;
+	int isAdmin;//1이 관리자 0이 유저
 	
 	String signDate;
 	
