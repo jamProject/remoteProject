@@ -41,4 +41,5 @@ public interface MyRoomMapper {
 	void deleteCansleMessage(MessageVO vo);
 	ArrayList<MessageVO> checkApplyMessage(MessageVO vo);	
 	ArrayList<MessageVO> getMessageListById(MessageVO vo);	
+	ArrayList<TeamInfoVO> getTeamMemberList(TeamInfoVO vo);
 }

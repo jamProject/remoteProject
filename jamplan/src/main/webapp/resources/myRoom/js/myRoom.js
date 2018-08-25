@@ -69,11 +69,12 @@ $(document).ready(function() {
 		var index1 = $(this).data("trIndex");
 		deleteMessageTR(teamName,sender,index1)
 			});
-/*	$(document).on("click", "button.applyButCan", function(){
+	$(document).on("click", "button.applyButCan", function(){
+		alert("팀 신청 취소");
 		var teamName = $(this).attr("value");
-		var sender = $(this).data("sender");
-		deleteMessageTR(teamName,sender)
-			});*/
+		//var sender = $(this).data("sender");
+		deleteMessage(teamName)
+			});
 	$(document).on("click", "button.deleteMessageBut", function(){
 		var teamName = $(this).attr("value");
 		//var sender = $(this).data("sender");
@@ -201,6 +202,7 @@ $(document).ready(function() {
 	$(document).on("click", "button.applyBut", function(){
 		//alert("신청 버튼 이벤트 ")
 		var teamName = $(this).attr("value");
+		alert(teamName+"에 지원했습니다.");
 		$.ajax({
 			url : '/jamplan/applyToTeam.do',
 			type : 'POST',
@@ -211,7 +213,7 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 			success : function(data) {
-				//alert(data.res);
+				alert(data.res);
 			},
 			error: function(data){
 				alert(data.res);
@@ -387,11 +389,11 @@ $(document).ready(function() {
 					success : function(data) {
 						$.each(data, function(index, item) {			
 								update += '<tr><td>'+ item.teamName+ '</td>'
-								+'<td class="tdOdd"><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
+								+ '<td class="tdOdd"><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
 								+ '<td class="tdOdd"><button class = "btn btn-danger applyButCan" value = '+item.teamName+'>취소</button></td></tr>';
 								console.log("팀 검색 결과 : " + item.teamName);
 							})
-						//	console.log("update 글 : " + update);
+							//console.log("update 글 : " + update);
 							tableHead += update;
 							tableHead += tableTail;
 							//$('tableTail').append(tableHead);
@@ -435,7 +437,6 @@ function deleteMessageTR(teamName, sender,index1){
 function deleteMessage(teamName){
 	//alert("취소 버튼 이벤트 ")
 	var teamNAME = teamName;
-	var Sender = sender;
 	//alert("팀이름 : " + teamName);
 	$.ajax({
 		url : "/jamplan/deleteMessageToTeam.do",
@@ -444,7 +445,7 @@ function deleteMessage(teamName){
 				'teamName' : teamNAME
 				},
 		dataType : 'json',
-		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+		//contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
 			alert(data.res);
 		},
@@ -566,66 +567,8 @@ function ajaxGetTeamList() {
 
 	$('#teamList').empty();	
 	$.ajax({
-<<<<<<< HEAD
-				url : '/jamplan/ajaxPrintTeamList.do',
-				type : 'POST',
-				contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-				async: false,
-				dataType : 'json',
-				//async: false,
-				success : function(data) {
 
-						// data에 들어있는 데이터 수만큼 반복되고 하나하나가 매번 item에 매핑된다.
-						$.each(data,function(index, item) {
-											var teamList = '';
-											teamList += '<button class="btn btn-outline-light text-dark border-0 teamList" id="myTeam'
-													+ index
-													+ '"'
-													+ ' data-toggle="collapse" data-target="#myPlan'
-													+ index
-													+ '">'
-													+ item.teamName
-													+ '</button>';
-													
-													//console.log("return값 확인 : "+planListAdd(teamList, item.teamName));
-													//teamList = planListAdd(teamList, item.teamName);
-												/*	+ '<div id="myPlan'
-													+ index
-													+ '"'
-													+ ' class="collapse">'
-													+ 'plan' + '</div>';*/
-													console.log(teamList);
-											$('#teamList').append(teamList);
-					
-											// 팀명을 배열에 담고 Add plan 버튼에서의 테이블 생성에
-											// 이용한다.
-											teamNameArray[index] = item.teamName;
-										});
-				}, error : function(e) {
-					alert("unload " + e);
-								},
-							});
-	for(var i = 0; i < teamNameArray.length; i++){
-		console.log("i : "+i);
-		planListAdd(teamNameArray[i],i);
-	}
-	planClickEvent();
-	console.log("플랜 클릭 이벤 트 추가");
-	console.log("planLink val : " + $(".planLink").attr("value"));
-	
-} 
-
-function planClickEvent(){
-	
-	$(".planLink").click(function(){
-		var planNo = $(this).attr("value");
-		console.log("플랜 이벤트 플랜 번호  : " + planNo)
-		async: false,
-		$.ajax({
-			url : '/jamplan/movePlanMainPage.do',
-=======
 			url : '/jamplan/ajaxPrintTeamList.do',
->>>>>>> a69bfb8c34833ca8890b80deae0bb7548dbeb52b
 			type : 'POST',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 			async: false,
@@ -713,14 +656,10 @@ function planListAdd(teamName, indexI){
 					
 					//console.log("if문 플랜 정보 "+item.planNo);
 					//console.log("플랜이름"+item.planName);
-<<<<<<< HEAD
-					RetrunList = '<div id="myPlan' + item.planNo + ' class = "collapse planLink" value = "'+item.planNo+'">' + item.planName + '</div>';
-					//RetrunList = '<div id="myPlan' + item.planNo + ' class = "planLink" value = "'+item.planNo+'">' + item.planName + '</div>';
-					$('#myTeam'+i).append(RetrunList);
-=======
+
 					RetrunList = '<div id="planSelectList' + item.planNo + ' class ="movePlan" value = "'+item.planNo+'">' + item.planName + '</div>';
 					$('#myTeam'+i).append(RetrunList);	
->>>>>>> a69bfb8c34833ca8890b80deae0bb7548dbeb52b
+
 				}
 			})
 		}

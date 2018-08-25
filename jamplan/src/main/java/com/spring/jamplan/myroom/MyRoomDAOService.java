@@ -135,9 +135,9 @@ public class MyRoomDAOService implements MyRoomDAO {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < teamList.size(); i++) {
+		/*for (int i = 0; i < teamList.size(); i++) {
 			System.out.println(teamList.get(i).getPlanNo());
-		}
+		}*/
 		System.out.println("DAO getPlanListById Out");
 		return teamList;
 	}
@@ -238,9 +238,9 @@ public class MyRoomDAOService implements MyRoomDAO {
 		System.out.println("DAO getMessageList in");
 
 		ArrayList<MessageVO> messageList = null;
-		try {
+		//try {
 			messageList = myRoomMapper.getMessageListById(vo);
-			if(messageList.size()!=0) {
+/*			if(messageList.size()!=0) {
 				System.out.println("====="+messageList.get(0).getTeamName());
 			}else {
 				System.out.println("인덱스 바운드 익셉션");
@@ -250,21 +250,20 @@ public class MyRoomDAOService implements MyRoomDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+		*/
 		System.out.println("DAO getMessageList out");
 		return messageList;
 	}
 
 	@Override
-	public int insertApplyMessage(String id, MessageVO message) {
+	public int insertApplyMessage(MessageVO message) {
 		System.out.println("DAO insertApplyMessage in");
 		// 이미 가입된 팀 0, 이미 신청함 1, 신청 저장 2;
 		int check = 0;
-		String sender = id;
 		String teamName = message.getTeamName();
+		String id = message.getSender();
 		TeamInfoVO team1 = null;
 		ArrayList<TeamInfoVO> teamList = null;
-		message.setSender(sender);
 		System.out.println("insertApplyMessage teamName :" + teamName);
 		try {
 			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
@@ -308,7 +307,6 @@ public class MyRoomDAOService implements MyRoomDAO {
 				// 0일때 읽지 않은 메세지
 				message.setIsRead(0);
 				message.setReceiver(receiver);
-				message.setSender(sender);
 				message.setTeamName(teamName);
 
 				try {
@@ -448,26 +446,27 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 
 	@Override
-	public int insertPlan(TeamInfoVO vo) {
+	public void insertPlan(TeamInfoVO vo) {
 		System.out.println("DAO insertPlan IN");
-		int check = 0;
+		//int check = 0;
 		try {
 			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 			myRoomMapper.insertPlan(vo);
-			check = 1;
+			//check = 1;
 			System.out.println("insertPlan : insert suc");
 			// 성공시 1
 		} catch (Exception e) {
 			// TODO: handle exception
 			// 실패시 0;
 			System.out.println("insertPlan : insert fail");
-			check = 0;
+			//check = 0;
 		}
 		System.out.println("insertPlan out");
-		return check;
+		//return check;
 	}
 
 	@Override
+	//팀네임이 같은 테이블 정보 전부 가져오기
 	public ArrayList<TeamInfoVO> getTeamInfo(TeamInfoVO teamVO) {
 		System.out.println("getTeamInfo in");
 		ArrayList<TeamInfoVO> vo = null;
@@ -480,7 +479,21 @@ public class MyRoomDAOService implements MyRoomDAO {
 		System.out.println("getTeamInfo out");
 		return vo;
 	}
-
+	
+	@Override
+	//같은 팀원의 리스트 가져오기
+	public ArrayList<TeamInfoVO> getTeamMemberList(TeamInfoVO teamVO) {
+		System.out.println("getTeamInfo in");
+		ArrayList<TeamInfoVO> list = null;
+		try {
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			list = myRoomMapper.getTeamMemberList(teamVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("getTeamInfo out");
+		return list;
+	}
 	@Override
 	public int getMaxPlanNo() {
 

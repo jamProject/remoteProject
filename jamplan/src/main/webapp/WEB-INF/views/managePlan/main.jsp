@@ -145,6 +145,7 @@
 						<div class="tab-pane container fade" value = "plantableajax.mp" id="planTable"></div>
 						<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div>
 					</div>
+					<!-- <div class = "content"></div> -->
 				</div>
 				<div class="col-md-3">
 					<h1>채팅창</h1>

@@ -13,7 +13,9 @@ $(document).ready(function() {
 		contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
 		dataType : "json",
 		success:function(str){
-			$(".content").load(str.link);
+			alert("캘린더");
+			console.log(str.link);
+			$("#calendar").load(str.link);
 			console.log('로드 후')
 		},	
 		error:function(){

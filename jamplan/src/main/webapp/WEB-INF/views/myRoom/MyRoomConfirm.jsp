@@ -16,6 +16,10 @@
 
 	String id = (String) request.getAttribute("id");
 	
+	if(session.getAttribute("planNo")!=null){
+		System.out.print("===========================jsp 세션 초기화=======================");
+		session.removeAttribute("planNo");
+	}
 	/* if( request.getAttribute("teamList") != null){
 		List<TeamInfoVO> teamList = (List<TeamInfoVO>) request.getAttribute("teamList");
 
