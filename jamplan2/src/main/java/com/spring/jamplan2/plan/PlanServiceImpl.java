@@ -15,7 +15,7 @@ public class PlanServiceImpl implements PlanService {
 	private SqlSession sqlsession;
 	
 	@Override
-	public ArrayList planTable(PlanTableVO planTableVO, PlanMapVO planMapVO){
+	public ArrayList<PlanTableVO> planTable(PlanTableVO planTableVO, PlanMapVO planMapVO){
 		//질문. arraylist를 안써도 되지않나유?왜써주는건가유(노랑표시..)
 		
 		ArrayList<PlanTableVO> planTableList = null;
@@ -51,12 +51,18 @@ public class PlanServiceImpl implements PlanService {
 			if(planTableList.size() == 0) {
 				System.out.println("플랜테이블이0일때 들어오고 둘다 null이아닐때 들어왔다!!!!");
 				for (i=0; i < planMapList.size(); i++) {
+					System.out.println("for문들어옴");
+					
 					String getCalendar = planMapList.get(i).getCalendar();
 					planTableVO.setCalendar(getCalendar);
 					String getMap = planMapList.get(i).getMap();
 					planTableVO.setMap(getMap);
-					
+					planTableVO.setPlanSeq(i);
+					System.out.println("seq = " + i);
+
 					planMapper.insertPlanTable(planTableVO);
+					System.out.println("isert완료");
+				
 				}
 				/*System.out.println("set한planTable insert!!");*/
 				
@@ -153,31 +159,31 @@ public class PlanServiceImpl implements PlanService {
 	}*/
 	
 	@Override
-	public ArrayList savePlanTable (PlanTableVO planTableVO) {
+	public ArrayList<PlanTableVO> savePlanTable (PlanTableVO planTableVO) {
 		System.out.println("save들어왔니?");
-		ArrayList<PlanTableVO> checkList = null;
+		ArrayList<PlanTableVO> planTableList = null;
 		int i = 0;
 		
 		PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
 		
-		checkList = planMapper.getplanTable(planTableVO);
-		System.out.println("checkList:" + checkList.get(0).getMap());
+		planTableList = planMapper.getplanTable(planTableVO);
+		System.out.println("checkList:" + planTableList.get(0).getMap());
 		
-		System.out.println("checkList사이즈="+checkList.size());
+		System.out.println("checkList사이즈="+planTableList.size());
 		
 		
 		//for문 돌리면안됌..?
-		for (i=0; i < checkList.size(); i++) {
-			String getMap = checkList.get(i).getMap();
-			planTableVO.setMap(getMap);
-			int check = planMapper.savePlanTable(planTableVO);
-			
+		for (i=0; i < planTableList.size(); i++) {
+			System.out.println("메모"+planTableList.get(i).getMemo());
+			System.out.println("시퀀스"+planTableList.get(i).getPlanSeq());
+			System.out.println("플랜넘버"+planTableList.get(i).getPlanNo());
+			planMapper.savePlanTable(planTableVO);
 		}
 		System.out.println("for문");
 		
 		System.out.println("mapper연결되고나옴");
 		
-		return checkList;
+		return planTableList;
 		
 		
 		

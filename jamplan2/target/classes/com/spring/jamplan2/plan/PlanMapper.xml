@@ -8,6 +8,7 @@
 	<resultMap type="PlanTableVO" id="planTableMap">
 		<result property="calendar" column="calendar" />
 		<result property="map" column="map" />
+		<result property="memo" column="memo" />
 	</resultMap>
 	
 	<!-- Calendar 테이블 쓰려한거.
@@ -39,11 +40,13 @@
 	</select>
 	 
 	 <insert id="insertPlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
-	 	insert into planTable(calendar,map) values(#{calendar, jdbcType=VARCHAR}, #{map, jdbcType=VARCHAR})
+	 	<!-- insert into planTable(calendar,map) values(#{calendar, jdbcType=VARCHAR}, #{map, jdbcType=VARCHAR}) -->
+	 	insert into planTable(planNo,calendar,map,planSeq) values(#{planNo, jdbcType=INTEGER}, #{calendar, jdbcType=VARCHAR}, #{map, jdbcType=VARCHAR}, #{planSeq, jdbcType=INTEGER})
 	 </insert>
+	 
 	
 	<update id="savePlanTable" parameterType="com.spring.jamplan2.plan.PlanTableVO">
-		update planTable set memo = #{memo, jdbcType=VARCHAR} where map = #{map, jdbcType=VARCHAR}
+		update planTable set memo = #{memo, jdbcType=VARCHAR} where planSeq = #{planSeq, jdbcType=INTEGER} AND planNo = #{planNo, jdbcType=INTEGER}
 	</update>
 
 </mapper>

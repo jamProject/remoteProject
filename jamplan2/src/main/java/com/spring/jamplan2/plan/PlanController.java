@@ -73,9 +73,14 @@ public class PlanController {
 	//savePlanTable : 저장
 	@RequestMapping(value = "savePlanTable.plan", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String savePlanTable (PlanTableVO planTableVO) {
+	public String savePlanTable (HttpSession session, PlanTableVO planTableVO) {
 		System.out.println("memo의값  = " + planTableVO.getMemo());
 		System.out.println("save1");
+		
+		session.setAttribute("no", "1");
+		String no = (String)session.getAttribute("no");
+		int planNo = Integer.parseInt(no);
+		planTableVO.setPlanNo(planNo);
 		
 		ArrayList savePlanList = planService.savePlanTable(planTableVO);
 		

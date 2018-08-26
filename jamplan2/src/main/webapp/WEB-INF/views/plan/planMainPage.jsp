@@ -245,7 +245,7 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript">
 		//동적태그를사용하기위해 사용한 memoList -> 전역변수로 사용한 이유는 어디서든 사용할수있게(먼저 get할때 length를 저장하고 update할때 length값을 쓰기위해 전역변수로 사용함)
-		var memoList = [];
+// 		var memoList = [];
 	
 		$(document).ready(function() {
 				$('.drawer').drawer();
@@ -324,33 +324,14 @@
 				success:function(data){
 					$('#planput').empty();
 					$('#saveput').empty();
-					$('#put').empty();
 					var put = '';
 					var saveput = '';
 						saveput += '<br><br>';
 						saveput += '<a href="javascript:savePlanTable();"><button class="btn btn-primary pull-right" >저장</button></a>';
 						$('#saveput').append(saveput);
-						//put : 기본 뿌려주기
-						put += '<table class="table">';
-						put += '<thead>';
-						put += '<th>날짜 </th>';
-						put += '<th>장소</th>';
-						put += '<th>일정</th>';
-						put += '</thead>';
-						put += '<tbody>';
-						put += '<tr>';
-						put += '<td></td>';
-						put += '<td></td>';
-						//id : memo 쓰임새 고민해보기
-						put += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" ></textarea></td>';
-						put += '</tr>';
-						put += '</tbody>';
-						put += '</table>';
-						$('#put').append(put);
 						
 					$.each(data, function(index, item){
 						/* $('#planput').empty(); */
-						$('#put').empty();
 						var planput = '';
 						planput += '<table class="table">';
 						planput += '<thead>';
@@ -362,12 +343,13 @@
 						planput += '<tr>';
 						planput += '<td>' + item.calendar + '</td>';
 						planput += '<td>' + item.map + '</td>';
-						planput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >' + item.memo + '</textarea></td>';
+						planput += '<td><textarea class="form-control" name="memo" id="memo' + index + '" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
+						planput += '<td><input type="text" hidden="hidden" id="planSeq'+index+'" value="'+item.planSeq+'"></td>'
 						planput += '</tr>';
 						planput += '</tbody>';
 						planput += '</table>';
 						
-						memoList[index] = item.map;
+// 						memoList[index] = item.map;
 						console.log("planput" + planput);
 						$('#planput').append(planput);
 					});
@@ -382,51 +364,50 @@
 		
 		// savePlanTable : 저장
 		function savePlanTable(){
-			
-			var i = 0;
+			var memoCnt = $('[name="memo"]');
 			var params = {};
-			
-			for(i=0; i<memoList.length; i++){
-				params = {"memo" : $('#memo').val()};
+			for(var i=0; i<memoCnt.length; i++){
+				params = {"memo" : $('#memo'+ i).val(), "planSeq" : $('#planSeq'+ i).val()};
 				console.log(params);
+				$.ajax({
+					url : '/jamplan2/savePlanTable.plan',
+					type : 'POST',
+					dataType: "json",
+			        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			        data : params,
+			        success:function(data) {
+					
+			        	/* $.each(data, function(index, item){
+							$('#updateput').empty();
+							var updateput = '';
+							updateput += '<table class="table">';
+							updateput += '<thead>';
+							updateput += '<th>날짜 </th>';
+							updateput += '<th>장소</th>';
+							updateput += '<th>일정</th>';
+							updateput += '</thead>';
+							updateput += '<tbody>';
+							updateput += '<tr>';
+							updateput += '<td>' + item.calendar + '</td>';
+							updateput += '<td>' + item.map + '</td>';
+							updateput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
+							updateput += '</tr>';
+							updateput += '</tbody>';
+							updateput += '</table>';
+							
+							
+							console.log("updateput" + updateput);
+							$('#updateput').append(updateput);
+							
+						}); */
+					},
+			        	error:function() {
+			        		alert('ajax통신실패!!!');
+			        	}
+			        });
 			}
+			alert('저장성공!');
 			
-			$.ajax({
-				url : '/jamplan2/savePlanTable.plan',
-				type : 'POST',
-				dataType: "json",
-		        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		        data : params,
-		        success:function(data) {
-		        	$.each(data, function(index, item){
-		        		alert('성공!');
-						/* $('#planput').empty(); */
-						$('#updateput').empty();
-						var updateput = '';
-						updateput += '<table class="table">';
-						updateput += '<thead>';
-						updateput += '<th>날짜 </th>';
-						updateput += '<th>장소</th>';
-						updateput += '<th>일정</th>';
-						updateput += '</thead>';
-						updateput += '<tbody>';
-						updateput += '<tr>';
-						updateput += '<td>' + item.calendar + '</td>';
-						updateput += '<td>' + item.map + '</td>';
-						updateput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >' + item.memo + '</textarea></td>';
-						updateput += '</tr>';
-						updateput += '</tbody>';
-						updateput += '</table>';
-						
-						
-						console.log("updateput" + updateput);
-						$('#updateput').append(updateput);
-					});
-				},
-		        	error:function() {
-		        		alert('ajax통신실패!!!');
-		        	}
-		        });
 		}
 		
 		
@@ -490,6 +471,7 @@
 				
 				<!-- 기본 뿌려주기 -->
 				<div id="put"></div>
+				
 				
 				
 				<!-- palnTable 뿌려주기 -->	
