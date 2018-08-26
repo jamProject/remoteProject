@@ -6,11 +6,14 @@
 
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.spring.jamplan.model.TeamInfoVO" %>
+<%@ page import="com.spring.jamplan.model.UserVO" %>
+
 
 <%  
     session.setAttribute("id", "thkim9198");   
 	session.setAttribute("teamNo", "3");
-%>
+	UserVO user = (UserVO)request.getAttribute("user");
+ %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -55,6 +58,9 @@
 		}
 		/*구글 한글폰트 불러오는 부분 끝*/
 		</style>
+		<script>
+			
+		</script>
 		
 		<title>Jam Planner</title>
 	</head>
@@ -76,7 +82,7 @@
 		</header>
 		<section class="container-fluid">
 			<div id="main-container" class="row content">
-				<div class="col-sm-3 sidenav">
+				<div class="col-sm-2 sidenav">
 					<h1>사이드바</h1>
 					<ul class="nav nav-pills flex-column">
 				        <li class="nav-item active"><a class="nav-link" href="#section1">Main</a></li>
@@ -93,22 +99,22 @@
 				        </span>
 				    </div>
 				</div>
-				<div class="col-sm-9">
+				<div class="col-sm-10">
 					</br></br>
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 							
-							<li class="nav-item">
-							     <a class="nav-link active" id="teamManage-tab" data-toggle="tab" href="#teamManage" role="tab" aria-controls="profile" aria-selected="false">
-									팀 관리</a></li>	
-							<li class="nav-item">
-                                <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="home" aria-selected="true">
-                                                                    내 정보</a></li>
-							<div class="search-container">
-							    <form action="/">
-							      <input type="text" placeholder="Search ..." name="search">
-							      <button type="submit">검색</button>
-							    </form>
-							</div>
+						<li class="nav-item">
+							<a class="nav-link active" id="teamManage-tab" data-toggle="tab" href="#teamManage" role="tab" aria-controls="profile" aria-selected="false">
+								팀 관리</a></li>	
+						<li class="nav-item">
+                        	<a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="home" aria-selected="true">
+                                          내 정보</a></li>
+						<div class="search-container">
+							<form action="/">
+								<input type="text" placeholder="Search ..." name="search">
+							    <button type="submit">검색</button>
+							</form>
+						</div>
 					</ul>
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" value="teamManage.mp" id="teamManage" role="tabpanel" aria-labelledby="teamManage-tab">
@@ -149,61 +155,60 @@
 						</div>
 						<div class="tab-pane fade" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
                             <div style="display:flex;width:100%;">
-                                <form id="imageForm" name="imageForm" action="imageUpload.info" enctype="multipart/form-data">
+                                <form id="imageForm" action="imageUpload.info" method="post" enctype="multipart/form-data">
                                     <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
-                                    <label id="imageSearch">사진 찾기<input id="image" type="file" name="image" accept="image/*"></label>                              
+                                    <label id="imageSearch">사진 찾기<input id="image" type="file" name="file" accept="image/*"></label>                              
                                     <button id="imageUpload" class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
                                 </form>
-                                <form autocomplete="off" id="infoForm" action="/updateMyInfo.info" method="post">
+                                <form autocomplete="off" id="infoForm" name="updateInfo" action="updateMyInfo.info" method="post">
                                     <div style="width: 80%;margin-right:10%">
                                         <p>아이디</p>
                                         <input name="id" value="${id }" readonly autofocus>
                                     </div>
                                     <div style="width: 80%;margin-right:10%">
                                         <p>이메일</p>
-                                        <input id="email" name="email">
+                                        <input type="text" id="email" name="email" value="${user.email }">
                                     </div>
                                     <div style="width:30%;margin-right:17%">
                                         <p>비밀번호 확인</p>
-                                        <input id="password" name="pass">
+                                        <input id="password" name="pass" type="password" value="${user.pass }">
                                     </div>                      
                                     <div style="width:37%;margin-right:6%">
                                         <p>비밀번호</p>
-                                        <input id="prePassword">
+                                        <input id="prePassword" type="password" value="${user.pass }">
                                     </div>                                    
                                     <div style="width:37%;margin-right:10%">
                                         <p>가입일</p>
-                                        <input readonly name="signDate">
+                                        <input type="text" readonly name="signDate" value="${user.signDate }">
                                     </div>
                                     <div class="autocomplete" style="width:37%;margin-right:6%">
                                         <p>국적</p>
-                                        <input id="myNation" type="text" name="nation">
+                                        <input id="myNation" type="text" name="nation" value="${user.nation }">
                                     </div>
                                     <div style="width:37%;margin-right:10%;margin-bottom:5%">
                                       <p>성별</p>
-                                      <div class="custom-control custom-radio">
-                                          <input type="radio" class="custom-control-input" id="defaultUnchecked" name="defaultExampleRadios">
-                                          <label class="custom-control-label" for="defaultUnchecked">여자</label>
-                                      </div>
-                                      <div class="custom-control custom-radio">
-                                          <input type="radio" class="custom-control-input" id="defaultChecked" name="defaultExampleRadios" checked>
-                                          <label class="custom-control-label" for="defaultChecked">남자</label>
-                                      </div>
-                                    </div>
+                                      	  <div class="custom-control custom-radio">
+	                                          <input type="radio" class="custom-control-input" id="female" name="gender" value="f" checked>
+	                                          <label class="custom-control-label" for="female">여자</label>                                      
+	                                      </div>
+	                                      <div class="custom-control custom-radio">
+	                                          <input type="radio" class="custom-control-input" id="male" name="gender" value="m">
+	                                          <label class="custom-control-label" for="male">남자</label>
+	                                      </div>
+	                                </div>
                                     <div style="width:37%;margin-right:6%">
                                         <p>나이</p>
-                                        <input id="age" name="age">
+                                        <input type="text" id="age" name="age" value="${user.age }">
                                     </div>
                                     <div style="width:37%;margin-right:6%">
                                         <p>여행 타입</p>
-                                        
                                         <div class="sel sel--black-panther">
-										  <select name="select-profession" id="select-profession">
-										    <option value="alone">나홀로</option>
+										  <select name="travelType" id="select-profession">
+										    <option value="나홀로">나홀로</option>
 										    <option value="friend">친구들과 함께</option>
-										    <option value="family">가족과 함께</option>
-										    <option value="stranger">동행 구하기</option>
-										    <option value="love">연인과 함께</option>
+										    <option value="가족과 함께">가족과 함께</option>
+										    <option value="동행 구하기">동행 구하기</option>
+										    <option value="연인과 함께">연인과 함께</option>
 										  </select>
 										</div>
                                     </div>

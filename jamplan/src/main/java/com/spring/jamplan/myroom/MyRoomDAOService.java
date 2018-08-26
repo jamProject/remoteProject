@@ -72,7 +72,6 @@ public class MyRoomDAOService implements MyRoomDAO {
 				teamList.get(i).setRole(2);
 				System.out.println("==============================");
 				System.out.println(teamList.get(i).getId());
-				System.out.println(teamList.get(i).getJoinDate());
 				System.out.println(teamList.get(i).getPlanName());
 				System.out.println(teamList.get(i).getPlanNo());
 				System.out.println(teamList.get(i).getRole());
@@ -233,43 +232,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 		return userVO;
 	}
 
-	@Override
-<<<<<<< HEAD
-	public void insertApplyMessage(MessageVO vo) {
-		MyRoomMapper myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
-		System.out.println("insertApplyMessage 진입");
-		
-		String teamName = vo.getTeamName();
-		TeamInfoVO team =new TeamInfoVO();
-		team.setTeamName(teamName);
-		String receiver = myRoomMapper.getTeamReceiver(team).getId();
-		
-		vo.setIsRead(1);
-		vo.setReceiver(receiver);
-		vo.setTeamName(teamName);
-=======
-	public ArrayList<MessageVO> getMessageList(MessageVO vo) {
-		System.out.println("DAO getMessageList in");
-
-		ArrayList<MessageVO> messageList = null;
-		try {
-			messageList = myRoomMapper.getMessageListById(vo);
-			if(messageList.size()!=0) {
-				System.out.println("====="+messageList.get(0).getTeamName());
-			}else {
-				System.out.println("인덱스 바운드 익셉션");
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		System.out.println("DAO getMessageList out");
-		return messageList;
->>>>>>> wookimHome
-	}
-
+	
 	@Override
 	public int insertApplyMessage(String id, MessageVO message) {
 		System.out.println("DAO insertApplyMessage in");
@@ -339,6 +302,99 @@ public class MyRoomDAOService implements MyRoomDAO {
 		System.out.println("DAO insertApplyMessage IN");
 		return check;
 	}
+
+	
+	@Override
+	public ArrayList<MessageVO> getMessageList(MessageVO vo) {
+		System.out.println("DAO getMessageList in");
+	
+		ArrayList<MessageVO> messageList = null;
+		try {
+			messageList = myRoomMapper.getMessageListById(vo);
+			if(messageList.size()!=0) {
+				System.out.println("====="+messageList.get(0).getTeamName());
+			}else {
+				System.out.println("인덱스 바운드 익셉션");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		System.out.println("DAO getMessageList out");
+		return messageList;
+	}
+
+//	@Override
+//	public int insertApplyMessage(String id, MessageVO message) {
+//		System.out.println("DAO insertApplyMessage in");
+//		// 이미 가입된 팀 0, 이미 신청함 1, 신청 저장 2;
+//		int check = 0;
+//		String sender = id;
+//		String teamName = message.getTeamName();
+//		TeamInfoVO team1 = null;
+//		ArrayList<TeamInfoVO> teamList = null;
+//		message.setSender(sender);
+//		System.out.println("insertApplyMessage teamName :" + teamName);
+//		try {
+//			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+//			// 신청자가 해당 팀에 이미 신청했는지를 판단
+//			team1 = new TeamInfoVO();
+//			team1.setId(id);
+//			team1.setTeamName(teamName);
+//			teamList = myRoomMapper.getTeamInfo(team1);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			// TODO: handle exception
+//		}
+//
+//		if (teamList.size() != 0) {
+//			System.out.println("insertApplyMessage : 이미 팀원임");
+//			check = 0;
+//		} else {
+//			System.out.println("insertApplyMessage : 팀원은 아님");
+//			// 이전에 신청을 했는지 확인
+//			ArrayList<MessageVO> messageList = myRoomMapper.checkApplyMessage(message);
+//
+//			if (messageList.size() != 0) {
+//				System.out.println("insertApplyMessage : 근데 이미 신청 함");
+//				check = 1;
+//			} else {
+//				check = 2;
+//				System.out.println("insertApplyMessage : 팀원도 아니고 신청도 안함");
+//				String receiver = "";
+//				team1 = new TeamInfoVO();
+//				team1.setTeamName(teamName);
+//				team1.setRole(0);
+//				try {
+//					// 받는 사람을 설정
+//					teamList = myRoomMapper.getTeamReceiver(team1);
+//					receiver = teamList.get(0).getId();
+//					System.out.println("insertApplyMessage 리더 아이디 가져오기 성공");
+//				} catch (Exception e) {
+//					System.out.println("insertApplyMessage 리더 아이디 가져오기 실패");
+//					e.printStackTrace();
+//				}
+//				// 0일때 읽지 않은 메세지
+//				message.setIsRead(0);
+//				message.setReceiver(receiver);
+//				message.setSender(sender);
+//				message.setTeamName(teamName);
+//
+//				try {
+//					// 메세지 디비에 해당 신청 메세지 저장
+//					myRoomMapper.insertApplyMessage(message);
+//					System.out.println("insertApplyMessage 삽입 성공");
+//				} catch (Exception e) {
+//					System.out.println("insertApplyMessage 삽입 실패");
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		System.out.println("DAO insertApplyMessage IN");
+//		return check;
+//	}
 
 	@Override
 	public int deleteCansleMessage(MessageVO vo) {

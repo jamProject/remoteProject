@@ -6,39 +6,38 @@
 
 //문서 전체 출력 후
 function autocomplete(inp, arr) {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
+  /*두개의 파라미터를 입력한다.
+   * 하나는 내가 실제 입력하는 값, 하나는 autoComplete을 위한 값들의 베열이다.*/
   var currentFocus;
-  /*execute a function when someone writes in the text field:*/
+  /*입력칸에 무언가 입력되면 이벤트가 발생하게된다.*/
   inp.addEventListener("input", function(e) {
       var a, b, i, val = this.value;
-      /*close any already open lists of autocompleted values*/
+
       closeAllLists();
       if (!val) { return false;}
       currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
+      /*아이템들을 담게될 div 태그를 만드는 부분 (values):*/
       a = document.createElement("DIV");
       a.setAttribute("id", this.id + "autocomplete-list");
       a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
+      /*autocomplete container의 자손으로 div태그를 추가한다.*/
       this.parentNode.appendChild(a);
-      /*for each item in the array...*/
+     
       for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
+        /*입력칸에 입력된 글자와 같은 글인지 체크하는 부분*/
         if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
+          /*매칭되는 태그마다 div태그를 추가한다.*/
           b = document.createElement("DIV");
-          /*make the matching letters bold:*/
+          /*매칭되는 글자에 bold효과를 준다.*/
           b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
           b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
+          /*item값들을 담을 array를 input의 value값으로 설정한다.*/
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-              b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
+
+          b.addEventListener("click", function(e) {
+              
               inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
+              
               closeAllLists();
           });
           a.appendChild(b);
@@ -46,27 +45,25 @@ function autocomplete(inp, arr) {
       }
   });
   
-  /*execute a function presses a key on the keyboard:*/
+  /*키보드에서 키를 누르면 함수를 호출한다ㅏ.*/
   inp.addEventListener("keydown", function(e) {
       var x = document.getElementById(this.id + "autocomplete-list");
       if (x) x = x.getElementsByTagName("div");
       if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
+        /*아래쪽 방향키를 누르면 포커스가 이동한다.*/
         currentFocus++;
-        /*and and make the current item more visible:*/
+
         addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
+      } else if (e.keyCode == 38) { //위쪽 방향키
+        /*위쪽 방향키를 누르면 포커스가 이동한다.*/
         currentFocus--;
-        /*and and make the current item more visible:*/
+
         addActive(x);
       } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        /*엔터키에 의한 submit 방지를 위한 부분*/
         e.preventDefault();
         if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
+          /*active item에 대한 시뮬레이션*/
           if (x) x[currentFocus].click();
         }
       }
@@ -259,7 +256,7 @@ $(document).ready(function() {
 		});
 	})
 	
-	$("#imageUpload").click(function(event) {
+	/*$("#imageUpload").click(function(event) {
 		
 		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
 		event.preventDefault();
@@ -287,7 +284,7 @@ $(document).ready(function() {
 				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
 			}
 		});
-	})
+	})*/
 	
 	
 	/*$("#imageUpload").click(function(event) {
@@ -402,14 +399,13 @@ $(document).ready(function() {
 	autocomplete(document.getElementById("myNation"), countries);
 	
 	// 이미지를 찾으면 readURL함수를 통해 프리뷰 이미지를 생성한다.
-	$('#searchImage').change(function () {
+	$('#image').change(function () {
 		readURL(this);
 	})
 	
 	
 	
-	// 셀렉트 박스의 동작에 대한 스크립트
-	/* ===== Logic for creating fake Select Boxes ===== */
+	// 셀렉트 박스의 동작에 대한 스크립트, fake select box를 만든다.
 	$('.sel').each(function() {
 	  $(this).children('select').css('display', 'none');
 	  

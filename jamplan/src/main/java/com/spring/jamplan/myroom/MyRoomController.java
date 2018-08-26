@@ -280,17 +280,10 @@ public class MyRoomController {
 		
 		return updateListToJson;
 	}
-<<<<<<< HEAD
+
 	
-	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String applyToTeam(HttpSession session, MessageVO vo) {
-		
-		String sender = (String)session.getAttribute("id");
-		vo.setSender(sender);
-		
-		myRoomDAO.insertApplyMessage(vo);
-=======
+
+
 	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String applyToTeam(HttpSession session, MessageVO vo) {
@@ -311,7 +304,7 @@ public class MyRoomController {
 		}catch (Exception e) {
 			map.put("res", "fail");
 		}
->>>>>>> wookimHome
+
 		
 		String searchTeamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();
@@ -324,6 +317,8 @@ public class MyRoomController {
 		System.out.println("applyTeam Out");
 		return searchTeamListToJson;
 	}
+	
+	
 	//deleteCansleMessage
 	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody

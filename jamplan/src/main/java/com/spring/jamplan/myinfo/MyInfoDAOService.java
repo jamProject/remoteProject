@@ -23,17 +23,23 @@ public class MyInfoDAOService implements MyInfoDAO {
 		System.out.println("getMyInfo IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
 		user = myInfoMapper.getMyInfo(user);
-		
+		System.out.println("DAOService 내에서 user = " + user.getId());
+		System.out.println("DAOService 내에서 user = " + user.getEmail());
+		System.out.println("DAOService 내에서 user = " + user.getGender());
+		System.out.println("DAOService 내에서 user = " + user.getNation());
+		System.out.println("DAOService 내에서 user = " + user.getTravelType());
+
 		System.out.println("getMyInfo OUT");
 		return user;
 	}
 
 	@Override
 	public int updateMyInfo(UserVO user) {
-		System.out.println("updateMyInfo IN");
+		System.out.println("DAOService updateMyInfo IN");
 		myInfoMapper = sqlSession.getMapper(MyInfoMapper.class);
+		System.out.println("매퍼 생성 지나감");
 		int result = myInfoMapper.updateMyInfo(user);
-		
+		System.out.println("DAOService result = " + result);
 		System.out.println("updateMyInfo OUT");
 		return result;
 	}

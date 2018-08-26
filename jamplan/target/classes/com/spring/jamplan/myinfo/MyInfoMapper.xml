@@ -33,10 +33,9 @@
     </select>
     
     <update id="updateMyInfo" parameterType="com.spring.jamplan.model.UserVO">
-        UPDATE USERINFO(EMAIL, PASS, NATION, GENDER, AGE, TRAVELTYPE, HOBBY) 
-            SET EMAIL=#{email, jdbcType=VARCHAR}, PASS=#{pass, jdbcType=INTEGER}, NATION=#{nation, jdbcType=VARCHAR},
+        UPDATE USERINFO SET EMAIL=#{email, jdbcType=VARCHAR}, PASS=#{pass, jdbcType=VARCHAR}, NATION=#{nation, jdbcType=VARCHAR},
                  GENDER=#{gender, jdbcType=VARCHAR}, AGE=#{age, jdbcType=INTEGER}, 
-                    TRAVELTYPE=#{travelType, jdbcType=VARCHAR}, HOBBY=#{hobby, jdbcType=VARCHAR}
+                    TRAVELTYPE=#{travelType, jdbcType=VARCHAR}
                         WHERE ID=#{id, jdbcType=VARCHAR}
     </update>
     
