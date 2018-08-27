@@ -109,8 +109,24 @@ public class ManagePlanController {
 		}
 		return map;
 	}
+	@RequestMapping(value = "calendarajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String calendarLoad(HttpSession session) {
+
+		map = new HashMap<String, Object>();
+		map.put("link", "managePlan/calendarPage");
+		
+		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
+		String str = "";
+		try {
+			str = mapper.writeValueAsString(map);
+		} catch (Exception e) {
+			System.out.println("castring fail");
+		}
+		return str;
+	}
 	
-	@RequestMapping(value = "calendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	/*@RequestMapping(value = "calendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String calendarLoad(HttpSession session) {
 		System.out.println("실행됨");
@@ -141,9 +157,9 @@ public class ManagePlanController {
 	@RequestMapping(value = "calendarajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
 	public String calendarAjax(HttpSession session) {
-	/*	String id = (String) session.getAttribute("id");
+		String id = (String) session.getAttribute("id");
 		int planNo= (int)session.getAttribute("planNo");
-		int role = (int) session.getAttribute("role");*/
+		int role = (int) session.getAttribute("role");
 		//int planNo = Integer.parseInt(planno);
 		
 		map = new HashMap<String, Object>();
@@ -258,6 +274,6 @@ public class ManagePlanController {
 		session.setAttribute("role", teamVO.getRole());
 		
 		return "managePlan/viewAllPage";
-	}
+	}*/
 
 }
