@@ -1,0 +1,31 @@
+package com.spring.jamplan.manageplan;
+
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.jamplan.model.TeamInfoVO;
+
+@Service
+public class ChatDAOService {
+	
+	@Autowired(required=false) 
+	private SqlSession sqlSession;
+	
+	public ArrayList<TeamInfoVO> chatConnect(TeamInfoVO teamInfo) {
+		ArrayList<TeamInfoVO> chatList = null;
+		System.out.println("chatConnect IN");
+		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
+		System.out.println(teamInfo.getTeamNo());
+		try {
+			chatList = mapper.chatConnect(teamInfo);
+			System.out.println("chatConnect에서 chatList가 나왔는지: " + chatList.size());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return chatList;
+	}
+}
