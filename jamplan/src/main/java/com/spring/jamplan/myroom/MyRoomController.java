@@ -30,16 +30,19 @@ public class MyRoomController {
 		
 	private HashMap<String, Object> map;
 
-	@RequestMapping(value="movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@RequestMapping(value="movePlanMainPage.do")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
 
 		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
-		vo.setId((String)session.getAttribute("id"));
+//		vo.setId((String)session.getAttribute("id"));
 
 		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
-		session.setAttribute("planNo",vo.getPlanNo());
-		System.out.println("role"+ teamVO.getRole());
-		session.setAttribute("role", teamVO.getRole());
+//		session.setAttribute("planNo",vo.getPlanNo());
+		session.setAttribute("planNo",2);
+//		System.out.println("role"+ teamVO.getRole());
+//		session.setAttribute("role", teamVO.getRole());
+		session.setAttribute("id", "thkim9198");
+		session.setAttribute("role", 0);
 		System.out.println("페이지 이동 컨트롤러 진입");
 		
 		return "managePlan/main";

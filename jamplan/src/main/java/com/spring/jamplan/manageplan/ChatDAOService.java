@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.jamplan.model.TeamInfoVO;
+import com.spring.jamplan.model.UserVO;
 
 @Service
 public class ChatDAOService {
@@ -27,5 +28,14 @@ public class ChatDAOService {
 		}
 		
 		return chatList;
+	}
+	
+	public UserVO getImageName(UserVO user) {
+		System.out.println("getOnUserList DAOService IN");
+		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
+		user = mapper.getImageName(user);
+		
+		System.out.println("getOnUserList DAOService OUT");
+		return user;
 	}
 }

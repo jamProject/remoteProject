@@ -5,6 +5,7 @@
 <html lang="ko">
 <head>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"crossorigin="anonymous"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -28,13 +29,12 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
-	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
 		<!-- jquery & iScroll -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
 		<!-- drawer.js -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
 	
 	<title>JAM</title>
 
@@ -43,8 +43,6 @@
 	session.setAttribute("teamNo", "3");
 %>
 
-
-	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<style>
 		/*구글 한글폰트 불러오는 곳*/
 		@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
@@ -56,32 +54,95 @@
 /*구글 한글폰트 불러오는 부분 끝*/
 	</style>
 	<script>
-	//websocket 부분에 대한 스크립트
-	var log = function (s) {
-		// 이 부분에 메시지 형식 넣어야함.
-		document.getElementById("chatTextarea").textContent += (s + "\n");
-	}
-
-	var id = '${id}';
-	var teamNo = '3';
-	
 	
 	$(document).ready(function () {
 		$("#sendButton").click(function() {
 			var input = $('#inputText').val();
 			w.send('${id}' + "/" + input);
 		});
+		
+		$('.drawer').drawer({
+			  class: {
+			    nav: 'drawer-nav',
+			    toggle: 'drawer-toggle',
+			    overlay: 'drawer-overlay',
+			    open: 'drawer-open',
+			    close: 'drawer-close',
+			    dropdown: 'drawer-dropdown'
+			  },
+			  iscroll: {
+			    preventDefault: false
+			  },
+			  showOverlay: true
+			}); 
+		
+		$('.drawer').drawer();
 	})
 		
+	
+	//websocket 부분에 대한 스크립트
+	var log = function (s) {
+		// 이 부분에 메시지 형식 넣어야함.
+		document.getElementById("chatTextarea").textContent += (s + "\n");
+	}
+	
+	
+	var splitNameList = function (s) {
+		
+		var nameList = s.split('/');
+		
+		// 해당 아이디를 가진 유저들의 정보를 불러오기 위한 ajax
+		$.ajax({
+			url : 'onUserList.mp',
+			type : 'POST',
+			data : {
+				'nameList' : nameList
+			},
+			traditional : true,
+			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+			dataType : "json",
+			success : function (data) {
+				console.log(data);
+				$.each(data, function(index, item) {
+					imageUp(item);
+				});
+			},	
+			error:function(){
+				alert("페이지 이동 ajax실패")
+			}
+		});
+	}
+	
+	//채팅방에 팀원이 접속하면 해당 팀원의 프로필 사진을 띄운다.
+	var imageUp = function (e) {
+		var image = document.createElement("image");
+		var chat = document.getElementById('chat');
+		image.setAttribute("src", "<spring:url value='/image/" + ${e.image } + "'/>");
+		image.setAttribute("alt", 'Avatar');
+		image.setAttribute("class", 'avatar');
+		image.setAttribute("title", ${e.id});
+		chat.appendChild(image);
+	}
 
+	var id = '${id}';
+	var teamNo = '3';
+	
 	w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
 	// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
 	w.onopen = function () {
-		alert("WebSocket Connected!");
+		console.log("WebSocket Connected!");
+		
+		
 	}
 	w.onmessage = function(e) {
+		
 		alert("success");
-		log(e.data.toString());
+		if(e.data.toString().substring(0,8) == 'nameList') {
+			splitNameList(e.data.toString());
+		}else {
+			log(e.data.toString());
+		}
+		
 	}
 	w.onclose = function(e) {
 		alert("closed");
@@ -131,7 +192,7 @@
 	<section>
 		<div id="main-container" class="container-fluid text-center">
 			<div class="row">
-				<div class="col-md-2"><h1>사이드바</h1></div>
+				<div class="col-md-2"></div>
 				<div id="planManage" class="col-md-7">
 					<ul class="nav nav-tabs">
 						<li><a href="#calendar" data-toggle="tab" class="nav-link active">
@@ -150,8 +211,10 @@
 						<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<h1>채팅창</h1>
+				<div id="chat" class="col-md-3">
+				
+					<!-- 아바타 이미지 들어가는 곳 -->
+					
 					<button class="open-button" onclick="openForm()">Chat</button>
 					<div class="form-popup" id="myForm">
 						<div class="form-container">
@@ -171,20 +234,7 @@
 	<footer>
 	</footer>
 	<script>
-	/* $('.drawer').drawer({
-		  class: {
-		    nav: 'drawer-nav',
-		    toggle: 'drawer-toggle',
-		    overlay: 'drawer-overlay',
-		    open: 'drawer-open',
-		    close: 'drawer-close',
-		    dropdown: 'drawer-dropdown'
-		  },
-		  iscroll: {
-		    preventDefault: false
-		  },
-		  showOverlay: true
-		}); */
+	
 	</script>
 </body>
 </html>

@@ -57,12 +57,12 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		super.afterConnectionClosed(session, status);
-		System.out.println("afterConnectionClosed IN");
+//		System.out.println("afterConnectionClosed IN");
 		idMap.remove(session);
 //		System.out.println("afterConnectionClosed idMap에서 remove 됐는지");
 
 		teamNoMap.remove(session);
-		System.out.println("afterConnectionClosed teamNoMap에서 remove 됐는지? =>>" + teamNoMap.get(session));
+//		System.out.println("afterConnectionClosed teamNoMap에서 remove 됐는지? =>>" + teamNoMap.get(session));
 
 		
 		Map<String, Object> map = session.getAttributes();
@@ -71,14 +71,14 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		
 		// 같은 팀 사람 중에 남아있는 사람이 있는지 알기 위해 DB에서 같은 팀 사람들의 리스트 받아와서 비교한다.
 		for (int i=0; i < chatDAOService.chatConnect(teamInfo).size(); i++) {
-			System.out.println("for문 들어왔나??");
+//			System.out.println("for문 들어왔나??");
 			// 같은 팀 사람들에 대한 team정보를 하나하나 teamInfo에 맵핑시킨다.
 			for(TeamInfoVO teamInfo : chatDAOService.chatConnect(teamInfo)) {
 				// idMap에 같은 팀 사람이 남아있는지 체크하는 부분
 				if(idMap.containsValue(teamInfo.getId())) {
-					System.out.println("아직 같은 팀 중에 남아있는 사람이 있다.");
+//					System.out.println("아직 같은 팀 중에 남아있는 사람이 있다.");
 				}else {
-					System.out.println("남아있는 사람이 없다.");
+//					System.out.println("남아있는 사람이 없다.");
 					chatSetGroupMap.remove(Integer.parseInt(teamNo));
 				}
 			}
@@ -109,42 +109,68 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		teamNoMap.put(session, (Integer)teamNo);
 		teamInfo.setTeamNo(teamNo);
 		
-		System.out.println("DB 들어가기 전");
+//		System.out.println("DB 들어가기 전");
 		
 		// 같은 팀멤버들을 select해서 모아놓은 list
 		teamList = chatDAOService.chatConnect(teamInfo);
-		System.out.println("for문 들어가기 전 teamList 나왔나 점검" + teamList.size());
+//		System.out.println("for문 들어가기 전 teamList 나왔나 점검" + teamList.size());
+		
+		
 		
 		for(int i=0; i<teamList.size(); i++) {
 			TeamInfoVO teamResult = teamList.get(i);
-			System.out.println("teamResult 나왔나 점검 : " + teamResult.getId());
+			String nameList = "";
+//			System.out.println("teamResult 나왔나 점검 : " + teamResult.getId());
 			// 이미 team의 채팅방에 대한 set이 만들어져있는 상태라면 그곳에 session을 넣어준다.
-			System.out.println("chatSetGroupMap에 채팅방이 개설됐는지 확인 전");
+//			System.out.println("chatSetGroupMap에 채팅방이 개설됐는지 확인 전");
 			if(chatSetGroupMap.containsKey(teamInfo.getTeamNo())) {
-				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 있다.");
+//				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 있다.");
 				
 				// 특정 team의 채팅방 관리하는 set에 session을 넣는다.
 				chatSetGroupMap.get(teamInfo.getTeamNo()).add(session);
 				
 				// session 집합을 teamNo를 key값으로해서 저장한다.
 				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getTeamNo())) {
-					System.out.println(chatSetGroupMap.get(teamInfo.getTeamNo()));
-					assignedSession.sendMessage(new TextMessage("message/" + id + "님이 참여했습니다."));
+//					System.out.println(chatSetGroupMap.get(teamInfo.getTeamNo()));
+					
+					// 접속시에 누가 접속했는지 알려주기위해 id를 모은다.
+	
+					String name = idMap.get(assignedSession);
+					
+					nameList += name + "/";
+					
+					// 각각의 세션에 해당하는 사용자들에게 참여를 알린다.
+					assignedSession.sendMessage(new TextMessage(id + "님이 참여했습니다."));
 				}
+				
+				System.out.println(nameList);
+				// 실제로 nameList를 클라이언트로 넘기는 부분. 클라이언트에선 split한다.
+				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getTeamNo())) {
+					try {
+						assignedSession.sendMessage(new TextMessage("nameList/" + nameList));
+					}catch(Exception e) {
+						System.out.println(e.getMessage());
+					}
+					
+				}
+				return;
 				
 			}else {
 				// 특정 팀에 속해있지만 각 팀의 사용자들 구분을 위한 session들의 집합은 만들어지지 않았을때.
 				// 즉, 어떠한 팀에 누군가가 처음 접속했을 때 각 사용자들을 팀에 따라 구분하기 위해 list 생성
-				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 없다.");
+//				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 없다.");
 				
 				// 새로운 list를 만들고 session을 넣어준다.
 				chatListSet = getChatGroup(idMap, id);
 				sessionSet.add(session);
 				chatSetGroupMap.put(teamInfo.getTeamNo(), chatListSet);
-				System.out.println("누군가가 처음 접속하면 이렇게 된다!!!");
+				nameList += id + "/";
+				session.sendMessage(new TextMessage("nameList/" + nameList));
+//				System.out.println("누군가가 처음 접속하면 이렇게 된다!!!");
 				session.sendMessage(new TextMessage(teamResult.getTeamName() + " 방으로 입장했습니다."));
 			}
 			
+			return;
 		}
 		
 	}

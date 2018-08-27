@@ -6,7 +6,7 @@
 $(document).ready(function() {
 	
 	
-//	$('.drawer').drawer();
+	
 	/*var link = $(".tab-pane container active").attr("value");
 	console.log(link);
 	$.ajax({
@@ -43,10 +43,6 @@ $(document).ready(function() {
 		})
 	})
 });
-
-
-	
-
 
 //chat창에 대한 스크립트
 function openForm() {

@@ -22,14 +22,20 @@ import com.spring.jamplan.model.UserVO;
 @Controller
 public class ManagePlanController {
 
-	@Autowired(required = true)
+	@Autowired(required = false)
 	private PlanVO planVO;
 
-	@Autowired(required = true)
+	@Autowired(required = false)
 	private TeamInfoVO teamVO;
+	
+	@Autowired(required = false) 
+	private UserVO user;
 
-	@Autowired(required = true)	
+	@Autowired(required = false)	
 	private ManagePlanDAOService mpDAOS;
+	
+	@Autowired(required = false) 
+	private ChatDAOService chatDAO;
 
 	private ArrayList<PlanVO> planList;
 	private HashMap<String, Object> map;
@@ -250,6 +256,46 @@ public class ManagePlanController {
 		session.setAttribute("role", teamVO.getRole());
 		
 		return "managePlan/viewAllPage";
+	}
+	
+	
+	// 접속 중인 유저들의 프로필 사진명을 얻기 위한 메서드
+	@RequestMapping(value="/onUserList.mp", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody 
+	public String getOnUserList(String[] nameList) {
+		System.out.println("getOnUserList IN");
+		System.out.println(nameList[2]);
+		Map<String, String> imageMap = new HashMap<String, String>();
+		
+		for(int i=1; i<nameList.length; i++) {
+			String name = nameList[i];
+			System.out.println(name);
+			System.out.println("들어갔니");
+			user.setId(name);
+			System.out.println("user에 set은 잘했니");
+			user = chatDAO.getImageName(user);
+			System.out.println("DB엔 잘갔다왔고?");
+			imageMap.put(name, user.getImage());
+			System.out.println(name);
+			System.out.println(user.getImage());
+			System.out.println("이제 map에 다 넣었지?");
+		}
+		
+		System.out.println("1");
+		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
+		System.out.println("2");
+		String imageList = "";
+		System.out.println("3");
+		try {
+			System.out.println("imageList 뽑기 전까지는 왔네");
+			imageList = mapper.writeValueAsString(imageMap);
+			System.out.println(imageList);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		System.out.println("getOnUserList OUT");
+		return imageList;
 	}
 
 }

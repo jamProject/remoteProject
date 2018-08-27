@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
+import com.spring.jamplan.model.UserVO;
 
 
 @Service
@@ -168,4 +169,5 @@ public class ManagePlanDAOService {
 		}
 
 	}
+	
 }

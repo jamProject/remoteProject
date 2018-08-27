@@ -61,7 +61,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>adminPage.admin</welcome-file>
+		<welcome-file>movePlanMainPage.do</welcome-file>
 	</welcome-file-list>
 
 	<!--필터  -->
