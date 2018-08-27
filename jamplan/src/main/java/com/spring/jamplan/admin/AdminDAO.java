@@ -10,4 +10,7 @@ public interface AdminDAO {
 	ArrayList<TeamInfoVO> adminTeamSearch(TeamInfoVO teamInfo);
 	ArrayList<PlanVO> adminPlanSearch(PlanVO plan);
 	UserVO adminUserSearch(UserVO user);
+	
+	int removeTeam(TeamInfoVO teamInfo);
+	int removeUser(UserVO user);
 }

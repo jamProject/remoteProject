@@ -61,7 +61,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>home.do</welcome-file>
+		<welcome-file>adminPage.admin</welcome-file>
 	</welcome-file-list>
 
 	<!--필터  -->

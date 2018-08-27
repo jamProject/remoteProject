@@ -1,4 +1,4 @@
-package com.spring.jamplan2.searchcontroller;
+package com.spring.jamplan.searchcontroller;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.jamplan.model.LikeVO;
+import com.spring.jamplan.model.PlanVO;
+import com.spring.jamplan.model.UserVO;
 
 
 
@@ -33,32 +36,6 @@ public class SearchController {
 	//검색페이지 이동
 	@RequestMapping("plan.search")
 	public String planLoad() {
-
-		
-		/*String str = "";
-	
-		UserVO vo = searchService.getUserId(userVO.getId());
-		
-		System.out.println(vo.getId());
-		
-		session.setAttribute("checkID", vo.getId());
-		
-		if (session.getAttribute("checkID") != null) {
-			str = "search/searchPlanPage";
-		}
-		else {
-			str = "//webapp/mianPage";
-		}*/
-		/*
-		 * System.out.println("move1");
-		 * HttpSession session, UserVO userVO
-		 * 
-		searchService.moveSchedule();
-		System.out.println("move4");
-		session.setAttribute("checkID", userVO.getId());*/
-		
-		
-		
 		return "search/searchPlanPage";
 	}
 	

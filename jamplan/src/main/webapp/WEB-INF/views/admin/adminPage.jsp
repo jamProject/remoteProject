@@ -65,14 +65,14 @@
 			  <div class="topnav-right">
 			    <a href="#search">Message</a>
 			    <a href="#myInfo">My Info</a>
-			    <a href="#about">Search</a>
+			    <a href="plan.search">Search</a>
 			  </div>
 			</div>
 		</header>
 		<section class="container-fluid">
 			<div id="main-container" class="row content">
 				<div class="col-sm-2 sidenav">
-					<h1>사이드바</h1>
+					
 					<ul class="nav nav-pills flex-column">
 				        <li class="nav-item active"><a class="nav-link" href="#section1">Main</a></li>
 				        <li class="nav-item"><a class="nav-link" href="#section2">My Room</a></li>

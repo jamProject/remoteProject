@@ -53,5 +53,13 @@
 		
 	</select>
 	
+	<delete id="removeTeam" parameterType="com.spring.jamplan.model.TeamInfoVO">
+		DELETE TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
+		
+	</delete>
+	
+	<delete id="removeUser" parameterType="com.spring.jamplan.model.UserVO" >
+		DELETE USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
+	</delete>
 	
 </mapper>

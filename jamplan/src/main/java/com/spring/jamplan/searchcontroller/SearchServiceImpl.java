@@ -1,4 +1,4 @@
-package com.spring.jamplan2.searchcontroller;
+package com.spring.jamplan.searchcontroller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,10 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.spring.jamplan.model.LikeVO;
+import com.spring.jamplan.model.PlanVO;
+import com.spring.jamplan.model.UserVO;
 
 @Service("searchService")
 public class SearchServiceImpl implements SearchService{

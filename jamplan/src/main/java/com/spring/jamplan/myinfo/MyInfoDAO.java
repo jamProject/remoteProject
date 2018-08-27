@@ -15,4 +15,6 @@ public interface MyInfoDAO {
 	ArrayList<TeamInfoVO> getTeamListAsMember(UserVO user);
 	int removeTeamAsLeader(TeamInfoVO teamInfo);
 	int signOutTeamAsMember(TeamInfoVO teamInfo);
+	
+	
 }

@@ -95,24 +95,57 @@ public class AdminController {
 		System.out.println("adminUserSearch IN");
 		user.setId(request.getParameter("searchItem"));
 		System.out.println("user에 set 완료 = " + user.getId());
-
 		
 		if(adminDAO.adminUserSearch(user) != null) {
-			
+			String userToJson = "";
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				userToJson = mapper.writeValueAsString(user);
+				System.out.println(userToJson);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("adminUserSearch OUT");
+			return userToJson;
 		}else {
-			
+			return null;
 		}
 		
-		String userToJson = "";
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			userToJson = mapper.writeValueAsString(user);
-			System.out.println(userToJson);
-		}catch (Exception e) {
-			e.printStackTrace();
+	}
+	
+	@RequestMapping(value="removeTeam.admin", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String removeTeam(TeamInfoVO teamInfo) {
+		System.out.println("removeTeam In");
+		System.out.println(teamInfo.getTeamName());
+		int check = 0;
+		
+		if(adminDAO.removeTeam(teamInfo) != 0) {
+			check = 1;
+			
+		}else {
 		}
-		System.out.println("adminUserSearch OUT");
-
-		return userToJson;
+		String checkToString = String.valueOf(check);
+		System.out.println("removeTeam Out");
+		
+		return checkToString;
+	}
+	
+	@RequestMapping(value="removeUser.admin", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String removeUser(UserVO user) {
+		System.out.println("removeUser In");
+		System.out.println(user.getId());
+		int check = 0;
+		
+		if(adminDAO.removeUser(user) != 0) {
+			check = 1;
+		}else {
+		}
+		
+		String checkToString = String.valueOf(check);
+		System.out.println("removeUser Out");
+		
+		return checkToString;
 	}
 }

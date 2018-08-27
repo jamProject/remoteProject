@@ -18,4 +18,7 @@ public interface MyInfoMapper {
 	ArrayList<TeamInfoVO> getTeamListAsMember(UserVO user);
 	int removeTeamAsLeader(TeamInfoVO teamInfo);
 	int signOutTeamAsMember(TeamInfoVO teamInfo);
+	
+	int removeTeam(TeamInfoVO teamInfo);
+	int removeUser(UserVO user);
 }

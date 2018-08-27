@@ -6,7 +6,7 @@
 	varchar2(200), goodCount varchar2(400), readCount varchar2(200) ); -->
 
 <mapper
-	namespace="com.spring.jamplan.searchcontroller.SearchMapper">
+	namespace="com.spring.jamplan.model.SearchMapper">
 
 	<resultMap type="PlanVO" id="planResultMap">
 		<result property="image" column="image" />
@@ -32,12 +32,12 @@
 	</select>
 
 	<insert id="fileUpload"
-		parameterType="com.spring.jamplan.searchcontroller.PlanVO">
+		parameterType="com.spring.jamplan.model.PlanVO">
 		insert into plantest (image) values (#{image})
 	</insert>
 
 	<select id="planSearch"
-		parameterType="com.spring.jamplan.searchcontroller.PlanVO"
+		parameterType="com.spring.jamplan.model.PlanVO"
 		resultMap="planResultMap">
 
 		SELECT * FROM plantest
@@ -52,7 +52,7 @@
 	</select>
 
 	<select id="clickSearch"
-		parameterType="com.spring.jamplan.searchcontroller.PlanVO"
+		parameterType="com.spring.jamplan.model.PlanVO"
 		resultMap="planResultMap">
 
 		SELECT * FROM plantest
@@ -77,26 +77,16 @@
 		UPDATE PLAN SET READCOUNT = READCOUNT + 1 WHERE PLANNO = #{PLANNO, jdbcType=NUMBER}
 	</update>  -->
 	
-	<select id="getUserId" parameterType="com.spring.jamplan.searchcontroller.UserVO" resultMap="UserResultMap">
+	<select id="getUserId" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
 		select * from userVO where id = #{id, javaType=String}
 	</select>
 	
-	<update id="heartCheck" parameterType="com.spring.jamplan.searchcontroller.LikeVO">
-		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=NUMBER} + 1
+	<update id="heartCheck" parameterType="com.spring.jamplan.model.LikeVO">
+		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=INTEGER} + 1
 	</update>
-
-
-
 
 	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
 		> update plan set readCount = (select readCount from plan where planName 
 		= #{planName, jdbcType=VARCHAR}) + 1 where planNo = #{planNo, jdbcType=NUMBER} 
 		</update> -->
-
-
-
-
-
-
-
 </mapper>

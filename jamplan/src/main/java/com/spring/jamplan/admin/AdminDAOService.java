@@ -60,5 +60,40 @@ public class AdminDAOService implements AdminDAO {
 		System.out.println("adminUserSearch DAOService OUT");
 		return user;
 	}
+	
+	@Override 
+	public int removeTeam(TeamInfoVO teamInfo) {
+		System.out.println("removeTeam DAOService IN");
+		adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int check = 0;
+		
+		if(adminMapper.removeTeam(teamInfo) != 0) {
+			check = 1;
+			System.out.println("removeTeam DAOService OUT");
+			
+			return check;
+		}else {
+			System.out.println("removeTeam DAOService OUT");
+			return check;
+		}
+		
+	}
+	
+	@Override 
+	public int removeUser(UserVO user) {
+		System.out.println("removeUser DAOService IN");
+		adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int check = 0;
+		
+		if(adminMapper.removeUser(user) != 0) {
+			check = 1;
+			System.out.println("removeUser DAOService OUT");
+			
+			return check;
+		}else {
+			System.out.println("removeUser DAOService OUT");
+			return check;
+		}
+	}
 
 }

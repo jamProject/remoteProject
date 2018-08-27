@@ -346,7 +346,7 @@ $(document).ready(function() {
 			success : function(data) {$.each(data,function(index,item) {
 							var update = '';
 							update += '<div class="media border p-3">'
-									+ '<img src="http://alumnes.org/wp-content/uploads/2017/06/fa-user-circle-o-c0a2bd7a.png"'
+									+ '<img src="/jamplan/image/' + ${user.image} + '"'
 									+ 'alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">'
 									+ '<div class="media-body">'
 									+ '<h4>'+ item.planName+ '</h4>'

@@ -14,4 +14,6 @@ public interface AdminMapper {
 	ArrayList<PlanVO> adminPlanSearch(PlanVO plan);
 	UserVO adminUserSearch(UserVO user);
 	
+	int removeTeam(TeamInfoVO teamInfo);
+	int removeUser(UserVO user);
 }
