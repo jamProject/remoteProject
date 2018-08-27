@@ -27,15 +27,18 @@ public interface MyRoomMapper {
 	PlanVO searchPlan(PlanVO plan);
 	int makeTeam(TeamInfoVO team);
 	void insertPlan(TeamInfoVO vo);
-	TeamInfoVO validationTeamName(TeamInfoVO team);
+	void updateMessage(MessageVO vo);
+	void insertToMember(TeamInfoVO team);
+	ArrayList<TeamInfoVO> validationTeamName(TeamInfoVO team);
 	int deleteTeam(TeamInfoVO team);
 	int deletePlan(PlanVO plan);
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO vo);
 	int getMaxPlanNo();
 	void deleteNullPlan(String teamName);
 	TeamInfoVO getRole(TeamInfoVO team);
-	TeamInfoVO getTeamReceiver(TeamInfoVO team);
+	ArrayList<TeamInfoVO> getTeamReceiver(TeamInfoVO team);
 	void insertApplyMessage(MessageVO vo);
 	void deleteCansleMessage(MessageVO vo);
-	
+	ArrayList<MessageVO> checkApplyMessage(MessageVO vo);	
+	ArrayList<MessageVO> getMessageListById(MessageVO vo);	
 }

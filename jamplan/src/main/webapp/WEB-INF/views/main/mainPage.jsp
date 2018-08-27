@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -7,8 +8,15 @@
 <%	String id=(String)session.getAttribute("id"); %>
 <!DOCTYPE html>
 <html lang="en">
+=======
+    
+<!--한글 인코딩 -->
+>>>>>>> task0821
 
+<!DOCTYPE html>
+<html>
 <head>
+<<<<<<< HEAD
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -268,5 +276,26 @@
 				            </div> -->
 				      <!--   </div>
 				    </div> -->
+=======
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>mainPage </h1>
+	
+	<form action="main.mp" method="post">
+		<input value="id" type = "text" name = "id">
+		<input value="pass" type = "password" name = "pass">
+		<input type = "submit" value="로그인">
+	</form>
+	
+	<a href="main.jsp">planMain</a>
+	<a href = "main.search">mainPage</a>
+	<a href = "plan.search">planPage</a>
+	<a href = "formFile.search">formFile</a>
+	<a href = "view.search">view</a>
+	<a href = "schedule.search">schedule</a>
+	<a href = "login.search">login</a>
+>>>>>>> task0821
 </body>
 </html>

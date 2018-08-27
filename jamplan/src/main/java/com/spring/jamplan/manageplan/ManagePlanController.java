@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.CalendarVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
+import com.spring.jamplan.model.UserVO;
 
 
 @Controller
@@ -35,12 +36,23 @@ public class ManagePlanController {
 	private ObjectMapper mapper;
 
 	
-	@RequestMapping(value = "main.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String mainLoad() {
+//	@RequestMapping(value = "/main.mp")
+//	public String mainLoad() {
+//		
+//		
+//		return "managePlan/main";
+//	}
+	
+	// 웹소켓 테스트를 위한 부분
+	@RequestMapping(value = "/main.mp")
+	public String mainLoad(HttpSession session, UserVO user) {
+		
+		session.setAttribute("id", user.getId());
+		
 		return "managePlan/main";
 	}
 
-	@RequestMapping(value = "selectCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/selectCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String, Object> calendarSelect(HttpSession session, CalendarVO vo) {
 		vo.setId((String) session.getAttribute("id"));
@@ -52,7 +64,7 @@ public class ManagePlanController {
 		return map;
 	}
 	
-	@RequestMapping(value = "getMemberId.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/getMemberId.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
 	public String getMemberId(HttpSession session) {
 		int planNo = (int)session.getAttribute("planNo");
@@ -72,7 +84,7 @@ public class ManagePlanController {
 	}
 
 	// 선택한 날짜 디비에서 불러오는 컨트롤러 json으로 해당 데이터 보내기
-	@RequestMapping(value = "loadCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/loadCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String calendarLoadDate(HttpSession session) {
 		ArrayList<CalendarVO> calVO = mpDAOS.getSelectDate((int) session.getAttribute("planNo"));
@@ -88,7 +100,7 @@ public class ManagePlanController {
 		return str;
 	}
 	//방장(혹은팀원)이 날짜를 확정 지으면 update문으로 해당 일정 업데이트 + 삽입
-	@RequestMapping(value = "fixcal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/fixcal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	//json받을 떄 필수다 리스폰스 바디
 	@ResponseBody
 	public HashMap<String, Object> fixDate(HttpSession session, CalendarVO vo) {
@@ -110,7 +122,7 @@ public class ManagePlanController {
 		return map;
 	}
 	
-	@RequestMapping(value = "calendar.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/calendar.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String calendarLoad(HttpSession session) {
 		System.out.println("실행됨");
 		
@@ -126,7 +138,7 @@ public class ManagePlanController {
 		return "managePlan/calendarPage";
 	}
 	
-	@RequestMapping(value = "calendarajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/calendarajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
 	public String calendarAjax(HttpSession session) {
 
@@ -143,7 +155,7 @@ public class ManagePlanController {
 		return str;
 	}
 	
-	@RequestMapping(value = "mapajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/mapajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
 	public String mapAjax(HttpSession session) {
 		
@@ -160,7 +172,7 @@ public class ManagePlanController {
 		return str;
 	}
 
-	@RequestMapping(value = "map.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/map.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String mapLoad(HttpSession session) {
 
 		System.out.println("실행됨");
@@ -178,7 +190,7 @@ public class ManagePlanController {
 		return "managePlan/mapPage";
 	}
 	
-	@RequestMapping(value = "plantableajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/plantableajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
 	public String planTableAjax(HttpSession session) {
 		map = new HashMap<String, Object>();
@@ -194,7 +206,7 @@ public class ManagePlanController {
 		return str;
 	}
 
-	@RequestMapping(value="plantable.mp",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value="/plantable.mp",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String planTableLoad(HttpSession session) {
 
 		String id = (String) session.getAttribute("id");
@@ -209,7 +221,7 @@ public class ManagePlanController {
 		return "managePlan/planTablePage";
 	}
 
-	@RequestMapping(value = "viewallajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/viewallajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
 	public String viewAllAjax(HttpSession session) {
 		map = new HashMap<String, Object>();
@@ -225,7 +237,7 @@ public class ManagePlanController {
 		return str;
 	}
 	
-	@RequestMapping(value="viewall.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value="/viewall.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String viewAllLoad(HttpSession session) {
 		String id = (String) session.getAttribute("id");
 		int planNo = (int) session.getAttribute("planNo");

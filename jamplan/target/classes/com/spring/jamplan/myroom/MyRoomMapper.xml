@@ -61,16 +61,33 @@
 		<result property="dateCheck" column="dateCheck" />
 	</resultMap>
 	
-	<insert id="insertApplyMessage" parameterType = "com.spring.jamplan.model.MessageVO">
+	<insert id="insertToMember" parameterType= "com.spring.jamplan.model.TeamInfoVO" >
+		insert into teaminfo (id, planName, planNo, role, teamName, teamNo, joinDate) 
+		values ( #{id}, #{planName, jdbcType=VARCHAR}, #{planNo, jdbcType=VARCHAR}, #{role}, #{teamName}, #{teamNo}, sysdate)
+	</insert>
+	
+	<update id = "updateMessage" parameterType= "com.spring.jamplan.model.MessageVO" >
+		update message set isRead = #{isRead} where receiver = #{receiver}
+	</update>
+	
+	<select id="getMessageListById"  parameterType = "com.spring.jamplan.model.MessageVO" resultMap="messageResultMap">
+		select * from message where receiver = #{receiver}
+	</select>
+	
+	<insert id="insertApplyMessage" parameterType = "com.spring.jamplan.model.MessageVO" >
 		insert into message (sender, receiver, isRead, teamName) values(#{sender},#{receiver},#{isRead},#{teamName})
 	</insert>
 	
-	<select id ="getTeamReceiver" parameterType = "com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
-		select * from teamInfo where teamName =#{teamNmae} and (role = 0 or role =1) 
+	<select id ="checkApplyMessage" parameterType = "com.spring.jamplan.model.MessageVO" resultMap="messageResultMap">
+		select * from message where teamName =#{teamName} and sender = #{sender}
 	</select>
 	
-	<delete id="deleteCansleMessage">
-		delete from message where //
+	<select id ="getTeamReceiver" parameterType = "com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		select * from teaminfo where teamName = #{teamName} and role = #{role}
+	</select>
+	
+	<delete id="deleteCansleMessage" parameterType = "com.spring.jamplan.model.MessageVO">
+		delete from message where sender = #{sender} and teamName = #{teamName}
 	</delete>
 	
 	<select id = "getRole" parameterType = "com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
@@ -111,7 +128,7 @@
 	<select id="getMessageList" parameterType="String" resultMap="messageResultMap">
 		SELECT * FROM (SELECT * FROM MESSAGE WHERE RECEIVER=#{receiver, jdbcType=VARCHAR }) 
 			WHERE ISREAD = 0
-	</select>
+	</select> 
 	
 	<select id="searchTeam" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap" >
 		SELECT * FROM TEAMINFO WHERE TEAMNAME LIKE '%'||#{teamName, jdbcType=VARCHAR}||'%'
