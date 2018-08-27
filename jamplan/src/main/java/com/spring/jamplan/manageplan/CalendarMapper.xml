@@ -66,7 +66,7 @@
 	</update>
 	
 	<select id ="getTeamRole" parameterType="hashmap" resultMap="teamInfoResultMap">
-		select * from userTeam where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
+		select * from teaminfo where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
 	</select>
 
 	<select id="getCalendarSelectDate" parameterType="int"

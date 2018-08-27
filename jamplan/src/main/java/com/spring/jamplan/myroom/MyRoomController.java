@@ -36,14 +36,17 @@ public class MyRoomController {
 
 	@RequestMapping(value="movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
-
+		String id =(String) session.getAttribute("id");
 		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
-		vo.setId((String)session.getAttribute("id"));
-		
+		//System.out.println("세션 planNo: "+session.getAttribute("planNo"));
+		System.out.println("vo plan No :" + vo.getPlanNo());
+		vo.setId(id);
 		System.out.println(vo.getId());
+	
 		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
+		System.out.println("team get role : " + teamVO.getRole());
 		session.setAttribute("planNo",vo.getPlanNo());
-		System.out.println("role"+ teamVO.getRole());
+		//System.out.println("role"+ teamVO.getRole());
 		session.setAttribute("role", teamVO.getRole());
 		System.out.println("페이지 이동 컨트롤러 진입");
 		

@@ -609,7 +609,7 @@ function ajaxGetTeamList() {
 	});
 } 
 
-//플랜 클릭시 페이지 이동 이벤트 
+//플랜 클릭시 페이지 이동 이벤트  form으로 데이터 전달 및 페이지 이동
 function planClickEvent(planNo){
 
 	var planNO = planNo;
@@ -627,15 +627,7 @@ function planClickEvent(planNo){
 	form.appendChild(input);
 	
 	form.submit();
-	//console.log("done");
-	/*$.ajax({
-		url : '/jamplan/movePlanMainPage.do',
-		type : 'GET',
-		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-		async: false,
-		dataType : 'json',
-		data : {"planNo" : planNO}
-	})*/
+	
 }
 
 function planListAdd(teamName, indexI){

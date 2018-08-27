@@ -130,20 +130,20 @@
 				<div class="col-md-2"><h1>사이드바</h1></div>
 				<div id="planManage" class="col-md-7">
 					<ul class="nav nav-tabs">
-						<li><a href="#calendar" data-toggle="tab" class="nav-link active">
-								Calendar</a></li>
-						<li><a href="#map" data-toggle="tab" class="nav-link">
-								Map</a></li>
-						<li><a href="#planTable" data-toggle="tab" class="nav-link">
-								PlanTable</a></li>
-						<li><a href="viewAll" data-toggle="tab" class="nav-link">
-								View all</a></li>
+					<!-- 	<li><a href="#calendar" data-toggle="tab" class="nav-link active">Calendar</a></li>
+						<li><a href="#map" data-toggle="tab" class="nav-link">Map</a></li>
+						<li><a href="#planTable" data-toggle="tab" class="nav-link">PlanTable</a></li>
+						<li><a href="viewAll" data-toggle="tab" class="nav-link">View all</a></li> -->
+						<li><a value="calendarajax.mp" data-toggle="tab" class="nav-link active moveLink">Calendar</a></li>
+						<li><a value="mapajax.mp" data-toggle="tab" class="nav-link moveLink">Map</a></li>
+						<li><a value="plantableajax.mp" data-toggle="tab" class="nav-link moveLink">PlanTable</a></li>
+						<li><a value="viewallajax.mp" data-toggle="tab" class="nav-link moveLink">View all</a></li>
 					</ul>
-					<div class="tab-content">
-						<div class="tab-pane container active" value = "calendarajax.mp" id="calendar"></div>
+					<div class="tab-content divContent">
+					<!-- 	<div class="tab-pane container active" value = "calendarajax.mp" id="calendarContent"></div>
 						<div class="tab-pane container fade" value = "mapajax.mp" id="map"></div>
 						<div class="tab-pane container fade" value = "plantableajax.mp" id="planTable"></div>
-						<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div>
+						<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div> -->
 					</div>
 					<!-- <div class = "content"></div> -->
 				</div>

@@ -6,23 +6,23 @@
 $(document).ready(function() {
 	
 	/*var link = $(".tab-pane container active").attr("value");
-	console.log(link);*/
+	console.log(link);*/	
 	$.ajax({
 		url : "calendarajax.mp",
 		type : "post",
-		contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+		//contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
 		dataType : "json",
 		success:function(str){
 			alert("캘린더");
 			console.log(str.link);
-			$("#calendar").load(str.link);
+			$(".divContent").load(str.link);
 			console.log('로드 후')
 		},	
 		error:function(){
 			alert("페이지 이동 ajax실패")
 		}
 	})
-	
+
 	$('.drawer').on("drawer",function(){
 		$('.drawer').drawer({
 			  class: {
@@ -46,7 +46,7 @@ $(document).ready(function() {
 		w.send(id + "/" + input);
 	}
 	
-	$(".tab-pane.container").click(function(){
+	/*$("a.moveLink").click(function(){
 		console.log($(this).attr("value"));
 		var link = $(this).attr("value");
 		$.ajax({
@@ -55,14 +55,14 @@ $(document).ready(function() {
 			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
 			dataType : "json",
 			success:function(str){
-				$(".content").load(str.link);
+				$("div.divContent").load(str.link);
 				console.log('로드 후')
 			},	
 			error:function(){
 				alert("페이지 이동 ajax실패")
 			}
 		})
-	})
+	})*/
 });
 /*
 //websocket 부분에 대한 스크립트
