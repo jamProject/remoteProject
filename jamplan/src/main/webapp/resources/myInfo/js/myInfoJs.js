@@ -7,7 +7,7 @@
 //문서 전체 출력 후
 function autocomplete(inp, arr) {
   /*두개의 파라미터를 입력한다.
-   * 하나는 내가 실제 입력하는 값, 하나는 autoComplete을 위한 값들의 베열이다.*/
+   * 하나는 내가 실제 입력하는 값, 하나는 autocomplete을 위한 값들의 배열이다.*/
   var currentFocus;
   /*입력칸에 무언가 입력되면 이벤트가 발생하게된다.*/
   inp.addEventListener("input", function(e) {

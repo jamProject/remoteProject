@@ -81,28 +81,27 @@
 				    </ul><br>
 				</div>
 				<div id="hero" class="col-sm-10">
-				  <div class="container">
+				  <div id="searchContainer" class="container">
 				    <div class="searchwrapper">
 				      <div class="searchbox">
 				       
 				        	<form id="selectionForm" class="row">
 					          <div class="col-md-3">
 					            <select id="adminSelection" class="form-control category">
-					              <option value="team">팀명</option>
-					              <option value="plan">일정명</option>
-					              <option value="user">ID</option>
+					              <option id="team" class="option" value="team">팀명</option>
+					              <option id="plan" class="option" value="plan">일정명</option>
+					              <option id="user" class="option" value="user">ID</option>
 					            </select>
 					          </div>
 					          <div class="col-md-5"><input type="text" id="searchItem" name="searchItem" class="form-control" placeholder="찾을 대상을 입력하세요."></div>
 					          <div class="col-md-1"><input type="submit" id="searchButton" class="btn btn-primary" class="form-control" value="Search"></div>
 				        	</form>
-				      
 				      </div>
 				    </div>
+				    <div id="adminItemPrint"class="container">
+				  	</div>
 				  </div>
-				  <div id="adminItemPrint"class="container">
-				  	
-				  </div>
+				  
 				</div>
 			</div>
 		</section>

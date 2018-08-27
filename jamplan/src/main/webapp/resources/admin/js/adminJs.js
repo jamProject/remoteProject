@@ -2,31 +2,12 @@
  * 
  */
 
-$(document).ready(function() {
-	//select값의 변화에 따라 controller에 따로 들어가게된다.
-	$('#searchButton').on('click', function(e) {
-		e.preventDefault();
-		console.log($('#searchButton'));
-		if($('#adminSelection')[0].val().selected == 'true') {
-			adminTeamSearch();
-			
-		}else if($('#adminSelection')[1].val().selected == 'true') {
-			adminPlanSearch();
-		
-		}else if($('#adminSelection')[2].val().selected == 'true') {
-			adminUserSearch();
-		
-		}
-	})
-	
-	
-});
 
 // 팀명으로 검색할 경우
 function adminTeamSearch() {
 	$('#adminItemPrint').empty();
 	var item = $('#searchItem').val();
-	
+	console.log("adminTeamSearch 들어옴");
 	var html = '<table id="teamSearchTable" class="table table-borderless table-hover text-center">'
 		+ '<thead><tr><th>팀명</th><th>팀장</th>'
 		+ '</tr></thead><tbody>';
@@ -40,15 +21,24 @@ function adminTeamSearch() {
 		dataType : 'json',
 		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
-			$.each(data, function(index,item){
-				html += '<tr><td>' + item.teamName + '</td>'
-					+ '<td>' + item.id + '</td></tr>'
-			})
 			
-			html += '</tbody></table>';
-			$('#adminItemPrint').append(html);
+			if (data != null) {
+				alert('성공적으로 들어옴');
+				$.each(data, function(index,item){
+					html += '<tr><td>' + item.teamName + '</td>'
+						+ '<td>' + item.id + '</td></tr>'
+				})
+				
+				html += '</tbody></table>';
+				$('#adminItemPrint').append(html);
+			}else {
+				console.log('null 들어옴');
+			}
+			
 		},
-		error : function() {}
+		error : function() {
+			console.log("에러");
+		}
 	})
 }
 
@@ -145,6 +135,28 @@ function watchPlanAsAdmin(planNo) {
 	
 	form.submit();
 }
+
+$(document).ready(function() {
+	//select값의 변화에 따라 controller에 따로 들어가게된다.
+	$('#searchButton').on('click', function(e) {
+		e.preventDefault();
+		console.log($('.option')[0].selected);
+		if($('.option')[0].selected == true) {
+			adminTeamSearch();
+			
+		}else if($('.option')[1].selected == true) {
+			adminPlanSearch();
+		
+		}else if($('.option')[2].selected == true) {
+			adminUserSearch();
+		
+		}
+	})
+	
+	
+});
+
+
 
 
 

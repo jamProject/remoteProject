@@ -38,7 +38,7 @@
 		SELECT * FROM TEAMINFO WHERE TEAMNAME LIKE '%'||#{teamName, jdbcType=VARCHAR}||'%'
 		
 		<if test="teamName != null">
-			AND ROLE=0;
+			AND ROLE=0
 		</if>
 	</select>
 	

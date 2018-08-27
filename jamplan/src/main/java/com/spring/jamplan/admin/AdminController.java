@@ -25,9 +25,6 @@ public class AdminController {
 	private AdminDAO adminDAO;
 	
 	@Autowired(required=false)
-	private TeamInfoVO teamInfo;
-	
-	@Autowired(required=false)
 	private PlanVO plan;
 	
 	@Autowired(required=false)
@@ -40,50 +37,71 @@ public class AdminController {
 	
 	@RequestMapping(value="adminTeamSearch.admin", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String adminTeamSearch(HttpServletRequest request) {
+	public String adminTeamSearch(HttpServletRequest request, TeamInfoVO teamInfo) {
 		System.out.println("adminTeamSearch IN");
-		teamInfo = (TeamInfoVO)request.getAttribute("searchItem");
-		teamList = adminDAO.adminTeamSearch(teamInfo);
+		teamInfo.setTeamName(request.getParameter("searchItem"));;
+		System.out.println("teamInfo에 set 완료 = " + teamInfo.getTeamName());
 		
-		String teamListToJson = "";
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			teamListToJson = mapper.writeValueAsString(teamList);
-			System.out.println(teamListToJson);
-		}catch (Exception e) {
-			e.printStackTrace();
+		if (adminDAO.adminTeamSearch(teamInfo) != null) {
+			System.out.println("CONTROLLER에서 DB갔다옴");
+			teamList = adminDAO.adminTeamSearch(teamInfo);
+			
+			String teamListToJson = "";
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				teamListToJson = mapper.writeValueAsString(teamList);
+				System.out.println(teamListToJson);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("adminTeamSearch OUT with teamList");
+			return teamListToJson;
+			
+		}else {
+			System.out.println("adminTeamSearch OUT with null");
+			return null;
 		}
-		System.out.println("adminTeamSearch OUT");
-		
-		return teamListToJson;
 	}
 	
 	@RequestMapping(value="adminPlanSearch.admin", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String adminPlanSearch(HttpServletRequest request) {
+	public String adminPlanSearch(HttpServletRequest request, PlanVO plan) {
 		System.out.println("adminPlanSearch IN");
-		plan = (PlanVO)request.getAttribute("searchItem");
-		planList = adminDAO.adminPlanSearch(plan);
-		
-		String planListToJson = "";
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			planListToJson = mapper.writeValueAsString(planList);
-			System.out.println(planListToJson);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("adminPlanSearch OUT");
+		plan.setPlanName(request.getParameter("searchItem"));
+		System.out.println("plan에 set 완료 = " + plan.getPlanName());
 
-		return planListToJson;
+		if(adminDAO.adminPlanSearch(plan).size() != 0) {
+			planList = adminDAO.adminPlanSearch(plan);
+			
+			String planListToJson = "";
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				planListToJson = mapper.writeValueAsString(planList);
+				System.out.println(planListToJson);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("adminPlanSearch OUT with planList");
+			return planListToJson;
+		}else {
+			System.out.println("adminPlanSearch OUT with null");
+			return "null";
+		}
 	}
 	
 	@RequestMapping(value="adminUserSearch.admin", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String adminUserSearch(HttpServletRequest request) {
+	public String adminUserSearch(HttpServletRequest request, UserVO user) {
 		System.out.println("adminUserSearch IN");
-		user = (UserVO)request.getAttribute("searchItem");
-		user = adminDAO.adminUserSearch(user);
+		user.setId(request.getParameter("searchItem"));
+		System.out.println("user에 set 완료 = " + user.getId());
+
+		
+		if(adminDAO.adminUserSearch(user) != null) {
+			
+		}else {
+			
+		}
 		
 		String userToJson = "";
 		ObjectMapper mapper = new ObjectMapper();

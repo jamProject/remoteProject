@@ -156,7 +156,7 @@
 						<div class="tab-pane fade" value="info.mp" id="info" role="tabpanel" aria-labelledby="info-tab">
                             <div style="display:flex;width:100%;">
                                 <form id="imageForm" action="imageUpload.info" method="post" enctype="multipart/form-data">
-                                    <div><img id="imagePreview" src="https://via.placeholder.com/200x200" width="200" height="200"></div>
+                                    <div><img id="imagePreview" src="<spring:url value='/image/${user.image }'/>" width="200" height="200"></div>
                                     <label id="imageSearch">사진 찾기<input id="image" type="file" name="file" accept="image/*"></label>                              
                                     <button id="imageUpload" class="btn btn-primary btn-rounded" type="submit">프로필 사진 등록</button>
                                 </form>
