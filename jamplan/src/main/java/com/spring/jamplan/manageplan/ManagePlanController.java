@@ -266,18 +266,25 @@ public class ManagePlanController {
 		System.out.println("getOnUserList IN");
 		System.out.println(nameList[2]);
 		Map<String, String> imageMap = new HashMap<String, String>();
+		System.out.println("nameList.length=" + nameList.length);
+		System.out.println("nameList[0]=" + nameList[0]);
 		
-		for(int i=1; i<nameList.length; i++) {
+		for(int i=1; i<nameList.length-1; i++) {
 			String name = nameList[i];
-			System.out.println(name);
+			System.out.println("name=" + name + "AAAA");
 			System.out.println("들어갔니");
 			user.setId(name);
 			System.out.println("user에 set은 잘했니");
 			user = chatDAO.getImageName(user);
-			System.out.println("DB엔 잘갔다왔고?");
-			imageMap.put(name, user.getImage());
-			System.out.println(name);
-			System.out.println(user.getImage());
+			System.out.println("DB엔 잘갔다왔고?=" + user);
+			try {
+				imageMap.put(name, user.getImage());
+			}catch(Exception e) {
+				e.getMessage();
+			}
+			
+			System.out.println("name=" + name + "BBBB");
+			System.out.println("user.getImage()" + user.getImage());
 			System.out.println("이제 map에 다 넣었지?");
 		}
 		

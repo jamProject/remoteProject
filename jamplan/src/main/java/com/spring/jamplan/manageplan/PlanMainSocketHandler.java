@@ -134,9 +134,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 //					System.out.println(chatSetGroupMap.get(teamInfo.getTeamNo()));
 					
 					// 접속시에 누가 접속했는지 알려주기위해 id를 모은다.
-	
 					String name = idMap.get(assignedSession);
-					
 					nameList += name + "/";
 					
 					// 각각의 세션에 해당하는 사용자들에게 참여를 알린다.

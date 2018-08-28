@@ -33,7 +33,7 @@ public class UserVO {
 	String gender;
 	String travelType;
 	String hobby;
-	
+	String authCode;
 	String image;
 	
 	int age;
@@ -113,6 +113,14 @@ public class UserVO {
 		this.hobby = hobby;
 	}
 
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
+	}
+
 	public String getImage() {
 		return image;
 	}
@@ -146,5 +154,4 @@ public class UserVO {
 	}
 
 	
-
 }

@@ -39,8 +39,8 @@
 	<title>JAM</title>
 
 <%
-	String id = (String)session.getAttribute("id");
-	session.setAttribute("teamNo", "3");
+	session.setAttribute("id", "thkim9198");
+	session.setAttribute("teamNo", "14");
 %>
 
 	<style>
@@ -90,6 +90,7 @@
 	var splitNameList = function (s) {
 		
 		var nameList = s.split('/');
+		var nameArr = [];
 		
 		// 해당 아이디를 가진 유저들의 정보를 불러오기 위한 ajax
 		$.ajax({
@@ -103,9 +104,9 @@
 			dataType : "json",
 			success : function (data) {
 				console.log(data);
-				$.each(data, function(index, item) {
-					imageUp(item);
-				});
+				for(var name in data) {
+					imageUp(name, data[name]);
+				}
 			},	
 			error:function(){
 				alert("페이지 이동 ajax실패")
@@ -114,13 +115,14 @@
 	}
 	
 	//채팅방에 팀원이 접속하면 해당 팀원의 프로필 사진을 띄운다.
-	var imageUp = function (e) {
-		var image = document.createElement("image");
-		var chat = document.getElementById('chat');
-		image.setAttribute("src", "<spring:url value='/image/" + ${e.image } + "'/>");
+	var imageUp = function (name, imageName) {
+		var profileImage = document.getElementById('profileImage');
+		var image = document.createElement("img");
+		
+		image.setAttribute("src", "<spring:url value='/image/" + imageName + "'/>");
 		image.setAttribute("alt", 'Avatar');
 		image.setAttribute("class", 'avatar');
-		image.setAttribute("title", ${e.id});
+		image.setAttribute("title", name);
 		chat.appendChild(image);
 	}
 
@@ -185,6 +187,7 @@
 		  <!-- Right-aligned links -->
 		  <div class="topnav-right">
 		    <a href="#search">Message</a>
+		    <a href="myInfo.info?id=${id }">My Info</a>
 		    <a href="#about">Search</a>
 		  </div>
 		</div>
@@ -212,9 +215,8 @@
 					</div>
 				</div>
 				<div id="chat" class="col-md-3">
-				
 					<!-- 아바타 이미지 들어가는 곳 -->
-					
+					<div id="profileImage"></div>
 					<button class="open-button" onclick="openForm()">Chat</button>
 					<div class="form-popup" id="myForm">
 						<div class="form-container">

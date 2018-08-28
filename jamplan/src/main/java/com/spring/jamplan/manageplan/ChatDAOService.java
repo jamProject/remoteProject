@@ -31,11 +31,16 @@ public class ChatDAOService {
 	}
 	
 	public UserVO getImageName(UserVO user) {
-		System.out.println("getOnUserList DAOService IN");
-		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
-		user = mapper.getImageName(user);
-		
-		System.out.println("getOnUserList DAOService OUT");
+		try {
+			System.out.println("getOnUserList DAOService IN");
+			ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
+			user = mapper.getImageName(user);
+			
+			System.out.println("getOnUserList DAOService OUT");
+		}catch(Exception e) {
+			System.out.println("AAAAAAAAAAAAAAAAAAAA");
+			e.printStackTrace();
+		}
 		return user;
 	}
 }
