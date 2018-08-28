@@ -6,6 +6,7 @@
 <html lang="ko">
 <head>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"crossorigin="anonymous"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -14,7 +15,7 @@
 	<spring:url value="/resources/planMain/js/planMain.js" var="mainPageJs" />
 	<spring:url value="/resources/planMain/css/planMain.css" var="mainPageCss" />
 	
-	<script src="${mainPageJs}"></script>
+	<script src="${mainPageJs }"></script>
 	<link href="${mainPageCss}" rel="stylesheet" />
 	
 	<meta charset="UTF-8">
@@ -28,19 +29,22 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
-	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
+
 	<!-- jquery & iScroll -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
 	<!-- drawer.js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
+	
 
 	<title>JAM</title>
 
 <%
-	String id = (String)session.getAttribute("id");
+	session.setAttribute("id", "thkim9198");
+	session.setAttribute("teamNo", "14");
 %>
+
 
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -160,27 +164,127 @@
 	<div>
 		<label>Plan Main</label>
 	</div>
+=======
+	<style>
+		/*구글 한글폰트 불러오는 곳*/
+		@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+    
+		* {
+			font-family: 'Jeju Myeongjo', serif;
+			font-weight: 600;
+		}
+/*구글 한글폰트 불러오는 부분 끝*/
+	</style>
+	<script>
+>>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460
 	
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top" id ="navCenter">
-		<table>
-			<tr>
-				<td class = "linkMp" value = "calendarajax.mp" style="color:white">calendar</td>
-				<td class = "linkMp" value = "mapajax.mp" style="color:white">map</td>
-				<td class = "linkMp" value = "plantableajax.mp" style="color:white">plantable</td>
-				<td class = "linkMp" value = "viewallajax.mp" style="color:white">view all</td>
-			</tr>
-		</table>
-	</nav>
+	$(document).ready(function () {
+		$("#sendButton").click(function() {
+			var input = $('#inputText').val();
+			w.send('${id}' + "/" + input);
+		});
+		
+		$('.drawer').drawer({
+			  class: {
+			    nav: 'drawer-nav',
+			    toggle: 'drawer-toggle',
+			    overlay: 'drawer-overlay',
+			    open: 'drawer-open',
+			    close: 'drawer-close',
+			    dropdown: 'drawer-dropdown'
+			  },
+			  iscroll: {
+			    preventDefault: false
+			  },
+			  showOverlay: true
+			}); 
+		
+		$('.drawer').drawer();
+	})
+		
 	
-	Side navigation left
-	<div class="sidenavL"></div>
+	//websocket 부분에 대한 스크립트
+	var log = function (s) {
+		// 이 부분에 메시지 형식 넣어야함.
+		document.getElementById("chatTextarea").textContent += (s + "\n");
+	}
 	
-	Side navigation right
-	<div class="sidenavR"></div>
+	
+	var splitNameList = function (s) {
+		
+		var nameList = s.split('/');
+		var nameArr = [];
+		
+		// 해당 아이디를 가진 유저들의 정보를 불러오기 위한 ajax
+		$.ajax({
+			url : 'onUserList.mp',
+			type : 'POST',
+			data : {
+				'nameList' : nameList
+			},
+			traditional : true,
+			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+			dataType : "json",
+			success : function (data) {
+				console.log(data);
+				for(var name in data) {
+					imageUp(name, data[name]);
+				}
+			},	
+			error:function(){
+				alert("페이지 이동 ajax실패")
+			}
+		});
+	}
+	
+	//채팅방에 팀원이 접속하면 해당 팀원의 프로필 사진을 띄운다.
+	var imageUp = function (name, imageName) {
+		var profileImage = document.getElementById('profileImage');
+		var image = document.createElement("img");
+		
+		image.setAttribute("src", "<spring:url value='/image/" + imageName + "'/>");
+		image.setAttribute("alt", 'Avatar');
+		image.setAttribute("class", 'avatar');
+		image.setAttribute("title", name);
+		chat.appendChild(image);
+	}
 
-	<div class = "content"></div>
- -->
- <body class="drawer drawer--left">
+	var id = '${id}';
+	var teamNo = '3';
+	
+	w = new WebSocket("ws://localhost:8800/jamplan/planMainChat?id="+id + "&teamNo=" + teamNo);
+	// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
+	w.onopen = function () {
+		console.log("WebSocket Connected!");
+		
+		
+	}
+	w.onmessage = function(e) {
+		
+		alert("success");
+		if(e.data.toString().substring(0,8) == 'nameList') {
+			splitNameList(e.data.toString());
+		}else {
+			log(e.data.toString());
+		}
+		
+	}
+	w.onclose = function(e) {
+		alert("closed");
+		console.log('닫힌다는 메시지가 창에 뜨기 전');
+		log("WebSocket closed!!");
+	}
+	w.onerror = function(e) {
+		alert("failure");
+		log("WebSocket error!!");
+	}
+	// websocket 부분에 대한 스크립트 끝
+
+	</script>
+</head>
+
+
+<body class="drawer drawer--left">
 	<header>
 		<div role="banner">
 			<!-- side bar 삽입 -->
@@ -206,6 +310,7 @@
 		  <!-- Right-aligned links -->
 		  <div class="topnav-right">
 		    <a href="#search">Message</a>
+		    <a href="myInfo.info?id=${id }">My Info</a>
 		    <a href="#about">Search</a>
 		  </div>
 		</div>
@@ -213,7 +318,7 @@
 	<section>
 		<div id="main-container" class="container-fluid text-center">
 			<div class="row">
-				<div class="col-md-2"><h1>사이드바</h1></div>
+				<div class="col-md-2"></div>
 				<div id="planManage" class="col-md-7">
 					<ul class="nav nav-tabs">
 					<!--<li><a href="#calendar" data-toggle="tab" class="nav-link active">Calendar</a></li>
@@ -235,22 +340,16 @@
 					</div>
 					<!-- <div class = "content"></div> -->
 				</div>
-				
-			   <!-- DB에 저장하기 -->
-	           <!--		    <div id="saveput"></div>
-			           		palnTable 뿌려주기   
-			           		<br><br>
-			           		<div class="container" id="planput"></div></div>
-				-->
-				
-				
-				<div class="col-md-3">
-					<h1>채팅창</h1>
+
+				<div id="chat" class="col-md-3">
+					<!-- 아바타 이미지 들어가는 곳 -->
+					<div id="profileImage"></div>
+
 					<button class="open-button" onclick="openForm()">Chat</button>
 					<div class="form-popup" id="myForm">
 						<div class="form-container">
 					   <!--  	<label for="exampleFormControlTextarea3">Rounded corners</label> -->
-    						<textarea class="form-control" id="exampleFormControlTextarea3" readonly rows="10"></textarea>
+    						<textarea class="form-control" id="chatTextarea" readonly rows="10"></textarea>
 					    	<input id="inputText" type="text" placeholder="대화를 해보세요" required>
 					
 					    	<button id="sendButton" class="btn">Enter</button>
@@ -264,5 +363,8 @@
 	</section>
 	<footer>
 	</footer>
+	<script>
+	
+	</script>
 </body>
 </html>

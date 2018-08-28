@@ -34,7 +34,27 @@ $(document).ready(function() {
 		var input = document.getElementById('inputText').value;
 		w.send(id + "/" + input);
 	}
+
 	
+	
+	
+	/*var link = $(".tab-pane container active").attr("value");
+	console.log(link);
+	$.ajax({
+		url : "calendarajax.mp",
+		type : "post",
+		contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+		dataType : "json",
+		success:function(str){
+			$(".content").load(str.link);
+			console.log('로드 후11')
+		},	
+		error:function(){
+			alert("페이지 이동 ajax실패")
+		}
+	})
+	*/
+
 	/*$(document).ready(function() {
 		$('.drawer').drawer();
 		
@@ -46,6 +66,7 @@ $(document).ready(function() {
 				var input = document.getElementById('inputText').value;
 				w.send(id + "/" + input);
 			}
+<<<<<<< HEAD
 		}); 
 		
 		document.getElementById("sendButton").onclick = function() {
@@ -79,8 +100,13 @@ w.onerror = function(e) {
 	log("WebSocket error!!");
 }
 // websocket 부분에 대한 스크립트 끝
+=======
+		})
+	})
+});
+>>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460
 
-// chat창에 대한 스크립트
+//chat창에 대한 스크립트
 function openForm() {
     document.getElementById("myForm").style.display = "block";
 }
@@ -88,6 +114,7 @@ function openForm() {
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
+<<<<<<< HEAD
 */
 
 // chat창에 대한 스크립트 끝

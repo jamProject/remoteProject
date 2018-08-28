@@ -5,8 +5,13 @@
 <!-- create table plan( image varchar2(100), planDate varchar2(200), planName 
 	varchar2(200), goodCount varchar2(400), readCount varchar2(200) ); -->
 
+<!-- <<<<<<< HEAD:jamplan/src/main/java/com/spring/jamplan/searchcontroller/SearchMapper.xml -->
 <mapper namespace="com.spring.jamplan.searchcontroller.SearchMapper">
-
+<!-- =======
+<mapper
+	namespace="com.spring.jamplan.model.SearchMapper">
+>>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460:jamplan/src/main/java/com/spring/jamplan/searchcontroller/SearchMapper.xml
+ -->
 	<resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
 		<result property="image" column="image" />
 		<result property="planDate" column="planDate" />
@@ -92,21 +97,12 @@
 	</select>
 	
 	<update id="heartCheck" parameterType="com.spring.jamplan.model.LikeVO">
+<!-- <<<<<<< HEAD:jamplan/src/main/java/com/spring/jamplan/searchcontroller/SearchMapper.xml -->
 		UPDATE LIKETEST SET likeNo = #{likeNo, javaType=int} + 1
 	</update>
-
-
-
 
 	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
 		> update plan set readCount = (select readCount from plan where planName 
 		= #{planName, jdbcType=VARCHAR}) + 1 where planNo = #{planNo, jdbcType=NUMBER} 
 		</update> -->
-
-
-
-
-
-
-
 </mapper>

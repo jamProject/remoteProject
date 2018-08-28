@@ -2,6 +2,8 @@ package com.spring.jamplan.myroom;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import com.spring.jamplan.model.MessageVO;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;

@@ -30,24 +30,32 @@ public class MyRoomController {
 		
 	private HashMap<String, Object> map;
 
-	@RequestMapping(value="movePlanMainPage.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	@RequestMapping(value="myRoom.do")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
 		String id =(String) session.getAttribute("id");
 		
 		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
+//<<<<<<< HEAD
 		//System.out.println("세션 planNo: "+session.getAttribute("planNo"));
-		System.out.println("vo plan No :" + vo.getPlanNo());
-		
+		System.out.println("vo plan No :" + vo.getPlanNo());	
 		vo.setId(id);
 		System.out.println(vo.getId());
-	
 		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
-		
 		System.out.println("team get role : " + teamVO.getRole());
-		
 		session.setAttribute("planNo",vo.getPlanNo());
 		session.setAttribute("role", teamVO.getRole());
 		
+/*=======
+//		vo.setId((String)session.getAttribute("id"));
+
+		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
+//		session.setAttribute("planNo",vo.getPlanNo());
+		session.setAttribute("planNo",2);
+//		System.out.println("role"+ teamVO.getRole());
+//		session.setAttribute("role", teamVO.getRole());
+		session.setAttribute("id", "thkim9198");
+		session.setAttribute("role", 0);
+>>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460*/
 		System.out.println("페이지 이동 컨트롤러 진입");
 		
 		return "managePlan/main";
@@ -209,7 +217,7 @@ public class MyRoomController {
 				//팀에 속해 있는 모든 유저의 데이터 삽입
 				vo.setId(list.get(i).getId()); 
 				vo.setRole(list.get(i).getRole());				
-				vo.setJoinDate(list.get(i).getJoinDate());
+				//vo.setJoinDate(list.get(i).getJoinDate());
 
 				myRoomDAO.insertPlan(vo);
 			}
@@ -313,6 +321,10 @@ public class MyRoomController {
 		
 		return updateListToJson;
 	}
+
+	
+
+
 	@RequestMapping(value="/applyToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String applyToTeam(HttpSession session, MessageVO vo) {
@@ -334,6 +346,7 @@ public class MyRoomController {
 		}catch (Exception e) {
 			map.put("res", "fail");
 		}
+
 		
 		String searchTeamListToJson = "";
 		ObjectMapper mapper = new ObjectMapper();
@@ -346,6 +359,8 @@ public class MyRoomController {
 		System.out.println("applyTeam Out");
 		return searchTeamListToJson;
 	}
+	
+	
 	//deleteCansleMessage
 	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody

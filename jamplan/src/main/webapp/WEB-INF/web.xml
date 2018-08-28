@@ -27,13 +27,17 @@
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.search</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.room</url-pattern>
-
 	</servlet-mapping>
 
 	<servlet-mapping>
@@ -47,13 +51,29 @@
 	</servlet-mapping>
 	
 	<servlet-mapping>
+
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.plan</url-pattern>
+ 	</servlet-mapping>
+ 	
+	 <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>*.info</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.admin</url-pattern>
+
 	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>home.do</welcome-file>
 	</welcome-file-list>
+	
+	<!-- <welcome-file-list>
+		<welcome-file>main.mp</welcome-file>
+	</welcome-file-list> -->
 
 	<!--필터  -->
 	<filter>

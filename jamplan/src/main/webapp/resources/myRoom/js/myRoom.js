@@ -337,6 +337,7 @@ $(document).ready(function() {
 	function() {
 	var id = '<%=id %>';
 	$('#updateSpace').empty();
+	
 	$.ajax({
 			url : '/jamplan/updateCheck.do',
 			type : 'POST',
@@ -345,17 +346,17 @@ $(document).ready(function() {
 			},
 			dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-			success : function(data) {$.each(data,function(index,item) {
-							var update = '';
-							update += '<div class="media border p-3">'
-									+ '<img src="http://alumnes.org/wp-content/uploads/2017/06/fa-user-circle-o-c0a2bd7a.png"'
+			success : function(data) {
+				$.each(data, function(index,item) {
+					var update = '';
+							update += '<div class="media border p-3">' + '<img src="/jamplan/image/${user.image}"'
 									+ 'alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">'
 									+ '<div class="media-body">'
 									+ '<h4>'+ item.planName+ '</h4>'
 									+ '<p>일정에 변화가 있어요. 확인해 보세요.</p>'
 									+ '</div>'+ '</div>'+ '</br></br>';
 							$('#updateSpace').append(update);
-						})
+						});
 			},
 			error : function() {
 				alert("Error");
@@ -561,10 +562,12 @@ function onError(event) {
 
 // 배열을 생성하고 팀 이름들을 저장한다.
 //btn btn-primary, btn btn-danger  
+
 var teamNameArray = [];
 
 function ajaxGetTeamList() {
 
+		
 	$('#teamList').empty();	
 	$.ajax({
 
