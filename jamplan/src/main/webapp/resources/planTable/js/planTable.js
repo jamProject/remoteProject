@@ -30,8 +30,8 @@ $(document).ready(function() {
 					planput += '</thead>';
 					planput += '<tbody>';
 					planput += '<tr>';
-					planput += '<td>' + item.calendar + '</td>';
-					planput += '<td>' + item.map + '</td>';
+					planput += '<td>' + item.planDate + '</td>';
+					planput += '<td>' + item.placeName + '</td>';
 					planput += '<td><textarea class="form-control" name="memo" id="memo' + index + '" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
 					planput += '<td><input type="text" hidden="hidden" id="planSeq'+index+'" value="'+item.planSeq+'"></td>'
 					planput += '</tr>';
