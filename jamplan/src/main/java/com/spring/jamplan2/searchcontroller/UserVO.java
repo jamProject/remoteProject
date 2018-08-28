@@ -18,7 +18,6 @@ public class UserVO {
    private String travelType;
    private String hobby;
    private String image;
-   
    private int age;
    
    private int isAdmin;
@@ -120,4 +119,6 @@ public class UserVO {
    public void setSignDate(String signDate) {
       this.signDate = signDate;
    }
+
+
 }

@@ -34,7 +34,7 @@ public class UserVO {
 	String snsLink;
 	String travelType;
 	String hobby;
-	
+	String authCode;
 	//image
 	
 	int age;
@@ -145,5 +145,17 @@ public class UserVO {
 	public void setSignDate(String signDate) {
 		this.signDate = signDate;
 	}
+
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authcode) {
+		this.authCode = authcode;
+	}
+
+	
+
+	
 
 }

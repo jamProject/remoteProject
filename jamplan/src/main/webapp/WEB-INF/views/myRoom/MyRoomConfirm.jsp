@@ -10,11 +10,11 @@
 <%-- <%@page import="com.spring.jamplan.myroom.CalendarVO"%> --%>
 
 <%
-	if ((String) request.getAttribute("id") == null)
+	if ((String)session.getAttribute("id") == null)
 		response.sendRedirect("/jamplan/home.do");
 
 
-	String id = (String) request.getAttribute("id");
+	String id = (String) session.getAttribute("id");
 	
 	/* if( request.getAttribute("teamList") != null){
 		List<TeamInfoVO> teamList = (List<TeamInfoVO>) request.getAttribute("teamList");
