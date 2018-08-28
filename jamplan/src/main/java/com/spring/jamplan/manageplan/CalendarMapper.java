@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.jamplan.model.CalendarVO;
-import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 
 
 public interface CalendarMapper {
-	public ArrayList<PlanVO> getAllPlans();
-	public ArrayList<PlanVO> getTeamPlan(PlanVO planVO);
+	public ArrayList<TeamInfoVO> getAllPlans();
+	public ArrayList<TeamInfoVO> getTeamPlan(TeamInfoVO planVO);
 	public ArrayList<CalendarVO> getCalendarSelectDate(int planNo);
 	
 	public ArrayList<CalendarVO> checkSelectDate(CalendarVO calendarVO);

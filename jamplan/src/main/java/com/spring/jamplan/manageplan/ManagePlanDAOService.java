@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.jamplan.model.CalendarVO;
-import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 
 
@@ -20,21 +19,21 @@ public class ManagePlanDAOService {
 	private TeamInfoVO teamVO;
 	
 	private CalendarMapper calendarMapper;
-	private ArrayList<PlanVO> planList;
+	private ArrayList<TeamInfoVO> planList;
 	private ArrayList<CalendarVO> voList;
 
-	public ArrayList<PlanVO> getPlans(PlanVO planVO) {
+	public ArrayList<TeamInfoVO> getPlans(TeamInfoVO planVO) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 
-		planList = new ArrayList<PlanVO>();
+		planList = new ArrayList<TeamInfoVO>();
 		planList = calendarMapper.getAllPlans();
 		return planList;
 	}
 
-	public ArrayList<PlanVO> getTeamPlan(PlanVO planVO) {
+	public ArrayList<TeamInfoVO> getTeamPlan(TeamInfoVO planVO) {
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
 
-		planList = new ArrayList<PlanVO>();
+		planList = new ArrayList<TeamInfoVO>();
 		planList = calendarMapper.getTeamPlan(planVO);
 
 		// System.out.println(planList.get(0).getPlanNo());

@@ -2,10 +2,9 @@
 <%-- <%@page import="org.springframework.boot.autoconfigure.web.ServerProperties.Session"%> --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page import ="com.spring.jamplan.model.PlanVO" %>
+<%-- <%@ page import ="com.spring.jamplan.model.PlanVO" %> --%>
 <!DOCTYPE html>
 
 <%@ page session="false"%>
@@ -26,9 +25,7 @@
 	int role = (int)session.getAttribute("role");
 %>	
 
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-		  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="${calJs}"></script>
 <link href="${calCss}" rel="stylesheet" />
 

@@ -24,14 +24,14 @@ public interface MyRoomDAO {
 	void insertToMember(MessageVO vo);
 	
 	UserVO getUserInfo(UserVO vo);	
-	PlanVO searchPlan(PlanVO plan);
+	ArrayList<TeamInfoVO> searchPlan(TeamInfoVO team);
 	TeamInfoVO getRole(TeamInfoVO team);
 	
 	ArrayList<TeamInfoVO> getTeamList(String id);
 	ArrayList<TeamInfoVO> getPlanListById(String id);
-	ArrayList<PlanVO> checkUpdate(UserVO vo);
+	ArrayList<TeamInfoVO> checkUpdate(UserVO vo);
 	ArrayList<TeamInfoVO> getTeamMember(UserVO vo);
-	ArrayList<PlanVO> getPlanList(TeamInfoVO team);	
+	ArrayList<TeamInfoVO> getPlanList(TeamInfoVO team);	
 	ArrayList<TeamInfoVO> searchTeam(TeamInfoVO team);
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO team);
 	ArrayList<MessageVO>getMessageList(MessageVO vo);

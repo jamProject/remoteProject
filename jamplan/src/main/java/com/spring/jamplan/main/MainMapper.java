@@ -1,12 +1,9 @@
 package com.spring.jamplan.main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import java.util.List;
 
 import com.spring.jamplan.model.PlanVO;
-
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 

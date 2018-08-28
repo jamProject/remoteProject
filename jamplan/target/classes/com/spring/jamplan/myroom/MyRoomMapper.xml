@@ -118,8 +118,8 @@
 		SELECT ID FROM teaminfo WHERE TEAMNO IN (SELECT DISTINCT TEAMNO FROM teaminfo WHERE ID=#{id, jdbcType=VARCHAR})
 	</select>
 	
-	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="planResultMap">
-		SELECT * FROM PLAN WHERE TEAMNO IN (SELECT TEAMNO FROM teaminfo WHERE ID = #{id, jdbcType=VARCHAR })
+	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		SELECT * FROM TeamInfoVO WHERE TEAMNO IN (SELECT TEAMNO FROM teaminfo WHERE ID = #{id, jdbcType=VARCHAR })
 	</select>
 	
 	<select id="checkUpdate" parameterType="com.spring.jamplan.model.UserVO" resultMap="planUpdateResultMap">
@@ -140,8 +140,8 @@
 		
 	</select>
 	
-	<select id="searchPlan" parameterType="com.spring.jamplan.model.PlanVO" resultMap="planResultMap" >
-		SELECT * FROM PLAN WHERE PLANNO=#{planNo, jdbcType=INTEGER }
+	<select id="searchPlan" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap" >
+		SELECT * FROM teaminfo WHERE PLANNO=#{planNo, jdbcType=INTEGER }
 	</select>
 	
 	<insert id="makeTeam" parameterType="com.spring.jamplan.model.TeamInfoVO"  >

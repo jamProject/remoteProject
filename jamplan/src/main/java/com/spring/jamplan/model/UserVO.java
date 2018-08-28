@@ -22,6 +22,21 @@ import org.springframework.stereotype.Component;
 	TRAVELTYPE VARCHAR2(10), 
 	HOBBY VARCHAR2(20) 
 	);
+	  private String id;
+   private String email;
+   private String pass;
+   private String nation;
+   private String gender;
+   private String snsSite;
+   private String travelType;
+   private String hobby;
+   private String image;
+   
+   private int age;
+   
+   private int isAdmin;
+   
+   private String signDate;
 */
 
 @Component

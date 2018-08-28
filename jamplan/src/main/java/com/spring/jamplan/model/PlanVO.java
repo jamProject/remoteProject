@@ -1,18 +1,25 @@
 package com.spring.jamplan.model;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author wookim
  * @param 
-<<<<<<< HEAD
-<<<<<<< HEAD
- *	
-*/
-	
+ *   
+ */
 @Component
 public class PlanVO {
    private int planNo;
+   private int teamNo;
+   private int goodCount;
+   private int readCount;
+   
+   private String image;
+   private String planName;
+   private String planDate;
+   
+ /*  private int planNo;
    private int teamNo;
    private int goodCount;
    private int readCount;
@@ -20,7 +27,8 @@ public class PlanVO {
    private String image;
    private String planName;
    private String planDate;
-   private String hashTag;
+   private String hashTag;*/
+   
 public int getPlanNo() {
 	return planNo;
 }
@@ -45,12 +53,6 @@ public int getReadCount() {
 public void setReadCount(int readCount) {
 	this.readCount = readCount;
 }
-public int getIsOpen() {
-	return isOpen;
-}
-public void setIsOpen(int isOpen) {
-	this.isOpen = isOpen;
-}
 public String getImage() {
 	return image;
 }
@@ -69,11 +71,13 @@ public String getPlanDate() {
 public void setPlanDate(String planDate) {
 	this.planDate = planDate;
 }
-public String getHashTag() {
-	return hashTag;
-}
-public void setHashTag(String hashTag) {
-	this.hashTag = hashTag;
-}
+
+   
+   
+
+
+
+   // private int isOpen;
+   //private String hashTag;
 
 }

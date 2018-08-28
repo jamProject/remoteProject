@@ -1,27 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<%-- <!DOCTYPE html>
-<html lang="en">
-<head>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"crossorigin="anonymous"></script>
-	<spring:url value="/resources/planMain/js/planMain.js" var="mainPageJs" />
-	<spring:url value="/resources/planMain/css/planMain.css" var="mainPageCss" />
-	<script src="${mainPageJs}"></script>
-	<link href="${mainPageCss}" rel="stylesheet" />
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>JAM</title>
-</head> --%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -44,19 +24,18 @@
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet"href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
-		<!-- jquery & iScroll -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
-		<!-- drawer.js -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
-	
+	<!-- jquery & iScroll -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+	<!-- drawer.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+
 	<title>JAM</title>
 
 <%
@@ -65,6 +44,113 @@
 
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
+	<%-- <script type="text/javascript">
+	//planTable : 불러오기
+    function planTableGo() {
+       
+       
+       $.ajax({
+          url : '/jamplan/planTable.plan',
+          type : 'POST',
+          dataType: "json",
+            contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+          data : { 
+             "userId" : '<%=userId%>',
+             "planNo" : $('#planNo').val(),
+             "likeYn" : updateStatus
+          },
+          success:function(data){
+             $('#planput').empty();
+             $('#saveput').empty();
+             var put = '';
+             var saveput = '';
+                saveput += '<br><br>';
+                saveput += '<a href="javascript:savePlanTable();"><button class="btn btn-primary pull-right" >저장</button></a>';
+                $('#saveput').append(saveput);
+                
+             $.each(data, function(index, item){
+                /* $('#planput').empty(); */
+                var planput = '';
+                planput += '<table class="table">';
+                planput += '<thead>';
+                planput += '<th>날짜 </th>';
+                planput += '<th>장소</th>';
+                planput += '<th>일정</th>';
+                planput += '</thead>';
+                planput += '<tbody>';
+                planput += '<tr>';
+                planput += '<td>' + item.calendar + '</td>';
+                planput += '<td>' + item.map + '</td>';
+                planput += '<td><textarea class="form-control" name="memo" id="memo' + index + '" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
+                planput += '<td><input type="text" hidden="hidden" id="planSeq'+index+'" value="'+item.planSeq+'"></td>'
+                planput += '</tr>';
+                planput += '</tbody>';
+                planput += '</table>';
+                
+//                 memoList[index] = item.map;
+                console.log("planput" + planput);
+                $('#planput').append(planput);
+             });
+          },
+          error:function() {
+             alert('ajax통신실패!!!');
+          }
+       });
+    }
+    
+    
+    
+    // savePlanTable : 저장
+    function savePlanTable(){
+       var memoCnt = $('[name="memo"]');
+       var params = {};
+       for(var i=0; i<memoCnt.length; i++){
+          params = {"memo" : $('#memo'+ i).val(), "planSeq" : $('#planSeq'+ i).val()};
+          console.log(params);
+          $.ajax({
+             url : '/jamplan/savePlanTable.plan',
+             type : 'POST',
+             dataType: "json",
+               contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+               data : params,
+               success:function(data) {
+             
+                  /* $.each(data, function(index, item){
+                   $('#updateput').empty();
+                   var updateput = '';
+                   updateput += '<table class="table">';
+                   updateput += '<thead>';
+                   updateput += '<th>날짜 </th>';
+                   updateput += '<th>장소</th>';
+                   updateput += '<th>일정</th>';
+                   updateput += '</thead>';
+                   updateput += '<tbody>';
+                   updateput += '<tr>';
+                   updateput += '<td>' + item.calendar + '</td>';
+                   updateput += '<td>' + item.map + '</td>';
+                   updateput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
+                   updateput += '</tr>';
+                   updateput += '</tbody>';
+                   updateput += '</table>';
+                   
+                   
+                   console.log("updateput" + updateput);
+                   $('#updateput').append(updateput);
+                   
+                }); */
+             },
+                  error:function() {
+                     alert('ajax통신실패!!!');
+                  }
+               });
+       }
+       alert('저장성공!');
+       
+    }
+    
+	</script> --%>
+	
 </head>
 
 <body>
@@ -136,17 +222,28 @@
 						<li><a href="viewAll" data-toggle="tab" class="nav-link">View all</a></li> -->
 						<li><a href="#calendarContent" data-toggle="tab" class="nav-link active moveLink">Calendar</a></li>
 						<li><a href="#mapContent" data-toggle="tab" class="nav-link moveLink">Map</a></li>
+						<!-- <li><a href="javascript:planTableGo();" class="nav-link moveLink">PlanTable</a></li>
+						<li><a href="javascript:planTableGo();" class="nav-link moveLink">PlanTable</a></li> -->
 						<li><a href="#planTableContent" data-toggle="tab" class="nav-link moveLink">PlanTable</a></li>
 						<li><a href="#viewAllContent" data-toggle="tab" class="nav-link moveLink">View all</a></li>
 					</ul>
 					<div class="tab-content divContent">
 					    <div class="tab-pane container active" id="calendarContent"></div>
 						<div class="tab-pane container fade" id="mapContent"></div>
-						<div class="tab-pane container fade" id="planTableContent"></div>
+						<div class="tab-pane container fade" id="planTableContent">			
 						<div class="tab-pane container fade" id="viewAllContent"></div>
 					</div>
 					<!-- <div class = "content"></div> -->
 				</div>
+				
+			   <!-- DB에 저장하기 -->
+	           <!--		    <div id="saveput"></div>
+			           		palnTable 뿌려주기   
+			           		<br><br>
+			           		<div class="container" id="planput"></div></div>
+				-->
+				
+				
 				<div class="col-md-3">
 					<h1>채팅창</h1>
 					<button class="open-button" onclick="openForm()">Chat</button>

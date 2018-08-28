@@ -173,9 +173,9 @@ public class MyRoomDAOService implements MyRoomDAO {
 	}
 
 	@Override
-	public ArrayList<PlanVO> getPlanList(TeamInfoVO team) {
+	public ArrayList<TeamInfoVO> getPlanList(TeamInfoVO team) {
 		System.out.println("DAO getPlanList IN");
-		ArrayList<PlanVO> planList = new ArrayList<PlanVO>();
+		ArrayList<TeamInfoVO> planList = new ArrayList<TeamInfoVO>();
 		try {
 			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 			planList = myRoomMapper.getPlanList(team);
@@ -189,14 +189,14 @@ public class MyRoomDAOService implements MyRoomDAO {
 
 	// 일정에서 변동사항이 있는지 확인한다.
 	@Override
-	public ArrayList<PlanVO> checkUpdate(UserVO vo) {
+	public ArrayList<TeamInfoVO> checkUpdate(UserVO vo) {
 		System.out.println("DAO checkUpdate IN");
-		PlanVO plan = null;
-		ArrayList<PlanVO> planList = null;
+		TeamInfoVO plan = null;
+		ArrayList<TeamInfoVO> planList = null;
 		try {
 			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 			ArrayList<PlanUpdateVO> updateList = myRoomMapper.checkUpdate(vo);
-			planList = new ArrayList<PlanVO>();
+			planList = new ArrayList<TeamInfoVO>();
 
 			if (updateList != null) {
 				// 변동사항 있는 일정들의 번호를 불러온다.
@@ -204,7 +204,8 @@ public class MyRoomDAOService implements MyRoomDAO {
 					// 불러온 일정번호들을 하나하나 plan의 planNo에 맵핑.
 					plan.setPlanNo(planUpdate.getPlanNo());
 					// 맵핑된 plan으로 해당 planNo를 가진 일정을 찾는다.
-					planList.add(searchPlan(plan));
+					
+					planList = myRoomMapper.searchPlan(plan);
 				}
 			} else {
 				planList.add(null);
@@ -412,21 +413,22 @@ public class MyRoomDAOService implements MyRoomDAO {
 
 	// 변동된 일정을 찾기 위한 메서드
 	@Override
-	public PlanVO searchPlan(PlanVO plan) {
+	public ArrayList<TeamInfoVO> searchPlan(TeamInfoVO plan) {
 		System.out.println("DAOS searchPlan in");
+		ArrayList<TeamInfoVO> planList;
 		try {
-			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);	
 			if (myRoomMapper.searchPlan(plan) != null) {
-				plan = myRoomMapper.searchPlan(plan);
+				 planList = myRoomMapper.searchPlan(plan);
 			} else {
-				plan = null;
+				planList = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			plan = null;
+			planList = null;
 		}
 		System.out.println("DAOS searchPlan out");
-		return plan;
+		return planList;
 	}
 
 	@Override
