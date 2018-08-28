@@ -58,6 +58,11 @@ $(document).ready(function(){
 		location.href="searchplan.do";
 	});
 	
+	$("#searchBtn").click(function(){
+		var planName = $("city_search").val();
+		location.href="searchplan.do";
+	});
+	
 });
 var idck = 0;
 $(function() {
