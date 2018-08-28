@@ -687,7 +687,7 @@ function validationCheck() {
 
 				if ($('#teamName').focus()) {
 					alert("focus in");
-					$('#validationCheck').enable();
+					$('#validationCheck').able();
 				} else {
 					alert("focus out");
 				}

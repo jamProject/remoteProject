@@ -67,6 +67,7 @@
 
 	</servlet-mapping>
 
+	
 	<welcome-file-list>
 		<welcome-file>home.do</welcome-file>
 	</welcome-file-list>

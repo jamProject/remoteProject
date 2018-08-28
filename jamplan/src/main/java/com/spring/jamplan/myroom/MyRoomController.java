@@ -30,7 +30,7 @@ public class MyRoomController {
 		
 	private HashMap<String, Object> map;
 
-	@RequestMapping(value="myRoom.do")
+	@RequestMapping(value="movePlanMainPage.do")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
 		String id =(String) session.getAttribute("id");
 		

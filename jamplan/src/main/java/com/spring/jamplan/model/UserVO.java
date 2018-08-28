@@ -49,6 +49,7 @@ public class UserVO {
 	String travelType;
 	String hobby;
 	String authCode;
+
 	String image;
 	
 	int age;
@@ -168,5 +169,4 @@ public class UserVO {
 		this.signDate = signDate;
 	}
 
-	
 }

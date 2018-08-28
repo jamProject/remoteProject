@@ -15,7 +15,7 @@
 	<spring:url value="/resources/planMain/js/planMain.js" var="mainPageJs" />
 	<spring:url value="/resources/planMain/css/planMain.css" var="mainPageCss" />
 	
-	<script src="${mainPageJs }"></script>
+	<script src="${mainPageJs}"></script>
 	<link href="${mainPageCss}" rel="stylesheet" />
 	
 	<meta charset="UTF-8">
@@ -41,8 +41,9 @@
 	<title>JAM</title>
 
 <%
-	session.setAttribute("id", "thkim9198");
-	session.setAttribute("teamNo", "14");
+	String id = (String)session.getAttribute("id");
+	/* session.setAttribute("id", "thkim9198");
+	session.setAttribute("teamNo", "14"); */
 %>
 
 
@@ -306,6 +307,7 @@
 		  <!-- Centered link -->
 		  <div class="topnav-centered">
 		    <h2><strong><a href="#home" class="active">Jam Planner</a></strong></h2>
+		    <p style="text-align:center"><%=id%>의 planner</p>
 		  </div>
 		  <!-- Right-aligned links -->
 		  <div class="topnav-right">
