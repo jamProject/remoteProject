@@ -35,6 +35,10 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4c4e78f21dd8e97ca3e4c2c59456d09a68284415
 		<buildCommand>
 			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
 			<arguments>
