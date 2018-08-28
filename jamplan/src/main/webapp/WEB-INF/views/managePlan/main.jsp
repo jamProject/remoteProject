@@ -90,6 +90,8 @@
 	var splitNameList = function (s) {
 		
 		var nameList = s.split('/');
+		console.log(nameList);
+		/* nameList = nameList.substring(0, nameList.length); */
 		
 		// 해당 아이디를 가진 유저들의 정보를 불러오기 위한 ajax
 		$.ajax({
@@ -117,7 +119,7 @@
 	var imageUp = function (e) {
 		var image = document.createElement("image");
 		var chat = document.getElementById('chat');
-		image.setAttribute("src", "<spring:url value='/image/" + ${e.image } + "'/>");
+		image.setAttribute("src", "<spring:url value='/image/" + ${e.image} + "'/>");
 		image.setAttribute("alt", 'Avatar');
 		image.setAttribute("class", 'avatar');
 		image.setAttribute("title", ${e.id});
@@ -131,8 +133,6 @@
 	// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
 	w.onopen = function () {
 		console.log("WebSocket Connected!");
-		
-		
 	}
 	w.onmessage = function(e) {
 		

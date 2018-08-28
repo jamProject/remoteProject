@@ -27,9 +27,6 @@ public class ManagePlanController {
 
 	@Autowired(required = false)
 	private TeamInfoVO teamVO;
-	
-	@Autowired(required = false) 
-	private UserVO user;
 
 	@Autowired(required = false)	
 	private ManagePlanDAOService mpDAOS;
@@ -262,7 +259,7 @@ public class ManagePlanController {
 	// 접속 중인 유저들의 프로필 사진명을 얻기 위한 메서드
 	@RequestMapping(value="/onUserList.mp", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody 
-	public String getOnUserList(String[] nameList) {
+	public String getOnUserList(String[] nameList, UserVO user) {
 		System.out.println("getOnUserList IN");
 		System.out.println(nameList[2]);
 		Map<String, String> imageMap = new HashMap<String, String>();
@@ -281,11 +278,8 @@ public class ManagePlanController {
 			System.out.println("이제 map에 다 넣었지?");
 		}
 		
-		System.out.println("1");
 		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
-		System.out.println("2");
 		String imageList = "";
-		System.out.println("3");
 		try {
 			System.out.println("imageList 뽑기 전까지는 왔네");
 			imageList = mapper.writeValueAsString(imageMap);
