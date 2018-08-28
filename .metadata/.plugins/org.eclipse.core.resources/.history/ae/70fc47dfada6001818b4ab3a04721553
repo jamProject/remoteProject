@@ -1,0 +1,5 @@
+package com.spring.jamplan.mail;
+
+public class EmailDAOService {
+
+}
