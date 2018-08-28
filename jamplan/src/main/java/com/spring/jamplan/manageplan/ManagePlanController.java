@@ -287,25 +287,25 @@ public class ManagePlanController {
 		return imageList;
 	}
 	
-	@RequestMapping(value = "/fixcal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/dDay.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public HashMap<String, Object> dDaySlide(HttpSession session, CalendarVO vo) {
+	public String dDaySlide(HttpSession session, CalendarVO vo) {
+		System.out.println("dDaySlide IN");
+		String id = (String)session.getAttribute("id");
+		String planNo = (String)session.getAttribute("planNo");
+		vo.setId(id);
+		vo.setPlanNo(Integer.parseInt(planNo));
 		
-		vo.setId((String)session.getAttribute("id"));
-		vo.setPlanNo((int)session.getAttribute("planNo"));
-		System.out.println("컨트롤러 select date : "+vo.getSelectDate());
-		System.out.println("컨트롤러 실행");
-		map = new HashMap<String, Object>();
 		try {
-			mpDAOS.getSelectDateFix(vo);
-			map.put("res", "ok");
-			System.out.println("fixCal Success");
+			System.out.println("여기까진 잘왔나?");
+			vo = mpDAOS.getDday(vo);
+			System.out.println("vo.getSelectDate() = " + vo.getSelectDate() + "입니다.");
 		} catch (Exception e) {
-			// TODO: handle exception
-			map.put("res", "fail");
-			System.out.println("fixCal fail");
+			e.getMessage();
 		}
-		return map;
+		
+		System.out.println("dDaySlide OUT");
+		return vo.getSelectDate();
 	}
 
 }

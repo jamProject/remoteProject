@@ -136,10 +136,9 @@ public class ManagePlanDAOService {
 	// D-day를 얻기 위한 메서드
 	public CalendarVO getDday(CalendarVO calendarVO){
 		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
-		voList = new ArrayList<CalendarVO>();
+		calendarVO = calendarMapper.getDday(calendarVO);
 		
-		voList = calendarMapper.getMemberId(planNo);
-		return voList;
+		return calendarVO;
 	}
 
 	public void insertSelectDate(CalendarVO vo) {

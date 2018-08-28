@@ -43,7 +43,7 @@
 
 <%
 	session.setAttribute("id", "thkim9198");
-	session.setAttribute("teamNo", "14");
+	session.setAttribute("planNo", "1");
 %>
 
 	<style>
@@ -100,13 +100,11 @@
 	var splitNameList = function (s) {
 		
 		var nameList = s.split('/');
-<<<<<<< HEAD
+
 		console.log(nameList);
 		/* nameList = nameList.substring(0, nameList.length); */
-=======
+
 		var nameArr = [];
->>>>>>> cb02e4721272d71a2d4bb3f7d11f5486c75ced4d
-		
 		// 해당 아이디를 가진 유저들의 정보를 불러오기 위한 ajax
 		$.ajax({
 			url : 'onUserList.mp',
@@ -130,18 +128,11 @@
 	}
 	
 	//채팅방에 팀원이 접속하면 해당 팀원의 프로필 사진을 띄운다.
-<<<<<<< HEAD
-	var imageUp = function (e) {
-		var image = document.createElement("image");
-		var chat = document.getElementById('chat');
-		image.setAttribute("src", "<spring:url value='/image/" + ${e.image} + "'/>");
-=======
 	var imageUp = function (name, imageName) {
 		var profileImage = document.getElementById('profileImage');
 		var image = document.createElement("img");
 		
 		image.setAttribute("src", "<spring:url value='/image/" + imageName + "'/>");
->>>>>>> cb02e4721272d71a2d4bb3f7d11f5486c75ced4d
 		image.setAttribute("alt", 'Avatar');
 		image.setAttribute("class", 'avatar');
 		image.setAttribute("title", name);
@@ -210,8 +201,8 @@
 		  </div>
 		</div>
 	</div>
-	<div class="slideshow-container">
-		<!-- quotes slide 들어가는 부분 -->
+	<div class="container">
+		<h2></h2>
 	</div>
 	<div id="main-container" class="container-fluid text-center">
 		<div class="row h-50">
