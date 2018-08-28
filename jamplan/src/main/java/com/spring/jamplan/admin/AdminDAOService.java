@@ -31,7 +31,7 @@ public class AdminDAOService implements AdminDAO {
 				System.out.println(teamList.get(0));
 				return teamList;
 			}else {
-				
+				System.out.println("null 나옴");
 			}
 		}catch(Exception e) {
 			System.out.println(e.getMessage());

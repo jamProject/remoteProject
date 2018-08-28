@@ -53,12 +53,12 @@ public class ManagePlanDAOService {
 		System.out.println("getSelectFixDate 진입");
 		voList = new ArrayList<CalendarVO>();
 		try {
-			System.out.println("planNo: "+ vo.getPlanNo());
-			System.out.println("selectDate : "+vo.getSelectDate());
+//			System.out.println("planNo: "+ vo.getPlanNo());
+//			System.out.println("selectDate : "+vo.getSelectDate());
 			voList = calendarMapper.getSelectFixDate(vo);
-			System.out.println("getSelectFixDate 성공");
-			System.out.println("voList size = "+ voList.size());
-			System.out.println("volist confirm : " + voList.get(0).getConfirmIndicator());
+//			System.out.println("getSelectFixDate 성공");
+//			System.out.println("voList size = "+ voList.size());
+//			System.out.println("volist confirm : " + voList.get(0).getConfirmIndicator());
 		}catch (Exception e) {
 			System.out.println("calendarMapper 데이터 없음");
 			// TODO: handle exception
@@ -129,6 +129,16 @@ public class ManagePlanDAOService {
 			}
 		}
 		// System.out.println("size : " + voList.size());
+		return voList;
+	}
+	
+	
+	// D-day를 얻기 위한 메서드
+	public CalendarVO getDday(CalendarVO calendarVO){
+		calendarMapper = sqlSession.getMapper(CalendarMapper.class);
+		voList = new ArrayList<CalendarVO>();
+		
+		voList = calendarMapper.getMemberId(planNo);
 		return voList;
 	}
 

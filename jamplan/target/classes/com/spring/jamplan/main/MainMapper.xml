@@ -18,6 +18,7 @@
 		<result property="age" column="age" />
 		<result property="isAdmin" column="isAdmin" />
 		<result property="signDate" column="signDate" />
+		<result property="authCode" column="authCode" />
 	</resultMap>
 	
 		<!-- getTeamRole -->
@@ -39,9 +40,18 @@
 		<result property="readCount" column="readCount" />
 	</resultMap>
 	
+	<update id="createAuthKey" parameterType="com.spring.jamplan.model.UserVO">
+		update userInfo set authCode = #{authCode} where email = #{email}
+	</update>
+
 	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
 		select * from userInfo where id = #{id, javaType = String}
 	</select>
+	
+	<select id="idcheck" parameterType="String" resultType="Integer">
+      SELECT COUNT(*) FROM userInfo where id = #{id, javaType = String}
+	</select>
+
 	
 	<select id ="getTeamInfo" parameterType = "String" resultMap = "teamInfoResultMap">
 		select * planNo from userTeam where id = #{id, javaType = String}
@@ -54,5 +64,10 @@
 	<insert id="fileUpload" parameterType="com.spring.jamplan.model.PlanVO">
 		insert into plan(image) values (#{image})
 	</insert>
-
+	
+	<insert id="insertUser" parameterType="com.spring.jamplan.model.UserVO">
+		insert into userInfo(email, id, pass) values (#{email},#{id},#{pass})
+	</insert>
+	
+	
 </mapper>

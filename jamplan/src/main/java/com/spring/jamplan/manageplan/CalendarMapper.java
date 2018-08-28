@@ -19,6 +19,7 @@ public interface CalendarMapper {
 	public void deleteSelectDate(CalendarVO calendarVO);
 	public void updateCountDate(CalendarVO calendarVO);
 	public TeamInfoVO getTeamRole(HashMap<String, Object> map);
+	public CalendarVO getDday(CalendarVO calendarVO);
 	public void updateFixDate(CalendarVO calendarVO);
 	public ArrayList<CalendarVO> getSelectFixDate(CalendarVO calendarVO);
 	public ArrayList<CalendarVO> getMemberId(int planNo);

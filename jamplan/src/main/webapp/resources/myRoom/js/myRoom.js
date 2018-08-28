@@ -346,7 +346,7 @@ $(document).ready(function() {
 			success : function(data) {$.each(data,function(index,item) {
 							var update = '';
 							update += '<div class="media border p-3">'
-									+ '<img src="/jamplan/image/' + ${user.image} + '"'
+									+ '<img src=<spring:url value="/image/${user.image}"'
 									+ 'alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">'
 									+ '<div class="media-body">'
 									+ '<h4>'+ item.planName+ '</h4>'
@@ -355,7 +355,7 @@ $(document).ready(function() {
 							$('#updateSpace').append(update);
 						})
 			},
-			error : function() {
+			error : function() {+
 				alert("Error");
 			}
 		});

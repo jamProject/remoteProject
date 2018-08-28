@@ -82,6 +82,10 @@
 		select * from plandate where selectDate = #{selectDate, javaType=String}
 	</select>
 	
+	<select id = "getDday" parameterType="com.spring.jamplan.model.CalendarVO" resultMap="CalendarResultMap">
+		select selectdate from plandate where planNo = #{planNo, javaType=int}
+	</select>
+	
 	<update id="updateCountDate" parameterType = "com.spring.jamplan.model.CalendarVO">
 		update plandate set dateCount = #{dateCount, javaType = int} 
 		where planNo = #{planNo, javaType = int} and selectDate = #{selectDate, javaType= String}

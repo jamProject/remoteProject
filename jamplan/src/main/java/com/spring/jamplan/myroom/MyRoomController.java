@@ -30,7 +30,7 @@ public class MyRoomController {
 		
 	private HashMap<String, Object> map;
 
-	@RequestMapping(value="movePlanMainPage.do")
+	@RequestMapping(value="myRoom.do")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
 
 		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());

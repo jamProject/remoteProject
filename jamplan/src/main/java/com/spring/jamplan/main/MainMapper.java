@@ -16,6 +16,7 @@ public interface MainMapper {
 	public UserVO getUserInfo(String id); 
 	public List<PlanVO> getPlanList();
 	public int fileUpload(PlanVO planVO);
-	public void InsertUser(UserVO vo);
-
+	public void insertUser(UserVO vo);
+	public int idcheck(String id);
+	public void createAuthKey(UserVO vo);
 }
