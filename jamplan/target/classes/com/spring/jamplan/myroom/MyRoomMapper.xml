@@ -118,7 +118,10 @@
 	</select>
 	
 	<select id="checkUpdate" parameterType="com.spring.jamplan.model.UserVO" resultMap="planUpdateResultMap">
-		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO IN (SELECT PLANNO FROM TEAMINFO WHERE ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) WHERE ROWNUM <![CDATA[<=]]> 10
+		SELECT * FROM (SELECT * FROM PLANUPDATE WHERE PLANNO 
+			IN (SELECT PLANNO FROM TEAMINFO WHERE 
+				ID=#{id, jdbcType=VARCHAR }) ORDER BY DATECHECK DESC) 
+					WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
 	<select id="getUserInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap" >

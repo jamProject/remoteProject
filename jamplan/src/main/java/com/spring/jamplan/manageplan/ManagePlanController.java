@@ -264,37 +264,22 @@ public class ManagePlanController {
 	@ResponseBody 
 	public String getOnUserList(String[] nameList) {
 		System.out.println("getOnUserList IN");
-		System.out.println(nameList[2]);
 		Map<String, String> imageMap = new HashMap<String, String>();
-		System.out.println("nameList.length=" + nameList.length);
-		System.out.println("nameList[0]=" + nameList[0]);
 		
 		for(int i=1; i<nameList.length-1; i++) {
 			String name = nameList[i];
-			System.out.println("name=" + name + "AAAA");
-			System.out.println("들어갔니");
 			user.setId(name);
-			System.out.println("user에 set은 잘했니");
 			user = chatDAO.getImageName(user);
-			System.out.println("DB엔 잘갔다왔고?=" + user);
 			try {
 				imageMap.put(name, user.getImage());
 			}catch(Exception e) {
 				e.getMessage();
 			}
-			
-			System.out.println("name=" + name + "BBBB");
-			System.out.println("user.getImage()" + user.getImage());
-			System.out.println("이제 map에 다 넣었지?");
 		}
 		
-		System.out.println("1");
 		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
-		System.out.println("2");
 		String imageList = "";
-		System.out.println("3");
 		try {
-			System.out.println("imageList 뽑기 전까지는 왔네");
 			imageList = mapper.writeValueAsString(imageMap);
 			System.out.println(imageList);
 		} catch (Exception e) {
@@ -303,6 +288,27 @@ public class ManagePlanController {
 		
 		System.out.println("getOnUserList OUT");
 		return imageList;
+	}
+	
+	@RequestMapping(value = "/fixcal.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public HashMap<String, Object> dDaySlide(HttpSession session, CalendarVO vo) {
+		
+		vo.setId((String)session.getAttribute("id"));
+		vo.setPlanNo((int)session.getAttribute("planNo"));
+		System.out.println("컨트롤러 select date : "+vo.getSelectDate());
+		System.out.println("컨트롤러 실행");
+		map = new HashMap<String, Object>();
+		try {
+			mpDAOS.getSelectDateFix(vo);
+			map.put("res", "ok");
+			System.out.println("fixCal Success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			map.put("res", "fail");
+			System.out.println("fixCal fail");
+		}
+		return map;
 	}
 
 }

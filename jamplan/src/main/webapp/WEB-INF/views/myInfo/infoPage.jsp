@@ -101,8 +101,8 @@
 				</div>
 				<div class="col-sm-10">
 					</br></br>
+					
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
-							
 						<li class="nav-item">
 							<a class="nav-link active" id="teamManage-tab" data-toggle="tab" href="#teamManage" role="tab" aria-controls="profile" aria-selected="false">
 								팀 관리</a></li>	

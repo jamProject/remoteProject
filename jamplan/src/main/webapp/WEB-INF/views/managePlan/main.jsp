@@ -36,6 +36,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
 	
+	<!-- Full screen video -->
+	<script src="http://pupunzi.com/mb.components/mb.YTPlayer/demo/inc/jquery.mb.YTPlayer.js"></script>
+	
 	<title>JAM</title>
 
 <%
@@ -74,12 +77,19 @@
 			    preventDefault: false
 			  },
 			  showOverlay: true
-			}); 
+			});
 		
 		$('.drawer').drawer();
-	})
 		
+		
+	})
 	
+	// 배경 이미지에 파스텔 효과 주는 부분
+	var hue = Math.floor(Math.random() * 360);
+		var pastel = 'hsl(' + hue + ', 100%, 87.5%)';
+		$('body').css('background-color', pastel);
+		
+		
 	//websocket 부분에 대한 스크립트
 	var log = function (s) {
 		// 이 부분에 메시지 형식 넣어야함.
@@ -159,10 +169,8 @@
 
 	</script>
 </head>
-
-
-<body class="drawer drawer--left">
-	<header>
+<body>
+	<div class="drawer drawer--left">
 		<div role="banner">
 			<!-- side bar 삽입 -->
 			<button type="button" class="drawer-toggle drawer-hamburger">
@@ -191,52 +199,51 @@
 		    <a href="#about">Search</a>
 		  </div>
 		</div>
-	</header>
-	<section>
-		<div id="main-container" class="container-fluid text-center">
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div id="planManage" class="col-md-7">
-					<ul class="nav nav-tabs">
-						<li><a href="#calendar" data-toggle="tab" class="nav-link active">
-								Calendar</a></li>
-						<li><a href="#map" data-toggle="tab" class="nav-link">
-								Map</a></li>
-						<li><a href="#planTable" data-toggle="tab" class="nav-link">
-								PlanTable</a></li>
-						<li><a href="viewAll" data-toggle="tab" class="nav-link">
-								View all</a></li>
-					</ul>
-					<div class="tab-content">
-						<div class="tab-pane container active" value = "calendarajax.mp" id="calendar"></div>
-						<div class="tab-pane container fade" value = "mapajax.mp" id="map"></div>
-						<div class="tab-pane container fade" value = "plantableajax.mp" id="planTable"></div>
-						<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div>
-					</div>
-				</div>
-				<div id="chat" class="col-md-3">
-					<!-- 아바타 이미지 들어가는 곳 -->
-					<div id="profileImage"></div>
-					<button class="open-button" onclick="openForm()">Chat</button>
-					<div class="form-popup" id="myForm">
-						<div class="form-container">
-					   <!--  	<label for="exampleFormControlTextarea3">Rounded corners</label> -->
-    						<textarea class="form-control" id="chatTextarea" readonly rows="10"></textarea>
-					    	<input id="inputText" type="text" placeholder="대화를 해보세요" required>
-					
-					    	<button id="sendButton" class="btn">Enter</button>
-					    	<button type="submit" id="cancelButton" class="btn cancel" onclick="closeForm()">Chat close</button>
-					  </div>
-					</div>
-					
+	</div>
+	<div class="slideshow-container">
+		<!-- quotes slide 들어가는 부분 -->
+	</div>
+	<div id="main-container" class="container-fluid text-center">
+		<div class="row h-50">
+			<div class="col-md-2"></div>
+			<div id="planManage" class="col-md-7">
+			<!-- ul태그에 css 변경 -->
+				<ul class="nav nav-tabs" id="contentTabs" role="tablist">
+					<li class="nav-item"><a href="#calendar" data-toggle="tab" role="tab" class="nav-link active">
+							Calendar</a></li>
+					<li class="nav-item"><a href="#map" data-toggle="tab" role="tab" class="nav-link">
+							Map</a></li>
+					<li class="nav-item"><a href="#planTable" data-toggle="tab" role="tab" class="nav-link">
+							PlanTable</a></li>
+					<li class="nav-item"><a href="viewAll" data-toggle="tab" role="tab" class="nav-link">
+							View all</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane container active" value = "calendarajax.mp" id="calendar"><h1>hello</h1></div>
+					<div class="tab-pane container fade" value = "mapajax.mp" id="map"></div>
+					<div class="tab-pane container fade" value = "plantableajax.mp" id="planTable"></div>
+					<div class="tab-pane container fade" value = "viewallajax.mp" id="viewAll"></div>
 				</div>
 			</div>
+			<div id="chat" class="col-md-3">
+				<!-- 아바타 이미지 들어가는 곳 -->
+				<div id="profileImage"></div>
+				<button class="open-button" onclick="openForm()">Chat</button>
+				<div class="form-popup" id="myForm">
+					<div class="form-container">
+				   <!--  	<label for="exampleFormControlTextarea3">Rounded corners</label> -->
+    					<textarea class="form-control" id="chatTextarea" readonly rows="10"></textarea>
+				    	<input id="inputText" type="text" placeholder="대화를 해보세요" required>
+					
+					   	<button id="sendButton" class="btn">Enter</button>
+				    	<button type="submit" id="cancelButton" class="btn cancel" onclick="closeForm()">Chat close</button>
+				  </div>
+				</div>
+					
+			</div>
 		</div>
-	</section>
+	</div>
 	<footer>
 	</footer>
-	<script>
-	
-	</script>
 </body>
 </html>
