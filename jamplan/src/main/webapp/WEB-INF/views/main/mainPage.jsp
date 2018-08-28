@@ -73,6 +73,7 @@
                 %>
                 <li class="nav-item" data-toggle="modal" data-target="#myModalJoin"><a class="nav-link" href="#">join</a></li>
                 <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#">Search</a></li>
+            <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#">Account</a></li>
             </ul>
          <!-- 모달버튼 끝 -->
         </div>
