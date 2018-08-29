@@ -2,8 +2,8 @@
  * 
  */
 $(document).ready(function() {
-/*	function planTableGo() {
-		*/
+	/*function planTableGo() {*/
+		
 		$.ajax({
 			url : '/jamplan/planTable.plan',
 			type : 'POST',
@@ -11,7 +11,7 @@ $(document).ready(function() {
 			async: false,
 	        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			success:function(data){
-				$('#planput').empty();
+				
 				$('#saveput').empty();
 				var put = '';
 				var saveput = '';
@@ -21,6 +21,7 @@ $(document).ready(function() {
 					
 				$.each(data, function(index, item){
 					/* $('#planput').empty(); */
+					$('#planput').empty();
 					var planput = '';
 					planput += '<table class="table">';
 					planput += '<thead>';
@@ -47,28 +48,30 @@ $(document).ready(function() {
 				alert('ajax통신실패!!!');
 			}
 		});
-/*	}*/
+	/*}*/
 
 
 
 
-	// savePlanTable : 저장
-/*	function savePlanTable(){*/
-		var memoCnt = $('[name="memo"]');
-		var params = {};
-		for(var i=0; i<memoCnt.length; i++){
-			params = {"memo" : $('#memo'+ i).val(), "planSeq" : $('#planSeq'+ i).val()};
-			console.log(params);
-			$.ajax({
-				url : '/jamplan2/savePlanTable.plan',
-				type : 'POST',
-				async: false,
-				dataType: "json",
-		        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		        data : params,
-		        success:function(data) {
+});
+
+// savePlanTable : 저장
+function savePlanTable(){
+	var memoCnt = $('[name="memo"]');
+	var params = {};
+	for(var i=0; i<memoCnt.length; i++){
+		params = {"memo" : $('#memo'+ i).val(), "planSeq" : $('#planSeq'+ i).val()};
+		console.log(params);
+		$.ajax({
+			url : '/jamplan/savePlanTable.plan',
+			type : 'POST',
+			async: false,
+			dataType: "json",
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			data : params,
+			success:function(data) {
 				
-		        	/* $.each(data, function(index, item){
+				/* $.each(data, function(index, item){
 						$('#updateput').empty();
 						var updateput = '';
 						updateput += '<table class="table">';
@@ -91,14 +94,13 @@ $(document).ready(function() {
 						$('#updateput').append(updateput);
 						
 					}); */
-				},
-		        	error:function() {
-		        		alert('ajax통신실패!!!');
-		        	}
-		        });
-		}
-		alert('저장성공!');
-		
-		/*}*/
-});
+			},
+			error:function() {
+				alert('ajax통신실패!!!');
+			}
+		});
+	}
+	alert('저장성공!');
+	
+}
 

@@ -2,19 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="searchplan.do" key="selection"/>
+		<item value="saveput" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="searchplan.do"/>
-			<item value="searchplan"/>
-			<item value="city_search"/>
-			<item value="searchBtn"/>
-			<item value="map"/>
-			<item value="calendar"/>
-			<item value="hidden"/>
+			<item value="saveput"/>
+			<item value="planTableGo()"/>
+			<item value="planTable"/>
+			<item value="savePlanTable"/>
+			<item value="planSeq"/>
+			<item value="getLikeCount"/>
+			<item value="LikeCountMap"/>
+			<item value="likeCheck"/>
 		</list>
 		<list key="replacehistory">
 		</list>

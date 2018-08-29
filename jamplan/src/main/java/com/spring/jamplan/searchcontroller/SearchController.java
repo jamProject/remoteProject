@@ -2,9 +2,12 @@ package com.spring.jamplan.searchcontroller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jamplan.model.LikeVO;
@@ -36,6 +40,32 @@ public class SearchController {
 	//검색페이지 이동
 	@RequestMapping("plan.search")
 	public String planLoad() {
+
+		
+		/*String str = "";
+	
+		UserVO vo = searchService.getUserId(userVO.getId());
+		
+		System.out.println(vo.getId());
+		
+		session.setAttribute("checkID", vo.getId());
+		
+		if (session.getAttribute("checkID") != null) {
+			str = "search/searchPlanPage";
+		}
+		else {
+			str = "//webapp/mianPage";
+		}*/
+		/*
+		 * System.out.println("move1");
+		 * HttpSession session, UserVO userVO
+		 * 
+		searchService.moveSchedule();
+		System.out.println("move4");
+		session.setAttribute("checkID", userVO.getId());*/
+		
+		
+		
 		return "search/searchPlanPage";
 	}
 	
@@ -139,12 +169,18 @@ public class SearchController {
 	}
 	
 	//스케쥴페이지이동
-	@RequestMapping("schedule.search")
-	public String moveSchedule() {
-		System.out.println("oo");
+	@RequestMapping(value = "schedule.search", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+	public ModelAndView moveSchedule(HttpServletRequest request, PlanVO planVO) {
+		System.out.println("moveSchedule");
+		//planNo 넘기기
+		System.out.println("request!!!!" + request.getParameter("planNo"));
 		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("planNo", request.getParameter("planNo"));
+		mv.setViewName("search/schedule");
 		
-		
+		//조회수
+		searchService.updateReadCount(planVO);
 		/*UserVO vo = searchService.getUserId(userVO.getId());
 		
 		System.out.println(vo.getId());*/
@@ -155,7 +191,7 @@ public class SearchController {
 		
 		
 		
-		return "search/schedule";
+		return mv;
 	}
 	
 	//login test
@@ -168,20 +204,97 @@ public class SearchController {
 	
 	@RequestMapping("inpugLogin.search")
 	public String inputLogin(HttpSession session, UserVO userVO) {
-		System.out.println("sc");
+		System.out.println("log");
 		UserVO vo = searchService.getUserId(userVO.getId());
 		System.out.println(vo.getId());
 		session.setAttribute("checkID", vo.getId());
 		return "search/searchPlanPage";
 	}
 	
-	@RequestMapping("heartCheck.search")
-	public String heartCheck(LikeVO likeVO) {
+	//like 불러오는거
+	@RequestMapping(value = "heartCheck.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody 
+	public Map<String, Object> likeCheck(LikeVO likeVO) {
+		System.out.println("like1");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		//라이크-로그인db에서 받아오기
+		/*LikeVO vo = searchService.likeUserId(likeVO.getUserId());
+		System.out.println(vo.getUserId());*/
+		
+		/*likeVO.setUserId((String)session.getAttribute("id"));*/
+		
+		String likeYn ="";
+		
+		
+		likeYn =  searchService.likeCheck(likeVO);
+		
+		System.out.println("@@@@@@@@@@@@@likeYn  =  " +likeYn);
+		System.out.println("like4");
+		retVal.put("likeYn", likeYn);
+		System.out.println("likeYn값" + likeYn);
+		System.out.println("retVal값" + retVal);
+		
+		
+		return retVal; 
+		/*int likeNo = likeVO.getLikeNo();
+		int likeCheck = 0;
+		likeCheck = likeVO.getLikeCheck();
+		
+		if(likeCheck == 0) {
+			likeCheck++;
+		}
+		else {
+			likeCheck--;
+		}*/
+		
+		/*@RequestMapping(value = "selectCalendar.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public Map<String, Object> calendarSelect(HttpSession session, CalendarVO vo) {
+		      vo.setId((String) session.getAttribute("id"));
+		      vo.setPlanNo((int) session.getAttribute("planNo"));
+		      mpDAOS.insertSelectDate(vo);
+
+		      map = new HashMap<String, Object>();
+		      map.put("res", "ok");
+		      return map;
+		   }*/
+		
+		
+	}
+	
+	//like Update
+	@RequestMapping(value = "likeUpdate.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody 
+	public Map<String, Object> likeUpdate(LikeVO likeVO) {
+		System.out.println("like1");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+
+		String likeYn ="";
+
+		searchService.likeUpdate(likeVO);
+
+		likeYn =  searchService.likeCheck(likeVO);
+		
+		System.out.println("updatelikeYn  =  " +likeYn);
+		retVal.put("likeYn", likeYn);
+		System.out.println("likeYn값" + likeYn);
+		System.out.println("retVal값" + retVal);
+		
+		
+		return retVal; 
+	
+	}
+	
+	
+	
+	
+	
+	/*public String heartCheck(LikeVO likeVO) {
 		System.out.println("like1");
 		searchService.heartCheck(likeVO);
 		System.out.println("like4");
 		return "search/schedule";
-	}
+	}*/
 	
 
 	

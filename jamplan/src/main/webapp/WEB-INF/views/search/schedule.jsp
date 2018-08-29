@@ -3,10 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 	<%
-		if(session.getAttribute("checkID") == null) {
-			response.sendRedirect("./mainPage.jsp");
+		if(session.getAttribute("getId") == null) {
+			response.sendRedirect("./src/main/webapp/WEB-INF/views/main/mainPage.jsp");
 		};
+		
+		String id = (String)session.getAttribute("getId");
+
 	%>
+	
+	
+	
+	
+	
 	
 	<%-- <% 
 	String userId = (String)request.getParameter("id");
@@ -26,34 +34,101 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 
-function likeFunc() {
-	/* 유저가 하트를 체크했는지 안했는지 체크해주는 코드 써주기 : if~ */
-	
-	
+
+$(document).ready(function(){
+	$('#planNo').val(${planNo});
+	likeGet();
+});
+
+
+//처음 접속시 유저가 좋아요를 체크했는지 안했는지 
+function likeGet() {
 	
 	$.ajax({
-		url : '/jamplan2/heartCheck.search',
+		url : '/jamplan/heartCheck.search',
 		type : 'POST',
-		dataType : "json",
-		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		data : {
+			"id" : '<%=id%>',
+			"planNo" : $('#planNo').val()
+		},
 		success:function(data){
-			if(data.likeNo == 0){
-				'<i class="far fa-heart" tyle= "color : #E75450;" ></i>';
+			/* alert(data.likeYn); */
+			var likeput = '';
+			
+			if('N' == data.likeYn){
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="far fa-heart" id="noneHeart" value="N" style= "color : #E75450;" ></i></a></h1>';
+				$('#likeStatus').val('N');
 			}
 			else{
-				'<i class="fas fa-heart " style= "color : #E75450;"  ></i>';
-			}	
-					
-					
-				consloe.log("output:" + output);
-				$('output').append(output);
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="fas fa-heart " id="fullHeart" style= "color : #E75450;"  ></i></a></h1>';
+				$('#likeStatus').val('Y');
+			}
+			
+
+				console.log("likeput:" + likeput);
+				$('#likeput').html(likeput);
 		},
 		error:function(){
 			alert("ajax통신 실패!!!");
 		}
 	});
 	
+	
+	
 }
+
+
+//클릭시 좋아요 선택,취소
+function likeFunc() {
+
+	/* alert($('#likeStatus').val()); */
+	var likeStatus = $('#likeStatus').val();
+	var updateStatus ='';
+	if(likeStatus=='Y'){
+		updateStatus='N'
+	}else{
+		updateStatus='Y'
+		
+	}
+	
+	$.ajax({
+		url : '/jamplan/likeUpdate.search',
+		type : 'POST',
+		dataType: "json",
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		data : {
+			"id" : '<%=id%>',
+			"planNo" : $('#planNo').val(),
+			"likeYn" : updateStatus
+		},
+		success:function(data){
+			/* alert(data.likeYn); */
+			var likeput = '';
+			
+			if('N' == data.likeYn){
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="far fa-heart" style= "color : #E75450;" ></i></a></h1>';
+				$('#likeStatus').val('N');
+			}
+			else{
+				likeput = '<h1><a href="javascript:likeFunc();"><i class="fas fa-heart " id="fullHeart" style= "color : #E75450;"  ></i></a></h1>';
+				$('#likeStatus').val('Y');
+			}
+			
+
+				console.log("likeput:" + likeput);
+				$('#likeput').html(likeput);
+		},
+		error:function(){
+			alert("ajax통신 실패!!!");
+		}
+	});
+	
+	
+	
+}
+
 
 
 
@@ -72,17 +147,10 @@ function likeFunc() {
 	</style>
 	
 	<h3>스케쥴테스트</h3>
-	<div>
-		<h1><a href="javascript:likeFunc();"><i class="far fa-heart" id="noneHeart" style= "color : #E75450;" ></i></a></h1>
-		<h1><i class="fas fa-heart " id="fullHeart" style= "color : #E75450;"  ></i></h1>
-	</div>
+	<div id="likeput"></div>
 	
-	<div>
-		
-	</div>
-	
-	
-	
+	<input type="text" id="likeStatus" hidden="hidden">
+	<input type="text" id="planNo" hidden="hidden">
 	
 </body>
 </html>

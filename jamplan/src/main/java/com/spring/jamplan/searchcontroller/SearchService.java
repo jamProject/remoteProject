@@ -16,7 +16,9 @@ public interface SearchService {
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
 	void moveSchedule();
 	UserVO getUserId(String id);
-	int heartCheck(LikeVO likeVO);
+	String likeCheck(LikeVO likeVO);
+	String likeUpdate(LikeVO likeVO);
+	void updateReadCount(PlanVO planVO);
 }
 
 

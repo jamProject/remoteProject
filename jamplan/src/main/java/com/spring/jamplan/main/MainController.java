@@ -206,9 +206,22 @@ public class MainController {
 		if (session.getAttribute("id") != null) {
 			String id = (String) session.getAttribute("id");
 			vo = mDAOS.getUserInfo(id);
-			mav.addObject("userVO", vo);
+			
+			
+			session.setAttribute("getId", vo.getId());
+			System.out.println("id??=" + vo.getId());
+			
+			/*mav.addObject("getId", getId); 이건 뭐 보내는거지??*/
 			mav.setViewName("search/searchPlanPage");
 			System.out.println("userVO속성에 vo객체 담았음");
+			
+			/*System.out.println("log");
+			UserVO vo = searchService.getUserId(userVO.getId());
+			System.out.println(vo.getId());
+			session.setAttribute("checkID", vo.getId());
+			return "search/searchPlanPage";*/
+			
+			
 		} else {
 			mav.setViewName("search/searchPlanPage");
 		}
