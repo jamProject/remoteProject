@@ -51,7 +51,10 @@
 	<select id="idcheck" parameterType="String" resultType="Integer">
       SELECT COUNT(*) FROM userInfo where id = #{id, javaType = String}
 	</select>
-
+	
+	<select id="checkIdEmail" parameterType="com.spring.jamplan.model.UserVO" resultMap="UserResultMap">
+		select * from userInfo where id = #{id, javaType = String} and email= #{email, javaType = String}
+	</select>
 	
 	<select id ="getTeamInfo" parameterType = "String" resultMap = "teamInfoResultMap">
 		select * planNo from userTeam where id = #{id, javaType = String}
@@ -69,5 +72,8 @@
 		insert into userInfo(email, id, pass, isAdmin, signDate) values (#{email},#{id},#{pass},#{isAdmin} ,sysdate)
 	</insert>
 	
+	<select id="getIdInfo" parameterType="com.spring.jamplan.model.UserVO" resultType="String">
+		select id from userInfo where email = #{email, javaType = String}
+	</select>
 	
 </mapper>

@@ -1,6 +1,7 @@
 package com.spring.jamplan.main;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +69,62 @@ public class MainController {
 		System.out.println("AAAAAAA");
 		return "main/mainPage";
 	}
-
+	
+	@RequestMapping(value= "/findId.do", method = RequestMethod.POST)
+	public String finId(UserVO vo, Model model,  HttpServletResponse response) throws Exception
+	{	
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html; charset=UTF-8");
+		String str = "";
+		String[] id=mDAOS.getIdInfo(vo);
+		System.out.println("이메일로 아이디 정보 가져옴");
+		
+		if(id.length==0)
+		{	
+			System.out.println("등록된 이메일이 아닙니다.");
+			out.println("<script>alert('등록된 이메일을 입력해 주세요');</script>");
+			out.flush();
+			str = "main/mainPage";
+		}
+		else
+		{	System.out.println(id);
+			System.out.println("이메일로 아이디 정보 가져오고 id[] DAO 에 전달함");
+			mDAOS.sendFindId(id);
+			str = "main/mainPage";
+		}
+		return str;
+	}
+	
+	@RequestMapping(value= "/findPw.do", method = RequestMethod.POST)
+	public String finPw(UserVO vo, Model model,  HttpServletResponse response) throws Exception
+	{	
+		System.out.println("패스워드 찾기 컨트롤러");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html; charset=UTF-8");
+		String str = "";
+		System.out.println("vo.getEmail()="+vo.getEmail());
+		System.out.println("vo.getId()="+vo.getId());
+		UserVO uservo = mDAOS.checkIdEmail(vo);
+		System.out.println("아이디로 패스워드 정보 가져옴");
+		
+		if(uservo==null)
+		{	
+			System.out.println("아이디와 이메일을 다시 확인해 주세요");
+			out.println("<script>alert('아이디와 이메일을 다시 확인해 주세요');</script>");
+			out.flush();
+			str = "main/mainPage";
+		}
+		else
+		{	System.out.println("uservo정보="+uservo.getPass());
+			mDAOS.sendFindPw(uservo);
+			str = "main/mainPage";
+		}
+		return str;
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "/emailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirm(UserVO vo, Model model, HttpServletResponse response) throws Exception { // 이메일인증
 		System.out.println("emailConfirm.do 컨트롤러 진입");
