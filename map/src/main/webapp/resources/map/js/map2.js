@@ -58,6 +58,8 @@ $(document).ready(function(){
 	
 	selectDate = $('.ui.dropdown > option:first').text();
 	color = "000000";
+	alert("왜안됨"+selectDate);
+	
 	
 	$(document).on("change", ".ui.dropdown", function() {
 		selectDate=$(this).find("option:selected").text();
@@ -101,7 +103,7 @@ $(document).ready(function(){
       $('#placeList').remove();
      
       $(".block").css('background-color', '#f0f5f5');
-     
+     alert(selectDate);
       $.ajax({
          url:'getAllPickList.mp',
          type: 'POST',

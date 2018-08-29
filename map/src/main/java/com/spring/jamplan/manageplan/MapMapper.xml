@@ -17,25 +17,34 @@
 		<result property="confirm" column="CONFIRM" />
 	</resultMap>
 	
-	<resultMap type="com.spring.jamplan.model.CalendarVO" id="mapCalendarResultMap">
+	<!-- <resultMap type="com.spring.jamplan.model.CalendarVO" id="mapCalendarResultMap">
 		<result property="planNo" column="PLANNO" />
 		<result property="selectDate" column="SELECTDATE" />
 		<result property="id" column="ID" />
 		<result property="dateCount" column="DATECOUNT" />
 		<result property="confirmIndicator" column="CONFIRMINDICATOR" />
-	</resultMap>
+	</resultMap> -->
 		
-	<select id="getAllPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
+	 <select id="getAllPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
 		select * 
 		from planMap 
 		where rowid IN (
 		    select min(rowid) over(partition by placeName) 
-		    from planMap	
+		    from planMap 	
 		    where planNo = #{planNo, javaType=int}
 		    and selectDate = #{selectDate,javaType=String}
 		)
 		order by pickCount desc
 	</select>
+<!--  <select id="getAllPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
+		select  placeName, max(pickCount) as pickCount, max(lat) as lat, max(lng) as lng,
+				 address, max(confirm) as confirm, userColor
+		from planMap	
+		where planNo = #{planNo, javaType=int}
+		and selectDate = #{selectDate,javaType=String}
+        group by placeName, address,userColor
+		order by pickCount desc
+	</select>  -->
 
 	<select id="getPickList" parameterType="MapVO" resultMap="mapMemberResultMap">
 		select * 
