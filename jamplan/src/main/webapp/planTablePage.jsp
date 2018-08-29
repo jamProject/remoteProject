@@ -19,7 +19,7 @@
 <link href="${calCss}" rel="stylesheet" /> 
 </head>
 <body>
-	<div id="saveput">testtest</div>
+	<div id="saveput"></div>
 	<!-- palnTable 뿌려주기 -->   
 	<br><br>
 	<div class="container" id="planput"></div></div>
