@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+C:\Users\jeongeun\Desktop\JAM\remoteProject\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+377078057.index
+512579564.index
+1118845422.index
+1757293190.index
+4138068669.index
