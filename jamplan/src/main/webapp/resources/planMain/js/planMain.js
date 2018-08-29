@@ -9,6 +9,7 @@ $(document).ready(function() {
 	//console.log(window.location.pathname);
 	$("#calendarContent").load("./calendarPage.jsp");
 	//$("#mapContent").load("./mapPage.jsp");
+	$("#mapContent").load("mapPage.jsp");
 	$("#planTableContent").load("./planTablePage.jsp");
 	//$("#viewAllContent").load("./viewAllPage.jsp");n
 
@@ -35,9 +36,6 @@ $(document).ready(function() {
 		w.send(id + "/" + input);
 	}
 
-	
-	
-	
 	/*var link = $(".tab-pane container active").attr("value");
 	console.log(link);
 	$.ajax({

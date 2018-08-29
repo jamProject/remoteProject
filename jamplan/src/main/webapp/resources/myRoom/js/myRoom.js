@@ -12,7 +12,6 @@ $(document).ready(function() {
 // 로드 되면 업데이트 사항 바로 보여준다.
 
 // 로드 되면 출력한다.
-
 	ajaxGetTeamList();
 	noticeMessage();
 	$(".move").on("click",function(){
