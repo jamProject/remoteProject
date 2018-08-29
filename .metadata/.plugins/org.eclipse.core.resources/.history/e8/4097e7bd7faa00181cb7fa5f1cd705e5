@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- create table plan( image varchar2(100), planDate varchar2(200), planName 
+	varchar2(200), goodCount varchar2(400), readCount varchar2(200) ); -->
+
+<mapper namespace="com.spring.jamplan.searchcontroller.SearchMapper">
+
+	<resultMap type="PlanVO" id="planResultMap">
+		<result property="image" column="image" />
+		<result property="planDate" column="planDate" />
+		<result property="planName" column="planName" />
+		<result property="goodCount" column="goodCount" />
+		<result property="readCount" column="readCount" />
+	</resultMap>
+	
+	<resultMap type="com.spring.jamplan.model.UserVO" id="UserResultMap">
+		<result property="id" column="id" />
+	</resultMap>
+	
+	<resultMap type="com.spring.jamplan.model.LikeVO" id="LikeResultMap">
+		<result property="likeNo" column="likeNo" />
+		<result property="likeCheck" column="likeCheck" />
+	</resultMap>
+
+
+
+	<select id="getPlanList" resultMap="planResultMap">
+		SELECT * FROM plantest order by planDate desc
+	</select>
+
+	<insert id="fileUpload"
+		parameterType="com.spring.jamplan.PlanVO">
+		insert into plantest (image) values (#{image})
+	</insert>
+
+	<select id="planSearch"
+		parameterType="com.spring.jamplan.PlanVO"
+		resultMap="planResultMap">
+
+		SELECT * FROM plantest
+		
+		<if test='planName != null '>
+			where planName like '%'||#{planName, jdbcType=VARCHAR}||'%' order by planName
+		</if>
+		<if test='planDate != null '>
+			where planDate like '%'||#{planDate, jdbcType=VARCHAR}||'%' order by planDate desc
+		</if>
+
+	</select>
+
+	<select id="clickSearch"
+		parameterType="com.spring.jamplan.PlanVO"
+		resultMap="planResultMap">
+
+		SELECT * FROM plantest
+
+		<if test='planDate != null and planDate.equals("a")'>
+			order by planDate desc
+		</if>
+		<if test='readCount != null and readCount.equals(1)'>
+			order by readCount
+		</if>
+		<if test='goodCount != null and goodCount.equals(2)'>
+			order by goodCount
+		</if>
+		<if test='planName != null and planName.equals("b")'>
+			order by planName
+		</if>
+
+
+	</select>
+	
+	<!--<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
+		UPDATE PLAN SET READCOUNT = READCOUNT + 1 WHERE PLANNO = #{PLANNO, jdbcType=NUMBER}
+	</update>  -->
+	
+	<select id="getUserId" parameterType="com.spring.jamplan.UserVO" resultMap="UserResultMap">
+		select * from userVO where id = #{id, javaType=String}
+	</select>
+	
+	<update id="heartCheck" parameterType="com.spring.jamplan.searchcontroller.LikeVO">
+		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=NUMBER} + 1
+	</update>
+
+
+
+
+	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 
+		> update plan set readCount = (select readCount from plan where planName 
+		= #{planName, jdbcType=VARCHAR}) + 1 where planNo = #{planNo, jdbcType=NUMBER} 
+		</update> -->
+
+
+
+
+
+
+
+</mapper>

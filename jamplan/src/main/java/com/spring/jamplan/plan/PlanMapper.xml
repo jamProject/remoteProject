@@ -6,8 +6,8 @@
    namespace="com.spring.jamplan.plan.PlanMapper">
    
    <resultMap type="com.spring.jamplan.model.PlanTableVO" id="planTableMap">
-      <result property="calendar" column="calendar" />
-      <result property="map" column="map" />
+      <result property="planDate" column="planDate" />
+      <result property="placeName" column="placeName" />
       <result property="memo" column="memo" />
    </resultMap>
    
@@ -19,13 +19,13 @@
    
    <resultMap type="com.spring.jamplan.model.PlanMapVO" id="planMapMap">
       <result property="planNo" column="planNo" />
-      <result property="map" column="map" />
+      <result property="planDate" column="planDate" />
    </resultMap>
    
    
    
    <select id="getplanTable" parameterType="com.spring.jamplan.model.PlanTableVO" resultMap="planTableMap">
-      select * from planTable order by calendar
+      select * from planTable order by planDate
    </select>
    
    
@@ -36,12 +36,12 @@
    </select> -->
    
    <select id="getPlanMap" parameterType="com.spring.jamplan.model.PlanMapVO" resultMap="planMapMap">
-      select * from planMap where planNo = #{planNo, jdbcType=INTEGER} order by calendar
+      select * from planMap where planNo = #{planNo, jdbcType=INTEGER} order by planDate
    </select>
     
     <insert id="insertPlanTable" parameterType="com.spring.jamplan.model.PlanTableVO">
        <!-- insert into planTable(calendar,map) values(#{calendar, jdbcType=VARCHAR}, #{map, jdbcType=VARCHAR}) -->
-       insert into planTable(planNo,calendar,map,planSeq) values(#{planNo, jdbcType=INTEGER}, #{calendar, jdbcType=VARCHAR}, #{map, jdbcType=VARCHAR}, #{planSeq, jdbcType=INTEGER})
+       insert into planTable(planNo,planDate,placeName,planSeq) values(#{planNo, jdbcType=INTEGER}, #{planDate, jdbcType=VARCHAR}, #{placeName, jdbcType=VARCHAR}, #{planSeq, jdbcType=INTEGER})
     </insert>
     
    

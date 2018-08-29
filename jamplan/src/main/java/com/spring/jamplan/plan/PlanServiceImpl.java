@@ -56,10 +56,12 @@ public class PlanServiceImpl implements PlanService {
             for (i=0; i < planMapList.size(); i++) {
                System.out.println("for문들어옴");
                
-               String getCalendar = planMapList.get(i).getCalendar();
-               planTableVO.setCalendar(getCalendar);
-               String getMap = planMapList.get(i).getMap();
-               planTableVO.setMap(getMap);
+               String getCalendar = planMapList.get(i).getPlanDate();
+               //날짜
+               planTableVO.setPlanDate(getCalendar);
+               String getMap = planMapList.get(i).getPlaceName();
+               //장소
+               planTableVO.setPlaceName(getMap);
                planTableVO.setPlanSeq(i);
                System.out.println("seq = " + i);
 
@@ -170,7 +172,7 @@ public class PlanServiceImpl implements PlanService {
       PlanMapper planMapper = sqlsession.getMapper(PlanMapper.class);
       
       planTableList = planMapper.getplanTable(planTableVO);
-      System.out.println("checkList:" + planTableList.get(0).getMap());
+      System.out.println("checkList:" + planTableList.get(0).getPlaceName());
       
       System.out.println("checkList사이즈="+planTableList.size());
       
