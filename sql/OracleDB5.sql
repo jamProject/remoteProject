@@ -5,28 +5,56 @@ create table planDate(
     dateCount number,
     confirmIndicator number
 );
-
+drop table teaminfo;
 create table TEAMINFO(
     teamNo number not null,
     teamName varchar2(30) not null,
     id VARCHAR2(20) not null, 
     role number,
-    planno number,
-    planName varchar2(30) not null,
-    joinDate date not null
+    planNo number,
+    planName varchar2(30),
+    joinDate date 
 );
+--create table TEAMINFO(
+--    teamNo number not null,
+--    teamName varchar2(30) not null,
+--    id VARCHAR2(20) not null, 
+--    role number,
+--    planno number,
+--    planName varchar2(30) not null,
+--    joinDate date not null
+--);
+create table message(
+    sender varchar2(30) not null,
+    receiver varchar2(30),
+    isRead number not null,
+    teamName varchar2(30) not null
+);
+commit;
+select *from message;   
+select * from teaminfo order by id;
 
-create table userteam(
-    id varchar2(32),
-    teamno number,
-    role number,
-    planno number,
-    teamname varchar2(32)
-);
+
+delete from teaminfo;
+delete from message;
+
+CREATE SEQUENCE TEAMINFO_SEQ
+    START WITH 3
+    INCREMENT BY 1
+    MAXVALUE 1000;
+
+--drop table userteam;
+--create table userteam(
+--    id varchar2(32),
+--    teamno number,
+--    role number,
+--    planno number,
+--    teamname varchar2(32)
+--);
 select * from plan;
-
 select * from teaminfo;
---delete teaminfo;
+select * from teaminfo order by teamno asc ;
+delete teaminfo;
 commit;
 create table userInfo(
     id varchar2(32) primary key,
@@ -51,6 +79,7 @@ create table plan(
     readcount number,
     isopen number not null
 );
+select * from plan;
 select * from plandate where planNo =1 and SELECTDATE ='18/08/01'; 
 commit;
 select * from plandate order by selectdate asc;

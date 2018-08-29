@@ -50,12 +50,12 @@ $(document).ready(function(){
    
    $("#myroomBtn").click(function(){
       
-      location.href="movePlanMainPage.do";
+      location.href="myroom.do";
    });
    
    $("#searchBtn").click(function(){
       var planName = $("city_search").val();
-      location.href="plan.search";
+      location.href="searchplan.do";
    });
    
 });

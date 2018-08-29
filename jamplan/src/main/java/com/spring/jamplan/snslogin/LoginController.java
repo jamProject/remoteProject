@@ -1,19 +1,21 @@
 package com.spring.jamplan.snslogin;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonParser;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.spring.jamplan.main.MainDAOService;
+
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
@@ -26,7 +28,7 @@ public class LoginController {
 	UserVO userVO;
 	
 	@Autowired
-	MainDAOService mDAOS;
+	SnsDAOService sDAOS;
 	
 	@Autowired
 	TeamInfoVO teamVo;
@@ -40,7 +42,7 @@ public class LoginController {
     }
 
     //로그인 첫 화면 요청 메소드
-    @RequestMapping(value = "/snsLogin.do", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/home.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String login(Model model, HttpSession session) {
         
         /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
@@ -50,16 +52,17 @@ public class LoginController {
         //redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
         System.out.println("네이버:" + naverAuthUrl);
         
-        //네이버 
+        //네이버
+        session.setAttribute("url", naverAuthUrl);
         model.addAttribute("url", naverAuthUrl);
 
         /* 생성한 인증 URL을 View로 전달 */
-        return "main/naverlogin";
+        return "main/mainPage";
     }
     
     //네이버 로그인 성공시 callback호출 메소드
     @RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+    public String callback(UserVO vo, Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
             throws IOException {
         System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
@@ -77,7 +80,22 @@ public class LoginController {
         System.out.println("email="+email);
         System.out.println("name="+name);
 
-        UserVO vo = new UserVO();
+        vo = sDAOS.getUserInfo(email);
+        
+        if(!(vo==null))
+        {
+        	session.setAttribute("id",vo.getId());
+        	System.out.println("vo.getId()="+vo.getId());
+        }
+        else
+        {
+        	System.out.println("SetId 하기 전 vo.getId()="+null);
+        	UserVO userVO = new UserVO();
+        	userVO.setId(email);
+        	System.out.println("SetId 하고 난 후 vo.getId()="+userVO.getId());
+        	sDAOS.insertUser(userVO);
+        	System.out.println("회원가입까지 해줌");
+        }
 //      UserVO vo = new UserVO();
 //      vo.setUser_snsId(snsId);
 //      vo.setUser_name(name);
@@ -91,7 +109,6 @@ public class LoginController {
 //      }
 
 
-//      session.setAttribute("login",vo);
 //      return new ModelAndView("user/loginPost", "result", vo);
         
         return "main/callback";

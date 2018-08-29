@@ -163,7 +163,7 @@ $(document).ready(function(){ /* (document).ready는 html문서가 로딩이완�
     	}
     	  alert("3");
          $.ajax({
-        	 url:'/jamplan2/planSearch.search',
+        	 url:'/jamplan2/planSearch.do',
             type:'POST',
             dataType: "json",
             contentType : 'application/x-www-form-urlencoded; charset=utf-8',

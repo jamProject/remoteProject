@@ -19,14 +19,18 @@ import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
 
+
 @Controller
 public class ManagePlanController {
 
-	@Autowired(required = false)
-	private PlanVO planVO;
 
+<<<<<<< HEAD
 	@Autowired(required = false)
 	private TeamInfoVO teamVO;
+=======
+	@Autowired(required = false) 
+	private UserVO user;
+>>>>>>> master2
 
 	@Autowired(required = false)	
 	private ManagePlanDAOService mpDAOS;
@@ -34,7 +38,6 @@ public class ManagePlanController {
 	@Autowired(required = false) 
 	private ChatDAOService chatDAO;
 
-	private ArrayList<PlanVO> planList;
 	private HashMap<String, Object> map;
 	private ObjectMapper mapper;
 
@@ -124,30 +127,13 @@ public class ManagePlanController {
 		}
 		return map;
 	}
-	
-	@RequestMapping(value = "/calendar.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "calendarajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
 	public String calendarLoad(HttpSession session) {
-		System.out.println("실행됨");
-		
-		String id = (String) session.getAttribute("id");
-		int planNo = (int) session.getAttribute("planNo");
-		
-		map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("planNo", planNo);
-		
-		teamVO = mpDAOS.getPlanRole(map);
-		session.setAttribute("role", teamVO.getRole());
-		return "managePlan/calendarPage";
-	}
-	
-	@RequestMapping(value = "/calendarajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody 
-	public String calendarAjax(HttpSession session) {
 
 		map = new HashMap<String, Object>();
-		map.put("link", "calendar.mp");
-
+		map.put("link", "managePlan/calendarPage");
+		
 		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
 		String str = "";
 		try {
@@ -157,104 +143,6 @@ public class ManagePlanController {
 		}
 		return str;
 	}
-	
-	@RequestMapping(value = "/mapajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody 
-	public String mapAjax(HttpSession session) {
-		
-		map = new HashMap<String, Object>();
-		map.put("link", "map.mp");
-
-		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
-		String str = "";
-		try {
-			str = mapper.writeValueAsString(map);
-		} catch (Exception e) {
-			System.out.println("castring fail");
-		}
-		return str;
-	}
-
-	@RequestMapping(value = "/map.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String mapLoad(HttpSession session) {
-
-		System.out.println("실행됨");
-		
-		String id = (String) session.getAttribute("id");
-		int planNo = (int) session.getAttribute("planNo");
-		
-		map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("planNo", planNo);
-		
-		teamVO = mpDAOS.getPlanRole(map);
-		session.setAttribute("role", teamVO.getRole());
-
-		return "managePlan/mapPage";
-	}
-	
-	@RequestMapping(value = "/plantableajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody 
-	public String planTableAjax(HttpSession session) {
-		map = new HashMap<String, Object>();
-		map.put("link", "plantable.mp");
-
-		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
-		String str = "";
-		try {
-			str = mapper.writeValueAsString(map);
-		} catch (Exception e) {
-			System.out.println("castring fail");
-		}
-		return str;
-	}
-
-	@RequestMapping(value="/plantable.mp",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String planTableLoad(HttpSession session) {
-
-		String id = (String) session.getAttribute("id");
-		int planNo = (int) session.getAttribute("planNo");
-		
-		map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("planNo", planNo);
-		
-		teamVO = mpDAOS.getPlanRole(map);
-		session.setAttribute("role", teamVO.getRole());
-		return "managePlan/planTablePage";
-	}
-
-	@RequestMapping(value = "/viewallajax.mp", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody 
-	public String viewAllAjax(HttpSession session) {
-		map = new HashMap<String, Object>();
-		map.put("link", "viewall.mp");
-
-		mapper = new ObjectMapper();// json형식으로 데이터를 반환하기 위해 사용(pom.xml 편집)
-		String str = "";
-		try {
-			str = mapper.writeValueAsString(map);
-		} catch (Exception e) {
-			System.out.println("castring fail");
-		}
-		return str;
-	}
-	
-	@RequestMapping(value="/viewall.mp", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public String viewAllLoad(HttpSession session) {
-		String id = (String) session.getAttribute("id");
-		int planNo = (int) session.getAttribute("planNo");
-		
-		map = new HashMap<String, Object>();
-		map.put("id", id);
-		map.put("planNo", planNo);
-		
-		teamVO = mpDAOS.getPlanRole(map);
-		session.setAttribute("role", teamVO.getRole());
-		
-		return "managePlan/viewAllPage";
-	}
-	
 	
 	// 접속 중인 유저들의 프로필 사진명을 얻기 위한 메서드
 	@RequestMapping(value="/onUserList.mp", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
@@ -307,5 +195,6 @@ public class ManagePlanController {
 		System.out.println("dDaySlide OUT");
 		return vo.getSelectDate();
 	}
+
 
 }

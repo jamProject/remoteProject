@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,7 +15,7 @@
 	<spring:url value="/resources/planMain/js/planMain.js" var="mainPageJs" />
 	<spring:url value="/resources/planMain/css/planMain.css" var="mainPageCss" />
 	
-	<script src="${mainPageJs }"></script>
+	<script src="${mainPageJs}"></script>
 	<link href="${mainPageCss}" rel="stylesheet" />
 	
 	<meta charset="UTF-8">
@@ -24,18 +25,19 @@
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet"href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
-		<!-- jquery & iScroll -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
-		<!-- drawer.js -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
+
+	<!-- jquery & iScroll -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+	<!-- drawer.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
 	
+<<<<<<< HEAD
 	<!-- Full screen video -->
 	<script src="http://pupunzi.com/mb.components/mb.YTPlayer/demo/inc/jquery.mb.YTPlayer.js"></script>
 	
@@ -44,8 +46,137 @@
 <%
 	session.setAttribute("id", "thkim9198");
 	session.setAttribute("planNo", "1");
+=======
+
+	<title>JAM</title>
+
+<%
+	String id = (String)session.getAttribute("id");
+	/* session.setAttribute("id", "thkim9198");
+	session.setAttribute("teamNo", "14"); */
+>>>>>>> master2
 %>
 
+
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
+	<%-- <script type="text/javascript">
+	//planTable : 불러오기
+    function planTableGo() {
+       
+       
+       $.ajax({
+          url : '/jamplan/planTable.plan',
+          type : 'POST',
+          dataType: "json",
+            contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+          data : { 
+             "userId" : '<%=userId%>',
+             "planNo" : $('#planNo').val(),
+             "likeYn" : updateStatus
+          },
+          success:function(data){
+             $('#planput').empty();
+             $('#saveput').empty();
+             var put = '';
+             var saveput = '';
+                saveput += '<br><br>';
+                saveput += '<a href="javascript:savePlanTable();"><button class="btn btn-primary pull-right" >저장</button></a>';
+                $('#saveput').append(saveput);
+                
+             $.each(data, function(index, item){
+                /* $('#planput').empty(); */
+                var planput = '';
+                planput += '<table class="table">';
+                planput += '<thead>';
+                planput += '<th>날짜 </th>';
+                planput += '<th>장소</th>';
+                planput += '<th>일정</th>';
+                planput += '</thead>';
+                planput += '<tbody>';
+                planput += '<tr>';
+                planput += '<td>' + item.calendar + '</td>';
+                planput += '<td>' + item.map + '</td>';
+                planput += '<td><textarea class="form-control" name="memo" id="memo' + index + '" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
+                planput += '<td><input type="text" hidden="hidden" id="planSeq'+index+'" value="'+item.planSeq+'"></td>'
+                planput += '</tr>';
+                planput += '</tbody>';
+                planput += '</table>';
+                
+//                 memoList[index] = item.map;
+                console.log("planput" + planput);
+                $('#planput').append(planput);
+             });
+          },
+          error:function() {
+             alert('ajax통신실패!!!');
+          }
+       });
+    }
+    
+    
+    
+    // savePlanTable : 저장
+    function savePlanTable(){
+       var memoCnt = $('[name="memo"]');
+       var params = {};
+       for(var i=0; i<memoCnt.length; i++){
+          params = {"memo" : $('#memo'+ i).val(), "planSeq" : $('#planSeq'+ i).val()};
+          console.log(params);
+          $.ajax({
+             url : '/jamplan/savePlanTable.plan',
+             type : 'POST',
+             dataType: "json",
+               contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+               data : params,
+               success:function(data) {
+             
+                  /* $.each(data, function(index, item){
+                   $('#updateput').empty();
+                   var updateput = '';
+                   updateput += '<table class="table">';
+                   updateput += '<thead>';
+                   updateput += '<th>날짜 </th>';
+                   updateput += '<th>장소</th>';
+                   updateput += '<th>일정</th>';
+                   updateput += '</thead>';
+                   updateput += '<tbody>';
+                   updateput += '<tr>';
+                   updateput += '<td>' + item.calendar + '</td>';
+                   updateput += '<td>' + item.map + '</td>';
+                   updateput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
+                   updateput += '</tr>';
+                   updateput += '</tbody>';
+                   updateput += '</table>';
+                   
+                   
+                   console.log("updateput" + updateput);
+                   $('#updateput').append(updateput);
+                   
+                }); */
+             },
+                  error:function() {
+                     alert('ajax통신실패!!!');
+                  }
+               });
+       }
+       alert('저장성공!');
+       
+    }
+    
+	</script> --%>
+	
+</head>
+
+<body>
+<!-- <body style="height: 1500px">
+
+	<h1>planMainPage</h1>
+	<div>
+		<label>Plan Main</label>
+	</div>
+=======
 	<style>
 		/*구글 한글폰트 불러오는 곳*/
 		@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
@@ -57,6 +188,7 @@
 /*구글 한글폰트 불러오는 부분 끝*/
 	</style>
 	<script>
+>>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460
 	
 	$(document).ready(function () {
 		$("#sendButton").click(function() {
@@ -192,6 +324,7 @@
 		  <!-- Centered link -->
 		  <div class="topnav-centered">
 		    <h2><strong><a href="#home" class="active">Jam Planner</a></strong></h2>
+		    <p style="text-align:center"><%=id%>의 planner</p>
 		  </div>
 		  <!-- Right-aligned links -->
 		  <div class="topnav-right">
@@ -200,6 +333,7 @@
 		    <a href="#about">Search</a>
 		  </div>
 		</div>
+<<<<<<< HEAD
 	</div>
 	<div class="container">
 		<h2></h2>
@@ -235,6 +369,50 @@
 				   <!--  	<label for="exampleFormControlTextarea3">Rounded corners</label> -->
     					<textarea class="form-control" id="chatTextarea" readonly rows="10"></textarea>
 				    	<input id="inputText" type="text" placeholder="대화를 해보세요" required>
+=======
+	</header>
+	<section>
+		<div id="main-container" class="container-fluid text-center">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div id="planManage" class="col-md-7">
+					<ul class="nav nav-tabs">
+					<!--<li><a href="#calendar" data-toggle="tab" class="nav-link active">Calendar</a></li>
+						<li><a href="#map" data-toggle="tab" class="nav-link">Map</a></li>
+						<li><a href="#planTable" data-toggle="tab" class="nav-link">PlanTable</a></li>
+						<li><a href="viewAll" data-toggle="tab" class="nav-link">View all</a></li> -->
+						<li><a href="#calendarContent" data-toggle="tab" class="nav-link active moveLink">Calendar</a></li>
+						<li><a href="#mapContent" data-toggle="tab" class="nav-link moveLink">Map</a></li>
+						<!-- <li><a href="javascript:planTableGo();" class="nav-link moveLink">PlanTable</a></li>
+						<li><a href="javascript:planTableGo();" class="nav-link moveLink">PlanTable</a></li> -->
+						<li><a href="#planTableContent" data-toggle="tab" class="nav-link moveLink">PlanTable</a></li>
+						<li><a href="#viewAllContent" data-toggle="tab" class="nav-link moveLink">View all</a></li>
+					</ul>
+					<div class="tab-content divContent">
+					    <div class="tab-pane container active" id="calendarContent"></div>
+						<div class="tab-pane container fade" id="mapContent"></div>
+						<div class="tab-pane container fade" id="planTableContent">			
+						<div class="tab-pane container fade" id="viewAllContent"></div>
+					</div>
+					<!-- <div class = "content"></div> -->
+				</div>
+
+				<div id="chat" class="col-md-3">
+					<!-- 아바타 이미지 들어가는 곳 -->
+					<div id="profileImage"></div>
+
+					<button class="open-button" onclick="openForm()">Chat</button>
+					<div class="form-popup" id="myForm">
+						<div class="form-container">
+					   <!--  	<label for="exampleFormControlTextarea3">Rounded corners</label> -->
+    						<textarea class="form-control" id="chatTextarea" readonly rows="10"></textarea>
+					    	<input id="inputText" type="text" placeholder="대화를 해보세요" required>
+					
+					    	<button id="sendButton" class="btn">Enter</button>
+					    	<button type="submit" id="cancelButton" class="btn cancel" onclick="closeForm()">Chat close</button>
+					  </div>
+					</div>
+>>>>>>> master2
 					
 					   	<button id="sendButton" class="btn">Enter</button>
 				    	<button type="submit" id="cancelButton" class="btn cancel" onclick="closeForm()">Chat close</button>

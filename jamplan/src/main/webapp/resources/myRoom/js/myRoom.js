@@ -69,11 +69,12 @@ $(document).ready(function() {
 		var index1 = $(this).data("trIndex");
 		deleteMessageTR(teamName,sender,index1)
 			});
-/*	$(document).on("click", "button.applyButCan", function(){
+	$(document).on("click", "button.applyButCan", function(){
+		alert("팀 신청 취소");
 		var teamName = $(this).attr("value");
-		var sender = $(this).data("sender");
-		deleteMessageTR(teamName,sender)
-			});*/
+		//var sender = $(this).data("sender");
+		deleteMessage(teamName)
+			});
 	$(document).on("click", "button.deleteMessageBut", function(){
 		var teamName = $(this).attr("value");
 		//var sender = $(this).data("sender");
@@ -201,6 +202,7 @@ $(document).ready(function() {
 	$(document).on("click", "button.applyBut", function(){
 		//alert("신청 버튼 이벤트 ")
 		var teamName = $(this).attr("value");
+		alert(teamName+"에 지원했습니다.");
 		$.ajax({
 			url : '/jamplan/applyToTeam.do',
 			type : 'POST',
@@ -211,7 +213,7 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 			success : function(data) {
-				//alert(data.res);
+				alert(data.res);
 			},
 			error: function(data){
 				alert(data.res);
@@ -335,6 +337,7 @@ $(document).ready(function() {
 	function() {
 	var id = '<%=id %>';
 	$('#updateSpace').empty();
+	
 	$.ajax({
 			url : '/jamplan/updateCheck.do',
 			type : 'POST',
@@ -343,17 +346,24 @@ $(document).ready(function() {
 			},
 			dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+<<<<<<< HEAD
 			success : function(data) {$.each(data,function(index,item) {
 							var update = '';
 							update += '<div class="media border p-3">'
 									+ '<img src=<spring:url value="/image/${user.image}"'
+=======
+			success : function(data) {
+				$.each(data, function(index,item) {
+					var update = '';
+							update += '<div class="media border p-3">' + '<img src="/jamplan/image/${user.image}"'
+>>>>>>> master2
 									+ 'alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">'
 									+ '<div class="media-body">'
 									+ '<h4>'+ item.planName+ '</h4>'
 									+ '<p>일정에 변화가 있어요. 확인해 보세요.</p>'
 									+ '</div>'+ '</div>'+ '</br></br>';
 							$('#updateSpace').append(update);
-						})
+						});
 			},
 			error : function() {+
 				alert("Error");
@@ -387,11 +397,11 @@ $(document).ready(function() {
 					success : function(data) {
 						$.each(data, function(index, item) {			
 								update += '<tr><td>'+ item.teamName+ '</td>'
-								+'<td class="tdOdd"><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
+								+ '<td class="tdOdd"><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
 								+ '<td class="tdOdd"><button class = "btn btn-danger applyButCan" value = '+item.teamName+'>취소</button></td></tr>';
 								console.log("팀 검색 결과 : " + item.teamName);
 							})
-						//	console.log("update 글 : " + update);
+							//console.log("update 글 : " + update);
 							tableHead += update;
 							tableHead += tableTail;
 							//$('tableTail').append(tableHead);
@@ -435,7 +445,6 @@ function deleteMessageTR(teamName, sender,index1){
 function deleteMessage(teamName){
 	//alert("취소 버튼 이벤트 ")
 	var teamNAME = teamName;
-	var Sender = sender;
 	//alert("팀이름 : " + teamName);
 	$.ajax({
 		url : "/jamplan/deleteMessageToTeam.do",
@@ -444,7 +453,7 @@ function deleteMessage(teamName){
 				'teamName' : teamNAME
 				},
 		dataType : 'json',
-		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+		//contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
 			alert(data.res);
 		},
@@ -568,6 +577,7 @@ function ajaxGetTeamList() {
 		
 	$('#teamList').empty();	
 	$.ajax({
+
 			url : '/jamplan/ajaxPrintTeamList.do',
 			type : 'POST',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
@@ -609,7 +619,7 @@ function ajaxGetTeamList() {
 	});
 } 
 
-//플랜 클릭시 페이지 이동 이벤트 
+//플랜 클릭시 페이지 이동 이벤트  form으로 데이터 전달 및 페이지 이동
 function planClickEvent(planNo){
 
 	var planNO = planNo;
@@ -627,15 +637,7 @@ function planClickEvent(planNo){
 	form.appendChild(input);
 	
 	form.submit();
-	//console.log("done");
-	/*$.ajax({
-		url : '/jamplan/movePlanMainPage.do',
-		type : 'GET',
-		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
-		async: false,
-		dataType : 'json',
-		data : {"planNo" : planNO}
-	})*/
+	
 }
 
 function planListAdd(teamName, indexI){
@@ -656,8 +658,10 @@ function planListAdd(teamName, indexI){
 					
 					//console.log("if문 플랜 정보 "+item.planNo);
 					//console.log("플랜이름"+item.planName);
+
 					RetrunList = '<div id="planSelectList' + item.planNo + ' class ="movePlan" value = "'+item.planNo+'">' + item.planName + '</div>';
 					$('#myTeam'+i).append(RetrunList);	
+
 				}
 			})
 		}
@@ -690,7 +694,7 @@ function validationCheck() {
 
 				if ($('#teamName').focus()) {
 					alert("focus in");
-					$('#validationCheck').enable();
+					$('#validationCheck').able();
 				} else {
 					alert("focus out");
 				}

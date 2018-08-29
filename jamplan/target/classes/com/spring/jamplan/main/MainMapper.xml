@@ -66,7 +66,7 @@
 	</insert>
 	
 	<insert id="insertUser" parameterType="com.spring.jamplan.model.UserVO">
-		insert into userInfo(email, id, pass) values (#{email},#{id},#{pass})
+		insert into userInfo(email, id, pass, isAdmin, signDate) values (#{email},#{id},#{pass},#{isAdmin} ,sysdate)
 	</insert>
 	
 	

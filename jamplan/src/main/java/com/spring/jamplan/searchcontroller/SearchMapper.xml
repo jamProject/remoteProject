@@ -5,10 +5,14 @@
 <!-- create table plan( image varchar2(100), planDate varchar2(200), planName 
 	varchar2(200), goodCount varchar2(400), readCount varchar2(200) ); -->
 
+<!-- <<<<<<< HEAD:jamplan/src/main/java/com/spring/jamplan/searchcontroller/SearchMapper.xml -->
+<mapper namespace="com.spring.jamplan.searchcontroller.SearchMapper">
+<!-- =======
 <mapper
 	namespace="com.spring.jamplan.model.SearchMapper">
-
-	<resultMap type="PlanVO" id="planResultMap">
+>>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460:jamplan/src/main/java/com/spring/jamplan/searchcontroller/SearchMapper.xml
+ -->
+	<resultMap type="com.spring.jamplan.model.PlanVO" id="planResultMap">
 		<result property="image" column="image" />
 		<result property="planDate" column="planDate" />
 		<result property="planName" column="planName" />
@@ -16,11 +20,24 @@
 		<result property="readCount" column="readCount" />
 	</resultMap>
 	
-	<resultMap type="UserVO" id="UserResultMap">
+	<!-- <resultMap type="com.spring.jamplan.model.UserVO" id="UserResultMap">
 		<result property="id" column="id" />
+	</resultMap> -->
+	<resultMap type="com.spring.jamplan.model.UserVO" id="UserResultMap">
+		<result property="id" column="id" />
+		<result property="email" column="email" />
+		<result property="pass" column="pass" />
+		<result property="nation" column="nation" />
+		<result property="gender" column="gender" />
+		<result property="snsLink" column="snsLink" />
+		<result property="travelType" column="travelType" />
+		<result property="hobby" column="hobby" />
+		<result property="age" column="age" />
+		<result property="isAdmin" column="isAdmin" />
+		<result property="signDate" column="signDate" />
 	</resultMap>
 	
-	<resultMap type="LikeVO" id="LikeResultMap">
+	<resultMap type="com.spring.jamplan.model.LikeVO" id="LikeResultMap">
 		<result property="likeNo" column="likeNo" />
 		<result property="likeCheck" column="likeCheck" />
 	</resultMap>
@@ -69,8 +86,6 @@
 		<if test='planName != null and planName.equals("b")'>
 			order by planName
 		</if>
-
-
 	</select>
 	
 	<!--<update id="moveSchedule" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" >
@@ -82,7 +97,8 @@
 	</select>
 	
 	<update id="heartCheck" parameterType="com.spring.jamplan.model.LikeVO">
-		UPDATE LIKETEST SET likeNo = #{likeNo, jdbcType=INTEGER} + 1
+<!-- <<<<<<< HEAD:jamplan/src/main/java/com/spring/jamplan/searchcontroller/SearchMapper.xml -->
+		UPDATE LIKETEST SET likeNo = #{likeNo, javaType=int} + 1
 	</update>
 
 	<!-- 조회수 <update id="?" parameterType="com.spring.jamplan2.searchcontroller.PlanVO" 

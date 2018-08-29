@@ -28,7 +28,7 @@ $(document).ready(function() {
     $("#name").html("환영합니다. "+name+"님");
     $("#email").html(email);
     });
-  //location.href = "${pageContext.request.contextPath}/";
+  location.href = "${pageContext.request.contextPath}/";
 </script>
 
 </head>

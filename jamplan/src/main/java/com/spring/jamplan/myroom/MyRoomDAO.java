@@ -11,9 +11,8 @@ import com.spring.jamplan.model.UserVO;
 
 public interface MyRoomDAO {
 	
-	int makeTeam(TeamInfoVO team);
-	int insertPlan(TeamInfoVO vo);
-	int insertApplyMessage(String id,MessageVO vo);
+	int makeTeam(TeamInfoVO team);	
+	int insertApplyMessage(MessageVO vo);
 	int deleteCansleMessage(MessageVO vo);
 	int getMaxPlanNo();
 	
@@ -21,21 +20,23 @@ public interface MyRoomDAO {
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
 	
+	void insertPlan(TeamInfoVO vo);//
 	void deleteNullPlanTeaminfo(String teamName);	
 	void updateReadMessage(String receiver);
 	void insertToMember(MessageVO vo);
 	
 	UserVO getUserInfo(UserVO vo);	
-	PlanVO searchPlan(PlanVO plan);
+	ArrayList<TeamInfoVO> searchPlan(TeamInfoVO team);
 	TeamInfoVO getRole(TeamInfoVO team);
 	
 	ArrayList<TeamInfoVO> getTeamList(String id);
 	ArrayList<TeamInfoVO> getPlanListById(String id);
-	ArrayList<PlanVO> checkUpdate(UserVO vo);
+	ArrayList<TeamInfoVO> checkUpdate(UserVO vo);
 	ArrayList<TeamInfoVO> getTeamMember(UserVO vo);
-	ArrayList<PlanVO> getPlanList(TeamInfoVO team);	
+	ArrayList<TeamInfoVO> getPlanList(TeamInfoVO team);	
 	ArrayList<TeamInfoVO> searchTeam(TeamInfoVO team);
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO team);
 	ArrayList<MessageVO>getMessageList(MessageVO vo);
+	ArrayList<TeamInfoVO> getTeamMemberList(TeamInfoVO teamVO);
 
 }

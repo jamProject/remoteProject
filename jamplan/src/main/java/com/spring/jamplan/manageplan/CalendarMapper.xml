@@ -19,14 +19,12 @@
 	</resultMap>
 
 	<select id="getAllPlans" resultMap="PlanResultMap">
-		select * from plan where
-		isopen=0
+		select * from teamInfo <!-- plan  where isopen=0 -->
 	</select>
 
 	<select id="getTeamPlan"
-		parameterType="com.spring.jamplan.model.PlanVO"
-		resultMap="PlanResultMap">
-		select * from plan where teamNo = #{teamNo, javaType = int }
+		parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		select * from teaminfo where teamNo = #{teamNo, javaType = int }
 	</select>
 
 	<!-- column 은 대소구분 하지 않는다. 디비 컬럼을 의미함 참고할 점은 resultMap 의 id는 소문자로 시작 왜?->객체이름이니까 -->
@@ -66,7 +64,7 @@
 	</update>
 	
 	<select id ="getTeamRole" parameterType="hashmap" resultMap="teamInfoResultMap">
-		select * from userTeam where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
+		select * from teaminfo where id = #{id, javaType = String} and planNo = #{planNo, javaType= int}
 	</select>
 
 	<select id="getCalendarSelectDate" parameterType="int"

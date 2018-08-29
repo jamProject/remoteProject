@@ -16,23 +16,20 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-   
    <spring:url value="/resources/mainPage/js/mainPageJs.js" var="mainPageJs" />
-   <spring:url value="/resources/mainPage/css/mainPageCss.css" var="mainPageCss" />
-   
+     <spring:url value="/resources/mainPage/css/mainPageCss.css" var="mainPageCss" />
    <script src="${mainPageJs}"></script>
-   <link href="${mainPageCss}" rel="stylesheet" />
-   
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" ></script>
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   <title>Document</title>
+    <link href="${mainPageCss}" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
 
 </head>
 <body>
@@ -74,8 +71,8 @@
                 <%
                 }
                 %>
-                <li class="nav-item" data-toggle="modal" data-target="#myModalJoin"><a class="nav-link" href="#login">join</a></li>
-                <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#search">Search</a></li>
+                <li class="nav-item" data-toggle="modal" data-target="#myModalJoin"><a class="nav-link" href="#">join</a></li>
+                <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#">Search</a></li>
             </ul>
          <!-- 모달버튼 끝 -->
         </div>
@@ -90,20 +87,26 @@
               </ul>
            <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/jamplan/resources/mainPage/img/mainImage1.png"  alt="cat">
+                <img src="/jamplan/resources/mainPage/img/carousel1.jpg"  alt="cat">
                 <div class="carousel-caption">
                     <h1>새로운 여행</h1>
                     <p>상상속의 여행을 현실로 만들어 보세요</p>
                 </div>
             </div>
             <div class="carousel-item">
-                    <img src="/jamplan/resources/mainPage/img/mainImage2.png" alt="cat">
+                    <img src="/jamplan/resources/mainPage/img/carousel2.jpg" alt="cat">
                     <div class="carousel-caption">
                         <h1>단체플래너</h1>
                         <p>팀을 이루어 함께 여행 계획을 세워 보세요</p>
                     </div>
             </div>
-            
+            <div class="carousel-item">
+                    <img src="/jamplan/resources/mainPage/img/carousel2.jpg" alt="cat">
+                    <div class="carousel-caption">
+                        <h1>고양이</h1>
+                        <p>고양이와 강아지는 친구입니다.</p>
+                    </div>
+            </div>
         </div>
 
         <a href="#myCarousel" class="carousel-control-prev" data-slide="prev">
@@ -161,21 +164,21 @@
                             <!--헤더 , 바디, 푸터-->
                             <div class="modal-header">
                                 <h4 class="modal-title">login</h4>
-                                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                                <button id=closeLogin class="close" type="button" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">  
                             
                              <form class="login" action="login.do" method="post" onsubmit="return loginCheck()">
-                                <div class="form-group col-sm-8">
+                                <div class="form-group col-sm-12">
                                   <label for="usr1">ID:</label>
                                      <input type="text" class="form-control" id="usr1" name="id">
                                 </div>
-                              <div class="form-group col-sm-8">
+                              <div class="form-group col-sm-12">
                                   <label for="pwd1">비밀번호:</label>
                                   <input type="password" class="form-control" id="pwd1" name="pass">
                               </div>
                               <div class="col-sm-12">
-                                    <button type=submit class="btn btn-primary btn-block">로그인</button>
+                                    <button type=submit class="btn btn-outline-primary btn-block">로그인</button>
                                 </div>                 
                            </form>
                            
@@ -183,8 +186,8 @@
                             <!--modal-footer 에는 row를 쓸 필요가 없다 -->
                             <div class="modal-footer"> 
                                <div class="col-sm-12">
-                               <button class="btn btn-success btn-block"><a href="snsLogin.do">네이버 아이디로 로그인</a></button>
-                               <button class="btn btn-danger btn-block">아이디/비밀번호 찾기</button>                              
+                               <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 로그인</button>                               
+                               <button id=findA class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#myModalJoin">아이디/비밀번호 찾기</button>                              
                                </div>
                                 
                             </div>
@@ -205,7 +208,7 @@
                                
                             <div class="modal-header in">
                                 <h4 class="modal-title">join</h4>
-                                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                                <button id=closeJoin class="close" type="button" data-dismiss="modal">&times;</button>
                             </div>
                             
                             <div class="modal-body in">
@@ -217,21 +220,24 @@
                                 <div class="form-group col-sm-12">
                                   <label for="usr2">ID:</label>
                                      <input type="text" class="form-control" id="usr2" name="id">
-                                     <button id="idck" class="btn btn-default btn-block">중복체크</button>
+                                     <button id="idck" class="btn btn-outline-secondary btn-block">중복체크</button>
                                 </div>
                               <div class="form-group col-sm-12">
                                   <label for="pwd2">비밀번호:</label>
                                   <input type="password" class="form-control" id="pwd2" name="pass">
                               </div>
                               <div class="col-sm-12">
-                                    <button type=submit id=joinB class="btn btn-light btn-block">회원가입</button>
+                                    <button type=submit id=joinB class="btn btn-outline-primary btn-block">회원가입</button>
                                 </div>                              
+                              
+                            
+                            
                             </div>
                             <!--modal-footer 에는 row를 쓸 필요가 없다 -->
                             <div class="modal-footer"> 
                                 <div class="col-sm-12">
-                                 <button class="btn btn-light btn-block"><a href="snsLogin.do">네이버 아이디로 회원가입</a></button>
-                                  <button class="btn btn-danger btn-block">아이디/비밀번호 찾기</button>
+                                 <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 회원가입</a></button>
+                                  <button class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>
                                </div>                              
                             </div>
                         </div>
@@ -239,5 +245,76 @@
                     </div>
                 </div>
                 </div>
+      <!--    모달창 ID/PW 찾기-->
+                   <div id="myModalFind" class="modal">
+                    <!--모달의 크기 결정-->
+                    <!--modal-sm, modal-lg-->
+                    <div class="modal-dialog">
+            
+                        <!-- 모달의 본 컨텐츠 login-->
+                        <div class="modal-content">
+                            <!--헤더 , 바디, 푸터-->
+                            <div class="modal-header">
+                                <h4 class="modal-title">ID/PW 찾기</h4>
+                                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">  
+                            
+                             <form class="login" action="login.do" method="post" onsubmit="return loginCheck()">
+                                <div class="form-group col-sm-12">
+                                  <label for="usr1">ID:</label>
+                                     <input type="text" class="form-control" id="usr3" name="id">
+                                </div>
+                              <div class="form-group col-sm-12">
+                                  <label for="pwd1">비밀번호:</label>
+                                  <input type="password" class="form-control" id="pwd3" name="pass">
+                              </div>
+                              <div class="col-sm-12">
+                                    <button type=submit class="btn btn-outline-primary btn-block">로그인</button>
+                                </div>                 
+                           </form>
+                           
+                            </div>
+                            <!--modal-footer 에는 row를 쓸 필요가 없다 -->
+                            <div class="modal-footer"> 
+                               <div class="col-sm-12">
+                               <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 로그인</button>
+                               <button class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>                              
+                               </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         
+                <!--모달창 snslogin-->
+            <!--   <div id="myModalSns" class="modal">  -->
+                    <!--모달의 크기 결정-->
+                    <!--modal-sm, modal-lg-->
+                 <!--    <div class="modal-dialog"> -->
+            
+                        <!-- 모달의 본 컨텐츠 sns-->
+                     <!--    <div class="modal-content">
+                            헤더 , 바디, 푸터
+                            <div class="modal-header" align="center">
+                                <h4 class="modal-title" align="center">네이버 로그인</h4>
+                                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>본 구역에 내용을 삽입하세요</p>
+                                <img src="/jamplan/resources/mainPage/img/dog.jpg" alt="dog">
+                            </div>
+                            modal-footer 에는 row를 쓸 필요가 없다
+                            <div class="modal-footer"> 
+                                <div class="col-md-6">
+                                    <button class="btn btn-default btn-block">확인</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-danger btn-block">취소</button>
+                                </div> 
+                            </div>
+                        </div> -->
+                  <!--   </div>
+                </div> -->
 </body>
 </html>

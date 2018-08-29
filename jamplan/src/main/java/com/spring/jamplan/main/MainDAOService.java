@@ -14,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
-		
-		
+
 		
 @Service   
 public class MainDAOService {
@@ -31,6 +30,7 @@ public class MainDAOService {
 	private JavaMailSender mailSender;
 		
 	@Transactional
+
 	public void create(UserVO vo) throws Exception {
 	MainMapper mainMapper = sqlSession.getMapper(MainMapper.class);	
 	mainMapper.insertUser(vo); //회원가입 
@@ -46,7 +46,6 @@ public class MainDAOService {
 	sendMail.setTo(vo.getEmail());
 	sendMail.send();
 	}
-	
 	
 	public UserVO getUserInfo(String id) {
 		
