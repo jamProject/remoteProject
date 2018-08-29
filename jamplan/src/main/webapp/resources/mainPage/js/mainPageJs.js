@@ -57,6 +57,14 @@ $(document).ready(function(){
       var planName = $("city_search").val();
       location.href="searchplan.do";
    });
+   
+   $("#idck").click(function(){
+	   var userid =  $("#idck").val(); 
+	   if(userid.length == 0){
+	         alert("아이디를 입력해 주세요"); 
+	         $("#idck").focus();
+	     	}
+	   });
 });
 
 function check(){
@@ -138,7 +146,8 @@ $(function() {
                     $("#usr2").focus();
                     
                 
-                } else {
+                } 
+                else {
                     alert("사용가능한 아이디입니다.");
                     //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
                     $("#usr2").addClass("has-success")

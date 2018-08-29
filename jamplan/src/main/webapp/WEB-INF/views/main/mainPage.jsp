@@ -79,7 +79,7 @@
                 }
                 %>
                 <li class="nav-item" data-toggle="modal" data-target="#myModalJoin"><a class="nav-link" href="#">join</a></li>
-                <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#">Search</a></li>
+                <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#search">Search</a></li>
             </ul>
          <!-- 모달버튼 끝 -->
         </div>
@@ -194,6 +194,7 @@
                             <div class="modal-footer"> 
                                <div class="col-sm-12">
                                <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 로그인</button>                                                                                     
+                               <button type=submit class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>
                                </div>
                                 
                             </div>
@@ -243,6 +244,7 @@
                             <div class="modal-footer"> 
                                 <div class="col-sm-12">
                                  <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 회원가입</a></button>
+                               	 <button type=submit class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>
                                </div>                              
                             </div>
                         </div>
