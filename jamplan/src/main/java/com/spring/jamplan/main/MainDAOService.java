@@ -30,7 +30,38 @@ public class MainDAOService {
 	private JavaMailSender mailSender;
 		
 	@Transactional
+	
+	public void sendFindId(String[] id) throws Exception{
+	MainMapper mainMapper = sqlSession.getMapper(MainMapper.class);
+	UserVO vo=mainMapper.getUserInfo(id[0]);
+	String email=vo.getEmail();
+	MailHandler sendMail = new MailHandler(mailSender);
+	sendMail.setSubject("[JAM Planner 아이디 찾기]");	
+	sendMail.setFrom("wodud6349@gmail.com", "jamplanner");
+	StringBuffer sb=new StringBuffer();
+	sb.append("<h4>가입하신 ID LIST 입니다.</h4>");
+	for(int i=0; i<id.length; i++)
+	{
+			sb.append("<br>"+id[i]+"</br>");
+	}
+	sendMail.setText(sb.toString());
+	sendMail.setTo(email);
+	sendMail.send();
+		}
+	public void sendFindPw(UserVO uservo) throws Exception{
+		String email=uservo.getEmail();
+		MailHandler sendMail = new MailHandler(mailSender);
+		sendMail.setSubject("[JAM Planner 비밀번호 찾기]");	
+		sendMail.setFrom("wodud6349@gmail.com", "jamplanner");
+		StringBuffer sb=new StringBuffer();
+		sb.append("<h4>가입하신"+uservo.getId()+ "에 대한password 입니다.</h4>");
+		sb.append("<br>"+uservo.getPass()+"</br>");
+		sendMail.setText(sb.toString());
+		sendMail.setTo(email);
+		sendMail.send();
+			}
 
+	
 	public void create(UserVO vo) throws Exception {
 	MainMapper mainMapper = sqlSession.getMapper(MainMapper.class);	
 	mainMapper.insertUser(vo); //회원가입 
@@ -40,13 +71,30 @@ public class MainDAOService {
 	mainMapper.createAuthKey(vo); // 인증키 DB저장
 	MailHandler sendMail = new MailHandler(mailSender);
 	sendMail.setSubject("[JAM Planner 서비스 이메일 인증]");
-	sendMail.setText(
-			new StringBuffer().append("<h1>클릭하시면 이메일 인증이 완료됩니다.</h1>").append("<a href='http://localhost:8800/jamplan/emailConfirm.do?email=").append(vo.getEmail()).append("&authCode=").append(key).append("&id=").append(vo.getId()).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+	
 	sendMail.setFrom("wodud6349@gmail.com", "jamplanner");
 	sendMail.setTo(vo.getEmail());
+	sendMail.setText(
+			new StringBuffer().append("<h1>클릭하시면 이메일 인증이 완료됩니다.</h1>")
+			.append("<a href='http://localhost:8800/jamplan/emailConfirm.do?email=")
+			.append(vo.getEmail()).append("&authCode=")
+			.append(key).append("&id=")
+			.append(vo.getId())
+			.append("' target='_blenk'>이메일 인증 확인</a>")
+			.toString());
 	sendMail.send();
 	}
 	
+	public String[] getIdInfo(UserVO vo) {
+		
+		System.out.println("getIdInfo start");
+		System.out.println(sqlSession);
+		MainMapper mainMapper = sqlSession.getMapper(MainMapper.class); 
+		
+		String[] id = mainMapper.getIdInfo(vo); 
+		System.out.println("dao.id"+id);
+		return id;
+	}	
 	public UserVO getUserInfo(String id) {
 		
 		System.out.println("getUserInfo start");
@@ -101,6 +149,15 @@ public class MainDAOService {
 		mainMapper.createAuthKey(vo);
 		
 	}
+
+	public UserVO checkIdEmail(UserVO vo) {
+		// TODO Auto-generated method stub
+		MainMapper mainMapper =sqlSession.getMapper(MainMapper.class);
+		UserVO uservo = mainMapper.checkIdEmail(vo);
+		return uservo;
+	}
+
+
 		
 }
 		

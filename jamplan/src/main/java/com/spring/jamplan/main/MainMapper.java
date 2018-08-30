@@ -16,4 +16,6 @@ public interface MainMapper {
 	public void insertUser(UserVO vo);
 	public int idcheck(String id);
 	public void createAuthKey(UserVO vo);
+	public String[] getIdInfo(UserVO vo);
+	public UserVO checkIdEmail(UserVO vo);
 }

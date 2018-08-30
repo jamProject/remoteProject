@@ -58,7 +58,69 @@ $(document).ready(function(){
       location.href="searchplan.do";
    });
    
+   $("#idck").click(function(){
+	   var userid =  $("#idck").val(); 
+	   if(userid.length == 0){
+	         alert("아이디를 입력해 주세요"); 
+	         $("#idck").focus();
+	     	}
+	   });
 });
+
+function check(){
+	 var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+	 var email = $("#findID").val();
+	
+	if(email.length == 0){
+		alert("이메일을 입력하세요.");
+		$("#findID").focus();
+		return false;
+	}
+	 if(!getMail.test(email))
+     {
+         alert("이메일형식에 맞게 입력해주세요")
+         $("#findID").val("");
+         $("#findID").focus();
+         return false;
+      }
+	
+	return true;
+}
+function pwCheck(){
+	 var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+	 var getIdCheck = RegExp(/^[a-z0-9_]+$/);
+	 
+	 var email = $("#passEmail").val();
+	 var userid = $("#passId").val();
+	
+	 if(userid.length == 0){
+         alert("아이디를 입력해 주세요"); 
+         $("#passId").focus();
+         return false;
+     	}
+     
+     if(!getIdCheck.test(userid)){
+          alert("아이디는 오직 문자와 숫자, _ 기호만 입력가능");
+          $("#passId").val("");
+          $("#passId").focus();
+          return false;
+        }
+     
+	 if(email.length == 0){
+		alert("이메일을 입력하세요.");
+		$("#passEmail").focus();
+		return false;
+	}
+	 if(!getMail.test(email))
+    {
+        alert("이메일형식에 맞게 입력해주세요")
+        $("#passEmail").val("");
+        $("#passEmail").focus();
+        return false;
+     }
+	
+	return true;
+}
 var idck = 0;
 $(function() {
     //idck 버튼을 클릭했을 때 
@@ -84,7 +146,8 @@ $(function() {
                     $("#usr2").focus();
                     
                 
-                } else {
+                } 
+                else {
                     alert("사용가능한 아이디입니다.");
                     //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
                     $("#usr2").addClass("has-success")
@@ -122,7 +185,7 @@ $(function() {
               alert("이메일을 입력해주세요");
           $("#email").focus();
           return false;
-      }
+          }
           if(!getMail.test(email))
           {
               alert("이메일형식에 맞게 입력해주세요")
@@ -135,7 +198,7 @@ $(function() {
           alert("아이디를 입력해 주세요"); 
           $("#usr2").focus();
           return false;
-      }
+      	}
       
       if(!getIdCheck.test(userid)){
            alert("아이디는 오직 문자와 숫자, _ 기호만 입력가능");

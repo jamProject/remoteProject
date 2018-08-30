@@ -49,8 +49,15 @@
                <%
                if(id==null)
                {
-               %>
-                <li class="nav-item active" data-toggle="modal" data-target="#myModalLogin"><a class="nav-link" href="#login">login</a></li>
+               %>           
+                 	<li class="nav-item dropdown">
+	                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Account</a>
+	                 <div class="dropdown-menu">
+	                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModalLogin">login</a>
+	                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModalId">find ID</a>
+	                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModalPw">find Pass</a>
+	                 </div>
+	                </li>
                 <%   
                }
                else{ 
@@ -60,7 +67,7 @@
                     <%=id%>
                      <i class="fas fa-user"></i>
                  </a>
-                 <div class="dropdown-menu" style=>
+                 <div class="dropdown-menu">
                  
                       <a class="dropdown-item" id="myroomBtn" href="#">My room</a>
                       <a class="dropdown-item" href="#">My page</a>
@@ -72,7 +79,7 @@
                 }
                 %>
                 <li class="nav-item" data-toggle="modal" data-target="#myModalJoin"><a class="nav-link" href="#">join</a></li>
-                <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#">Search</a></li>
+                <li class="nav-item" data-toggle="modal" data-target="#myModalSns"><a class="nav-link" href="#search">Search</a></li>
             </ul>
          <!-- 모달버튼 끝 -->
         </div>
@@ -87,24 +94,24 @@
               </ul>
            <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/jamplan/resources/mainPage/img/carousel1.jpg"  alt="cat">
+                <img src="/jamplan/resources/mainPage/img/carousel2.jpg"  alt="cat">
                 <div class="carousel-caption">
-                    <h1>새로운 여행</h1>
-                    <p>상상속의 여행을 현실로 만들어 보세요</p>
+                    <h1>단체 플래너</h1>
+                     <p>팀을 이루어 함께 여행 계획을 세워 보세요</p>
                 </div>
             </div>
             <div class="carousel-item">
-                    <img src="/jamplan/resources/mainPage/img/carousel2.jpg" alt="cat">
+                    <img src="/jamplan/resources/mainPage/img/carousel3.jpg" alt="cat">
                     <div class="carousel-caption">
-                        <h1>단체플래너</h1>
-                        <p>팀을 이루어 함께 여행 계획을 세워 보세요</p>
+                        <h1>동행 구하기</h1>
+                        <p>함께 여행할 동지가 필요한 순간</p>
                     </div>
             </div>
             <div class="carousel-item">
-                    <img src="/jamplan/resources/mainPage/img/carousel2.jpg" alt="cat">
+                    <img src="/jamplan/resources/mainPage/img/carousel1.jpg" alt="cat">
                     <div class="carousel-caption">
-                        <h1>고양이</h1>
-                        <p>고양이와 강아지는 친구입니다.</p>
+                        <h1>새로운 여행</h1>
+                        <p>상상속의 여행을 현실로 만들어 보세요</p>
                     </div>
             </div>
         </div>
@@ -186,8 +193,8 @@
                             <!--modal-footer 에는 row를 쓸 필요가 없다 -->
                             <div class="modal-footer"> 
                                <div class="col-sm-12">
-                               <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 로그인</button>                               
-                               <button id=findA class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#myModalJoin">아이디/비밀번호 찾기</button>                              
+                               <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 로그인</button>                                                                                     
+                               <button type=submit class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>
                                </div>
                                 
                             </div>
@@ -237,7 +244,7 @@
                             <div class="modal-footer"> 
                                 <div class="col-sm-12">
                                  <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 회원가입</a></button>
-                                  <button class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>
+                               	 <button type=submit class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>
                                </div>                              
                             </div>
                         </div>
@@ -245,8 +252,8 @@
                     </div>
                 </div>
                 </div>
-      <!--    모달창 ID/PW 찾기-->
-                   <div id="myModalFind" class="modal">
+     	 <!--   모달창 ID/-->
+                   <div id="myModalId" class="modal">
                     <!--모달의 크기 결정-->
                     <!--modal-sm, modal-lg-->
                     <div class="modal-dialog">
@@ -255,34 +262,59 @@
                         <div class="modal-content">
                             <!--헤더 , 바디, 푸터-->
                             <div class="modal-header">
-                                <h4 class="modal-title">ID/PW 찾기</h4>
+                                <h4 class="modal-title">ID 찾기</h4>
                                 <button class="close" type="button" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">  
                             
-                             <form class="login" action="login.do" method="post" onsubmit="return loginCheck()">
+                             <form class="finId" action="findId.do" method="post" name=findform onsubmit="return check()">
                                 <div class="form-group col-sm-12">
-                                  <label for="usr1">ID:</label>
-                                     <input type="text" class="form-control" id="usr3" name="id">
-                                </div>
-                              <div class="form-group col-sm-12">
-                                  <label for="pwd1">비밀번호:</label>
-                                  <input type="password" class="form-control" id="pwd3" name="pass">
-                              </div>
+                                  <label for="usr4">Email:</label>
+                                     <input placeholder="회원가입시 입력한 이메일을 입력해 주세요" type="text" class="form-control" id="findID" name="email">
+                                </div>                             
                               <div class="col-sm-12">
-                                    <button type=submit class="btn btn-outline-primary btn-block">로그인</button>
+                                    <button type=submit class="btn btn-outline-primary btn-block">Email 인증</button>
                                 </div>                 
-                           </form>
+                            </form>
                            
                             </div>
                             <!--modal-footer 에는 row를 쓸 필요가 없다 -->
-                            <div class="modal-footer"> 
-                               <div class="col-sm-12">
-                               <button type="button" onclick="location.href='${url}'" class="btn btn-outline-success btn-block">네이버 아이디로 로그인</button>
-                               <button class="btn btn-outline-danger btn-block">아이디/비밀번호 찾기</button>                              
-                               </div>
-                                
+                         
+                        </div>
+                    </div>
+                </div>
+                
+                
+			<!--  PW 찾기-->                
+                  	<div id="myModalPw" class="modal">
+                    <!--모달의 크기 결정-->
+                    <!--modal-sm, modal-lg-->
+                    <div class="modal-dialog">
+            
+                        <!-- 모달의 본 컨텐츠 login-->
+                        <div class="modal-content">
+                            <!--헤더 , 바디, 푸터-->
+                            <div class="modal-header">
+                                <h4 class="modal-title">PW 찾기</h4>
+                                <button class="close" type="button" data-dismiss="modal">&times;</button>
                             </div>
+                            <div class="modal-body">  
+                            
+                             <form class="findPw" action="findPw.do" method="post" onsubmit="return pwCheck()">
+                                <div class="form-group col-sm-12">
+                                  <label for="PassId">아이디:</label>
+                                     <input type="text" placeholder="아이디를 입력해주세요"  class="form-control" id="passId" name="id">
+                                </div>
+                              <div class="form-group col-sm-12">
+                                  <label for="PassEmail">이메일주소:</label>
+                                  <input type="text" placeholder="해당 아이디에 대한 이메일을 입력해 주세요" class="form-control" id="passEmail" name="email">
+                              </div>
+                              <div class="col-sm-12">
+                                    <button type=submit class="btn btn-outline-primary btn-block">Email로 비밀번호 찾기</button>
+                                </div>                 
+                           </form>
+                           
+                            </div>     
                         </div>
                     </div>
                 </div>
