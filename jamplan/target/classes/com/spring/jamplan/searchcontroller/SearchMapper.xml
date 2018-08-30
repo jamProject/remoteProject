@@ -35,12 +35,15 @@
 
 	<select id="getPlanList" resultMap="planResultMap">
 		SELECT * FROM plan order by planDate desc
+		<!-- select distinct (image,planDate,planName,readCount,goodCount) from plan -->
+		<!-- select (image,planDate,planName,readCount,goodCount) from plan where planno = (select distinct planNo from plan where planNo = #{planNo, jdbcType=INTEGER}) -->
+		
 	</select>
 
-	<insert id="fileUpload"
+	<!-- <insert id="fileUpload"
 		parameterType="com.spring.jamplan.model.PlanVO">
 		insert into plan(image) values (#{image})
-	</insert>
+	</insert> -->
 
 	<select id="planSearch"
 		parameterType="com.spring.jamplan.model.PlanVO"
@@ -126,7 +129,7 @@
 	
 	<!-- 조회 -->
 	<update id="updateReadCount" parameterType="com.spring.jamplan.model.PlanVO">
-		   update plan set readCount = nvl((select readCount from plan where planNo = #{planNo, jdbcType=INTEGER}) ,0)+1 where planNo = #{planNo, jdbcType=INTEGER}
+		   update plan set readCount = nvl((select distinct readCount from plan where planNo = #{planNo, jdbcType=INTEGER}) ,0)+1 where planNo = #{planNo, jdbcType=INTEGER}
 	</update>
 	
 	

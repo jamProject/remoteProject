@@ -10,7 +10,7 @@ import com.spring.jamplan.model.UserVO;
 
 public interface SearchMapper {
 	List<PlanVO> getPlanList();
-	int fileUpload(PlanVO planVO);
+	/*int fileUpload(PlanVO planVO);*/
 	ArrayList<PlanVO> planSearch(PlanVO planVO);
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
 	void moveSchedule();

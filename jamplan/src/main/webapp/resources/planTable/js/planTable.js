@@ -11,7 +11,7 @@ $(document).ready(function() {
 			async: false,
 	        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			success:function(data){
-				
+				$('#planput').empty();
 				$('#saveput').empty();
 				var put = '';
 				var saveput = '';
@@ -21,7 +21,7 @@ $(document).ready(function() {
 					
 				$.each(data, function(index, item){
 					/* $('#planput').empty(); */
-					$('#planput').empty();
+					
 					var planput = '';
 					planput += '<table class="table">';
 					planput += '<thead>';

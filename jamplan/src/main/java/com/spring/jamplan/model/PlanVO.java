@@ -14,20 +14,12 @@ public class PlanVO {
    private int teamNo;
    private int goodCount;
    private int readCount;
-   
+   private String boardName;
    private String image;
-   private String planName;
+   private String planName; /*쓰이는것찾기*/
    private String planDate;
-   
- /*  private int planNo;
-   private int teamNo;
-   private int goodCount;
-   private int readCount;
-   private int isOpen;
-   private String image;
-   private String planName;
-   private String planDate;
-   private String hashTag;*/
+   private String placeName;
+   private String memo;
    
 public int getPlanNo() {
 	return planNo;
@@ -53,6 +45,12 @@ public int getReadCount() {
 public void setReadCount(int readCount) {
 	this.readCount = readCount;
 }
+public String getBoardName() {
+	return boardName;
+}
+public void setBoardName(String boardName) {
+	this.boardName = boardName;
+}
 public String getImage() {
 	return image;
 }
@@ -71,13 +69,21 @@ public String getPlanDate() {
 public void setPlanDate(String planDate) {
 	this.planDate = planDate;
 }
+public String getPlaceName() {
+	return placeName;
+}
+public void setPlaceName(String placeName) {
+	this.placeName = placeName;
+}
+public String getMemo() {
+	return memo;
+}
+public void setMemo(String memo) {
+	this.memo = memo;
+}
+   
 
    
-   
-
-
-
-   // private int isOpen;
-   //private String hashTag;
+ 
 
 }

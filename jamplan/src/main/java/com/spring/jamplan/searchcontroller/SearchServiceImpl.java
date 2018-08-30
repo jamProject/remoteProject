@@ -26,14 +26,14 @@ public class SearchServiceImpl implements SearchService{
 		return planList;
 	}
 	
-	@Override
+	/*@Override
 	public int fileUpload(PlanVO planVO) {
 		System.out.println("image");
 		SearchMapper searchmapper = sqlsession.getMapper(SearchMapper.class);
 		int check = searchmapper.fileUpload(planVO);
 		System.out.println("returnfile");
 		return check;
-	}
+	}*/
 	
 	/*@Override
 	public ArrayList<PlanVO> planSearch(PlanVO planVO) {

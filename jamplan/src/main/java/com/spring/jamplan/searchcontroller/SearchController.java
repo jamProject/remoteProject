@@ -96,7 +96,7 @@ public class SearchController {
 		return "search/formFile";
 	}
 	
-	//저장한파일 인서트로 뿌려주는 컨트롤러
+	/*//저장한파일 인서트로 뿌려주는 컨트롤러
 	@RequestMapping("fileUpload.search")
 	public String fileUpload(MultipartHttpServletRequest multiRequest, PlanVO planVO) throws Exception {
 		System.out.println("1");
@@ -118,7 +118,7 @@ public class SearchController {
 		int check = searchService.fileUpload(planVO);
 		
 		return "redirect:/plan.search";
-	}
+	}*/
 	
 	//일정검색컨트롤러
 	@RequestMapping(value = "planSearch.search", method = RequestMethod.POST, produces="application/json;charset=UTF-8")

@@ -11,7 +11,7 @@ import com.spring.jamplan.model.UserVO;
 
 public interface SearchService {
 	List<PlanVO> getPlanjson();
-	int fileUpload(PlanVO planVO);
+	/*int fileUpload(PlanVO planVO);*/
 	ArrayList<PlanVO> planSearch(PlanVO planVO);
 	ArrayList<PlanVO> clickSearch(PlanVO planVO);
 	void moveSchedule();
