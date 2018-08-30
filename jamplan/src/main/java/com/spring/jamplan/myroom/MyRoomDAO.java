@@ -15,7 +15,8 @@ public interface MyRoomDAO {
 	int insertApplyMessage(MessageVO vo);
 	int deleteCansleMessage(MessageVO vo);
 	int getMaxPlanNo();
-	
+	ArrayList<TeamInfoVO> deleteValByTeamName(ArrayList<TeamInfoVO> teamList);
+	ArrayList<TeamInfoVO> getPlanListByPlanName(TeamInfoVO team);
 	String validationTeamName(TeamInfoVO team);
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
@@ -24,7 +25,7 @@ public interface MyRoomDAO {
 	void deleteNullPlanTeaminfo(String teamName);	
 	void updateReadMessage(String receiver);
 	void insertToMember(MessageVO vo);
-	
+	void insertAlertMessage(MessageVO message);
 	UserVO getUserInfo(UserVO vo);	
 	ArrayList<TeamInfoVO> searchPlan(TeamInfoVO team);
 	TeamInfoVO getRole(TeamInfoVO team);
@@ -38,5 +39,6 @@ public interface MyRoomDAO {
 	ArrayList<TeamInfoVO> getTeamInfo (TeamInfoVO team);
 	ArrayList<MessageVO>getMessageList(MessageVO vo);
 	ArrayList<TeamInfoVO> getTeamMemberList(TeamInfoVO teamVO);
+	ArrayList<TeamInfoVO> deleteValByMemberID(ArrayList<TeamInfoVO> list);
 
 }

@@ -35,8 +35,6 @@ public class MyRoomController {
 		String id =(String) session.getAttribute("id");
 		
 		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
-//<<<<<<< HEAD
-		//System.out.println("세션 planNo: "+session.getAttribute("planNo"));
 		System.out.println("vo plan No :" + vo.getPlanNo());	
 		vo.setId(id);
 		System.out.println(vo.getId());
@@ -45,17 +43,6 @@ public class MyRoomController {
 		session.setAttribute("planNo",vo.getPlanNo());
 		session.setAttribute("role", teamVO.getRole());
 		
-/*=======
-//		vo.setId((String)session.getAttribute("id"));
-
-		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
-//		session.setAttribute("planNo",vo.getPlanNo());
-		session.setAttribute("planNo",2);
-//		System.out.println("role"+ teamVO.getRole());
-//		session.setAttribute("role", teamVO.getRole());
-		session.setAttribute("id", "thkim9198");
-		session.setAttribute("role", 0);
->>>>>>> 711bb3fadbdfe9685e60acfa43d696a0b62fd460*/
 		System.out.println("페이지 이동 컨트롤러 진입");
 		
 		return "managePlan/main";
@@ -96,8 +83,6 @@ public class MyRoomController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*System.out.println("getPlanListByTeamName OUT");*/
-		//System.out.println(teamListToJson);
 		return teamListToJson;
 	}
 	
@@ -107,13 +92,33 @@ public class MyRoomController {
 	public String acceptToMember(HttpSession session, MessageVO vo) throws JsonProcessingException {
 		System.out.println("CONT acceptToMember IN");
 		myRoomDAO.insertToMember(vo);
+		System.out.println("===============isread : " + vo.getIsRead());
+		try {
+			int check = myRoomDAO.insertApplyMessage(vo);		
+			if(check==0) {
+				map.put("res", "이미 해당 팀원임");
+			}else if (check ==1) {
+				map.put("res", "이미 신청 했음");
+			}else {
+				map.put("res", "메세지 저장 완료");
+			}
+			 
+		}catch (Exception e) {
+			map.put("res", "fail");
+		}
+		System.out.println("=============ssssss=isread : "+vo.getIsRead());
+		String teamLeader = (String)session.getAttribute("id");
+		String receiver = vo.getSender();
+		vo.setReceiver(receiver);
+		vo.setSender(teamLeader);
 		
+		myRoomDAO.insertAlertMessage(vo);
 		
 		String teamListToJson = "";
 		map = new HashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			map.put("res", "ok");
+
 			teamListToJson = mapper.writeValueAsString(map);
 			System.out.println(teamListToJson);
 			
@@ -183,6 +188,34 @@ public class MyRoomController {
 		//vo에 teamName planName이 저장됨
 		System.out.println("insertplan run");
 		ArrayList<TeamInfoVO> list =new ArrayList<TeamInfoVO>();
+		
+		map = new HashMap<String, Object>();
+		String teamListToJson = "";
+		
+		//planName 중복 제거
+		try {
+			list = myRoomDAO.getPlanListByPlanName(vo);
+			if(list.size()!=0) {
+				System.out.println("==planName 중복===");
+				map.put("res","planName 중복");
+				
+				ObjectMapper mapper = new ObjectMapper();
+				try {
+					teamListToJson = mapper.writeValueAsString(map);
+					System.out.println(teamListToJson);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+				list = null;
+				return teamListToJson;
+			}else {
+				System.out.println("=====planName 가능=====");
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 		//id 저장
 		vo.setId((String)session.getAttribute("id"));
 
@@ -197,29 +230,21 @@ public class MyRoomController {
 		
 		//planNo값이 가장 큰 값을 가져와 +1 증가시켜 planNo 설정하기
 		int maxplabNo=0;
+		int check = 0;
 		try {
+			list = myRoomDAO.getTeamMemberList(vo);
+			ArrayList<TeamInfoVO> idList = myRoomDAO.deleteValByMemberID(list);
 			maxplabNo = myRoomDAO.getMaxPlanNo() + 1;
 			vo.setPlanNo(maxplabNo);
 			vo.setTeamNo(list.get(0).getTeamNo());	
-		}catch (Exception e) {
-			System.out.println("DAO insertPlan 192");
-			e.printStackTrace();
-		}
-		
-		//설정된 teaminfo를 insert하기
-		int check = 0;
-		map = new HashMap<String, Object>();
-		
-		try {
+			
+			System.out.println("===================list size : " + list.size());
 			for(int i = 0 ; i < list.size(); i++) {
-				//vo.setPlanName();되어 있다.
-				//vo.setPlanNo();되어 있다.
-				//팀에 속해 있는 모든 유저의 데이터 삽입
+				//팀에 속해 있는 모든 유저에 추가된 plan8 데이터 삽입
 				vo.setId(list.get(i).getId()); 
 				vo.setRole(list.get(i).getRole());				
 				//vo.setJoinDate(list.get(i).getJoinDate());
-
-				myRoomDAO.insertPlan(vo);
+				myRoomDAO.insertPlan(vo);		
 			}
 			
 			map.put("res", "성공");
@@ -230,7 +255,8 @@ public class MyRoomController {
 			map.put("res","실패");
 		}
 		
-		String teamListToJson = "";
+		//설정된 teaminfo를 insert하기
+		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			teamListToJson = mapper.writeValueAsString(map);
@@ -376,6 +402,11 @@ public class MyRoomController {
 		map = new HashMap<String, Object>();
 		try {
 			int check = myRoomDAO.deleteCansleMessage(vo);		
+			String teamLeader = (String)session.getAttribute("id");
+			String receiver = vo.getSender();
+			vo.setReceiver(receiver);
+			vo.setSender(teamLeader);
+			myRoomDAO.insertAlertMessage(vo);
 			if(check==0) {
 				map.put("res", "이미 해당 팀원임");
 			}else if (check ==1) {

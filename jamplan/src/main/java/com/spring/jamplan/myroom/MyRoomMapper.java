@@ -15,7 +15,7 @@ import com.spring.jamplan.model.UserVO;
  */
 
 public interface MyRoomMapper {
-		
+	ArrayList<TeamInfoVO>getPlanListByPlanName(TeamInfoVO team);
 	ArrayList<TeamInfoVO> getTeamList(String id);
 	ArrayList<TeamInfoVO> getTeamMember(UserVO user);
 	ArrayList<TeamInfoVO> getPlanList(TeamInfoVO team);
@@ -24,6 +24,7 @@ public interface MyRoomMapper {
 	ArrayList<MessageVO> getMessageList(String receiver);
 	ArrayList<TeamInfoVO> searchTeam(TeamInfoVO team);
 	ArrayList searchPlan(TeamInfoVO plan);
+	void insertAlertMessage(MessageVO vo);
 	int makeTeam(TeamInfoVO team);
 	void insertPlan(TeamInfoVO vo);
 	void updateMessage(MessageVO vo);

@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="insertPlan" key="selection"/>
+		<item value="deleteMessageTR" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="insertAlertMessage"/>
+			<item value="insertApplyMessage"/>
+			<item value="insertToMember"/>
+			<item value="deleteValByTeamName"/>
+			<item value="getTeamMemberList"/>
 			<item value="insertPlan"/>
-			<item value="MyRoomDAOService"/>
-			<item value="movePlanMainPage"/>
-			<item value="mak"/>
-			<item value="maket"/>
-			<item value="join"/>
-			<item value="mailSender"/>
-			<item value="idck"/>
+			<item value="insertPlan : insert suc"/>
+			<item value="DAO getPlanListById IN"/>
 		</list>
 		<list key="replacehistory">
 		</list>

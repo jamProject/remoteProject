@@ -12,6 +12,7 @@ $(document).ready(function() {
 // 로드 되면 업데이트 사항 바로 보여준다.
 
 // 로드 되면 출력한다.
+
 	ajaxGetTeamList();
 	noticeMessage();
 	$(".move").on("click",function(){
@@ -529,10 +530,8 @@ function addPlanToDB() {
 /*
 // 메시지를 실시간으로 처리하기 위한 웹소켓 개통 부분
 var domain = "ws://localhost:8800/jamplan/jamplanWebSocket";
-
 function sendMessage() {
 	webSocket = new WebSocket(domain);
-
 	// 서버와 연결이 성공하면 자동으로 호출되는 메서드
 	webSocket.onopen = function(event) {
 		onOpen(event);
@@ -544,15 +543,12 @@ function sendMessage() {
 		onError(event);
 	};
 }
-
 function onOpen(event) {
 	webSocket.send('<%=id%>');
 }
-
 function onMessage(event) {
 	$('#countLabel').append(event.data);
 }
-
 function onError(event) {
 }*/
 
@@ -713,5 +709,3 @@ $(document).on('click', '.panel-heading span.icon_minim', function(e) {
 	}
 });
 /* 메세지 팝업창을 위한 스크립트 끝 */
-
-

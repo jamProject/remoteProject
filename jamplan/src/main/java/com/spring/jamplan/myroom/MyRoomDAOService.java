@@ -170,6 +170,19 @@ public class MyRoomDAOService implements MyRoomDAO {
 		System.out.println("DAO getTeamMember Out");
 		return teamList;
 	}
+	@Override
+	public  ArrayList<TeamInfoVO> getPlanListByPlanName(TeamInfoVO team){
+		ArrayList<TeamInfoVO> planList = new ArrayList<TeamInfoVO>();
+		try {
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			planList = myRoomMapper.getPlanListByPlanName(team);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return planList;
+		
+	}
 
 	@Override
 	public ArrayList<TeamInfoVO> getPlanList(TeamInfoVO team) {
@@ -254,7 +267,20 @@ public class MyRoomDAOService implements MyRoomDAO {
 		System.out.println("DAO getMessageList out");
 		return messageList;
 	}
+	
+	
 */
+	@Override
+	public void insertAlertMessage(MessageVO vo) {
+		try {
+			System.out.println("==========알림 메세지 넣기");
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			myRoomMapper.insertAlertMessage(vo);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 	@Override
 	public int insertApplyMessage(MessageVO message) {
 		System.out.println("DAO insertApplyMessage in");
@@ -336,12 +362,10 @@ public class MyRoomDAOService implements MyRoomDAO {
 			}else {
 				System.out.println("인덱스 바운드 익셉션");
 			}
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
 		System.out.println("DAO getMessageList out");
 		return messageList;
 	}
@@ -686,7 +710,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 		System.out.println("DAO deletePlan out");
 		return checkMap;
 	}
-
+	@Override
 	public ArrayList<TeamInfoVO> deleteValByTeamName(ArrayList<TeamInfoVO> teamList) {
 		System.out.println("DAO deleteValByTeamName method in");
 		int k = 0;
@@ -696,6 +720,30 @@ public class MyRoomDAOService implements MyRoomDAO {
 			for (int j = 0; j < teamList.size(); j++) {
 				if (i != j) {
 					if (teamList.get(i).getTeamName().equals(teamList.get(j).getTeamName())) {
+						// System.out.println("remove : " + voList.get(j).getSelectDate());
+						teamList.remove(j);
+						k++;
+						i = 0;
+						break;
+					}
+				}
+			}
+			if (i > size - k) {
+				break;
+			}
+		}
+		System.out.println("DAO deleteValByTeamName method out");
+		return teamList;
+	}
+	public ArrayList<TeamInfoVO> deleteValByMemberID(ArrayList<TeamInfoVO> teamList) {
+		System.out.println("DAO deleteValByTeamName method in");
+		int k = 0;
+		int size = teamList.size();
+		// 팀명을 출력 할 때 중복 vo 중복 제거
+		for (int i = 0; i < teamList.size(); i++) {
+			for (int j = 0; j < teamList.size(); j++) {
+				if (i != j) {
+					if (teamList.get(i).getId().equals(teamList.get(j).getId())) {
 						// System.out.println("remove : " + voList.get(j).getSelectDate());
 						teamList.remove(j);
 						k++;

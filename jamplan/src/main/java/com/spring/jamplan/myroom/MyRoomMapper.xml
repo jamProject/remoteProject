@@ -102,6 +102,10 @@
 		select * from teaminfo where teamName = #{teamName,  javaType = String}
 	</select>
 	
+	<insert id="insertAlertMessage"  parameterType="com.spring.jamplan.model.MessageVO">
+		insert into message (sender, receiver, isRead, teamName) values(#{sender},#{receiver},#{isread},#{teamName})
+	</insert>
+	
 	<select id = "getMaxPlanNo" resultType="int">
 		SELECT NVL(MAX(planNo),0) as planNo FROM teaminfo 
 	</select>
@@ -119,7 +123,11 @@
 	</select>
 	
 	<select id="getPlanList" parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
-		SELECT * FROM TeamInfoVO WHERE TEAMNO IN (SELECT TEAMNO FROM teaminfo WHERE ID = #{id, jdbcType=VARCHAR })
+		SELECT * FROM TeamInfo WHERE TEAMNO IN (SELECT TEAMNO FROM teaminfo WHERE ID = #{id, jdbcType=VARCHAR })
+	</select>
+	
+	<select id="getPlanListByPlanName"  parameterType="com.spring.jamplan.model.TeamInfoVO" resultMap="teamInfoResultMap">
+		select * from teaminfo where planName = #{planName}
 	</select>
 	
 	<select id="checkUpdate" parameterType="com.spring.jamplan.model.UserVO" resultMap="planUpdateResultMap">
