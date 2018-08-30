@@ -21,6 +21,7 @@
 <body>
 	<div id="saveput"></div>
 	<!-- palnTable 뿌려주기 -->   
+	test
 	<br><br>
 	<div class="container" id="planput"></div></div>
 	

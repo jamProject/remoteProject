@@ -372,7 +372,7 @@ $(document).ready(function() {
 			}
 		});
 	
-	}, 30000000)
+	}, 3000)
 	//요기
 	// 팀검색을 시도할 경우 업데이트 사항 보여주기를 멈추고 비슷한 이름들의 팀을 나열해서 보여준다.
 	$('#searchButton').click(function() {
@@ -389,7 +389,7 @@ $(document).ready(function() {
 	
 			var tableTail = '</tbody></table>';
 			var update = '';
-			console.log('ajax전까지 ');
+			//console.log('ajax전까지 ');
 			$.ajax({
 					url : '/jamplan/searchTeam.do',
 					type : 'GET',
@@ -401,7 +401,7 @@ $(document).ready(function() {
 								update += '<tr><td>'+ item.teamName+ '</td>'
 								+ '<td class="tdOdd"><button class = "btn btn-primary applyBut" value = '+item.teamName+'>신청</button></td>'
 								+ '<td class="tdOdd"><button class = "btn btn-danger applyButCan" value = '+item.teamName+'>취소</button></td></tr>';
-								console.log("팀 검색 결과 : " + item.teamName);
+								//console.log("팀 검색 결과 : " + item.teamName);
 							})
 							//console.log("update 글 : " + update);
 							tableHead += update;
@@ -424,7 +424,7 @@ function deleteMessageTR(teamName, sender,index1){
 	var teamNAME = teamName;
 	var Sender = sender;
 	var index2 = index1;
-	alert("팀이름 : " + teamName);
+	//alert("팀이름 : " + teamName);
 	$.ajax({
 		url : "/jamplan/deleteMessageToTeam.do",
 		type : 'POST',
@@ -435,7 +435,7 @@ function deleteMessageTR(teamName, sender,index1){
 		dataType : 'json',
 		//contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
-			alert(data.res);
+			//alert(data.res);
 			$('#tr'+index2).remove();
 		},
 		error: function(data){ 
@@ -540,7 +540,7 @@ function addPlanToDB() {
 					 'planName' : planName},
 			success : function(str){
 				//console.log(str.res);
-				alert("플랜 추가 : 데이터 전송 성공");
+				//alert("플랜 추가 : 데이터 전송 성공");
 				teamName ="";
 				planName="";
 				ajaxGetTeamList();
@@ -699,7 +699,7 @@ function validationCheck() {
 		dataType : 'text',
 		// check가 responsebody에서 오는 데이터를 받는다.
 		success : function(check) {
-			alert(check);
+			//alert(check);
 			if (check == 'SUCCESS') {
 				$('#validationCheck').val('check');
 				$('#validationCheck').css('color', 'powderblue');

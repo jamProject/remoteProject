@@ -152,13 +152,13 @@
 			<version>3.1.1.RELEASE</version>
 		</dependency>
 
-		<!-- 스프링 부트 마이 바티스 추가 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+		<!-- 스프링 부트 마이 바티스 추가 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>1.1.1</version>
 
-		</dependency> -->
+		</dependency> 
 		
 		<dependency>
 			<groupId>org.mybatis</groupId>

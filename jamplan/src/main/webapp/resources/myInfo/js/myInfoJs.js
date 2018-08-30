@@ -104,57 +104,57 @@ document.addEventListener("click", function (e) {
 }
 
 var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla",
-				"Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia",
-				"Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados",
-				"Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia",
-				"Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands",
-				"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon",
-				"Canada","Cape Verde","Cayman Islands","Central Arfrican Republic",
-				"Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica",
-				"Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic",
-				"Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt",
-				"El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia",
-				"Falkland Islands","Faroe Islands","Fiji","Finland","France",
-				"French Polynesia","French West Indies","Gabon","Gambia","Georgia",
-				"Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam",
-				"Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti",
-				"Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran",
-				"Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan",
-				"Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait",
-				"Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya",
-				"Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar",
-				"Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
-				"Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
-				"Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar",
-				"Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles",
-				"New Caledonia","New Zealand","Nicaragua","Niger","Nigeria",
-				"North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama",
-				"Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal",
-				"Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda",
-				"Saint Pierre &amp; Miquelon","Samoa","San Marino","Sao Tome and Principe",
-				"Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone",
-				"Singapore","Slovakia","Slovenia","Solomon Islands","Somalia",
-				"South Africa","South Korea","South Sudan","Spain","Sri Lanka",
-				"St Kitts &amp; Nevis","St Lucia","St Vincent","Sudan","Suriname",
-				"Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan",
-				"Tanzania","Thailand","Timor L'Este","Togo","Tonga",
-				"Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan",
-				"Turks &amp; Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates",
-				"United Kingdom","United States of America","Uruguay","Uzbekistan",
-				"Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)",
-				"Yemen","Zambia","Zimbabwe"];
+            "Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia",
+            "Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados",
+            "Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia",
+            "Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands",
+            "Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon",
+            "Canada","Cape Verde","Cayman Islands","Central Arfrican Republic",
+            "Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica",
+            "Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic",
+            "Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt",
+            "El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia",
+            "Falkland Islands","Faroe Islands","Fiji","Finland","France",
+            "French Polynesia","French West Indies","Gabon","Gambia","Georgia",
+            "Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam",
+            "Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti",
+            "Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran",
+            "Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan",
+            "Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait",
+            "Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya",
+            "Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar",
+            "Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
+            "Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
+            "Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar",
+            "Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles",
+            "New Caledonia","New Zealand","Nicaragua","Niger","Nigeria",
+            "North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama",
+            "Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal",
+            "Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda",
+            "Saint Pierre &amp; Miquelon","Samoa","San Marino","Sao Tome and Principe",
+            "Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone",
+            "Singapore","Slovakia","Slovenia","Solomon Islands","Somalia",
+            "South Africa","South Korea","South Sudan","Spain","Sri Lanka",
+            "St Kitts &amp; Nevis","St Lucia","St Vincent","Sudan","Suriname",
+            "Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan",
+            "Tanzania","Thailand","Timor L'Este","Togo","Tonga",
+            "Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan",
+            "Turks &amp; Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates",
+            "United Kingdom","United States of America","Uruguay","Uzbekistan",
+            "Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)",
+            "Yemen","Zambia","Zimbabwe"];
 
 
 // 프로필 사진을 등록하기 전에 올린 사진 미리보기 기능
 function readURL(input) {
-	if(input.files && input.files[0]) {
-		var reader = new FileReader();
-		
-		reader.onload = function (e) {
-			$('#imagePreview').attr('src', e.target.result);
-		}
-		reader.readAsDataURL(input.files[0]);
-	}
+   if(input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function (e) {
+         $('#imagePreview').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+   }
 }
 
 
@@ -221,15 +221,15 @@ if(!getCheck.test($('#password').val()))
 
 if(password !== prePassword)
 {
-	alert("비밀번호가 일치되지 않습니다.");
-	$('#password').focus();
-	
-	}
+   alert("비밀번호가 일치되지 않습니다.");
+   $('#password').focus();
+   
+   }
 
 
 if(!ageCheck.test($('#age').val())) {
-	alert('나이를 정확히 입력해주세요.');
-	$('#age').focus();
+   alert('나이를 정확히 입력해주세요.');
+   $('#age').focus();
 }
 
 }
@@ -237,222 +237,117 @@ if(!ageCheck.test($('#age').val())) {
 
 
 $(document).ready(function() {
-	
-	$(".tab-pane.container").click(function(){
-		console.log($(this).attr("value"));
-		var link = $(this).attr("value");
-		$.ajax({
-			url : link,
-			type : "post",
-			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
-			dataType : "json",
-			success:function(str){
-				$(".content").load(str.link);
-				console.log('로드 후')
-			},	
-			error:function(){
-				alert("페이지 이동 ajax실패")
-			}
-		});
-	})
-	
-	/*$("#imageUpload").click(function(event) {
-		
-		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
-		event.preventDefault();
-		
-		var fileName = $('#imageForm')[0];
-		
-		var formData = new FormData(fileName);
-		
-		
-		$.ajax({
-			url: '/jamplan/imageUpload.info',
-			type: 'POST',
-			data: formData,
-			dataType: 'json',
-			processData: false,
-			contentType: false,
-			success: function(result) {
-				if(result == '1') {
-					alert('프로필 사진을 업로드했습니다.');
-				}else {
-					alert('프로필 사진 등록을 실패했습니다.');
-				}
-			},
-			error: function () {
-				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
-			}
-		});
-	})*/
-	
-	
-	/*$("#imageUpload").click(function(event) {
-		
-		// 이 버튼의 submit기능을 정지시키고 수동으로 submit하기 위한 작업.
-		event.preventDefault();
-		
-		var image = $('#searchImage').val();
-		console.log(image);
-		
-		
-		$.ajax({
-			url: '/jamplan/imageUpload.info',
-			type: 'POST',
-			data: {
-				image: image
-			},
-			dataType: "json",
-			contentType: 'application/x-www-form-urlencoded; charsert=utf-8',
-			success: function(result) {
-				if(result == '1') {
-					alert('프로필 사진을 업로드했습니다.');
-				}else {
-					alert('프로필 사진 등록을 실패했습니다.');
-				}
-			},
-			error: function () {
-				console.log('프로필 사진 등록 중에 에러가 발생했습니다.');
-			}
-		});
-	})*/
-	
-	
 	// 팀 삭제시 팀명 바로 없애주기 위한 ajax
-	$("#leaderTable button").click(function(){
-		var teamName = $(this).parent().siblings().text();
-		console.log(teamName);
-		$(this).empty();
-		$.ajax({
-			url : '/jamplan/removeTeam.info',
-			type : "post",
-			data : {
-				'id' : 'thkim9198',
-				'teamName': teamName
-			},
-			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
-			dataType : "text",
-			success:function(result){
-				if(result != '0') {
-					location.reload();
-				}else {
-					alert('팀 삭제에 실패했습니다.');
-				}
-			},	
-			error:function(){
-				console.log('팀 삭제 ajax 실패');
-			}
-		});
-	})
-	
-	// 팀 탈퇴시 바로 팀명 없애주기 위한 ajax
-	$("#memberTable button").click(function(){
-		var teamName = $(this).parent().siblings().text();
-		console.log(teamName);
-		$.ajax({
-			url : '/jamplan/signOutTeam.info',
-			type : "post",
-			data : {
-				'id' : 'thkim9198',
-				'teamName': teamName
-			},
-			contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
-			dataType : "text",
-			success:function(result){
-				if(result != '0') {
-					location.reload();
-				}else {
-					alert('팀 탈퇴에 실패했습니다.');
-				}
-			},	
-			error:function(){
-				console.log('팀 탈퇴 ajax 실패');
-			}
-		});
-	})
-	
-	// 이미지 파일을 비동기적으로 업로드(정확하게는 파일의 경로만 저장)
-//	$("#imageUpload").click(function(){
-//		var image = $('#imagePreview').val();
-//		console.log(image);
-//		$.ajax({
-//			url : '/jamplan/imageUpload.info',
-//			type : "POST",
-//			data : {
-//				'image': image
-//			},
-//			enctype: 'multipart/form-data',
-//			dataType : "text",
-//			success:function(result){
-//				if(result != '0') {
-//					alert('프로필 사진이 등록됐습니다.');
-//				}else {
-//					alert('다시 시도해주세요.');
-//				}
-//			},	
-//			error:function(){
-//				console.log('프로필 사진 등록 ajax 실패');
-//			}
-//		});
-//	})
-	
-	autocomplete(document.getElementById("myNation"), countries);
-	
-	// 이미지를 찾으면 readURL함수를 통해 프리뷰 이미지를 생성한다.
-	$('#image').change(function () {
-		readURL(this);
-	})
-	
-	
-	
-	// 셀렉트 박스의 동작에 대한 스크립트, fake select box를 만든다.
-	$('.sel').each(function() {
-	  $(this).children('select').css('display', 'none');
-	  
-	  var $current = $(this);
-	  
-	  $(this).find('option').each(function(i) {
-	    if (i == 0) {
-	      $current.prepend($('<div>', {
-	        class: $current.attr('class').replace(/sel/g, 'sel__box')
-	      }));
-	      
-	      var placeholder = $(this).text();
-	      $current.prepend($('<span>', {
-	        class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
-	        text: placeholder,
-	        'data-placeholder': placeholder
-	      }));
-	      
-	      return;
-	    }
-	    
-	    $current.children('div').append($('<span>', {
-	      class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
-	      text: $(this).text()
-	    }));
-	  });
-	});
+    $("#leaderTable button").click(function(){
+       var teamName = $(this).parent().siblings().text();
+       console.log(teamName);
+       $(this).empty();
+       $.ajax({
+          url : '/jamplan/removeTeam.info',
+          type : "post",
+          data : {
+             'id' : '${user.id}',
+             'teamName': teamName
+          },
+          contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+          dataType : "text",
+          success:function(result){
+             if(result != '0') {
+                location.reload();
+             }else {
+                alert('팀 삭제에 실패했습니다.');
+             }
+          },   
+          error:function(){
+             console.log('팀 삭제 ajax 실패');
+          }
+       });
+    })
+    
+    // 팀 탈퇴시 바로 팀명 없애주기 위한 ajax
+ $("#memberTable button").click(function(){
+    var teamName = $(this).parent().siblings().text();
+    console.log(teamName);
+    $.ajax({
+       url : '/jamplan/signOutTeam.info',
+       type : "post",
+       data : {
+          'id' : '${user.id}',
+          'teamName': teamName
+       },
+       contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+       dataType : "text",
+       success:function(result){
+          if(result != '0') {
+             location.reload();
+          }else {
+             alert('팀 탈퇴에 실패했습니다.');
+          }
+       },   
+       error:function(){
+          console.log('팀 탈퇴 ajax 실패');
+       }
+    });
+ })
+   
+   
+   autocomplete(document.getElementById("myNation"), countries);
+   
+   // 이미지를 찾으면 readURL함수를 통해 프리뷰 이미지를 생성한다.
+   $('#image').change(function () {
+      readURL(this);
+   })
+   
+   
+   
+   // 셀렉트 박스의 동작에 대한 스크립트, fake select box를 만든다.
+   $('.sel').each(function() {
+     $(this).children('select').css('display', 'none');
+     
+     var $current = $(this);
+     
+     $(this).find('option').each(function(i) {
+       if (i == 0) {
+         $current.prepend($('<div>', {
+           class: $current.attr('class').replace(/sel/g, 'sel__box')
+         }));
+         
+         var placeholder = $(this).text();
+         $current.prepend($('<span>', {
+           class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+           text: placeholder,
+           'data-placeholder': placeholder
+         }));
+         
+         return;
+       }
+       
+       $current.children('div').append($('<span>', {
+         class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+         text: $(this).text()
+       }));
+     });
+   });
 
-	// Toggling the `.active` state on the `.sel`.
-	$('.sel').click(function() {
-	  $(this).toggleClass('active');
-	});
+   // Toggling the `.active` state on the `.sel`.
+   $('.sel').click(function() {
+     $(this).toggleClass('active');
+   });
 
-	// Toggling the `.selected` state on the options.
-	$('.sel__box__options').click(function() {
-	  var txt = $(this).text();
-	  var index = $(this).index();
-	  
-	  $(this).siblings('.sel__box__options').removeClass('selected');
-	  $(this).addClass('selected');
-	  
-	  var $currentSel = $(this).closest('.sel');
-	  $currentSel.children('.sel__placeholder').text(txt);
-	  $currentSel.children('select').prop('selectedIndex', index + 1);
-	});
+   //  `.selected`상태의 옵션을 토글시킨다.
+   $('.sel__box__options').click(function() {
+     var txt = $(this).text();
+     var index = $(this).index();
+     
+     $(this).siblings('.sel__box__options').removeClass('selected');
+     $(this).addClass('selected');
+     
+     var $currentSel = $(this).closest('.sel');
+     $currentSel.children('.sel__placeholder').text(txt);
+     $currentSel.children('select').prop('selectedIndex', index + 1);
+   });
+   
 
 });
-
 
 

@@ -1,0 +1,30 @@
+package com.spring.jamplan.model;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class PlanMapVO {
+   private int planNo;
+   private String selectDate;
+   private String placeName;
+   private String id;
+   private int pickCount;
+   private String userColor;
+   private int lat;
+   private int lng;
+   private String address;
+   private int confirm;
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+}

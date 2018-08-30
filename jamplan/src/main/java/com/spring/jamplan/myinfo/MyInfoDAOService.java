@@ -28,6 +28,7 @@ public class MyInfoDAOService implements MyInfoDAO {
 		System.out.println("DAOService 내에서 user = " + user.getGender());
 		System.out.println("DAOService 내에서 user = " + user.getNation());
 		System.out.println("DAOService 내에서 user = " + user.getTravelType());
+		System.out.println("DAOService 내에서 user = " + user.getImage());
 
 		System.out.println("getMyInfo OUT");
 		return user;

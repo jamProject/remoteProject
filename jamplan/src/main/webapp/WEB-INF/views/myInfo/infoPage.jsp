@@ -10,8 +10,7 @@
 
 
 <%  
-    session.setAttribute("id", "thkim9198");   
-	session.setAttribute("teamNo", "3");
+    
 	UserVO user = (UserVO)request.getAttribute("user");
  %>
 <!DOCTYPE html>
@@ -200,18 +199,7 @@
                                         <p>나이</p>
                                         <input type="text" id="age" name="age" value="${user.age }">
                                     </div>
-                                    <div style="width:37%;margin-right:6%">
-                                        <p>여행 타입</p>
-                                        <div class="sel sel--black-panther">
-										  <select name="travelType" id="select-profession">
-										    <option value="나홀로">나홀로</option>
-										    <option value="friend">친구들과 함께</option>
-										    <option value="가족과 함께">가족과 함께</option>
-										    <option value="동행 구하기">동행 구하기</option>
-										    <option value="연인과 함께">연인과 함께</option>
-										  </select>
-										</div>
-                                    </div>
+                                    
                                     </br></br>
                                     <div style="width:37%;margin-right:25%">
                                     	<button class="btn success" type="submit">정보 수정</button>

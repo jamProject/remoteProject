@@ -1,0 +1,122 @@
+/**@author wookim
+ * 
+ */
+
+//문서 전체 출력 후
+$(document).ready(function() {
+	//var myFolder = new Folder(window.location.pathname);
+	//console.log(folder.exits);
+	//console.log(window.location.pathname);
+	$("#calendarContent").load("./calendarPage.jsp");
+	//$("#mapContent").load("./mapPage.jsp");
+	$("#mapContent").load("mapPage.jsp");
+	$("#planTableContent").load("./planTablePage.jsp");
+	$("#viewAllContent").load("./viewAllPage.jsp");n
+
+
+     $('.drawer').drawer({ 
+          class: {
+            nav: 'drawer-nav',
+            toggle: 'drawer-toggle',
+            overlay: 'drawer-overlay',
+            open: 'drawer-open',
+            close: 'drawer-close',
+            dropdown: 'drawer-dropdown'
+          },
+          iscroll: {
+            preventDefault: false
+          },
+          showOverlay: true
+        });
+     
+     $('.drawer').drawer();
+	
+	document.getElementById("sendButton").onclick = function() {
+		var input = document.getElementById('inputText').value;
+		w.send(id + "/" + input);
+	}
+
+
+
+});
+
+//웹소켓에 해당하는 스크립트
+
+//websocket 부분에 대한 스크립트
+var log = function (s) {
+   // 이 부분에 메시지 형식 넣어야함.
+   document.getElementById("chatTextarea").textContent += (s + "\n");
+}
+
+
+var splitNameList = function (s) {
+   
+   var nameList = s.split('/');
+   console.log(nameList);
+   /* nameList = nameList.substring(0, nameList.length); */
+   
+   // 해당 아이디를 가진 유저들의 정보를 불러오기 위한 ajax
+   $.ajax({
+      url : '/jamplan/onUserList.mp',
+      type : 'POST',
+      data : {
+         'nameList' : nameList
+      },
+      traditional : true,
+      contentType : 'application/x-www-form-urlencoded; charsert=utf-8',
+      dataType : "json",
+      success : function (data) {
+         console.log(data);
+         for(var name in data) {
+            console.log(name);
+            imageUp(name, data[name]);
+         }
+      },   
+      error:function(){
+         alert("페이지 이동 ajax실패")
+      }
+   });
+}
+
+//채팅방에 팀원이 접속하면 해당 팀원의 프로필 사진을 띄운다.
+var imageUp = function (name, imageName) {
+   var profileImage = document.getElementById('profileImage');
+   var image = document.createElement("img");
+   
+   image.setAttribute("src", "<spring:url value='/image/" + imageName + "'/>");
+   image.setAttribute("alt", 'Avatar');
+   image.setAttribute("class", 'avatar');
+   image.setAttribute("title", name);
+   chat.appendChild(image);
+}
+
+var id = '${id}';
+var planNo = '${planNo}';
+
+w = new WebSocket("ws://192.168.0.23:8800/jamplan/planMainChat?id=" + id + "&planNo=" + planNo);
+// 서버에서 handshaking이 성공적으로 끝나면 자동으로 호출되는 메서드
+w.onopen = function () {
+   console.log("WebSocket Connected!");
+}
+w.onmessage = function(e) {
+   
+   alert("success");
+   if(e.data.toString().substring(0,8) == 'nameList') {
+      splitNameList(e.data.toString());
+   }else {
+      log(e.data.toString());
+   }
+   
+}
+w.onclose = function(e) {
+   alert("closed");
+   console.log('닫힌다는 메시지가 창에 뜨기 전');
+   log("WebSocket closed!!");
+}
+w.onerror = function(e) {
+   alert("failure");
+   log("WebSocket error!!");
+}
+// websocket 부분에 대한 스크립트 끝
+
+	

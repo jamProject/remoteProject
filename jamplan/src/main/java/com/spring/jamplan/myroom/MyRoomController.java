@@ -20,8 +20,6 @@ import com.spring.jamplan.model.PlanVO;
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
-
-
 @Controller
 public class MyRoomController {
 
@@ -30,16 +28,17 @@ public class MyRoomController {
 		
 	private HashMap<String, Object> map;
 
+	//myRoom에서 특정 플랜메인페이지로 이동시 해당 플랜의 planNo 및 팀에서의 role를 세션에 저장한다.
 	@RequestMapping(value="movePlanMainPage.do")
 	public String movePlanMainPage(TeamInfoVO vo, HttpSession session) {
 		String id =(String) session.getAttribute("id");
 		
-		System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
-		System.out.println("vo plan No :" + vo.getPlanNo());	
+		//System.out.println("무브 컨트롤러 : " +vo.getPlanNo());
+		//System.out.println("vo plan No :" + vo.getPlanNo());	
 		vo.setId(id);
-		System.out.println(vo.getId());
+		//System.out.println(vo.getId());
 		TeamInfoVO teamVO =  myRoomDAO.getRole(vo);
-		System.out.println("team get role : " + teamVO.getRole());
+		//System.out.println("team get role : " + teamVO.getRole());
 		session.setAttribute("planNo",vo.getPlanNo());
 		session.setAttribute("role", teamVO.getRole());
 		
@@ -86,7 +85,7 @@ public class MyRoomController {
 		return teamListToJson;
 	}
 	
-	//팀원 수락 버튼 눌렀을 때
+	//팀원 수락 버튼 눌렀을 때0000000000000000000000000000000000000000000
 	@RequestMapping(value="/acceptToMember.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String acceptToMember(HttpSession session, MessageVO vo) throws JsonProcessingException {

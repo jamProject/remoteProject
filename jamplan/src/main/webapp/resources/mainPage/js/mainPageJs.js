@@ -58,13 +58,6 @@ $(document).ready(function(){
       location.href="searchplan.do";
    });
    
-   $("#idck").click(function(){
-	   var userid =  $("#idck").val(); 
-	   if(userid.length == 0){
-	         alert("아이디를 입력해 주세요"); 
-	         $("#idck").focus();
-	     	}
-	   });
 });
 
 function check(){

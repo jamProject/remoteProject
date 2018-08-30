@@ -9,17 +9,18 @@
 }
 /*구글 한글폰트 불러오는 부분 끝*/
 
+
+html {
+	
+	height: 1000px !important;
+}
 .planManage{
 	
 }
 
 
 body {
-	color: rgba(0, 0, 0, .87);
-	background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-		url("https://static1.squarespace.com/static/52da9677e4b03d314575985a/t/575d4453e707eb86c449a4b6/1465730134655/Vienna+Hotels+with+Best+Views+-+Header.jpg?format=1500w");
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
+
 }
 
 .navbar {

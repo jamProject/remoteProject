@@ -1,21 +1,18 @@
 package com.spring.jamplan.snslogin;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonParser;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-
 import com.spring.jamplan.model.TeamInfoVO;
 import com.spring.jamplan.model.UserVO;
 
@@ -24,14 +21,14 @@ import com.spring.jamplan.model.UserVO;
  */
 @Controller
 public class LoginController {
-	@Autowired(required = true)
-	UserVO userVO;
-	
-	@Autowired
-	SnsDAOService sDAOS;
-	
-	@Autowired
-	TeamInfoVO teamVo;
+   @Autowired(required = true)
+   UserVO userVO;
+   
+   @Autowired
+   SnsDAOService sDAOS;
+   
+   @Autowired
+   TeamInfoVO teamVo;
     /* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;
@@ -84,17 +81,19 @@ public class LoginController {
         
         if(!(vo==null))
         {
-        	session.setAttribute("id",vo.getId());
-        	System.out.println("vo.getId()="+vo.getId());
+           session.setAttribute("id",vo.getId());
+           System.out.println("vo.getId()="+vo.getId());
         }
         else
         {
-        	System.out.println("SetId 하기 전 vo.getId()="+null);
-        	UserVO userVO = new UserVO();
-        	userVO.setId(email);
-        	System.out.println("SetId 하고 난 후 vo.getId()="+userVO.getId());
-        	sDAOS.insertUser(userVO);
-        	System.out.println("회원가입까지 해줌");
+           System.out.println("SetId 하기 전 vo.getId()="+null);
+           UserVO userVO = new UserVO();
+           userVO.setId(email);
+           userVO.setEmail(email);
+           userVO.setIsAdmin(0);
+           System.out.println("SetId 하고 난 후 vo.getId()="+userVO.getId());
+           sDAOS.insertUser(userVO);
+           System.out.println("회원가입까지 해줌");
         }
 //      UserVO vo = new UserVO();
 //      vo.setUser_snsId(snsId);

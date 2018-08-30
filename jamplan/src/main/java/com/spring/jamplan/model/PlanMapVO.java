@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlanMapVO {
    private int planNo;
-   private String planDate;
+   private String selectDate;
    private String placeName;
    private String id;
    private int pickCount;
@@ -14,18 +14,17 @@ public class PlanMapVO {
    private int lng;
    private String address;
    private int confirm;
-   
 public int getPlanNo() {
 	return planNo;
 }
 public void setPlanNo(int planNo) {
 	this.planNo = planNo;
 }
-public String getPlanDate() {
-	return planDate;
+public String getSelectDate() {
+	return selectDate;
 }
-public void setPlanDate(String planDate) {
-	this.planDate = planDate;
+public void setSelectDate(String selectDate) {
+	this.selectDate = selectDate;
 }
 public String getPlaceName() {
 	return placeName;
@@ -75,6 +74,7 @@ public int getConfirm() {
 public void setConfirm(int confirm) {
 	this.confirm = confirm;
 }
+   
    
    
    

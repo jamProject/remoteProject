@@ -38,7 +38,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 	
 	// session을 id와 teamNo별로 관리하기 위한 Map 생성.
 	private Map<WebSocketSession, String> idMap = new HashMap<WebSocketSession, String>();
-	private Map<WebSocketSession, Integer> teamNoMap = new HashMap<WebSocketSession, Integer>();
+	private Map<WebSocketSession, Integer> planNoMap = new HashMap<WebSocketSession, Integer>();
 	
 	
 	// 실질적으로 팀마다 채팅방을 개설, 유지하도록 관리해주는 list.
@@ -61,13 +61,13 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		idMap.remove(session);
 //		System.out.println("afterConnectionClosed idMap에서 remove 됐는지");
 
-		teamNoMap.remove(session);
+		planNoMap.remove(session);
 //		System.out.println("afterConnectionClosed teamNoMap에서 remove 됐는지? =>>" + teamNoMap.get(session));
 
 		
 		Map<String, Object> map = session.getAttributes();
 		String id = (String)map.get("id");
-		String teamNo = (String)map.get("teamNo");
+		String planNo = (String)map.get("planNo");
 		
 		// 같은 팀 사람 중에 남아있는 사람이 있는지 알기 위해 DB에서 같은 팀 사람들의 리스트 받아와서 비교한다.
 		for (int i=0; i < chatDAOService.chatConnect(teamInfo).size(); i++) {
@@ -79,7 +79,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 //					System.out.println("아직 같은 팀 중에 남아있는 사람이 있다.");
 				}else {
 //					System.out.println("남아있는 사람이 없다.");
-					chatSetGroupMap.remove(Integer.parseInt(teamNo));
+					chatSetGroupMap.remove(Integer.parseInt(planNo));
 				}
 			}
 		}
@@ -103,11 +103,11 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 		teamInfo.setId(id);
 		
 		// 생성돼있는 bean객체인 team의 teamNo필드에 set.
-		String teamNoAsString = (String)map.get("teamNo");
-		int teamNo = Integer.parseInt(teamNoAsString);
+		String planNoAsString = (String)map.get("planNo");
+		int planNo = Integer.parseInt(planNoAsString);
 
-		teamNoMap.put(session, (Integer)teamNo);
-		teamInfo.setTeamNo(teamNo);
+		planNoMap.put(session, (Integer)planNo);
+		teamInfo.setPlanNo(planNo);
 		
 //		System.out.println("DB 들어가기 전");
 		
@@ -123,14 +123,14 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 //			System.out.println("teamResult 나왔나 점검 : " + teamResult.getId());
 			// 이미 team의 채팅방에 대한 set이 만들어져있는 상태라면 그곳에 session을 넣어준다.
 //			System.out.println("chatSetGroupMap에 채팅방이 개설됐는지 확인 전");
-			if(chatSetGroupMap.containsKey(teamInfo.getTeamNo())) {
+			if(chatSetGroupMap.containsKey(teamInfo.getPlanNo())) {
 //				System.out.println("chatSetGroupMap에 teamNo를 가진 채팅방이 있다.");
 				
 				// 특정 team의 채팅방 관리하는 set에 session을 넣는다.
-				chatSetGroupMap.get(teamInfo.getTeamNo()).add(session);
+				chatSetGroupMap.get(teamInfo.getPlanNo()).add(session);
 				
 				// session 집합을 teamNo를 key값으로해서 저장한다.
-				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getTeamNo())) {
+				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getPlanNo())) {
 //					System.out.println(chatSetGroupMap.get(teamInfo.getTeamNo()));
 					
 					// 접속시에 누가 접속했는지 알려주기위해 id를 모은다.
@@ -143,7 +143,7 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 				
 				System.out.println(nameList);
 				// 실제로 nameList를 클라이언트로 넘기는 부분. 클라이언트에선 split한다.
-				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getTeamNo())) {
+				for(WebSocketSession assignedSession : chatSetGroupMap.get(teamInfo.getPlanNo())) {
 					try {
 						assignedSession.sendMessage(new TextMessage("nameList/" + nameList));
 					}catch(Exception e) {
@@ -161,11 +161,11 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 				// 새로운 list를 만들고 session을 넣어준다.
 				chatListSet = getChatGroup(idMap, id);
 				sessionSet.add(session);
-				chatSetGroupMap.put(teamInfo.getTeamNo(), chatListSet);
+				chatSetGroupMap.put(teamInfo.getPlanNo(), chatListSet);
 				nameList += id + "/";
 				session.sendMessage(new TextMessage("nameList/" + nameList));
 //				System.out.println("누군가가 처음 접속하면 이렇게 된다!!!");
-				session.sendMessage(new TextMessage(teamResult.getTeamName() + " 방으로 입장했습니다."));
+				session.sendMessage(new TextMessage(teamResult.getPlanName() + " 방으로 입장했습니다."));
 			}
 			
 			return;
@@ -186,13 +186,13 @@ public class PlanMainSocketHandler extends TextWebSocketHandler{
 //		System.out.println("handleMessage 2 이후의 " + userId);
 //		System.out.println("handleMessage 3");
 
-		String teamNo = (String)map.get("teamNo");
+		String planNo = (String)map.get("planNo");
 //		System.out.println("handleMessage 3 이후의" + teamNo);
 //		System.out.println("handleMessage 4");
 
 		
 		
-		Set<WebSocketSession> instantSessionList = chatSetGroupMap.get(Integer.valueOf(teamNo));
+		Set<WebSocketSession> instantSessionList = chatSetGroupMap.get(Integer.valueOf(planNo));
 //		System.out.println("handleMessage 5");
 
 		for(WebSocketSession client_session : instantSessionList) {

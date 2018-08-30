@@ -8,6 +8,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXzorrjSQ61PxTjiyMHOydxJOq0iEOcaI&libraries=drawing,places" async defer>
+</script>
+
+<script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous">
@@ -16,7 +20,7 @@
 <spring:url value="/resources/map/css/semantic.min.css" var="semanticMinCss" />
 <spring:url value="/resources/map/css/map.css" var="mapCss" />
 <spring:url value="/resources/map/js/semantic.min.js" var="semanticMinJs" />
-<spring:url value="/resources/map/js/map2.js" var="mapJs"/>
+<spring:url value="/resources/map/js/map.js" var="mapJs"/>
  
 <link href="${semanticMinCss}" rel="stylesheet" />
 <link href="${mapCss}" rel="stylesheet" />
@@ -25,20 +29,20 @@
 
 <%
    request.setCharacterEncoding("utf-8");
-   String id = request.getParameter("id");  
+   String id = (String)session.getAttribute("id");  
+   
+   int planNo = (int)session.getAttribute("planNo");
+   int role = (int)session.getAttribute("role");
 %>
 
-<script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXzorrjSQ61PxTjiyMHOydxJOq0iEOcaI&libraries=drawing,places" async defer>
-</script>
-<!-- &callback=initMap -->
+
 <style> 
 .map-total{
    position: relative; 
    /* width: 820px;
     height: 500px; */
-    left: 400px;
-     top: 250px;
+     left: 1O0px;
+     top: 100px; 
      margin:0;
      
 } 
@@ -84,70 +88,69 @@ table,td{
     font-size: 15px;
     margin: 20px 2px 0 0;
     cursor: pointer;
-
 }
+
+#colorBtns{
+   position: relative; 
+   
+}
+
 </style>
 
 </head>
 <body>
 <input type="hidden" id="memberId" value=<%=id%> /> 
+<input type="hidden" id="planNo" value=<%=planNo%> /> 
+<input type="hidden" id="role" value=<%=role%> /> 
+
 <input type="hidden" id="color"/>
 <input type="hidden" id="pickCount" value=""/>
 <input type="hidden" id="lat" value=""/>
 <input type="hidden" id="lng" value=""/>
-<%-- <input type="text" id="selectDate" value=<%=selectDate[0]%>/> --%>   
 
 <input type="hidden" id="testInput"/>
 
 <div class="map-total" >
 <table>
    <tr>
-   <td>
-   <select class="ui dropdown">
-   <% 
-      String[] selectDate = request.getParameterValues("selectDate");
-      if(selectDate != null){
-         for(int i=0;i<selectDate.length;i++){
-   %>         
-            <option><%=selectDate[i] %></option>
-   <%          
+      <td align=left>
+         <select class="ui dropdown"></select>
+      </td>
    
-         }
-      }
-   %> 
-   </select>
-   </td>
-   
-   <td rowspan="2">
-      <div id="main-aside">
-         <form id="pickPlaceList" name="pickPlaceList" >   
-            <input id ="confirmBtn"  class="ui primary button" type="button" value="confirm">
-            <input id ="resetBtn"  class="ui button" type="button" value="reset">
-         </form>   
-         
-         <div id="vertical_buttons" style="height:458px; width:200px; overflow-y:scroll">
-         <%
-             for(int i=0;i<20;i++){
-         %>      
-               <button class="block" onclick="change1(this)"></button>
-               
-         <%      
-             }
-         %>
-         </div>   
-      </div>
-   </td>
-   
+      <td rowspan="2">
+         <div id="main-aside">
+            <form id="pickPlaceList" name="pickPlaceList" >
+               <%
+               if(role == 0 || role == 1){
+            %>      
+                        <input id ="confirmBtn"  class="ui primary button" type="button" value="confirm">
+                       <input id ="resetBtn"  class="ui button" type="button" value="reset">
+               <% 
+               }
+            %>
+            </form>   
+            
+            <div id="vertical_buttons" style="height:458px; width:200px; overflow-y:scroll">
+              <%
+                   for(int i=0;i<20;i++){
+              %>      
+                     <button class="block" onclick="change1(this)"></button>
+                     
+              <%      
+                   }
+              %>
+            </div>   
+         </div>
+      </td>   
    </tr>
    <tr>
    <td id='test'>
       <div><input  id="searchInput"  class="controls"  type = "text"  placeholder = "위치 입력" /></div>
-      <div id="map" style="border-color:#334d99"></div>
+      <div id="map"></div>
    </td>   
-   
 </table>
 
-<div>
+<div id="colorBtns">
    <% String[] colorArray = {"#ff4d4d", "#ffa64d", "#ffff4d", "#79ff4d", "#4dffff", "#4d79ff", "#d24dff", "#ff4dd2","#ffcccc","#bfbfbf"};
       for(int i=0;i<10;i++){
    

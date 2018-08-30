@@ -1,0 +1,42 @@
+/**@author wookim
+ * 
+ */
+
+//문서 전체 출력 후
+$(document).ready(function() {
+	//var myFolder = new Folder(window.location.pathname);
+	//console.log(folder.exits);
+	//console.log(window.location.pathname);
+	$("#calendarContent").load("./calendarPage.jsp");
+	//$("#mapContent").load("./mapPage.jsp");
+	$("#mapContent").load("mapPage.jsp");
+	$("#planTableContent").load("./planTablePage.jsp");
+	$("#viewAllContent").load("./viewAllPage.jsp");n
+
+
+     $('.drawer').drawer({ 
+          class: {
+            nav: 'drawer-nav',
+            toggle: 'drawer-toggle',
+            overlay: 'drawer-overlay',
+            open: 'drawer-open',
+            close: 'drawer-close',
+            dropdown: 'drawer-dropdown'
+          },
+          iscroll: {
+            preventDefault: false
+          },
+          showOverlay: true
+        });
+     
+     $('.drawer').drawer();
+	
+	document.getElementById("sendButton").onclick = function() {
+		var input = document.getElementById('inputText').value;
+		w.send(id + "/" + input);
+	}
+});
+
+
+
+	

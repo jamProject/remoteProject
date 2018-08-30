@@ -6,10 +6,9 @@ import org.springframework.stereotype.Component;
 public class PlanTableVO {
    private int planNo;
    private int planSeq;
-   private String planDate;
+   private String selectDate;
    private String placeName;
    private String memo;
-   
 public int getPlanNo() {
 	return planNo;
 }
@@ -22,11 +21,11 @@ public int getPlanSeq() {
 public void setPlanSeq(int planSeq) {
 	this.planSeq = planSeq;
 }
-public String getPlanDate() {
-	return planDate;
+public String getSelectDate() {
+	return selectDate;
 }
-public void setPlanDate(String planDate) {
-	this.planDate = planDate;
+public void setSelectDate(String selectDate) {
+	this.selectDate = selectDate;
 }
 public String getPlaceName() {
 	return placeName;
@@ -40,7 +39,7 @@ public String getMemo() {
 public void setMemo(String memo) {
 	this.memo = memo;
 }
-   
+
    
    
    

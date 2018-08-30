@@ -1,0 +1,25 @@
+package com.spring.jamplan.model;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class PlanTableVO {
+   private int planNo;
+   private int planSeq;
+   private String selectDate;
+   private String placeName;
+   private String memo;
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+}

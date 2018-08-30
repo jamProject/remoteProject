@@ -21,13 +21,18 @@ public class PlanMainHandshakeInterceptor extends HttpSessionHandshakeIntercepto
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest)request;
 		HttpServletRequest req = ssreq.getServletRequest();
 		
-		String id = (String)req.getSession().getAttribute("id");
+		String id = (String)req.getParameter("id");
+		req.getSession().setAttribute("id", id);
 		System.out.println(id);
-		String teamNo = (String)req.getSession().getAttribute("teamNo");
+		
+		String planNo = (String)req.getParameter("planNo");
+		req.getSession().setAttribute("planNo", planNo);
+		System.out.println(planNo);
+		
 		map.put("id", id);
-		map.put("teamNo", teamNo);
+		map.put("planNo", planNo);
 		System.out.println("HttpSession에 저장된 id: " + id);
-		System.out.println("HttpSession에 저장된 teamNo: " + teamNo);
+		System.out.println("HttpSession에 저장된 planNo: " + planNo);
 		
 		return super.beforeHandshake(request, response, wsHandler, map);
 	}

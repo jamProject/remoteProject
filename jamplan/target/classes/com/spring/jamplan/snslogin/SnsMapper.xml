@@ -25,6 +25,6 @@
 	</select>
 	
 	<insert id="insertUser" parameterType="com.spring.jamplan.model.UserVO">
-		insert into userInfo(id) values (#{id})
+		insert into userInfo(id,email, isAdmin,signDate) values (#{id},#{email},#{isAdmin} ,sysdate)
 	</insert>
 </mapper>

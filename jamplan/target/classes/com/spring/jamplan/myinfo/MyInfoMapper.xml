@@ -28,20 +28,20 @@
     </resultMap>
     
     <select id="getMyInfo" parameterType="com.spring.jamplan.model.UserVO" resultMap="userResultMap">
-        SELECT ID,EMAIL,PASS,NATION,GENDER,TRAVELTYPE,HOBBY,IMAGE,AGE
+        SELECT ID,EMAIL,PASS,NATION,GENDER,travelType,HOBBY,IMAGE,AGE
             FROM USERINFO WHERE ID=#{id, jdbcType=VARCHAR}
     </select>
     
     <update id="updateMyInfo" parameterType="com.spring.jamplan.model.UserVO">
         UPDATE USERINFO SET EMAIL=#{email, jdbcType=VARCHAR}, PASS=#{pass, jdbcType=VARCHAR}, NATION=#{nation, jdbcType=VARCHAR},
                  GENDER=#{gender, jdbcType=VARCHAR}, AGE=#{age, jdbcType=INTEGER}, 
-                    TRAVELTYPE=#{travelType, jdbcType=VARCHAR}
+                    travelType=#{travelType, jdbcType=VARCHAR}
                         WHERE ID=#{id, jdbcType=VARCHAR}
     </update>
     
-    <insert id="setProfileImage" parameterType="com.spring.jamplan.model.UserVO">
+    <update id="setProfileImage" parameterType="com.spring.jamplan.model.UserVO">
         UPDATE USERINFO SET IMAGE=#{image, jdbcType=VARCHAR} WHERE ID=#{id, jdbcType=VARCHAR}
-    </insert>
+    </update>
     
     <select id="getTeamListAsLeader" parameterType="com.spring.jamplan.model.UserVO" resultMap="teamInfoResultMap">
         SELECT TEAMNO, TEAMNAME, ID, ROLE FROM TEAMINFO 
@@ -59,6 +59,12 @@
         </if>
         
     </select>
+    
+    
+    <insert id="setBackgroundImage" parameterType="com.spring.jamplan.model.UserVO">
+       INSERT INTO USERINFO(travelType) VALUES(#{travelType, jdbcType=VARCHAR}) WHERE ID=#{id, jdbcType=VARCHAR}
+    </insert>
+    
     
     <delete id="removeTeamAsLeader" parameterType="com.spring.jamplan.model.TeamInfoVO">
         DELETE TEAMINFO WHERE TEAMNAME=#{teamName, jdbcType=VARCHAR}
