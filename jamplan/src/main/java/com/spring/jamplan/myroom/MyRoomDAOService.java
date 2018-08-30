@@ -143,7 +143,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 
 	@Override
 	public void deleteNullPlanTeaminfo(String teamName) {
-		System.out.println("DAO getPlanListById IN");
+		System.out.println("DAO deleteNullPlanTeaminfo IN");
 		try {
 			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
 			myRoomMapper.deleteNullPlan(teamName);
@@ -151,7 +151,7 @@ public class MyRoomDAOService implements MyRoomDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		System.out.println("DAO getPlanListById OUT");
+		System.out.println("DAO deleteNullPlanTeaminfo OUT");
 	}
 
 	// 처음 myroom으로 진입 시, 같은 팀인지를 확인 후에 웹소켓으로 메시지 뿌려줄 수 있다.
@@ -270,6 +270,18 @@ public class MyRoomDAOService implements MyRoomDAO {
 	
 	
 */
+	@Override
+	public void deleteAlertMessage(MessageVO vo) {
+		try {
+			System.out.println("==========알림 메세지 삭제");
+			myRoomMapper = sqlSession.getMapper(MyRoomMapper.class);
+			System.out.println("==========알림 메세지 삭제" + vo.getReceiver());
+			System.out.println("==========알림 메세지 삭제" + vo.getTeamName());
+			myRoomMapper.deleteCansleMessage(vo);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	@Override
 	public void insertAlertMessage(MessageVO vo) {
 		try {

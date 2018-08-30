@@ -20,7 +20,7 @@ public interface MyRoomDAO {
 	String validationTeamName(TeamInfoVO team);
 	Object deleteTeam(TeamInfoVO team);
 	Object deletePlan(PlanVO plan);
-	
+	void deleteAlertMessage(MessageVO vo);
 	void insertPlan(TeamInfoVO vo);//
 	void deleteNullPlanTeaminfo(String teamName);	
 	void updateReadMessage(String receiver);

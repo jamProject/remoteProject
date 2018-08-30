@@ -49,7 +49,8 @@ $(document).ready(function() {
 			type : 'POST',dataType : 'json',
 			contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 			data :{'sender':$(this).data("sender"),
-				   'teamName':$(this).data("teamName")},
+				   'teamName':$(this).data("teamName"),
+				   'isRead' : 2},
 			success : function(data) {
 				//alert("팀원초대 성공");
 				console.log(index1);
@@ -77,8 +78,12 @@ $(document).ready(function() {
 			});
 	$(document).on("click", "button.deleteMessageBut", function(){
 		var teamName = $(this).attr("value");
+		var index1 = $(this).data("trIndex");
 		//var sender = $(this).data("sender");
-		deleteMessage(teamName)
+		console.log(index1);
+		
+		deleteMessage(teamName, index1);
+		
 			});
 			
 	//메세지 클릭 이벤트
@@ -137,38 +142,42 @@ $(document).ready(function() {
 						messageHtml='';
 						messageHtml += '<tr id = tr'+ index+'><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
 									+ '<span class="label label-primary messageNew"></span>'
-									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
+									+"<button id = canTeam"+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#canTeam"+index).data("trIndex",index);
 						$("#acceptTeam"+index).data("trIndex" ,index);
 						$("#rejectTeamBut"+index).data("trIndex",index);
 					}else if(item.isRead == 3){//팀원에 신청을 한 유저가  "팀에 초대 수락 알림"을 받고 읽음
 						messageHtml='';
 						messageHtml += '<tr id = tr'+ index+'><td>'+item.receiver + '님 축하 드립니다. ' + item.teamName + '에 초대 되셨습니다.'
-									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
+									+"<button id = canTeam"+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#canTeam"+index).data("trIndex",index);
 						$("#acceptTeam"+index).data("trIndex" ,index);
 						$("#rejectTeamBut"+index).data("trIndex",index);
 					}else if(item.isRead == 4){//팀원에 신청을 한 유저가  "팀에 초대 거절 알림" 을 받고  안 읽음
 						messageHtml='';
 						messageHtml += '<tr id = tr'+ index+'><td>'+item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
 									+ '<span class="label label-primary messageNew"></span>'
-									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
+									+"<button id = canTeam"+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#canTeam"+index).data("trIndex",index);
 						$("#acceptTeam"+index).data("trIndex" ,index);
 						$("#rejectTeamBut"+index).data("trIndex",index);
 					}else if(item.isRead == 5){//팀원에 신청을 한 유저가  "팀에 초대 거절 알림" 을 받고 읽음
 						messageHtml='';
 						messageHtml +='<tr id = tr'+ index+'><td>'+ item.receiver + '님 죄송하지만 ' + item.teamName + '팀에서 거절했습니다.'
-									+"<button id = canTeam "+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
+									+"<button id = canTeam"+index+ " class = 'btn btn-primary deleteMessageBut'  value = "+item.teamName+">삭제</button></td></tr>";
 						$("#messageTable").append(messageHtml);
 						$("#canTeam"+index).data("sender",item.receiver);
 						$("#canTeam"+index).data("teamName",item.teamName);
+						$("#canTeam"+index).data("trIndex",index);
 						$("#acceptTeam"+index).data("trIndex" ,index);
 						$("#rejectTeamBut"+index).data("trIndex",index);
 					}
@@ -424,7 +433,7 @@ function deleteMessageTR(teamName, sender,index1){
 				'sender' : Sender
 				},
 		dataType : 'json',
-		contentType : 'application/x-www-form-urlencoded;charset=utf-8',
+		//contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
 			alert(data.res);
 			$('#tr'+index2).remove();
@@ -435,12 +444,31 @@ function deleteMessageTR(teamName, sender,index1){
 	});
 }
 
-function deleteMessage(teamName){
+/*$(document).on("click", "button.rejectTeamBut", function(){
+	var teamName = $(this).attr("value");
+	var sender = $(this).data("sender");
+	var index1 = $(this).data("trIndex");
+	deleteMessageTR(teamName,sender,index1)
+		});
+$(document).on("click", "button.applyButCan", function(){
+	alert("팀 신청 취소");
+	var teamName = $(this).attr("value");
+	//var sender = $(this).data("sender");
+	deleteMessage(teamName)
+		});
+$(document).on("click", "button.deleteMessageBut", function(){
+	var teamName = $(this).attr("value");
+	//var sender = $(this).data("sender");
+	deleteMessage(teamName)
+		});*/
+
+function deleteMessage(teamName,index1){
 	//alert("취소 버튼 이벤트 ")
 	var teamNAME = teamName;
+	var index2 = index1;
 	//alert("팀이름 : " + teamName);
 	$.ajax({
-		url : "/jamplan/deleteMessageToTeam.do",
+		url : "/jamplan/deleteAlertMessage.do",
 		type : 'POST',
 		data : {
 				'teamName' : teamNAME
@@ -448,10 +476,12 @@ function deleteMessage(teamName){
 		dataType : 'json',
 		//contentType : 'application/x-www-form-urlencoded;charset=utf-8',
 		success : function(data) {
-			alert(data.res);
+			//alert(data.res);
+			$("#tr"+index2).remove();
+			//$('#tr'+index1).remove();
 		},
 		error: function(data){ 
-			alert(data.res);
+			//alert(data.res);
 		}
 	});
 }
@@ -661,7 +691,7 @@ function validationCheck() {
 	//alert(params);
 	jQuery.ajax({
 		url : '/jamplan/validationCheck.do',
-		type : 'GET',
+		type : 'POST',
 		data : {
 			teamName : params
 		},

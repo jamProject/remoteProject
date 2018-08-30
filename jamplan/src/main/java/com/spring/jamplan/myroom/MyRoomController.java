@@ -86,7 +86,7 @@ public class MyRoomController {
 		return teamListToJson;
 	}
 	
-
+	//팀원 수락 버튼 눌렀을 때
 	@RequestMapping(value="/acceptToMember.do", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String acceptToMember(HttpSession session, MessageVO vo) throws JsonProcessingException {
@@ -318,7 +318,7 @@ public class MyRoomController {
 		return checkMapToJson;
 	}
 
-	@RequestMapping(value="/validationCheck.do", method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/validationCheck.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String validationCheck(TeamInfoVO team, PlanVO plan) {
 		System.out.println("validationCheck In");
@@ -386,6 +386,25 @@ public class MyRoomController {
 		return searchTeamListToJson;
 	}
 	
+	@RequestMapping(value="/deleteAlertMessage.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteAlertMessage(HttpSession session, MessageVO vo) {
+		String receiver = (String)session.getAttribute("id");
+		vo.setReceiver(receiver);
+		myRoomDAO.deleteAlertMessage(vo);
+		
+		String searchTeamListToJson = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			searchTeamListToJson = mapper.writeValueAsString(map);
+			System.out.println(searchTeamListToJson);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("deleteApplyMessageTeam Out");
+		return searchTeamListToJson;
+	}
+	
 	
 	//deleteCansleMessage
 	@RequestMapping(value="/deleteMessageToTeam.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
@@ -404,9 +423,9 @@ public class MyRoomController {
 			int check = myRoomDAO.deleteCansleMessage(vo);		
 			String teamLeader = (String)session.getAttribute("id");
 			String receiver = vo.getSender();
-			vo.setReceiver(receiver);
-			vo.setSender(teamLeader);
-			myRoomDAO.insertAlertMessage(vo);
+				/*vo.setReceiver(receiver);
+				vo.setSender(teamLeader);
+				myRoomDAO.insertAlertMessage(vo);*/
 			if(check==0) {
 				map.put("res", "이미 해당 팀원임");
 			}else if (check ==1) {
