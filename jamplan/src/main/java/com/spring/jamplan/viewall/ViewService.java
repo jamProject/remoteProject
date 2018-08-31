@@ -10,4 +10,5 @@ public interface ViewService {
 	   ArrayList insertViewAll(PlanTableVO planTableVO, PlanVO planVO);
 	   /*ArrayList savePlanTable (PlanTableVO planTableVO);*/
 	   int fileUpload(PlanVO planVO);
+	   int updatePlanName(PlanVO planVO);
 }

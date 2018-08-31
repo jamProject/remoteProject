@@ -22,7 +22,7 @@
 	<div id="saveput"></div>
 	<!-- palnTable 뿌려주기 -->   
 	<br><br>
-	<div class="container" id="planput"></div></div>
+	<div class="container" id="planput"></div>
 	
 </body>
 </html>

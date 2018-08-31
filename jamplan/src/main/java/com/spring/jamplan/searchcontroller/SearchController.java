@@ -175,6 +175,8 @@ public class SearchController {
 		//planNo 넘기기
 		System.out.println("request!!!!" + request.getParameter("planNo"));
 		
+		
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("planNo", request.getParameter("planNo"));
 		mv.setViewName("search/schedule");

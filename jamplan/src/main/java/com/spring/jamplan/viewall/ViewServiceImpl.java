@@ -37,17 +37,20 @@ public class ViewServiceImpl implements ViewService{
 	         if(planViewList.size() == 0) {
 	            System.out.println("뷰테이블이0일때 들어오고 플랜테이블리스트가 0이아닐때 들어왔다####");
 	            for (i=0; i < planTableList.size(); i++) {
-	               System.out.println("for문들어옴####");
+	               System.out.println("for문들어옴!@#!@#!@#");
 	               
 	               
 	               String getPlanDate = planTableList.get(i).getPlanDate();
 	               planVO.setPlanDate(getPlanDate);
+	               System.out.println("planPlanDate확인view==="+planVO.getPlanDate());
 	               String getPlaceName = planTableList.get(i).getPlaceName();
 	               planVO.setPlaceName(getPlaceName);
-	               System.out.println("planVO="+planVO.getPlaceName());
+	               System.out.println("planPlaceName확인view==="+planVO.getPlaceName());
+	               //memo get set
 	               String getMemo = planTableList.get(i).getMemo();
+	               System.out.println("pTmemo확인view" + planTableList.get(i).getMemo());
 	               planVO.setMemo(getMemo);
-	               System.out.println("planVO="+planVO.getMemo());
+	               System.out.println("planVOMemo확인view==="+planVO.getMemo());
 
 	               /*planTableVO.setPlanSeq(i);
 	               System.out.println("seq = " + i);*/
@@ -61,6 +64,10 @@ public class ViewServiceImpl implements ViewService{
 	            return planViewList;
 	         }
 	         else {
+	        	 System.out.println("else!@#!@$!@$");
+	        	 String getMemo = planTableList.get(0).getMemo();
+	        	 planVO.setMemo(getMemo);
+	        	 viewMapper.updateViewAll(planVO);
 	            return planViewList;
 	         }
 	         
@@ -110,7 +117,16 @@ public class ViewServiceImpl implements ViewService{
 			System.out.println("returnfile");
 			return check;
 		}
-	
+	   
+	   @Override
+	   public int updatePlanName(PlanVO planVO) {
+		   System.out.println("updatePlanName!@#!@#");
+		   ViewMapper viewMapper = sqlsession.getMapper(ViewMapper.class);
+		   System.out.println("planName=====" + planVO.getPlanName());
+		   int check = viewMapper.updatePlanName(planVO);
+		   System.out.println("Mapper나옴!@#!@#");
+		   return check;
+	   }
 	
 	
 	

@@ -2,7 +2,7 @@
  * 
  */
 $(document).ready(function() {
-		alert('viewAll');
+		
 		
 		$.ajax({
 			url : '/jamplan/moveViewAll.view',
@@ -20,7 +20,7 @@ $(document).ready(function() {
 					$('#saveput').append(saveput);*/
 					
 				$.each(data, function(index, item){
-					alert('success');
+					
 					/* $('#planput').empty(); */
 					
 					var viewput = '';
@@ -35,7 +35,7 @@ $(document).ready(function() {
 					viewput += '<td>' + item.planDate + '</td>';
 					viewput += '<td>' + item.placeName + '</td>';
 					viewput += '<td class="form-control" name="memo" id="memo' + index + '" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</td>';
-					viewput += '<td><input type="text" hidden="hidden" id="planSeq'+index+'" value="'+item.planSeq+'"></td>'
+					/*viewput += '<td><input type="text" hidden="hidden" id="planSeq'+index+'" value="'+item.planSeq+'"></td>'*/
 					viewput += '</tr>';
 					viewput += '</tbody>';
 					viewput += '</table>';
@@ -45,7 +45,7 @@ $(document).ready(function() {
 				});
 			},
 			error:function() {
-				alert('ajax통신실패!!!');
+				alert('ajax통신실패!!!?');
 			}
 		});
 	

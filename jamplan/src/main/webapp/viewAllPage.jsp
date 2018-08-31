@@ -19,10 +19,6 @@
 <script src="${calJs}"></script>
 <%-- <link href="${calCss}" rel="stylesheet" />  --%>
 <script type="text/javascript">
-
-
-
-
 </script>
 </head>
 <body>
@@ -50,9 +46,9 @@
                 <form action="fileUpload.view" method="post" enctype="multipart/form-data">
 					<input class="btn btn-outline-secondary" type="file" name="file" /><br/>
                 <div class="alert alert-info">
-					<input class="btn btn-outline-secondary" name="boadrName" placeholder="일정이름을 정해보세요" type="text">
+					<input class="btn btn-outline-secondary" name="planName" placeholder="일정이름을 정해보세요" type="text">
 				</div>
-				  <div class="modal-footer"> <!-- row 태그는 container태그가아닌 이곳 modal-footer에서는 적용안된다.-->
+				  <div class="modal-footer"> <!-- row 태그는 container태그가아닌 이곳 modal-footer에서는 적용안된다.--></div>
                 <div class="col-md-12">
 					<input class="btn btn-outline-danger" type="submit" value="저장" />
                     

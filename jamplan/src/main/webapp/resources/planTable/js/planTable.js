@@ -8,10 +8,10 @@ $(document).ready(function() {
 			url : '/jamplan/planTable.plan',
 			type : 'POST',
 			dataType: "json",
-			async: false,
+			/*async: false,*/
 	        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			success:function(data){
-				$('#planput').empty();
+				
 				$('#saveput').empty();
 				var put = '';
 				var saveput = '';
@@ -20,8 +20,7 @@ $(document).ready(function() {
 					$('#saveput').append(saveput);
 					
 				$.each(data, function(index, item){
-					/* $('#planput').empty(); */
-					
+					$('#planput').empty();
 					var planput = '';
 					planput += '<table class="table">';
 					planput += '<thead>';
@@ -62,16 +61,18 @@ function savePlanTable(){
 	for(var i=0; i<memoCnt.length; i++){
 		params = {"memo" : $('#memo'+ i).val(), "planSeq" : $('#planSeq'+ i).val()};
 		console.log(params);
+		
 		$.ajax({
 			url : '/jamplan/savePlanTable.plan',
 			type : 'POST',
-			async: false,
+			/*async: false,*/
 			dataType: "json",
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			data : params,
 			success:function(data) {
 				
-				/* $.each(data, function(index, item){
+				 /*$.each(data, function(index, item){
+						$('#planput').empty();
 						$('#updateput').empty();
 						var updateput = '';
 						updateput += '<table class="table">';
@@ -82,14 +83,14 @@ function savePlanTable(){
 						updateput += '</thead>';
 						updateput += '<tbody>';
 						updateput += '<tr>';
-						updateput += '<td>' + item.calendar + '</td>';
-						updateput += '<td>' + item.map + '</td>';
+						updateput += '<td>' + item.planDate + '</td>';
+						updateput += '<td>' + item.placeName + '</td>';
 						updateput += '<td><textarea class="form-control" id="memo" placeholder="여행계획을 작성해보세요!" rows="5" cols="30" >'+ item.memo +'</textarea></td>';
 						updateput += '</tr>';
 						updateput += '</tbody>';
 						updateput += '</table>';
 						
-						
+							
 						console.log("updateput" + updateput);
 						$('#updateput').append(updateput);
 						

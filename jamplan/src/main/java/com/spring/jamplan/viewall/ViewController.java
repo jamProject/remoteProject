@@ -99,8 +99,12 @@ public class ViewController {
 	   int planNo = (int)session.getAttribute("planNo");
 	   System.out.println("planNo%%%%%%%%%%%%%%%%%%%" + planNo);
 	   planVO.setPlanNo(planNo);
+	   System.out.println("!@#!@#!@#!@#planName=" + planVO.getPlanName());
+	   //planName update
+	   viewService.updatePlanName(planVO);
 	   
-		MultipartFile mf = multiRequest.getFile("file");
+		//fileUpload
+	   MultipartFile mf = multiRequest.getFile("file");
 		
 		String uploadPath = "C:\\BigDeep\\upload\\";
 				//"C:\\Users\\Playdata\\Downloads\\0805ProjectHan\\jamplan2\\src\\main\\webapp\\resources\\search\\image\\";
@@ -119,6 +123,13 @@ public class ViewController {
 		
 		return "redirect:/plan.search";
 	}
+   
+   /*@RequestMapping("updatePlanName.view")
+   public void updatePlanName(PlanVO planVO) {
+	   System.out.println("!@#!@#!@#!@#planName=" + planVO.getPlanName());
+	   //planName update
+	   viewService.updatePlanName(planVO);
+   }*/
    
    
    

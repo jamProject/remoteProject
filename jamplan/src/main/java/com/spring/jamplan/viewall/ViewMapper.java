@@ -15,7 +15,9 @@ public interface ViewMapper {
 	/*int savePlanTable (PlanTableVO planTableVO);*/
 	
 	int fileUpload(PlanVO planVO);
-	   
+	int updatePlanName(PlanVO planVO);
+	int updateViewAll(PlanVO planVO);
+	
 	
 	
 }

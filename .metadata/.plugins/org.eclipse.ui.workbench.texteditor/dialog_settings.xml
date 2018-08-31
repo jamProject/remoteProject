@@ -2,15 +2,16 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="savePlanTable" key="selection"/>
+		<item value="schedule" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="schedule"/>
+			<item value="planTable"/>
 			<item value="savePlanTable"/>
 			<item value="planResultMap"/>
-			<item value="schedule"/>
 			<item value="viewallvo"/>
 			<item value="viewallvo\"/>
 			<item value="viewAllVO"/>
@@ -22,7 +23,6 @@
 			<item value="파일선택"/>
 			<item value="modal"/>
 			<item value="planViewMap"/>
-			<item value="getViewAll"/>
 		</list>
 		<list key="replacehistory">
 		</list>

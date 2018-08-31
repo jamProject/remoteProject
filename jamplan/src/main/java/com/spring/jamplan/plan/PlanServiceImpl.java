@@ -179,9 +179,12 @@ public class PlanServiceImpl implements PlanService {
       
       //for문 돌리면안됌..?
       for (i=0; i < planTableList.size(); i++) {
-         System.out.println("메모"+planTableList.get(i).getMemo());
-         System.out.println("시퀀스"+planTableList.get(i).getPlanSeq());
-         System.out.println("플랜넘버"+planTableList.get(i).getPlanNo());
+         System.out.println("메모===="+planTableList.get(i).getMemo());
+         System.out.println("시퀀스====="+planTableList.get(i).getPlanSeq());
+         System.out.println("플랜넘버====="+planTableList.get(i).getPlanNo());
+         /*String getMemo = planTableList.get(i).getMemo();
+         planTableVO.setMemo(getMemo);*/
+         
          planMapper.savePlanTable(planTableVO);
       }
       System.out.println("for문");
