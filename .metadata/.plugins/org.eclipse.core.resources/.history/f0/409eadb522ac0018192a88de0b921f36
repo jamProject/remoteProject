@@ -1,0 +1,19 @@
+package com.spring.jamplan.viewall;
+
+import java.util.ArrayList;
+
+import com.spring.jamplan.model.ViewAllVO;
+import com.spring.jamplan.model.PlanTableVO;
+
+public interface ViewMapper {
+	ArrayList<ViewAllVO> getViewAll(ViewAllVO viewAllVO);
+	ArrayList<PlanTableVO> getPlanTables(PlanTableVO planTableVO);
+
+	void insertViewAll(ViewAllVO viewAllVO);
+	   
+	   
+	/*int savePlanTable (PlanTableVO planTableVO);*/
+	   
+	
+	
+}

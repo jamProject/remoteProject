@@ -1,0 +1,54 @@
+package com.spring.jamplan.model;
+
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class ViewAllVO {
+	int planNo;
+	private String planDate;
+	private String placeName;
+	private String memo;
+	private String boardName;
+	private String image;
+	public int getPlanNo() {
+		return planNo;
+	}
+	public void setPlanNo(int planNo) {
+		this.planNo = planNo;
+	}
+	public String getPlanDate() {
+		return planDate;
+	}
+	public void setPlanDate(String planDate) {
+		this.planDate = planDate;
+	}
+	public String getPlaceName() {
+		return placeName;
+	}
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	public String getBoardName() {
+		return boardName;
+	}
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
+	
+	
+}

@@ -1,0 +1,18 @@
+package com.spring.jamplan.model;
+
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class ViewAllVO {
+	int planNo;
+	private String planDate;
+	private String placeName;
+	private String memo;
+	private String boardName;
+	private String image;
+	
+	
+	
+	
+}
